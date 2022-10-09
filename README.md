@@ -4,7 +4,7 @@
     <img alt="AlNaoIT" src="https://www.alnao.it/wordpress/wp-content/uploads/2021/10/cropped-alnao_logo20211031-4.png" />
   </a>
 </p>
-In questo repository sono salvati esempi più o meno complicati sviluppati con diversi linguaggi, adatti per diverse situazioni.
+In questo repository sono salvati esempi più o meno complicati sviluppati con diversi linguaggi.
 <a href="https://www.alnao.it/wordpress/2022/04/alnao-it-disclaimer/">Disclaimer</a>.
 
 <p dir="auto">
