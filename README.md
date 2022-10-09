@@ -5,7 +5,7 @@
   </a>
 </p>
 In questo repository sono salvati esempi più o meno complicati sviluppati con diversi linguaggi, adatti per diverse situazioni.
-See (disclaimer)[https://www.alnao.it/wordpress/2022/04/alnao-it-disclaimer/].
+<a href="https://www.alnao.it/wordpress/2022/04/alnao-it-disclaimer/">Disclaimer</a>.
 
 <p dir="auto">
 <a href="https://github.com/alnao"><img src="https://img.shields.io/badge/-Github-000?style=flat&amp;logo=Github&amp;logoColor=white" style="max-width: 100%;"></a>
