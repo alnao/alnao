@@ -1,7 +1,7 @@
 # AlNao.it
 <p align="center" style="background-color:black;">
   <a href="https://www.alnao.it/">
-    <img alt="AlNaoIT" src="https://www.alnao.it/wordpress/wp-content/uploads/2021/10/cropped-alnao_logo20211031-4.png" />
+    <img alt="AlNaoIT" src="https://www.alnao.it/wordpress/wp-content/uploads/2022/10/alnaoItLogo_V20221016-300x78.png" />
   </a>
 </p>
 In questo repository sono salvati esempi più o meno complicati sviluppati con diversi linguaggi.
