@@ -4,8 +4,10 @@
     <img alt="AlNaoIT" src="https://www.alnao.it/wordpress/wp-content/uploads/2022/10/alnaoItLogo_V20221016-300x78.png" />
   </a>
 </p>
+<!--
 In questo repository sono salvati esempi più o meno complicati sviluppati con diversi linguaggi.
 <a href="https://www.alnao.it/wordpress/2022/04/alnao-it-disclaimer/">Disclaimer</a>.
+-->
 
 <p dir="auto">
 <a href="https://github.com/alnao"><img src="https://img.shields.io/badge/-Github-000?style=flat&amp;logo=Github&amp;logoColor=white" style="max-width: 100%;"></a>
