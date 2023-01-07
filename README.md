@@ -15,6 +15,10 @@
     <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
       <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
     </a>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="http://ForTheBadge.com/images/badges/built-with-love.svg?style=plastic" />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <img src="http://ForTheBadge.com/images/badges/built-by-developers.svg?style=plastic" />
   </div>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
   <div style="text-align:right">
@@ -56,9 +60,6 @@
       <a href="mailto:alnao84@gmail.com" target="_blank" rel="nofollow">
         <img src="https://img.shields.io/badge/Gmail-d14836?style=plastic&logo=Gmail&logoColor=white">
       </a>
-    </p><p>
-      <img src="http://ForTheBadge.com/images/badges/built-with-love.svg?style=plastic" />
-      <img src="http://ForTheBadge.com/images/badges/built-by-developers.svg?style=plastic" />
     </p>
   </div >
 </div >
