@@ -1,17 +1,21 @@
 # AlNao.it
+<!--
 <p align="center" style="background-color:black;">
   <a href="https://www.alnao.it/">
     <img alt="AlNaoIT" src="https://www.alnao.it/wordpress/wp-content/uploads/2021/10/cropped-alnao_logo20211031-4.png" />
   </a>
 </p>
+-->
 <div style="display:flex;align-items: center;justify-content: space-between;">
-  <!--<a href="https://www.alnao.it/wordpress" target="_blank">
-    <img src="https://www.alnao.it/wordpress/wp-content/uploads/2021/10/cropped-alnao_logo20211031-4.png" 
-      style="background-color:black;">
-  </a>-->
-  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
-	  <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
-  </a>
+  <div>
+    <!--<a href="https://www.alnao.it/wordpress" target="_blank">
+      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2021/10/cropped-alnao_logo20211031-4.png" 
+        style="background-color:black;">
+    </a>-->
+    <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
+      <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
+    </a>
+  </div>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
   <div style="text-align:right">
     <p>
