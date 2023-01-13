@@ -16,9 +16,9 @@
       <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
       <img src="https://d1.awsstatic.com/training-and-certification/icons/training-badges/aws-training-badge-serverless-technology.a0d2d10c665985544d91af81aaf362e9d31a9116.png" style="height:150px;">
     </a>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;
       <img src="http://ForTheBadge.com/images/badges/built-with-love.svg?style=plastic" />
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;
       <img src="http://ForTheBadge.com/images/badges/built-by-developers.svg?style=plastic" />
   </div>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
