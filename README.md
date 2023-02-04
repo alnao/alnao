@@ -1,4 +1,4 @@
-# AlNao.it
+<!-- # AlNao.it -->
 <!--
 <p align="center" style="background-color:black;">
   <a href="https://www.alnao.it/">
@@ -6,6 +6,22 @@
   </a>
 </p>
 -->
+ <p>
+      <img src="https://img.shields.io/badge/alnao-.it-blue?logo=AWS%20Lambda&logoColor=yellow" height="30px" />
+      &nbsp;&nbsp;
+      <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"  height="30px" />
+      &nbsp;&nbsp;
+      <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic" height="30px" />
+      &nbsp;&nbsp;
+      <a href="mailto:alnao@alnao.it">
+				<img src="https://img.shields.io/badge/Mail-alnao@alnao.it-blue" height="30px" />
+			</a>
+      &nbsp;&nbsp;
+      <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" rel="nofollow" target="_blank">
+        <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white"  height="30px" />
+      </a>
+
+</p>
 <p>
     <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
       <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/AWS_cert_pra.png" style="height:150px;">
@@ -13,12 +29,7 @@
       <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
     </a>
  </p>
- <p>
-      &nbsp;&nbsp;
-      <img src="http://ForTheBadge.com/images/badges/built-with-love.svg?style=plastic" />
-      &nbsp;&nbsp;
-      <img src="http://ForTheBadge.com/images/badges/built-by-developers.svg?style=plastic" />
-</p>
+
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
 <p>
       <a href="https://www.alnao.it/wordpress/aws/">
@@ -49,13 +60,5 @@
         <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white" />
       </a>
     </p><p>
-      <a href="https://github.com/alnao" target="_blank" rel="nofollow">
-        <img src="https://img.shields.io/badge/-Github-000?style=plastic&logo=Github&logoColor=white" style="max-width: 100%;">
-      </a>
-      <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" rel="nofollow" target="_blank">
-        <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white" style="max-width: 100%;">
-      </a>
-      <a href="mailto:alnao84@gmail.com" target="_blank" rel="nofollow">
-        <img src="https://img.shields.io/badge/Gmail-d14836?style=plastic&logo=Gmail&logoColor=white">
-      </a>
+
 </p>
