@@ -9,8 +9,8 @@
 <p>
     <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
       <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/AWS_cert_pra.png" style="height:150px;">
-      <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
       <img src="https://d1.awsstatic.com/training-and-certification/icons/training-badges/aws-training-badge-serverless-technology.a0d2d10c665985544d91af81aaf362e9d31a9116.png" style="height:150px;">
+      <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
     </a>
  </p>
  <p>
@@ -21,7 +21,6 @@
 </p>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
 <p>
-
       <a href="https://www.alnao.it/wordpress/aws/">
         <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black"/>
         <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white"/>
