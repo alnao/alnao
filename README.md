@@ -6,24 +6,22 @@
   </a>
 </p>
 -->
-<div style="display:flex;align-items: center;justify-content: space-between;">
-  <div>
-    <!--<a href="https://www.alnao.it/wordpress" target="_blank">
-      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2021/10/cropped-alnao_logo20211031-4.png" 
-        style="background-color:black;">
-    </a>-->
+<p>
     <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
+      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/AWS_cert_pra.png" style="height:150px;">
       <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
       <img src="https://d1.awsstatic.com/training-and-certification/icons/training-badges/aws-training-badge-serverless-technology.a0d2d10c665985544d91af81aaf362e9d31a9116.png" style="height:150px;">
     </a>
+ </p>
+ <p>
       &nbsp;&nbsp;
       <img src="http://ForTheBadge.com/images/badges/built-with-love.svg?style=plastic" />
       &nbsp;&nbsp;
       <img src="http://ForTheBadge.com/images/badges/built-by-developers.svg?style=plastic" />
-  </div>
+</p>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
-  <div style="text-align:right">
-    <p>
+<p>
+
       <a href="https://www.alnao.it/wordpress/aws/">
         <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black"/>
         <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white"/>
@@ -61,6 +59,4 @@
       <a href="mailto:alnao84@gmail.com" target="_blank" rel="nofollow">
         <img src="https://img.shields.io/badge/Gmail-d14836?style=plastic&logo=Gmail&logoColor=white">
       </a>
-    </p>
-  </div >
-</div >
+</p>
