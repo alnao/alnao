@@ -7,21 +7,23 @@
 </p>
 -->
  <p>
+   <a href="https://www.alnao.it/">
       <img src="https://img.shields.io/badge/alnao-.it-blue?logo=AWS%20Lambda&logoColor=yellow" height="50px" />
+   </a>
  </p>
  <p>
-      <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"   />
-      <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic" />
+      <a href="https://www.alnao.it/">
+        <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"   />
+        <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic" />
+      <a/>
       <a href="mailto:alnao@alnao.it">
 	<img src="https://img.shields.io/badge/Mail-alnao@alnao.it-blue?style=plastic" />
       </a>
       <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" rel="nofollow" target="_blank">
         <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white"   />
       </a>
-
 </p>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
-
 <p>
       <a href="https://www.alnao.it/wordpress/aws/">
         <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black"/>
