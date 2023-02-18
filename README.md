@@ -1,14 +1,7 @@
 <!-- # AlNao.it -->
-<!--
-<p align="center" style="background-color:black;">
-  <a href="https://www.alnao.it/">
-    <img alt="AlNaoIT" src="https://www.alnao.it/wordpress/wp-content/uploads/2021/10/cropped-alnao_logo20211031-4.png" />
-  </a>
-</p>
--->
  <p>
    <a href="https://www.alnao.it/">
-      <img src="https://img.shields.io/badge/alnao-.it-blue?logo=AWS%20Lambda&logoColor=yellow" height="50px" />
+      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/alnaoItlogo-1.png" height="50px" />
    </a>
  </p>
  <p>
