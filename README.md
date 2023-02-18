@@ -1,7 +1,7 @@
 <!-- # AlNao.it -->
  <p>
    <a href="https://www.alnao.it/">
-      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/alnaoItlogo-1.png" height="50px" />
+      <img src="https://img.shields.io/badge/alnao-.it-blue?logo=amazoncloudwatch&logoColor=A6C9E2" height="50px" />
    </a>
  </p>
  <p>
