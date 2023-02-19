@@ -1,4 +1,6 @@
-<!-- # AlNao.it -->
+Ciao ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif) Sono Alberto Nao
+=============================================================================================================================
+
  <p>
    <a href="https://www.alnao.it/">
       <img src="https://img.shields.io/badge/alnao-.it-blue?logo=amazoncloudwatch&logoColor=A6C9E2" height="50px" />
@@ -53,3 +55,5 @@
       <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
     </a>
  </p>
+
+	
