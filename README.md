@@ -49,10 +49,11 @@ Ciao ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9
       </a>
     </p>
 <p>
-    <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
-      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/AWS_cert_pra.png" style="height:150px;">
-      <img src="https://d1.awsstatic.com/training-and-certification/icons/training-badges/aws-training-badge-serverless-technology.a0d2d10c665985544d91af81aaf362e9d31a9116.png" style="height:150px;">
-      <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;">
+    <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">+
+      <img src="https://d1.awsstatic.com/training-and-certification/certification-badges/AWS-Certified-Developer-Associate_badge.5c083fa855fe82c1cf2d0c8b883c265ec72a17c0.png"  style="height:150px;"/>
+      <img src="https://d1.awsstatic.com/training-and-certification/icons/training-badges/aws-training-badge-serverless-technology.a0d2d10c665985544d91af81aaf362e9d31a9116.png" style="height:150px;"/>
+      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/AWS_cert_pra.png" style="height:150px;"/>
+      <img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;"/>
     </a>
  </p>
 
