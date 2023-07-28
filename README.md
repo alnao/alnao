@@ -7,31 +7,32 @@ Alberto Nao
    </a>
  </p>
  <p align="center">
-     <a href="https://www.alnao.it/">
-        <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"   />
-        <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic" />
-      <a/>
+     <!--<a href="https://www.alnao.it/">
+        <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"  style="height:28px;"   />
+        <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic"  style="height:28px;" />
+      <a/>-->
       <a href="mailto:alnao@alnao.it">
-	<img src="https://img.shields.io/badge/Mail-alnao@alnao.it-blue?style=plastic" />
+	<img src="https://img.shields.io/badge/Mail-alnao@alnao.it-blue?style=plastic"  style="height:28px;" />
       </a>
       <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" rel="nofollow" target="_blank">
-        <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white"   />
+        <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white"   style="height:28px;"  />
       </a>
 </p>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
 <p align="center">
       <a href="https://www.alnao.it/aws/">
-        <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black"/>
-        <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white"/>
+        <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:28px;" />
+        <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:28px;" />
       </a>
       <a href="https://www.alnao.it/debian/">
-        <img src="https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=plastic&logoColor=black">
-        <img src="https://img.shields.io/badge/Debian-A81D33?style=plastic&logo=debian&logoColor=white"/>
+        <img src="https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=plastic&logoColor=black"  style="height:28px;"  />
+        <img src="https://img.shields.io/badge/Debian-A81D33?style=plastic&logo=debian&logoColor=white" style="height:28px;" />
       </a>
       <a href="https://www.alnao.it/javaee/">
-        <img src="https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=java&logoColor=white"/>
-        <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white" />
+        <img src="https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=java&logoColor=white"  style="height:28px;" />
+        <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white"  style="height:28px;" />
       </a>
+<!--
       <a href="https://www.alnao.it/wordpresss/">
         <img src="https://img.shields.io/badge/Wordpress-21759B?style=plastic&logo=wordpress&logoColor=white" />
       </a>
@@ -39,14 +40,15 @@ Alberto Nao
         <img src="https://img.shields.io/badge/CSS-239120?&style=plastic&logo=css3&logoColor=white" />
         <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=plastic&logo=bootstrap&logoColor=white" />
       </a>
+-->
       <a href="https://www.alnao.it/angular-ionic/">
-        <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=white" />
-        <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white" />
+        <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=white"  style="height:28px;" />
+        <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:28px;"  />
       </a>
 </p>
 <hr />
 <p align="center">
-<img decoding="async" src="https://img.shields.io/badge/Certified and training badge-%23FF9900?style=plastic&amp;logo=AmazonAWS&amp;logoColor=black" style="height:28px;">
+<img decoding="async" src="https://img.shields.io/badge/Certified and Knowledge badge-%23FF9900?style=plastic&amp;logo=AmazonAWS&amp;logoColor=black" style="height:28px;">
 <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow">
 <img src="https://img.shields.io/badge/Verificated by-Credly-005850?style=plastic&amp;logo=credly&amp;logoColor=white" style="height:28px;">
 </a>
