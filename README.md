@@ -41,7 +41,7 @@ Alberto Nao
 -->
       <a href="https://www.alnao.it/angular-ionic/">
         <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=white"  style="height:28px;" />
-        <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:28px;"  />
+        <!--<img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:28px;"  />-->
       </a>
 </p>
 <hr />
