@@ -1,29 +1,32 @@
 <!--Ciao ![](https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif) Sono--> 
 Alberto Nao
 =============================================================================================================================
+
+<p align="center">
    <a href="https://www.alnao.it/">
-      <img src="https://img.shields.io/badge/alnao-.it-blue?logo=amazoncloudwatch&logoColor=A6C9E2" height="65px;" align="left" />
+      <img src="https://img.shields.io/badge/alnao-.it-blue?logo=amazoncloudwatch&logoColor=A6C9E2" height="65px;"  />
    </a>
-<p align="right">
+</p>
+<p align="center">
      <!--<a href="https://www.alnao.it/">
         <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"  style="height:28px;"   />
         <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic"  style="height:28px;" />
       <a/>-->
       <a href="mailto:alnao@alnao.it">
-	<img src="https://img.shields.io/badge/Mail-alnao@alnao.it-blue?style=plastic"  style="height:28px;"/>
+	<img src="https://img.shields.io/badge/EMail-alnao@alnao.it-blue?style=plastic"  style="height:28px;"/>
       </a>
       <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" rel="nofollow" target="_blank">
         <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white"  style="height:28px;"  />
       </a>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
 </p>
-<p align="right">
+<p align="center">
       <a href="https://www.alnao.it/aws/">
         <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:28px;" />
-        <!--<img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:28px;" />-->
+        <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:28px;" />
       </a>
       <a href="https://www.alnao.it/debian/">
-        <!--<img src="https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=plastic&logoColor=black"  style="height:28px;"  />-->
+        <img src="https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=plastic&logoColor=black"  style="height:28px;"  />
         <img src="https://img.shields.io/badge/Debian-A81D33?style=plastic&logo=debian&logoColor=white" style="height:28px;" />
       </a>
       <a href="https://www.alnao.it/javaee/">
@@ -40,8 +43,8 @@ Alberto Nao
       </a>
 -->
       <a href="https://www.alnao.it/angular-ionic/">
-        <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=white"  style="height:28px;" />
-        <!--<img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:28px;"  />-->
+        <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:28px;" />
+        <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:28px;"  />
       </a>
 </p>
 <hr />
