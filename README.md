@@ -51,7 +51,7 @@
 <p align="center">
 <img decoding="async" src="https://img.shields.io/badge/Certified-%23FF9900?style=plastic&amp;logo=AmazonAWS&amp;logoColor=black" style="height:35px;">
 <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow">
-<img src="https://img.shields.io/badge/-Credly-005850?style=plastic&amp;logo=credly&amp;logoColor=white" style="height:28px;">
+<img src="https://img.shields.io/badge/-Credly-005850?style=plastic&amp;logo=credly&amp;logoColor=white" style="height:35px;">
 </a>
 <br />
 <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
