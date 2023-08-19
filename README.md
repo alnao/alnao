@@ -9,8 +9,8 @@
 </p>
 <p align="center">
      <!--<a href="https://www.alnao.it/">
-        <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"  style="height:28px;"   />
-        <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic"  style="height:28px;" />
+        <img src="https://img.shields.io/badge/build%20with-%E2%9D%A4%EF%B8%8F-red?style=plastic"  style="height:35px;"   />
+        <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic"  style="height:35px;" />
       <a/>-->
       <a href="mailto:alnao@alnao.it">
 	<img src="https://img.shields.io/badge/EMail-alnao@alnao.it-blue?style=plastic"  style="height:28px;"/>
@@ -22,16 +22,16 @@
 </p>
 <p align="center">
       <a href="https://www.alnao.it/aws/">
-        <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:28px;" />
-        <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:28px;" />
+        <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:35px;" />
+        <!--<img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:28px;" />-->
       </a>
       <a href="https://www.alnao.it/debian/">
-        <img src="https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=plastic&logoColor=black"  style="height:28px;"  />
-        <img src="https://img.shields.io/badge/Debian-A81D33?style=plastic&logo=debian&logoColor=white" style="height:28px;" />
+        <!--<img src="https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=plastic&logoColor=black"  style="height:28px;"  />-->
+        <img src="https://img.shields.io/badge/Debian-A81D33?style=plastic&logo=debian&logoColor=white" style="height:35px;" />
       </a>
       <a href="https://www.alnao.it/javaee/">
-        <img src="https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=java&logoColor=white"  style="height:28px;" />
-        <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white"  style="height:28px;" />
+        <img src="https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=java&logoColor=white"  style="height:35px;" />
+        <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white"  style="height:35px;" />
       </a>
 <!--
       <a href="https://www.alnao.it/wordpresss/">
@@ -43,8 +43,8 @@
       </a>
 -->
       <a href="https://www.alnao.it/angular-ionic/">
-        <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:28px;" />
-        <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:28px;"  />
+        <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:35px;" />
+        <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:35px;"  />
       </a>
 </p>
 <hr />
