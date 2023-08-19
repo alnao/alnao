@@ -13,10 +13,10 @@
         <img src="https://img.shields.io/badge/build%20by-developer%3C/%3E-red?style=plastic"  style="height:35px;" />
       <a/>-->
       <a href="mailto:alnao@alnao.it">
-	<img src="https://img.shields.io/badge/EMail-alnao@alnao.it-blue?style=plastic"  style="height:28px;"/>
+	<img src="https://img.shields.io/badge/EMail-alnao@alnao.it-blue?style=plastic"  style="height:35px;"/>
       </a>
       <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" rel="nofollow" target="_blank">
-        <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white"  style="height:28px;"  />
+        <img src="https://img.shields.io/badge/-LinkedIn-blue?style=plastic&logo=Linkedin&logoColor=white"  style="height:35px;"  />
       </a>
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
 </p>
@@ -49,9 +49,9 @@
 </p>
 <hr />
 <p align="center">
-<img decoding="async" src="https://img.shields.io/badge/Certified and Knowledge badge-%23FF9900?style=plastic&amp;logo=AmazonAWS&amp;logoColor=black" style="height:28px;">
+<img decoding="async" src="https://img.shields.io/badge/Certified-%23FF9900?style=plastic&amp;logo=AmazonAWS&amp;logoColor=black" style="height:35px;">
 <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow">
-<img src="https://img.shields.io/badge/Verificated by-Credly-005850?style=plastic&amp;logo=credly&amp;logoColor=white" style="height:28px;">
+<img src="https://img.shields.io/badge/-Credly-005850?style=plastic&amp;logo=credly&amp;logoColor=white" style="height:28px;">
 </a>
 <br />
 <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
