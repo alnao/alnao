@@ -65,7 +65,7 @@
  </p>
 <hr />
 <p align="center">
-<h3 align="left">Public project</h3>
+<h3 align="left">Public projects</h3>
 <img align="right" alt="top-langauges" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
 
 - <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:22px;" /> [AwsAlNaoConsole](https://github.com/alnao/AwsAlNaoConsole) & [AWSCloudFormationExamples](https://github.com/alnao/AWSCloudFormationExamples)
