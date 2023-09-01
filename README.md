@@ -63,5 +63,15 @@
       <!--<img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;"/>-->
     </a>
  </p>
+<hr />
+<p align="center">
+<h3 align="left">Public project</h3>
+<img align="right" alt="top-langauges" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
 
-	
+- <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:22px;" /> [AwsAlNaoConsole](https://github.com/alnao/AwsAlNaoConsole) & [AWSCloudFormationExamples](https://github.com/alnao/AWSCloudFormationExamples)
+- <img src="https://img.shields.io/badge/Lambda-%23FF9900?style=plastic&logo=AWSlambda&logoColor=black" style="height:22px;" /> [AwsLambdaExamples](https://github.com/alnao/AwsLambdaExamples)
+- <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white"  style="height:22px;" /> [JavaSpringBootExample](https://github.com/alnao/JavaSpringBootExample)
+- <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:22px;" /> [IonicReduxNxWorkspaceExample](https://github.com/alnao/IonicReduxNxWorkspaceExample)
+- <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:22px;" /> [AngularReactNodeExamples](https://github.com/alnao/AngularReactNodeExamples)
+- <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:22px;" /> [PythonExamples](https://github.com/alnao/PythonExamples)
+<hr />
