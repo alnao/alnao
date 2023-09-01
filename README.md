@@ -75,10 +75,8 @@
 - <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:22px;" /> [AngularReactNodeExamples](https://github.com/alnao/AngularReactNodeExamples)
 - <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:22px;" /> [PythonExamples](https://github.com/alnao/PythonExamples)
 <hr />
-## License
-**Free Software, Hell Yeah!**
-See [MIT](https://it.wikipedia.org/wiki/Licenza_MIT)
-
+<h3 align="left">License</h3>
+<b></b>Free Software, Hell Yeah!</b>See <a href="https://it.wikipedia.org/wiki/Licenza_MIT">MIT</a>
 
 Copyright (c) 2023 AlNao.it
 
