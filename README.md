@@ -74,4 +74,3 @@
 - <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:22px;" /> [IonicReduxNxWorkspaceExample](https://github.com/alnao/IonicReduxNxWorkspaceExample)
 - <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:22px;" /> [AngularReactNodeExamples](https://github.com/alnao/AngularReactNodeExamples)
 - <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:22px;" /> [PythonExamples](https://github.com/alnao/PythonExamples)
-- 
