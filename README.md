@@ -66,8 +66,8 @@
   </a>
 </p>
 <hr />
-<p align="center">
-  <h3 align="left">Public projects.  <a href="https://it.wikipedia.org/wiki/Licenza_MIT"><img src="https://img.shields.io/badge/License-MIT-gold.svg" style="height:22px;" ></a> <i>Free Software!</i> See</h3>
+<p align="center" style="vertical-align: middle;">
+  <h3 align="left" style="vertical-align: middle;">Public projects.  <a href="https://it.wikipedia.org/wiki/Licenza_MIT"><img src="https://img.shields.io/badge/License-MIT-gold.svg" style="height:22px;" style="vertical-align: middle;" ></a> <i>Free Software!</i></h3>
   <img align="right" alt="top-langauges" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
 
 - <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:22px;" /> [AwsAlNaoConsole](https://github.com/alnao/AwsAlNaoConsole) & [AWSCloudFormationExamples](https://github.com/alnao/AWSCloudFormationExamples)
@@ -77,3 +77,4 @@
 - <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:22px;" /> [AngularReactNodeExamples](https://github.com/alnao/AngularReactNodeExamples)
 - <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:22px;" /> [PythonExamples](https://github.com/alnao/PythonExamples)
 </p>
+
