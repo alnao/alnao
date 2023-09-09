@@ -49,12 +49,13 @@
 </p>
 <hr />
 <p align="center">
-<img decoding="async" src="https://img.shields.io/badge/Certified-%23FF9900?style=plastic&amp;logo=AmazonAWS&amp;logoColor=black" style="height:35px;">
-<a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow">
-<img src="https://img.shields.io/badge/-Credly-005850?style=plastic&amp;logo=credly&amp;logoColor=white" style="height:35px;">
-</a>
-<br />
-<a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
+ <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow">
+  <img decoding="async" src="https://img.shields.io/badge/Certified-%23FF9900?style=plastic&amp;logo=AmazonAWS&amp;logoColor=black" style="height:35px;" />
+  <img src="https://img.shields.io/badge/-Credly-005850?style=plastic&amp;logo=credly&amp;logoColor=white" style="height:35px;" />
+ </a>
+</p>
+<p align="center">
+  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
       <img src="https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png"  style="height:150px;"/>
       <img src="https://images.credly.com/size/340x340/images/519a6dba-f145-4c1a-85a2-1d173d6898d9/image.png"  style="height:150px;"/>
       <img src="https://images.credly.com/size/340x340/images/b9feab85-1a43-4f6c-99a5-631b88d5461b/image.png"  style="height:150px;"/>
@@ -62,12 +63,12 @@
       <!--<img src="https://images.credly.com/size/340x340/images/ec621e2a-c8f0-4459-806c-ae11829d372a/image.png" style="height:150px;"/>-->
       <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/AWS_cert_pra.png" style="height:150px;"/>
       <!--<img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;"/>-->
-    </a>
- </p>
+  </a>
+</p>
 <hr />
 <p align="center">
-<h3 align="left">Public projects</h3>
-<img align="right" alt="top-langauges" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
+  <h3 align="left">Public projects. Free Software! See [MIT License](https://it.wikipedia.org/wiki/Licenza_MIT)</a></h3>
+  <img align="right" alt="top-langauges" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
 
 - <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:22px;" /> [AwsAlNaoConsole](https://github.com/alnao/AwsAlNaoConsole) & [AWSCloudFormationExamples](https://github.com/alnao/AWSCloudFormationExamples)
 - <img src="https://img.shields.io/badge/Lambda-%23FF9900?style=plastic&logo=AWSlambda&logoColor=black" style="height:22px;" /> [AwsLambdaExamples](https://github.com/alnao/AwsLambdaExamples)
@@ -75,3 +76,4 @@
 - <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:22px;" /> [IonicReduxNxWorkspaceExample](https://github.com/alnao/IonicReduxNxWorkspaceExample)
 - <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:22px;" /> [AngularReactNodeExamples](https://github.com/alnao/AngularReactNodeExamples)
 - <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:22px;" /> [PythonExamples](https://github.com/alnao/PythonExamples)
+</p>
