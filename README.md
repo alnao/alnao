@@ -73,9 +73,9 @@ Public projects <a href="https://it.wikipedia.org/wiki/Licenza_MIT"  valign="mid
 
 - <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:22px;"  valign="middle" /> [AwsAlNaoConsole](https://github.com/alnao/AwsAlNaoConsole) & [AWSCloudFormationExamples](https://github.com/alnao/AWSCloudFormationExamples)
 - <img src="https://img.shields.io/badge/Lambda-%23FF9900?style=plastic&logo=AWSlambda&logoColor=black" style="height:22px;"  valign="middle" /> [AwsLambdaExamples](https://github.com/alnao/AwsLambdaExamples)
-- <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white"  style="height:22px;"   valign="middle"/> [JavaSpringBootExample](https://github.com/alnao/JavaSpringBootExample)
-- <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:22px;"  valign="middle"/> [IonicReduxNxWorkspaceExample](https://github.com/alnao/IonicReduxNxWorkspaceExample)
-- <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:22px;"  valign="middle" /> [AngularReactNodeExamples](https://github.com/alnao/AngularReactNodeExamples)
+- <img src="https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=openjdk&logoColor=black"  style="height:22px;"   valign="middle" /> <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white"  style="height:22px;"   valign="middle"/> [JavaSpringBootExample](https://github.com/alnao/JavaSpringBootExample)
+- <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:22px;"  valign="middle"/> <img src="https://img.shields.io/badge/Redux-764abc?style=plastic&logo=redux&logoColor=white" style="height:22px;"  valign="middle" /> [IonicReduxNxWorkspaceExample](https://github.com/alnao/IonicReduxNxWorkspaceExample)
+- <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:22px;"  valign="middle" /> <img src="https://img.shields.io/badge/React-61DBFB?style=plastic&logo=react&logoColor=white"  style="height:22px;"  valign="middle"  /> [AngularReactNodeExamples](https://github.com/alnao/AngularReactNodeExamples)
 - <img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:22px;" valign="middle" /> [PythonExamples](https://github.com/alnao/PythonExamples)
 </p>
 
