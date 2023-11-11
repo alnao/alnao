@@ -21,15 +21,15 @@
   <!--badge see https://dev.to/envoy_/150-badges-for-github-pnk -->
 </p>
 <p align="center">
-      <a href="https://www.alnao.it/aws/">
+      <a href="https://www.alnao.it/aws/" style="text-decoration: none !important;">
         <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:35px;" />
         <!--<img src="https://img.shields.io/badge/Python-3766AB?style=plastic&logo=Python&logoColor=white" style="height:28px;" />-->
       </a>
-      <a href="https://www.alnao.it/debian/">
+      <a href="https://www.alnao.it/debian/" style="text-decoration: none !important;">
         <!--<img src="https://img.shields.io/badge/-Linux-6C6694.svg?logo=linux&style=plastic&logoColor=black"  style="height:28px;"  />-->
         <img src="https://img.shields.io/badge/Debian-A81D33?style=plastic&logo=debian&logoColor=white" style="height:35px;" />
       </a>
-      <a href="https://www.alnao.it/javaee/">
+      <a href="https://www.alnao.it/javaee/" style="text-decoration: none !important;">
         <img src="https://img.shields.io/badge/Java-ED8B00?style=plastic&logo=java&logoColor=white"  style="height:35px;" />
         <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=plastic&logo=SpringBoot&logoColor=white"  style="height:35px;" />
       </a>
@@ -42,7 +42,7 @@
         <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=plastic&logo=bootstrap&logoColor=white" />
       </a>
 -->
-      <a href="https://www.alnao.it/angular-ionic/">
+      <a href="https://www.alnao.it/angular-ionic/" style="text-decoration: none !important;">
         <img src="https://img.shields.io/badge/Angular-DD0031?style=plastic&logo=angular&logoColor=angular"  style="height:35px;" />
         <img src="https://img.shields.io/badge/Ionic-3880FF?style=plastic&logo=ionic&logoColor=white"  style="height:35px;"  />
       </a>
@@ -55,7 +55,7 @@
  </a>
 </p>
 <p align="center">
-  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;">
+  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank" rel="nofollow" style="display:inline;margin-left:15px;text-decoration: none !important;">
       <img src="https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png"  style="height:150px;"/>
       <img src="https://images.credly.com/size/340x340/images/519a6dba-f145-4c1a-85a2-1d173d6898d9/image.png"  style="height:150px;"/>
       <img src="https://images.credly.com/size/340x340/images/b9feab85-1a43-4f6c-99a5-631b88d5461b/image.png"  style="height:150px;"/>
@@ -68,7 +68,7 @@
 <hr />
 <p align="center"  valign="middle">
   <h3 align="left" >
-Public projects <a href="https://it.wikipedia.org/wiki/Licenza_MIT"  valign="middle"><img src="https://img.shields.io/badge/License-MIT-gold.svg" style="height:22px;"  valign="middle"></a> <i>Free Software!</i></h3>
+Public projects <a href="https://it.wikipedia.org/wiki/GNU_General_Public_License"  valign="middle"><img src="https://img.shields.io/badge/License-GNU-blue" style="height:22px;"  valign="middle"></a> <i>Free Software!</i></h3>
   <img align="right" alt="top-langauges" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
 
 - <img src="https://img.shields.io/badge/AWS-%23FF9900?style=plastic&logo=AmazonAWS&logoColor=black" style="height:22px;"  valign="middle" /> [AwsAlNaoConsole](https://github.com/alnao/AwsAlNaoConsole) & [AWSCloudFormationExamples](https://github.com/alnao/AWSCloudFormationExamples)
