@@ -19,7 +19,7 @@
       <img src="https://images.credly.com/size/340x340/images/b9feab85-1a43-4f6c-99a5-631b88d5461b/image.png"  style="height:150px;"/>
       <img src="https://images.credly.com/size/340x340/images/e07c6cc4-b737-4d7e-8ce8-66b6b7a60367/image.png" style="height:150px;"/>
       <!--<img src="https://images.credly.com/size/340x340/images/ec621e2a-c8f0-4459-806c-ae11829d372a/image.png" style="height:150px;"/>-->
-      <img src="https://www.alnao.it/wordpress/wp-content/uploads/2023/02/AWS_cert_pra.png" style="height:150px;"/>
+      <img src="https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" style="height:150px;"/>
       <!--<img src="https://images.credly.com/size/340x340/images/2784d0d8-327c-406f-971e-9f0e15097003/image.png" style="height:150px;"/>-->
   </a>
 </p>
