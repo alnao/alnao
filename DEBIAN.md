@@ -1,3 +1,8 @@
+|<h2>Debian 12 Handbook</h2>|*by AlNao*| <img src="https://www.debian.org/Pics/debian-logo-1024x576.png" width="200"> | 
+| ----- | ----- | ----- | 
+
+
+
 # Indice
 - [Introduzione a Debian](#Introduzione-a-Debian)
 - [Come installare Debian 12](#Come-installare-Debian-12)
@@ -5,16 +10,24 @@
 - [Come gestire i pacchetti Debian e il pannello di controllo](#Come-gestire-i-pacchetti-Debian-e-il-pannello-di-controllo)
 - [Come gestire i desktop e le applicazioni](#Come-gestire-i-desktop-e-le-applicazioni)
 - [Come gestire i demoni di Debian](#Come-gestire-i-demoni-di-Debian)
-- [Programmazione in Debian parte 1](#Programmazione-in-Debian-parte-1)
-- [Programmazione in Debian parte 2](#Programmazione-in-Debian-parte-2)
-- [Programmazione in Debian parte 3](#Programmazione-in-Debian-parte-3)
+- [Programmazione in Debian](#Programmazione-in-Debian-parte-1)
+  - [Parte 2](#Programmazione-in-Debian-parte-2)
+  - [Parte 3](#Programmazione-in-Debian-parte-3)
 - [I comandi comuni della shell](#I-comandi-comuni-della-shell)
-- [Comandi per il controllo del sistema](#Comandi-per-il-controllo-del-sistema)
+  - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
+  - [Operazioni su files](#Operazioni-su-files)
+  - [Il bootloader Grub](#Il-bootloader-Grub)
+  - [Gestione del gestino](#Gestione-del-gestino)
+  - [Il comando Sudo](#Il-comando-Sudo)
+  - [Comandi per il controllo del sistema](#Comandi-per-il-controllo-del-sistema)
+  - [Configurazione di rete](#Configurazione-di-rete)
+  - [Gestione dei backup](#Gestione-dei-backup)
+  - [Gestione delle macchine virtuali](#Gestione-delle-macchine-virtuali)
 
 # Introduzione a Debian
 In questa pagina sono elencati tutti gli articoli riguardo a GNU Linux Debian alla versione 12 chiamata **Bookworm**.
 
-E' garantito il permesso di copiare, distribuire e/o modificare questo documento in base ai termini della GNU Free Documentation License, Versione 1.2 o ogni versione successiva pubblicata dalla Free Software Foundation. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation.
+*E' garantito il permesso di copiare, distribuire e/o modificare questo documento in base ai termini della GNU Free Documentation License, Versione 1.2 o ogni versione successiva pubblicata dalla Free Software Foundation. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation.*
 
 Questo manuale viene aggiornato dal 2006, anno di scrittura della prima versione della mitica Debian 3.1 Sarge, ogni due anni esce una versione nuova del sistema operativo Debian, questo comporta una revisione completa di tutti gli argomenti trattati. E' in corso l'aggiornamento degli articoli alla nuova versione uscita nell'estate 2023 e a breve sarà possibile scaricare la versione PDF del AlNao Debian HandBook con tutti gli articoli. Tutti gli articoli completi e la versione di questo manuale della versione 11 sono disponibili nella vecchia versione del sito che rimarrà disponibile finché tutti gli articoli saranno aggiornati in questa pagina.
 
@@ -66,8 +79,9 @@ Il programma di installazione prevede alcuni passi che sono riassunti in:
 - configurazione di rete: se è stata avviata la procedura avanzata viene richiesto l'inserimento degli indirizzi di rete (Indirizzo IP, Subnet Mask e Gateway), se si è scelta la versione grafica standard questo passo è saltato in quanto vengono inseriti dei valori di default grazie al DHCP se presente.
 - password root: password principale dell'utente root
 - nuovo utente: nome e password del primo utente non amministratore, è "obbligatorio" creare un utente e non usare mai root se non strettamente necessario
-- impostazione dischi: l'utente deve selezionare il disco dove installare il sistema operativo, se si dispone di un sistema nuovo si può usare l'opzione automatica, se invece si dispone di dischi con dei dati già presenti o altri sistemi operativi è consigliato usare la procedura manuale e bisogna selezionare il disco dove installare il sistema operativo (partizione indicata con / ), alla fine il programma di installazione chiede una verifica e una ulteriore conferma. Successivamente alla conferma delle partizioni il programma prepara le partizioni formattandole e copiando il sistema base. <span style="color:orange;">Attenzione: le operazione di creazione e modifica delle partizioni del vostro disco HardDisk potrebbe causare la perdita dei dati all'interno del vostro sistema, è sempre raccomandato eseguire una copia backup dei dati prima di eseguire l'installazione di Debian e la creazione delle partizioni dedicate.</span>
-- mirror rete: il programma permette di attivare gli aggiornamenti automatici, selezionando questa opzione il sistema installato risulterà aggiornato alla versione più recente, la scelta consigliata è di attivare i mirror di rete selezionando quello ufficiale che viene proposto di default, si può notare che successivamente verrà installato il Kernel alla versione "linux-image 6.10"
+- impostazione dischi: l'utente deve selezionare il disco dove installare il sistema operativo, se si dispone di un sistema nuovo si può usare l'opzione automatica, se invece si dispone di dischi con dei dati già presenti o altri sistemi operativi è consigliato usare la procedura manuale e bisogna selezionare il disco dove installare il sistema operativo (partizione indicata con / ), alla fine il programma di installazione chiede una verifica e una ulteriore conferma. Successivamente alla conferma delle partizioni il programma prepara le partizioni formattandole e copiando il sistema base. 
+  - <span style="color:orange;">Attenzione: le operazione di creazione e modifica delle partizioni del vostro disco HardDisk potrebbe causare la perdita dei dati all'interno del vostro sistema, è sempre raccomandato eseguire una copia backup dei dati prima di eseguire l'installazione di Debian e la creazione delle partizioni dedicate.</span>
+- mirror rete: il programma permette di attivare gli aggiornamenti automatici, selezionando questa opzione il sistema installato risulterà aggiornato alla versione più recente, la scelta consigliata è di attivare i mirror di rete selezionando quello ufficiale che viene proposto di default, si può notare che successivamente verrà installato il Kernel alla versione **linux-image 6.1**
 - raccolta dati: il programma permette di attivare un programma statistico con il quale Debian raccoglie le informazioni di utilizzo del sistema, per questioni di privacy è sconsigliato attivare questa opzione
 - selezione software: in questo passo l'utente sceglie quale Desktop installare nel sistema, è consigliato installare almeno i tre sistemi base (Gnome, Kde, Xfce) così l'utente può provare il più adatto alle esigenze, dopo questa scelta vengono installate tutte le applicazioni dei rispettivi sistemi selezionati (selezionando i tre principali saranno più di 2381 pacchetti da installare). Nella selezione è sconsigliato attivare l'installazione del web server e del server ssh.
 - gestore del login: di default è selezionato il gestore "GDM LightDM", è sconsigliato modificare questa opzione se non strettamente necessario
@@ -584,7 +598,7 @@ che indica al kernel che lo script è direttamente eseguibile, e lo si fa immedi
 ```
 #!/bin/sh
 ```
-In questo tipo di script, oltre a tutti i comandi della shell, è possibile usare le variabili utilizzando il suffisso $ e con i simboli $# si indicano i parametri arrivati da riga di comando oppure $- indicano le opzioni della shell oppure $$ indicano il pid del processo, per l'elenco completo delle variabili disponibili è possibile cercare nelle varie guide on-line. Per interagire da riga di comando l'utente si può utilizzare il comando read per permettere all'utente di inserire dei valori da tastiera, per esempio un semplice programma:
+In questo tipo di script, oltre a tutti i comandi della shell, è possibile usare le variabili utilizzando il suffisso $ e con i simboli ```$#``` si indicano i parametri arrivati da riga di comando oppure $- indicano le opzioni della shell oppure $$ indicano il pid del processo, per l'elenco completo delle variabili disponibili è possibile cercare nelle varie guide on-line. Per interagire da riga di comando l'utente si può utilizzare il comando read per permettere all'utente di inserire dei valori da tastiera, per esempio un semplice programma:
 ```
 #!/bin/sh
 echo "Inserisci una frase \c"
@@ -1078,7 +1092,13 @@ Per la installazione del demone dei Docker basta installare i pacchetti omonimi:
 # systemctl status docker
 # systemctl start docker
 ```
-e poi si può analizzare il contenuto del demone con il comando:
+e per abilitare un utente ad usare e gestire il demone si devono eseguire i comandi
+```
+# usermod -aG docker <utente>
+# newgrp docker
+# chmod 666 /var/run/docker.sock
+```
+Si può analizzare le immagini docker in esecuzione con il comando:
 ```
 # docker ps
 ```
@@ -1157,7 +1177,9 @@ La shell bash mette a disposizione una serie di scorciatoie che è possibile usa
 - ```ALT-U``` trasforma in maiuscolo la parola su cui si trova il cursore (U sta per uppercase)
 - ```ALT-L``` trasforma in minuscolo la parola su cui si trova il cursore (L sta per lowercase)
 
-Nei sistemi basati su GNU Linux, tutte le shell hanno un path base spesso detto semplicemente path utilizzato per abbreviare i comandi ed evitare all'utente di dover inserire il path base ogni volta che esegue un comando; per esempio il comando cp, utilizzato per copiare files o cartelle, si trova quasi sempre nella cartella ```/bin/``` e, per evitare che l'utente inserisca il path ogni volta, viene impostato nel path base la cartella bin così la shell cerca i comandi inseriti dall'utente anche in quella cartella. In poche parole il path base è l'elenco delle cartelle dove la shell deve cercare un comando inserito dall'utente, questo elenco è modificabile e personalizzabile: un utente può aggiungere e togliere cartelle da questo elenco visto che questo valore è salvato in una variabile d'ambiente chiamata
+## Configurazione del Path e alias
+
+Nei sistemi basati su GNU Linux, tutte le shell hanno un **path** base spesso detto semplicemente path utilizzato per abbreviare i comandi ed evitare all'utente di dover inserire il path base ogni volta che esegue un comando; per esempio il comando cp, utilizzato per copiare files o cartelle, si trova quasi sempre nella cartella ```/bin/``` e, per evitare che l'utente inserisca il path ogni volta, viene impostato nel path base la cartella bin così la shell cerca i comandi inseriti dall'utente anche in quella cartella. In poche parole il path base è l'elenco delle cartelle dove la shell deve cercare un comando inserito dall'utente, questo elenco è modificabile e personalizzabile: un utente può aggiungere e togliere cartelle da questo elenco visto che questo valore è salvato in una variabile d'ambiente chiamata
 ```
 $PATH
 ```
@@ -1194,6 +1216,8 @@ alias cancella="rm -fr /tmp/* "
 ```
 dopo aver salvato il file, basterà che scriviate sul terminale il nuovo alias affinché venga eseguito il comando, si può utilizzare questa semplice procedura potete crearvi tutti i comandi che vi servono, comprese alias che richiamino script sh oppure programmi eseguibili non standard della shell bash.
 
+## Operazioni su files
+
 Esistono dei comandi specifici per ogni esigenza: se è essere necessario rinominare un gruppo di file dentro una cartella specifica, per farlo è possibile con uno semplice script per la shell Bash per evitare di dover ripetere l'operazione per ogni file, per esempio per modificare l’estensione di tutti i file si può usare:
 ```
 $ for i in *.from; do mv $i $(basename $i .from).to; done
@@ -1214,7 +1238,30 @@ $ mmv '*.ps' '#1.eps'
 ```
 per rinominare tutti i file da .ps a .eps, per maggiori informazioni e una guida completa potete vedere il comando man di mmv. Il metodo più semplice rimangono i programmi di gestione file del desktop che tutti quanti usano mmv ma basta un semplice click per eseguire il comando, è possibile provare in Dolphin, Konqueror, Total Commander o qualsiasi altro filemanager presente nel sistema Debian.
 
-Durante l'installazione al passo Copia del sistema base e impostazioni finali è stato installato nel proprio sistema il sistema Grub, questo è il componente della piattaforma GNU Linux che avvia il sistema operativo all'accensione del sistema: dopo l'accensione infatti compare con una schermata che permette di avviare il sistema GNU Linux in diverse modalità ed eventualmente sistemi operativi diversi se sono installate diverse versioni del KernelLinux o altri sistemi operativi, un utente non esperto deve evitare di eseguire modifiche lasciando i valori di default ma un utente più esperto potrà avviare il sistema ottimizzato a seconda delle proprie esigenze.
+## Manipolazione video
+Per la manipolazione di file video si possono usare diversi comandi, il principale è **ffmeg** che permette di manipolare file video da riga di comando con una sintassi molto complessa, si rimanda al sito ufficiale per tutti i dettagli e l'elenco di tutte le funzionalità messe a disposizione da questo tool.
+Le principali operazioni disponibili sono
+- Ruotare un video (per esempio se ripreso in verticale)
+  ```		
+  ffmpeg -i input.mp4 -vf "rotate=45*(PI/180)" output.mp4
+  ```
+- Tagliare un video da un punto ad un altro 
+  ```
+  ffmpeg -i input.mkv -ss 00:00:00 -t 00:02:30 -acodec copy -vcodec copy output.mkv
+  ```
+- Unire più files in uno unico (con questo modo i video sorgenti possono avere dimensioni e risoluzioni diverse, convertendo tutto in MP4 poi in TS e poi unendoli):
+	```
+	ffmpeg -i file1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt1.ts
+	ffmpeg -i file2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt2.ts
+	ffmpeg -i file3.ogv -vcodec libx264 "file3.mp4"
+	ffmpeg -i file3.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt3.ts
+	cat fileIntermediate3.ts  fileIntermediate1.ts fileIntermediate2.ts > output.ts
+	ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
+  ```
+
+## Il bootloader Grub
+
+Durante l'installazione al passo Copia del sistema base e impostazioni finali è stato installato nel proprio sistema il sistema **Grub**, questo è il componente della piattaforma GNU Linux che avvia il sistema operativo all'accensione del sistema: dopo l'accensione infatti compare con una schermata che permette di avviare il sistema GNU Linux in diverse modalità ed eventualmente sistemi operativi diversi se sono installate diverse versioni del KernelLinux o altri sistemi operativi, un utente non esperto deve evitare di eseguire modifiche lasciando i valori di default ma un utente più esperto potrà avviare il sistema ottimizzato a seconda delle proprie esigenze.
 
 New grub theme for debian 12! So hyped for debian 12 "bookworm"! : r/debian
 Questo pacchetto è importante perché permette di installare più sistemi operativi nello stesso sistema e poi scegliere quale avviare al momento dell'accensione (chiamata appunto boot del sistema oppure bootloader), in tutti gli altri sistemi operativi (come MS Windows e MacOX) questo componente non è presente per questo un utente non abituato a Grub non riesce a capirne l'utilità, è persino possibile installare più versioni di Debian o diverse distribuzioni nel sistema e poi gestirne l'avvio di sistemi operativi con Grub. Per gli utenti Debian di oggi, Grub viene installato durante la fase di installazione del sistema base e viene auto-configurato quindi l'utente non deve inserire nessuna configurazione: l'auto-configurazione rileva la presenza di altri sistemi operativi e li inserisce nell'elenco di quelli che Grub può avviare, ovviamente se il sistema operativo è stato installato dopo l'installazione di Grub bisogna rilanciarne la configurazione.
@@ -1229,7 +1276,9 @@ ma non bisogna MAI modificarlo a mano visto che ci sono una serie di comandi che
 ```
 ripristina la versione di Grub2 nel sistema, ovviamente i parametri mnt e sdX devono essere modificati con la configurazione del sistema.
 
-La gestione del cestino viene gestita dai vari Desktop (GNOME, KDE o XFCE), e come per altri sistemi, anche in Debian il cestino in realtà è una semplice cartella particolare dove vengono parcheggiati temporaneamente i file in attesa di una cancellazione definitiva, in realtà il Kernel di GNU Linux non gestisce nativamente il cestino, infatti se un utente usa i comandi:
+## Gestione del gestino
+
+La gestione del **cestino** viene gestita dai vari Desktop (GNOME, KDE o XFCE), e come per altri sistemi, anche in Debian il cestino in realtà è una semplice cartella particolare dove vengono parcheggiati temporaneamente i file in attesa di una cancellazione definitiva, in realtà il Kernel di GNU Linux non gestisce nativamente il cestino, infatti se un utente usa i comandi:
 ```
 $ rm
 $ rmdir
@@ -1248,7 +1297,9 @@ per esempio è possibile inserire questo comandi nello script rc.local per svuot
 ```
 e anche in questo caso basta pulire queste cartelle a mano oppure semplicemente svuotare il cestino dal desktop.
 
-Il comando sudo consente agli utenti senza privilegi di amministratore, di eseguire i comandi come super-utente senza dover effettuare la login come super-utente e senza conoscere la password dell'utente amministratore, in alcune distribuzioni derivate da Debian come Knoppix o Ubuntu questo comando è impostato di default perché non viene usato l'utente root mentre per chi usa Debian o altre distribuzioni GNU Linux questo comando è sconsigliato ma è possibile configurare il comando sudo, di default questo comando non viene installato durante la fase di installazione del sistema base e per averlo a disposizione basta installare il pacchetto sudo, con il comando:
+# Il comando Sudo
+
+Il comando **sudo** consente agli utenti senza privilegi di amministratore, di eseguire i comandi come super-utente senza dover effettuare la login come super-utente e senza conoscere la password dell'utente amministratore, in alcune distribuzioni derivate da Debian come Knoppix o Ubuntu questo comando è impostato di default perché non viene usato l'utente root mentre per chi usa Debian o altre distribuzioni GNU Linux questo comando è sconsigliato ma è possibile configurare il comando sudo, di default questo comando non viene installato durante la fase di installazione del sistema base e per averlo a disposizione basta installare il pacchetto sudo, con il comando:
 ```
 # apt-get install sudo
 ```
@@ -1276,11 +1327,11 @@ $ sudo passwd root <nuovapassword>
 ```
 questo perché in quasi tutte le live il comando sudo viene usato al posto dell'utenza root e questo viene ereditato nelle installazioni che vengono avviate da sistemi live.
 
-# Comandi per il controllo del sistema
+## Comandi per il controllo del sistema
 
 Esistono dei comandi specifici e dedicati al controllo di parti specifiche del sistema, questo articolo vuole essere un riassunto incompleto di questa categoria di comandi per Gnu Linux. Da ricordare che quasi tutte questi sistemi possono essere sostituiti da WebMin, pannello di controllo completo e facile da usare molto più semplice di tanti programmi divisi che possono risultare complessi da imparare ed usare.
 
-Esistono molti programmi per la gestione dell'intero sistema e che permettono di monitorare le risorse e lo stato del proprio sistema, soprattutto se state usando Debian come server: nella shell potete usare il programma top, utilissimo programma che permette di monitorare tutti processi attivi sul sistema, l'elenco delle funzionalità viene elencata semplicemente premendo il tasto "h". Se utilizzate un desktop, potete provare a configurare i vari widget di controllo sulla barra delle applicazioni e potete provare il programma Monitor di sistema che trovate sul menù Sistema, tramite questo programma potete monitorare memoria e processore, avete anche la possibilità di vedere ed eventualmente uccidere i vari processi e programmi in esecuzione nel vostro sistema. Un programma consigliato è PhpSysInfo, per funzionare necessita il demone web Apache e dopo aver installato l'omonimo pacchetto, basta accedere all'indirizzo:
+Esistono molti programmi per la gestione dell'intero sistema e che permettono di monitorare le risorse e lo stato del proprio sistema, soprattutto se state usando Debian come server: nella shell potete usare il programma top, utilissimo programma che permette di monitorare tutti processi attivi sul sistema, l'elenco delle funzionalità viene elencata semplicemente premendo il tasto "h". Se utilizzate un desktop, potete provare a configurare i vari widget di controllo sulla barra delle applicazioni e potete provare il programma Monitor di sistema che trovate sul menù Sistema, tramite questo programma potete monitorare memoria e processore, avete anche la possibilità di vedere ed eventualmente uccidere i vari processi e programmi in esecuzione nel vostro sistema. Un programma consigliato è **PhpSysInfo**, per funzionare necessita il demone web Apache e dopo aver installato l'omonimo pacchetto, basta accedere all'indirizzo:
 ```
 http://localhost/phpsysinfo/
 ```
@@ -1290,17 +1341,19 @@ Per la gestione e il monitoraggio dei processi in esecuzione su un sistema GNU L
 ```
 $ ps aux
 ```
-Per avere un task-manager sulla shell basta si può usare il programma top che mostra visione in tempo reale del sistema compreso l'utilizzo delle risorse come la CPU e la memoria, il comando service permette di gestire i vari demoni attivi, come il sendmail o apache, per lo stato basta lanciare il comando
+Per avere un task-manager sulla shell basta si può usare il programma **top** che mostra visione in tempo reale del sistema compreso l'utilizzo delle risorse come la CPU e la memoria, il comando service permette di gestire i vari demoni attivi, come il sendmail o apache, per lo stato basta lanciare il comando
 ```
 # service nomedemone status
 ```
 mentre per le varie operazioni basta usare il parametro "stop" oppure "start" per fermare o far partire un servizio.
 
-Il comando kill consente di interrompere l'esecuzione di un processo conoscendo il numero PID del processo da fermare mentre killall permette di bloccare l'esecuzione di un processo utilizzando il suo nome e non attraverso il suo PID, per chi usa un desktop manager può usare il comando xkill che permette di uccidere un programma "visuale" in esecuzione sul server X facendo click sulla finestra del programma con il puntatore del mouse che assume la forma di un teschio simile al classico Jolly Roger dei pirati.
+Il comando **kill** consente di interrompere l'esecuzione di un processo conoscendo il numero PID del processo da fermare mentre killall permette di bloccare l'esecuzione di un processo utilizzando il suo nome e non attraverso il suo PID, per chi usa un desktop manager può usare il comando **xkill** che permette di uccidere un programma "visuale" in esecuzione sul server X facendo click sulla finestra del programma con il puntatore del mouse che assume la forma di un teschio simile al classico Jolly Roger dei pirati.
 
-Per la gestione della memoria RAM, è possibile usare il comando free per avere una visione completa della situazione e che offre inoltre dettagli sulla memoria libera nella partizione di swap, utilizzata come supplemento alla memoria RAM disponibile sul sistema, è suggerito l'uso dei parametri "-l" che visualizzano lo stato della memoria e "-k" che visualizza l'output in KByte oppure "-m" che visualizza l'outout in MByte. Per la gestione dei dischi esiste il comando df che permette di eseguire un'operazione simile a free ma sui dispositivi di archiviazione: il suo scopo è infatti quelli di fornire informazioni sullo stato dell'hard disk del computer in uso e di ogni altro file system montato (pen drive, hard disk esterni e qualsiasi altra periferica esterna montata). Il comando df può essere eseguito sia senza alcun dispositivo target che seguito dal percorso di determinati file system: nel primo caso mostra lo spazio libero su ogni file system montato, nel secondo invece si limita a quelli selezionati manualmente.
+Per la gestione della memoria RAM, è possibile usare il comando **free** per avere una visione completa della situazione e che offre inoltre dettagli sulla memoria libera nella partizione di swap, utilizzata come supplemento alla memoria RAM disponibile sul sistema, è suggerito l'uso dei parametri "-l" che visualizzano lo stato della memoria e "-k" che visualizza l'output in KByte oppure "-m" che visualizza l'outout in MByte. Per la gestione dei dischi esiste il comando df che permette di eseguire un'operazione simile a free ma sui dispositivi di archiviazione: il suo scopo è infatti quelli di fornire informazioni sullo stato dell'hard disk del computer in uso e di ogni altro file system montato (pen drive, hard disk esterni e qualsiasi altra periferica esterna montata). Il comando df può essere eseguito sia senza alcun dispositivo target che seguito dal percorso di determinati file system: nel primo caso mostra lo spazio libero su ogni file system montato, nel secondo invece si limita a quelli selezionati manualmente.
 
-Esistono diversi tool per configurare del demone di rete: editare i singoli file di configurazione, usare comandi shell come ifconfig, usare gli strumenti con interfaccia grafica oppure l'uso di web webmin: GNU Linux e Debian mettono a disposizione moltissimi comandi per la gestione della rete, in particolare si può fare qualsiasi cosa anche senza ambiente grafico o Desktop, ovviamente bisogna ben sapere cosa fare e quindi conoscere tutte le teorie sulla rete, i protocolli (IP/TCP) e le impostazioni di sicurezza. In questo documento elenco solo alcuni comandi base che possono essere utili a tutti gli usi, i principali file di configurazione del demone di rete sono:
+# Configurazione di rete
+
+Esistono diversi tool per configurare del demone di rete: editare i singoli file di configurazione, usare comandi shell come **ifconfig**, usare gli strumenti con interfaccia grafica oppure l'uso di web webmin: GNU Linux e Debian mettono a disposizione moltissimi comandi per la gestione della rete, in particolare si può fare qualsiasi cosa anche senza ambiente grafico o Desktop, ovviamente bisogna ben sapere cosa fare e quindi conoscere tutte le teorie sulla rete, i protocolli (IP/TCP) e le impostazioni di sicurezza. In questo documento elenco solo alcuni comandi base che possono essere utili a tutti gli usi, i principali file di configurazione del demone di rete sono:
  
 - ```/etc/sysconfig/network``` contiene le principali configurazioni per il Networking
 - ```/etc/hosts``` contiene il mapping fra indirizzi e hostname ed alias. Segue un esempio
@@ -1314,7 +1367,7 @@ Mentre i principali comandi comandi lanciabili della shell sono:
 - ```route add -net 0.0.0.0/0 gw 192.168.0.1``` imposta 192.168.0.1 come default gateway
 - ```/etc/init.d/network start``` script di avvio del demone networking
 
-per il firewall viene usato il demone IPTables: si tratta di uno dei migliori firewall attualmente disponibili non solo per ambienti GNU Linux, interamente configurabile tramite riga di comando, l’elenco delle policy presenti è disponibile tramite:
+per il firewall viene usato il demone **IPTables**: si tratta di uno dei migliori firewall attualmente disponibili non solo per ambienti GNU Linux, interamente configurabile tramite riga di comando, l’elenco delle policy presenti è disponibile tramite:
 ```
 # iptables -L
 ```
@@ -1326,7 +1379,7 @@ dove PROTOCOLLO è il tipo di protocollo da abilitare (udp oppure tcp). Volendo,
 ```
 # iptables -A INPUT -p [PROTOCOLLO] --dport [PORTA] -s 192.168.1.0/24 -j ACCEPT
 ```
-in questo modo verrà abilitato il traffico proveniente dagli IP del tipo 192.168.1.X sulla porta selezionata mentre per abilitare un solo IP è necessario inserirlo per intero (al posto dello zero). Per monitorare una eventuale rete wireless c'è a disposizione il comando wavemon che mostra la banda, la qualità del segnale, statistiche e le informazioni base, programma molto utile se si deve monitorare la rete senza fili da riga di mando. Non i dilungo molto in questi discorsi visto che non è il mio campo e conviene sempre avere sottomano WebMin o i tool grafici dei vari desktop che risultano sempre più comodi, come firestarter per la configurazione del firewall. Può inoltre capitare di dover impostare un limite all'uso della rete, cioè impostare che un sistema utilizzi al massimo un valore costante di banda in download o upload, per questo si può usare il comando wondershaper installabile dal gestore dei pacchetti e poi da riga di comando basta lanciare il comando
+in questo modo verrà abilitato il traffico proveniente dagli IP del tipo 192.168.1.X sulla porta selezionata mentre per abilitare un solo IP è necessario inserirlo per intero (al posto dello zero). Per monitorare una eventuale rete wireless c'è a disposizione il comando wavemon che mostra la banda, la qualità del segnale, statistiche e le informazioni base, programma molto utile se si deve monitorare la rete senza fili da riga di mando. Non i dilungo molto in questi discorsi visto che non è il mio campo e conviene sempre avere sottomano WebMin o i tool grafici dei vari desktop che risultano sempre più comodi, come firestarter per la configurazione del firewall. Può inoltre capitare di dover impostare un limite all'uso della rete, cioè impostare che un sistema utilizzi al massimo un valore costante di banda in download o upload, per questo si può usare il comando **wondershaper** installabile dal gestore dei pacchetti e poi da riga di comando basta lanciare il comando
 ```
 $ wondershaper -a nomeInterfaccia -d limiteDowlonad -u limiteUpload
 ```
@@ -1336,14 +1389,16 @@ $ wondershaper -a enp3s0 -d 10000 -u 6500
 ```
 da notare che i limiti sono in Kbps.
 
+## Gestione dei backup
+
 Qualsiasi uso si faccia di un sistema informatico è sempre importante disporre di un sistema di backup ed eventualmente il restore dei dati, grazie ai tanti cloud come Dropbox o Google-Drive è possibile fare tutto tramite internet in maniera veloce, nel mondo GNU Linux esistono molti strumenti che servono proprio per eseguire i backup dei sistema, una lista incompleta di strumenti disponibili su Debian:
 
-- amanda: Advanced Maryland Automatic Network Disk Archiver cioè un sistema di archiviazione dei dischi
-- backupninja: sistema di meta-backup leggero ed estensibile
-- bacula: backup, ripristino e verifica in rete
-- duplicity: backup automatici incrementali
-- dump: lo storico programma per eseguire backup e dump dei dischi
-- xfsdump: programma per eseguire backup e dump dei dischi
+- **amanda**: Advanced Maryland Automatic Network Disk Archiver cioè un sistema di archiviazione dei dischi
+- **backupninja**: sistema di meta-backup leggero ed estensibile
+- **bacula**: backup, ripristino e verifica in rete
+- **duplicity**: backup automatici incrementali
+- **dump**: lo storico programma per eseguire backup e dump dei dischi
+- **xfsdump**: programma per eseguire backup e dump dei dischi
 
 E' possibile anche costruire un mini script personalizzato, scritto in linguaggio sh, per la copia di backup dei file base, questo script più essere utile per salvare solamente le configurazioni e non tutto il sistema. Per prima cosa per un backup delle configurazione bisogna salvare i file di sistema che possono essere modificati come visto nei precedenti capitoli e poi si elencano alcune dei principali componenti che è possibile salvare in un backup:
 
@@ -1358,13 +1413,15 @@ $ mysqldump --database nomedatabase > nomefile.sql -u root -p password
 ```
 (dove poi bisogna inserire la password di root o dell'utente indicato), viene eseguito in salvataggio nel file sql di tutto il db compresa la struttura e gli indici. Per eseguire il ripristino si può usare il comando da riga di comando oppure si può usare più comodamente un tool per l'importazione dello script di backup.
 
-Il kernel mette a disposizione anche il comando dd che è possibile usare per copiare una intera partizione che poi conviene comprimere per evitare di occupare troppo spazio con il bakcup:
+Il kernel mette a disposizione anche il comando **dd** che è possibile usare per copiare una intera partizione che poi conviene comprimere per evitare di occupare troppo spazio con il bakcup:
 ```
 dd if=/dev/partizione bs=32M | gzip -c > /mnt/Dati/FileBackukp.dd.gz
 ```
-Per GNU Linux esistono diversi sistemi di virtualizzazione, lo storico sistema nativo è chiamato Qemu/Kdm la cui interfaccia utente è la Virsh ed esistono moltissime guide, si rimanda alla documentazione ufficiale per maggiori dettagli, link da inserire tuttavia la configurazione e creazione con Qemu è considerata obsoleta in quanto nelle ultime versioni di Debian non si usa praticamente mai questo tipo di configurazione.
 
-Per quanto riguarda il programma VMware è possibile scaricarlo dal sito ufficiale, il file messo a disposizione è nel formato bundle, come già visto più volte l'estensione è solo una descrizione, infatti questo è uno script auto-installante, prima però di lanciare l'installazione bisogna verificare l'installazione di alcuni pacchetti:
+## Gestione delle macchine virtuali
+Per GNU Linux esistono diversi sistemi di virtualizzazione, lo storico sistema nativo è chiamato **Qemu** poi evoluto nel progetto **Kdm** la cui interfaccia utente è la **Virsh** ed esistono moltissime guide, si rimanda alla documentazione ufficiale per maggiori dettagli, link da inserire tuttavia la configurazione e creazione con Qemu è considerata obsoleta in quanto nelle ultime versioni di Debian non si usa praticamente mai questo tipo di configurazione.
+
+Per quanto riguarda il programma **VMware** è possibile scaricarlo dal sito ufficiale, il file messo a disposizione è nel formato bundle, come già visto più volte l'estensione è solo una descrizione, infatti questo è uno script auto-installante, prima però di lanciare l'installazione bisogna verificare l'installazione di alcuni pacchetti:
 ```
 # apt-get install gcc-6-locales gcc-6-cross-base linux-headers-X.Y.Z-A-amd64 build-essential
 ```
@@ -1375,7 +1432,7 @@ e poi procedere con l'installazione vera e propria con i comandi
 ```
 questo processo installa il programma e crea la voce di menù nel desktop, il programma poi verifica le dipendenze necessarie e visualizza un messaggio di errore all'avvio che indica i pacchetti mancanti (per esempio il pacchetto linux-headers alla versione richiesta da VmWare).
 
-Per quanto riguarda il programma VirtualBox non esiste un repository aggiornato per Debian ma solo per la versione per Debian 10 considerata obsoleta. Il programma comunque può essere scaricato dal sito del programma dalla versione per tutte le distribuzioni GNU Linux ed installata facilmente con pochi comandi:
+Per quanto riguarda il programma **VirtualBox** non esiste un repository aggiornato per Debian ma solo per la versione per Debian 10 considerata obsoleta. Il programma comunque può essere scaricato dal sito del programma dalla versione per tutte le distribuzioni GNU Linux ed installata facilmente con pochi comandi:
 ```
 # apt install build-essential linux-headers-amd64
 # wget https://download.virtualbox.org/virtualbox/6.1.22/VirtualBox-6.1.22-144080-Linux_amd64.run
@@ -1393,3 +1450,11 @@ Nessun contenuto in questo repository è stato creato con IA o automaticamente, 
 Public projects 
 <a href="https://it.wikipedia.org/wiki/GNU_General_Public_License"  valign="middle"><img src="https://img.shields.io/badge/License-GNU-blue" style="height:22px;"  valign="middle"></a> 
 *Free Software!*
+
+
+```
+| col 1      | col 2      |
+|------------|-------------|
+| image 1 | a |
+![debian_logo](https://www.debian.org/Pics/debian-logo-1024x576.png)
+```
