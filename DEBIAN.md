@@ -1,18 +1,53 @@
-|<h2>Debian 12 Handbook</h2>|*by AlNao*| <img src="https://www.debian.org/Pics/debian-logo-1024x576.png" width="200"> | 
-| ----- | ----- | ----- | 
 
+# Debian 12 Handbook
+
+
+<img src="https://www.debian.org/Pics/debian-logo-1024x576.png" width="200"> 
+
+
+*writted by AlNao*
 
 
 # Indice
 - [Introduzione a Debian](#Introduzione-a-Debian)
 - [Come installare Debian 12](#Come-installare-Debian-12)
 - [Come gestire i file e le partizioni](#Come-gestire-i-file-e-le-partizioni)
+  - [Gestione dei permessi](#Gestione-dei-permessi)
+  - [Il mounting](#Il-mounting)
 - [Come gestire i pacchetti Debian e il pannello di controllo](#Come-gestire-i-pacchetti-Debian-e-il-pannello-di-controllo)
+  - [Il pannello di controllo WebMin](#Il-pannello-di-controllo-WebMin)
 - [Come gestire i desktop e le applicazioni](#Come-gestire-i-desktop-e-le-applicazioni)
+  - [Gestione e installazione applicazioni](#Gestione-e-installazione-applicazioni)
+  - [Editor di testo](#Editor-di-testo)
+  - [Compressione ZIP e simili](#Compressione-ZIP-e-simili)
+  - [Browser e mail](#Browser-e-mail)
+  - [Skype e Discord](#Skype-e-Discord)
+  - [Appliazioni multimediali](#Appliazioni-multimediali)
+  - [Dropbox](#Dropbox)
+  - [Giochi e Steam](#Giochi-e-steam)
 - [Come gestire i demoni di Debian](#Come-gestire-i-demoni-di-Debian)
-- [Programmazione in Debian](#Programmazione-in-Debian-parte-1)
-  - [Parte 2](#Programmazione-in-Debian-parte-2)
-  - [Parte 3](#Programmazione-in-Debian-parte-3)
+  - [Sistema di stampa CUPS](#Sistema-di-stampa-CUPS)
+  - [Condivisioni di rete con SSH e Samba](#Condivisioni-di-rete-con-SSH-e-Samba)
+  - [I RunLevel](#I-RunLevel)
+  - [Schedulazioni con Cron](#Schedulazioni-con-Cron)
+  - [Controllo remoto](#Controllo-remoto)
+- [Programmazione in Debian](#Programmazione-in-Debian)
+  - [C e C++](#C)
+  - [Python](#Python)
+  - [LaTeX](#LaTeX)
+  - [Notify e Zenity](#Notify-e-Zenity)
+  - [LAMP](#LAMP)
+      - [Apache](#Apache)
+      - [MySql](#MySql)
+  - [Node e NPM](#Node-e-NPM)
+  - [Java e Tomcat](#Java-e-Tomcat)
+  - [GIT](#GIT)
+  - [Visual Studio Code](#Visual-Studio-Code)
+  - [Postman](#Postman)
+  - [PostgreSQL](#PostgreSQL)
+  - [MongoDB](#MongoDB)
+  - [AWS CLI e SAM](#AWS-CLI-e-SAM)
+  - [Docker](#Docker)
 - [I comandi comuni della shell](#I-comandi-comuni-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
@@ -122,6 +157,8 @@ questa cartella è specifica per ciascun sistema e rappresenta l'intero sistema:
 - ```/usr``` Contiene le applicazioni (non di sistema) installate nel sistema
 - ```/var``` Contiene vari files di sistema come i log e le carelle della posta
 
+## Gestione dei permessi
+
 Nei sistemi Unix e GNU Linux esistono tre tipi di diritti su un file: scrittura, lettura ed esecuzione rispettivamente identificati con la lettera r, w e x. Ogni file, quindi ogni cosa nel sistema, appartiene all'utente che ha creato quel file che ha sempre i tutti i diritti su quel file. Per ottenere i diritti su un file basta eseguire il comando sulla shell:
 ```
 $ ls -la
@@ -137,7 +174,9 @@ la prima riga descrive una directory, la si può riconoscere dal fatto che la pr
 
 Alcune delle configurazioni base devono essere eseguite da riga di comando che in informatica viene comunemente chiamata shell e, più in particolare, nei sistemi GNU Linux è disponibile il tipo chiamato bash, non bisogna fare confusione: con shell si intende una riga di comando mentre bash è l’interprete dei comandi, in questo manuale faremo sempre riferimento a bash e non verranno introdotte altre tipi di shell anche se in altri manuali potete trovare guide più complete di bash e di altri tipi di shell per GNU Linux. Tipicamente nelle architetture basate sul KernerLinux con la bash sono disponibili 8 “canali” detti anche tty (abbreviazione di TeleTYpewriter), nei sistemi basati su GNU Linux il primo canale è usato dal KernelLinux e in questo canale compaiono i messaggi del sistema mentre il server grafico tipicamente si trova nel settimo canale, dalla versione 10 di Debian il server grafico viene caricato sempre dal secondo canale mentre nel primo c'è una seconda versione del server grafico se si vuole utilizzare la funzionalità multiutente; è possibile passare da un canale ad un altro con la sequenza di tasti ALT + CTRL + F1 dove l’F1 è il numero del canale (ovviamente per il settimo canale si può usare F7).
 
-Una delle esigenze primarie di ogni utente è quello di poter accedere ai propri dati che sono salvati nei vari dischi, gli utenti di altri sistemi operativi sono abituati a identificare le memorie fisiche con delle lettere come C, D, E, ecc... mentre nei sistemi GNU Linux la gestione delle partizioni e delle periferiche di memoria è completamente diversa: la gestione viene chiamata mounting (in Italiano spesso viene tradotto con montaggio), nome che deriva dal comando mount che viene utilizzato per eseguire le configurazioni, infatti le memorie vengono viste dal Kernel Linux come un normale file dentro alla cartella /dev/ e, attraverso il comando mount, si possono collegare ad una cartella per permettere l’accesso al contenuto della memoria. I file che si trovano dentro alla cartella dev non rappresentano tutta la memoria fisica ma rappresentano una partizione: se in una memoria ci sono più partizioni significa che sono presenti più file che devono essere montati separatamente. Tipicamente questi file hanno il nome del tipo hda1, sda1, sda2, sdb1 dove la prima lettera del nome rappresenta il tipo (per esempio h=Eide, s=Sata), la seconda lettera è sempre d che significa DISK mentre la terza lettera è un incrementale se ci sono più dispositivi dello stesso tipo (se ci sono due HardDisk il primo sarà “a” mentre il secondo sarà “b”), il numero finale rappresenta il numero della partizione all'interno della stessa memoria fisica.
+## Il mounting
+
+Una delle esigenze primarie di ogni utente è quello di poter accedere ai propri dati che sono salvati nei vari dischi, gli utenti di altri sistemi operativi sono abituati a identificare le memorie fisiche con delle lettere come C, D, E, ecc... mentre nei sistemi GNU Linux la gestione delle partizioni e delle periferiche di memoria è completamente diversa: la gestione viene chiamata **mounting** (in Italiano spesso viene tradotto con montaggio), nome che deriva dal comando mount che viene utilizzato per eseguire le configurazioni, infatti le memorie vengono viste dal Kernel Linux come un normale file dentro alla cartella /dev/ e, attraverso il comando mount, si possono collegare ad una cartella per permettere l’accesso al contenuto della memoria. I file che si trovano dentro alla cartella dev non rappresentano tutta la memoria fisica ma rappresentano una partizione: se in una memoria ci sono più partizioni significa che sono presenti più file che devono essere montati separatamente. Tipicamente questi file hanno il nome del tipo hda1, sda1, sda2, sdb1 dove la prima lettera del nome rappresenta il tipo (per esempio h=Eide, s=Sata), la seconda lettera è sempre d che significa DISK mentre la terza lettera è un incrementale se ci sono più dispositivi dello stesso tipo (se ci sono due HardDisk il primo sarà “a” mentre il secondo sarà “b”), il numero finale rappresenta il numero della partizione all'interno della stessa memoria fisica.
 
 
 Per poter recuperare l'elenco delle partizioni e la struttura delle memorie si può usare il programma gparted dal desktop da installare oppure con il comando
@@ -223,7 +262,9 @@ La prima parola di ogni riga (deb o deb-src) indica il tipo di archivio: se cont
 ```
 In precedenti versioni di questo documento si indicava all'utente di modificare manualmente i file di list per inserire i mirror manualmente, questa operazione manuale è stata sostituita da operazioni più semplici che verranno introdotte man mano che sarà necessario installare pacchetti specifici non compresi nei mirror ufficiali di Debian che sono inseriti in automatico all'installazione del sistema base. I programmi di gestione APT & DPKG non sono stati studiati per essere interfacciati graficamente, quindi sono stati sviluppati e sono presenti in Debian diversi strumenti grafici che permettono di gestire i pacchetti attraverso una interfaccia grafica che può risultare più intuitiva all'utente meno esperto: il più importante programma per desktop per la gestione dei pacchetti è Synaptic che spesso si può trovare nei menù anche con il nome in italiano di Gestore pacchetti, la potenza di questo programma è la semplicità d'uso rispetto ad altri programmi simili come Aptitude e Adept che sono molto più poveri di funzioni. Con Synaptic è possibile vedere la lista dei pacchetti divisi in sezione per argomento (sistema, grafici, editor,...), per stato (installati, aggiornabili, non installati, corrotti), per origine (DVD, debian.org, ecc...) e la possibilità di cercare i pacchetti con una semplice ricerca testuale sui nomi e sulle descrizioni dei pacchetti stessi. La comodità principale di questo programma è la possibilità di gestire gli aggiornamenti del sistema con un semplice click su pulsante.
 
-Nei sistemi Debian è possibile trovare diversi programmi che permettano la configurazione del sistema, nei vari menu dei desktop si possono trovare diverse voci all'interno della categoria Strumenti di sistema però per GNU Linux è stato sviluppato un potentissimo programma per il controllo generale: WebMin che prevedete moltissimi moduli al proprio interno e permette all'utente di amministrare tutti i componenti del sistema, uno dei grandi vantaggi di questo pacchetto è che si tratta di una applicazione web quindi viene usata tramite browser anche da remoto. Rispetto alle precedenti versioni, WebMin non è più all'interno dei mirror ufficiali di Debian e quindi bisogna configurare una sorgente esterna con i comandi:
+## Il pannello di controllo WebMin
+
+Nei sistemi Debian è possibile trovare diversi programmi che permettano la configurazione del sistema, nei vari menu dei desktop si possono trovare diverse voci all'interno della categoria Strumenti di sistema però per GNU Linux è stato sviluppato un potentissimo programma per il controllo generale: **WebMin** che prevedete moltissimi moduli al proprio interno e permette all'utente di amministrare tutti i componenti del sistema, uno dei grandi vantaggi di questo pacchetto è che si tratta di una applicazione web quindi viene usata tramite browser anche da remoto. Rispetto alle precedenti versioni, WebMin non è più all'interno dei mirror ufficiali di Debian e quindi bisogna configurare una sorgente esterna con i comandi:
 ```
 # apt-get install perl libnet-ssleay-perl openssl libauthen-pam-perl 
 # apt-get install libpam-runtime libio-pty-perl apt-show-versions python3 apt-transport-https
@@ -254,21 +295,23 @@ nei comandi indicati c'è anche la configurazione del firewall ufw che blocchere
 
 <span style="color:orange;">WebMin è uno strumento molto potente ma anche troppo! Bisogna sempre prestare attenzione alle configurazioni eseguite e controllare più volte le operazioni potenzialmente distruttive per il sistema.</span>
 
-Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiamata GDM (abbreviazione di Gnome Desktop Manager) esistono anche altri gestori ma è sconsigliato l'utilizzo per utente non esperti. Per gestire gli utenti è possibile usare i vari programmi disponibili nei browser ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata. In realtà è iii sconsigliato iii per alcuni temi specifici come la gestione delle partizioni (molto meglio Gparted) e tutto quello che ha a che fare con l'hardware e i dispositivi esterni.
+Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiamata **GDM** (abbreviazione di Gnome Desktop Manager) esistono anche altri gestori ma è sconsigliato l'utilizzo per utente non esperti. Per gestire gli utenti è possibile usare i vari programmi disponibili nei browser ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata. In realtà è iii sconsigliato iii per alcuni temi specifici come la gestione delle partizioni (molto meglio Gparted) e tutto quello che ha a che fare con l'hardware e i dispositivi esterni.
 
 # Come gestire i desktop e le applicazioni
 
-Nel mondo GNU Linux il principale server grafico è X-WindowSystem (spesso abbreviato con X), questo gestire l'interfaccia utente e bisogna ricordare che non esiste un unico desktop: esistono diversi desktop che possono essere installati ed usati parallelamente, infatti esiste la possibilità di passare da un desktop ad un altro selezionando il nome nella schermata di login all'avvio del sistema; tutte le applicazioni possono essere eseguite da qualsiasi tipo di desktop. I principali desktop per GNU Linux basati sul server grafico X sono: GNOME, KDE e XFCE mentre quelli leggeri e studiati per essere veloci sono MATE e LXDE, è consigliato la prova di tutti i cinque appena elencati in modo che un utente possa scegliere il più consono. In tutte le architetture basate sul KernerLinux, nella bash sono disponibili 8 “canali” detti anche tty (abbreviazione di TeleTYpewriter), nei sistemi basati su GNU Linux il primo canale è usato dal KernelLinux e in questo canale compaiono i messaggi del sistema mentre il server grafico e il desktop si trova nel settimo canale, dalla versione 10 di Debian il server grafico viene caricato sempre dal secondo canale mentre nel primo c'è una seconda versione del server grafico se si vuole utilizzare la funzionalità multiutente; è possibile passare da un canale ad un altro con la sequenza di tasti ALT + CTRL + F1 dove l’F1 è il numero del canale (ovviamente per il settimo canale si può usare F7).
+Nel mondo GNU Linux il principale server grafico è **X-WindowSystem** (spesso abbreviato con X), questo gestire l'interfaccia utente e bisogna ricordare che non esiste un unico desktop: esistono diversi desktop che possono essere installati ed usati parallelamente, infatti esiste la possibilità di passare da un desktop ad un altro selezionando il nome nella schermata di login all'avvio del sistema; tutte le applicazioni possono essere eseguite da qualsiasi tipo di desktop. I principali desktop per GNU Linux basati sul server grafico X sono: **GNOME**, **KDE** e **XFCE** mentre quelli leggeri e studiati per essere veloci sono MATE e LXDE, è consigliato la prova di tutti i cinque appena elencati in modo che un utente possa scegliere il più consono. In tutte le architetture basate sul KernerLinux, nella bash sono disponibili 8 “canali” detti anche tty (abbreviazione di TeleTYpewriter), nei sistemi basati su GNU Linux il primo canale è usato dal KernelLinux e in questo canale compaiono i messaggi del sistema mentre il server grafico e il desktop si trova nel settimo canale, dalla versione 10 di Debian il server grafico viene caricato sempre dal secondo canale mentre nel primo c'è una seconda versione del server grafico se si vuole utilizzare la funzionalità multiutente; è possibile passare da un canale ad un altro con la sequenza di tasti ALT + CTRL + F1 dove l’F1 è il numero del canale (ovviamente per il settimo canale si può usare F7).
 
-Il più famoso desktop per il mondo GNU Linux è GNOME che di default viene attivato in fase di installazione di Debian, il gestore è ornami riconosciuto come il miglior gestore con un numero lunghissimo di applicazioni disponibili, le principali saranno elencate in questa sezione. Rispetto ad altri desktop, Gnome mette a disposizione alcune estensioni molto comode integrate nel sistema che possono essere facilmente installate dall'applicazione Estensioni oppure andando sul sito
+Il più famoso desktop per il mondo GNU Linux è **GNOME** che di default viene attivato in fase di installazione di Debian, il gestore è ornami riconosciuto come il miglior gestore con un numero lunghissimo di applicazioni disponibili, le principali saranno elencate in questa sezione. Rispetto ad altri desktop, Gnome mette a disposizione alcune estensioni molto comode integrate nel sistema che possono essere facilmente installate dall'applicazione Estensioni oppure andando sul sito
 ```
 extensions.gnome.org
 ```
 Le più famose ed usate sono elencate nel sito stesso e sono: Application Menu, Removable drive, Window list, User themes, Sound & Input, Traiyicons, App icons taskbar e Just Perfection. Inoltre è disponibile anche una applicazione personalizzazioni studiata per permettere agli utenti di modificare l'aspetto grafico del desktop.
 
-Uno degli errori più frequenti degli utenti comuni è pensare che non esistono applicazioni per il normale utilizzo di un computer, la verità è l'esatto opposto: esistono migliaia di applicazioni che rendono i sistemi GNU Linux completi e perfettamente utilizzabili. Basta infatti aprire il programma di gestione dei pacchetti Synaptic e usare la funzionalità di raggruppamento per categoria per rendersi conto delle migliaia di applicazioni disponibili nei repository Debian: oltre alla numerosità delle applicazioni, grazie a Synaptic, è possibile sfruttare la gestione dei pacchetti di Debian per evitare il problema delle dipendenze quindi un utente non deve preoccuparsi di nulla e non deve nemmeno preoccuparsi del desktop utilizzato. Tutti i pacchetti disponibili sui server mirror di Debian sono totalmente gratuiti e scaricabili dai mirror internet, su altri mirror non ufficiali è possibile scaricare altri programmi gratuitamente, per esempio il mirror di Google permette il download e l'installazione del browser Chrome. Purtroppo non esiste un elenco completo ed ufficiale di tutti i programmi disponibili, questo perché i programmi vengono creati quotidianamente e certi progetti chiudono per l’insuccesso di una applicazione o la sua scarsa utilità.
+## Gestione e installazione applicazioni
 
-In aggiunta al repository ufficiale Debian e ai repository proprietari, come quello di Google, è possibile usare anche il gestore snapd: un servizio web che mette a disposizione pacchetti scaricabili e funzionanti. Il consiglio è di usare questo servizio solo per quelle applicazioni o quei pacchetti che non si trovano nei repository ufficiali Debian ed è quello che verrà fatto in seguito. Per installare Snapd basta installare il pacchetto snapd, da non confondere con il pacchetto snap che invece riguarda una applicazione scientifica. Una volta installato il pacchetto è possibile vedere l'elenco dei pacchetti installati sul sistema con Snapd con il comando:
+Uno degli errori più frequenti degli utenti comuni è pensare che non esistono applicazioni per il normale utilizzo di un computer, la verità è l'esatto opposto: esistono migliaia di applicazioni che rendono i sistemi GNU Linux completi e perfettamente utilizzabili. Basta infatti aprire il programma di gestione dei pacchetti **Synaptic** e usare la funzionalità di raggruppamento per categoria per rendersi conto delle migliaia di applicazioni disponibili nei repository Debian: oltre alla numerosità delle applicazioni, grazie a Synaptic, è possibile sfruttare la gestione dei pacchetti di Debian per evitare il problema delle dipendenze quindi un utente non deve preoccuparsi di nulla e non deve nemmeno preoccuparsi del desktop utilizzato. Tutti i pacchetti disponibili sui server mirror di Debian sono totalmente gratuiti e scaricabili dai mirror internet, su altri mirror non ufficiali è possibile scaricare altri programmi gratuitamente, per esempio il mirror di Google permette il download e l'installazione del browser Chrome. Purtroppo non esiste un elenco completo ed ufficiale di tutti i programmi disponibili, questo perché i programmi vengono creati quotidianamente e certi progetti chiudono per l’insuccesso di una applicazione o la sua scarsa utilità.
+
+In aggiunta al repository ufficiale Debian e ai repository proprietari, come quello di Google, è possibile usare anche il gestore **snapd**: un servizio web che mette a disposizione pacchetti scaricabili e funzionanti. Il consiglio è di usare questo servizio solo per quelle applicazioni o quei pacchetti che non si trovano nei repository ufficiali Debian ed è quello che verrà fatto in seguito. Per installare Snapd basta installare il pacchetto snapd, da non confondere con il pacchetto snap che invece riguarda una applicazione scientifica. Una volta installato il pacchetto è possibile vedere l'elenco dei pacchetti installati sul sistema con Snapd con il comando:
 ```
 $ snap list
 ```
@@ -278,9 +321,13 @@ $ snap install nomeprogramma
 ```
 l'elenco di tutte le migliaia di programmi disponibili si trova nel sito ufficiale snapcraft.io, un esempio di applicazione consigliata su questo sistema è Spotify.
 
-Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs, forse troppo complicati per utenti poco esperti, i programmi più semplici da usare da riga di comando sono pico e nano che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è kEdit ma è possibile usare anche i programmi di GNOME come gEdit oppure mousepad. Tuttavia il programma più completo è Kate che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni ad apparenza strani' e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o posso essere senza estensione come il file fstab. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare jEdit, questi due programmi sono i più famosi e potenti programmi per la modifica di file dei testo.
+## Editor di testo
 
-Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di commando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è Konqueror e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file exploper ed è stato migliorato molto tanto da diventare uno dei miglioro programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è dolphin che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure Gnome Commander.
+Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs, forse troppo complicati per utenti poco esperti, i programmi più semplici da usare da riga di comando sono pico e nano che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è **kEdit** ma è possibile usare anche i programmi di GNOME come **gEdit** oppure **mousepad**. Tuttavia il programma più completo è Kate che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni ad apparenza strani' e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o posso essere senza estensione come il file fstab. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare jEdit, questi due programmi sono i più famosi e potenti programmi per la modifica di file dei testo.
+
+Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di commando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è **Konqueror** e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file exploper ed è stato migliorato molto tanto da diventare uno dei miglioro programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è **dolphin** che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure Gnome Commander.
+
+## Compressione ZIP e simili
 
 Gli standard di compressione del mondo GNU Linux si chiamano tar, gz e bz, ma possono essere usati anche altri formati come i più famosi zip e rar, per riconoscere in quale formato è compresso un file basta guardare l’estensione del file, da notare che le estensioni possono essere composte: per esempio un file può avere estensione nomefile.tar.gz oppure il semplice nomefile.zip. Visto che il formato rar è un algoritmo proprietario e non free, per poterlo usare è necessario installare i pacchetti rar, rar-2.80, unar e unace-nonfree che potete trovare nei repository "non free" nel mirror.
 
@@ -302,22 +349,28 @@ I principali parametri del comando tar sono:
 
 Per chi usa invece un desktop ci sono varie possibilità, il migliore programma che avete a disposizione è un programma chiamato Gestore di archivi che potete trovare sul menù Accessori di tutti i desktop (potete trovarlo anche con il nome file-roller), con questo semplice programma potete creare, comprimere e decomprimere file compressi in tutti i formati. Se invece usate Konqueror o Dolphin, potete usare il sistema integrato per la gestione dei sistemi di compressione chiamato ark che deve essere installato dal gestore dei pacchetti Synaptic e vi permetterà di gestire tutti i formati con pochi click: basta cliccare con il tasto destro del mouse su file o directory per avere la funzionalità "Comprimi" o su un singolo file compresso per avere la funzionalità di decompressione.
 
-Nel mondo GNU Linux e Debian potete trovare moltissimi programmi per la navigazione internet e la gestione delle mail, il browser più famoso in assoluto per GNU Linux è Firefox che è installato di default su tutte le distribuzioni Debian recenti. E' consigliato di installare da Synaptic anche il pacchetto flashplayer-mozilla se necessario avere il plugin per l’esecuzione dei flash e di installare il pacchetto totem-mozilla per la visualizzazione di video e filmati direttamente sul browser. Sui sistemi GNU Linux potete usare anche altri programmi come Amaya, Konqueror ed Epiphany.
+## Browser e mail
 
-Per installare il browser Opera è necessario aggiungere il repository proprietario e poi installare il pacchetto con i comandi:
+Nel mondo GNU Linux e Debian potete trovare moltissimi programmi per la navigazione internet e la gestione delle mail, il browser più famoso in assoluto per GNU Linux è **Firefox** che è installato di default su tutte le distribuzioni Debian recenti. E' consigliato di installare da Synaptic anche il pacchetto flashplayer-mozilla se necessario avere il plugin per l’esecuzione dei flash e di installare il pacchetto totem-mozilla per la visualizzazione di video e filmati direttamente sul browser. Sui sistemi GNU Linux potete usare anche altri programmi come Amaya, Konqueror ed Epiphany.
+
+Per installare il browser **Opera** è necessario aggiungere il repository proprietario e poi installare il pacchetto con i comandi:
 ```
 # wget -qO- https://deb.opera.com/archive.key | sudo apt-key add -
 # add-apt-repository "deb [arch=i386,amd64] https://deb.opera.com/opera-stable/ stable non-free"
 # apt install opera-stable
 ```
-Per il browser Google Chrome è consigliato scaricare e installare la versione dal repository proprietario di google:
+Per il browser **Google Chrome** è consigliato scaricare e installare la versione dal repository proprietario di google:
 ```
 # wget -qO - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg
 # echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
 # sudo apt update
 # sudo apt install -y google-chrome-stable
 ```
-da notare che questa installazione va automaticamente ad aggiungere il repository per i successivi aggiornamenti. Nei repository ufficiali di Debian è disponibile anche Chromium: un web browser open source da cui deriva Google Chrome, inizialmente l'idea di Google era quella di mantenere un solo progetto ma alla fine si sono creati due progetti paralleli che hanno sviluppi simili ma non uguali tanto che i browser hanno comportamenti differenti a volte. Per quanto riguarda i programmi per gestire le mail potete usare il programma di Firefox che potete trovare con il nome di Thunderbind Mail oppure con il nome IceDove, però potete usare anche altri programmi nativi come Evolution, Balsa, Gnus e Pine. I migliori programmi per le chat e l’instant messaging per GNU Linux sono Pidgin (ex Gaim), kMess e aMSN. Per installare il programma Skype nel sistema basta scaricare e installare il pacchetto con i comandi:
+da notare che questa installazione va automaticamente ad aggiungere il repository per i successivi aggiornamenti. Nei repository ufficiali di Debian è disponibile anche **Chromium**: un web browser open source da cui deriva Google Chrome, inizialmente l'idea di Google era quella di mantenere un solo progetto ma alla fine si sono creati due progetti paralleli che hanno sviluppi simili ma non uguali tanto che i browser hanno comportamenti differenti a volte. Per quanto riguarda i programmi per gestire le mail potete usare il programma di Firefox che potete trovare con il nome di **Thunderbind Mail** oppure con il nome **IceDove**, però potete usare anche altri programmi nativi come Evolution, Balsa, Gnus e Pine. 
+
+## Skype e Discord
+
+I migliori programmi per le chat e l’instant messaging per GNU Linux sono Pidgin (ex Gaim), kMess e aMSN. Per installare il programma Skype nel sistema basta scaricare e installare il pacchetto con i comandi:
 ```
 # wget https://go.skype.com/skypeforlinux-64.deb
 # wget apt install skypeforlinux-64.deb
@@ -329,6 +382,9 @@ Per installare l'applicazione Discord basta scaricare il pacchetto dal sito uffi
 # wget "https://discordapp.com/api/download?platform=linux\&format=deb" -O discord.deb
 # dpkg -i discord.deb
 ```
+
+## Appliazioni multimediali
+
 Anche per quanto riguarda la multimedialità nei sistemi GNU Linux sono presenti moltissimi programmi, non solo per la visualizzazione dei video ma anche per l'editing video e sono disponibili plugin per tutti i formati; inoltre in tutte le distribuzioni sono presenti i programmi e i driver per vedere la TV con il computer, ovviamente questo è possibile se, nel proprio pc, è presente un dispositivo di acquisizione TV come le chiavette USB. Prima di tutto bisogna scaricare ed installare i Codec, cioè le librerie necessarie per poter codificare i vari formati, per questa installazione basta usare Synaptic e controllare che i seguenti pacchetti siano già installati nel vostro sistema:
 ```
 libavcodec57
@@ -339,30 +395,32 @@ mpeglib (se presente)
 libavformat57
 libxvidcore4
 ```
-La base del sistema audio è il sottosistema ALSA, responsabile di tutti i suoni prodotti dal sistema, ad oggi non ci sono più problemi per la compatibilità con le varie schede audio delle tante marche di computer quindi automaticamente il sistema installerà ALSA e vi installerà anche una serie di pacchetti per l'uso della stessa scheda, compreso il programma per gestire i volumi e la riproduzione dei suoni base, è possibile trovare la lista dei programmi nella categoria Multimedia. Per la visualizzazione dei video c'è l'imbarazzo della scelta: il più famoso è Totem, lettore molto semplice e comodo, in tutti i desktop è il programma di default. La lista dei player di file multimediali è lunghissima ed eviterò di annoiare il lettore (come sempre ho cercato di fare in questo documento), sono elencati solo i programmi degni di nota:
+La base del sistema audio è il sottosistema ALSA, responsabile di tutti i suoni prodotti dal sistema, ad oggi non ci sono più problemi per la compatibilità con le varie schede audio delle tante marche di computer quindi automaticamente il sistema installerà ALSA e vi installerà anche una serie di pacchetti per l'uso della stessa scheda, compreso il programma per gestire i volumi e la riproduzione dei suoni base, è possibile trovare la lista dei programmi nella categoria Multimedia. Per la visualizzazione dei video c'è l'imbarazzo della scelta: il più famoso è **Totem**, lettore molto semplice e comodo, in tutti i desktop è il programma di default. La lista dei player di file multimediali è lunghissima ed eviterò di annoiare il lettore (come sempre ho cercato di fare in questo documento), sono elencati solo i programmi degni di nota:
 
-- VLC famoso player gratuito disponibile anche su altre piattaforme
+- **VLC** famoso player gratuito disponibile anche su altre piattaforme
 - Codeine programma molto semplice e con le scalette di produzione
 - KPlayer simile a Totem anche se incompleto in alcuni punti
 - Amarok programma per ascoltare musica avendo la possibilità di creare una playlist
 - Kaffeine buon programma per ascoltare musica
 - MPlayer player di video
 
-Per poter visualizzare i filmati nel formato di RealPlayer bisogna scaricare e installare il pacchetto disponibile sul sito RealPlayer, esistevano delle librerie che permettevano la visione dei file RealPlayer anche su Totem e su tutti i player di Linux ma sono stati rimossi perché non rispecchiamo le linee guida di Debian. Chi dispone di una scheda di acquisizione TV di tipo DDT (digitale terrestre) può tranquillamente vedere i canali: Debian contiene dei programmi per guardare la tv e registrare i propri programmi preferiti, una lista parziale dei programmi a disposizione come XawTV, XdTV, Kplayer e MythTV. Per GNU Linux esistono anche una lunga lista di programmi per la manipolazione e l'editing audio e video che si basano tutti sui comandi da riga di comando convert, i quattro programmi principali sono Sweep, Kwave, Audacity e Avidemux, i primi tre sono utili per modificare file audio come mp3, il quarto è un semplice programma che serve per modificare, concatenare i file video, in particolare Avidemux è un programma molto utile anche perché è compatibile con tutti i formati se i codec sono installati nel sistema.
+Per poter visualizzare i filmati nel formato di **RealPlayer** bisogna scaricare e installare il pacchetto disponibile sul sito RealPlayer, esistevano delle librerie che permettevano la visione dei file RealPlayer anche su Totem e su tutti i player di Linux ma sono stati rimossi perché non rispecchiamo le linee guida di Debian. Chi dispone di una scheda di acquisizione TV di tipo DDT (digitale terrestre) può tranquillamente vedere i canali: Debian contiene dei programmi per guardare la tv e registrare i propri programmi preferiti, una lista parziale dei programmi a disposizione come XawTV, XdTV, Kplayer e MythTV. Per GNU Linux esistono anche una lunga lista di programmi per la manipolazione e l'editing audio e video che si basano tutti sui comandi da riga di comando convert, i quattro programmi principali sono Sweep, Kwave, Audacity e **Avidemux**, i primi tre sono utili per modificare file audio come mp3, il quarto è un semplice programma che serve per modificare, concatenare i file video, in particolare Avidemux è un programma molto utile anche perché è compatibile con tutti i formati se i codec sono installati nel sistema.
 
-Per Debian è disponibile anche il famoso programma OBS, questo permette di eseguire registrazioni video e di eseguire streaming su alcune piattaforme come Twitch. Il programma è disponibile nel repository ufficiale di Debian con il nome di obs-studio. Per chi volesse creare il proprio DVD può provare ad usare il programma mandvd, questo programma permette di aggiungere i tuoi video al progetto del DVD, assegnare un immagine per creare il tasto di selezione di ciascun video, creare dei video slideshow delle tue foto (con o senza musica di sottofondo); alla fine del progetto, si converte il tutto nella classica struttura DVD, e si sceglie se masterizzare il progetto con K3B oppure creare un immagine ISO, scelta utile in caso ci sia la necessita di fare più copie. Per chi volesse invece rippare un DVD può usare dvdriv, un piccolo programma di utilità che permette la copia di DVD su Linux.
+Per Debian è disponibile anche il famoso programma **OBS**, questo permette di eseguire registrazioni video e di eseguire streaming su alcune piattaforme come Twitch. Il programma è disponibile nel repository ufficiale di Debian con il nome di obs-studio. Per chi volesse creare il proprio DVD può provare ad usare il programma mandvd, questo programma permette di aggiungere i tuoi video al progetto del DVD, assegnare un immagine per creare il tasto di selezione di ciascun video, creare dei video slideshow delle tue foto (con o senza musica di sottofondo); alla fine del progetto, si converte il tutto nella classica struttura DVD, e si sceglie se masterizzare il progetto con K3B oppure creare un immagine ISO, scelta utile in caso ci sia la necessita di fare più copie. Per chi volesse invece rippare un DVD può usare dvdriv, un piccolo programma di utilità che permette la copia di DVD su Linux.
 
-Per Spotify è consigliato l'uso del gestore snapd
+Per **Spotify** è consigliato l'uso del gestore snapd
 ```
 snap install spotify
 ```
-Su Synaptic potete trovare un elenco completo di tutte le applicazioni disponibili su Debian per la visualizzazione e l'editing di immagini e foto, dovete tenere presente anche che ogni desktop manager ha il proprio programma di visualizzazione delle immagini, è consigliato provare tutti i programmi già disponibili prima di scegliere un uno specifico. Per prima cosa dovete sapere che lo standard di GNU Linux per le immagini è il png anche se potete trovare e usare tranquillamente i formati jpg o gif. Tra i programmi per la modifica delle immagini è disponibile il famoso programma GIMP (GNU Image Manipulation Program), che è il più famoso programma di GNU Linux per la modifica delle immagini e uno dei più usati al mondo visto che è disponibile su tutte le piattaforme ed è completamente gratuito, le ultime versioni sono veramente all'altezza dei rivali. Per la grafica 3D è disponibile il famoso Blender anche se, in questo caso, conviene usare la versione su Snapd in quanto è una versione più recente; mentre è possibile usare Dia che permette di creare diagrammi di flusso, circuiti elettrici, grafici UML, diagrammi di rete, diagrammi E-R ed altri ancora.
+Su Synaptic potete trovare un elenco completo di tutte le applicazioni disponibili su Debian per la visualizzazione e l'editing di immagini e foto, dovete tenere presente anche che ogni desktop manager ha il proprio programma di visualizzazione delle immagini, è consigliato provare tutti i programmi già disponibili prima di scegliere un uno specifico. Per prima cosa dovete sapere che lo standard di GNU Linux per le immagini è il png anche se potete trovare e usare tranquillamente i formati jpg o gif. Tra i programmi per la modifica delle immagini è disponibile il famoso programma **GIMP (GNU Image Manipulation Program)**, che è il più famoso programma di GNU Linux per la modifica delle immagini e uno dei più usati al mondo visto che è disponibile su tutte le piattaforme ed è completamente gratuito, le ultime versioni sono veramente all'altezza dei rivali. Per la grafica 3D è disponibile il famoso **Blender** anche se, in questo caso, conviene usare la versione su Snapd in quanto è una versione più recente; mentre è possibile usare Dia che permette di creare diagrammi di flusso, circuiti elettrici, grafici UML, diagrammi di rete, diagrammi E-R ed altri ancora.
 
 All'interno dei desktop manager principali è possibile trovare installati automaticamente dei PDF reader però si possono installare programmi evoluti come kPDF e pdfedit, questo secondo permette di modificare file in formato PDF.
 
-Senza alcun dubbio K3B è la migliore applicazione per GNU Linux per la masterizzazione di CD-ROM e DVD, sorprende sempre la velocità e la semplicità d'uso di questa applicazione anche se per masterizzare è possibile scegliere anche altri programmi come GnomeBaker, Nero for GNU Linux, oppure i comandi da riga di comando cdrecord e growisofs mentre per creare dischi-video potete provare VCDImager.
+Senza alcun dubbio **K3B** è la migliore applicazione per GNU Linux per la masterizzazione di CD-ROM e DVD, sorprende sempre la velocità e la semplicità d'uso di questa applicazione anche se per masterizzare è possibile scegliere anche altri programmi come GnomeBaker, Nero for GNU Linux, oppure i comandi da riga di comando cdrecord e growisofs mentre per creare dischi-video potete provare VCDImager.
 
-Per i servizi dropbox esiste il pacchetto dedicato ufficiale, purtroppo non è nei repository ufficiali è necessario scaricare il pacchetto manualmente perché non esiste repository dedicato, per l'installazione veloce basta eseguire il comando di installazione
+## Dropbox
+
+Per i servizi **Dropbox** esiste il pacchetto dedicato ufficiale, purtroppo non è nei repository ufficiali è necessario scaricare il pacchetto manualmente perché non esiste repository dedicato, per l'installazione veloce basta eseguire il comando di installazione
 ```
 dpkg -i nomePacchetto.deb
 ```
@@ -370,13 +428,15 @@ al termine dell'installazione dovrebbe aprirsi automaticamente un browser per la
 
 Per il controllo remoto dei sistemi è possibile usare i vari programmi e protocolli: con i sistemi GNU Linux si usa il protocollo specifico RDC con i vari programmi di gestione come KRDC, è possibile usare anche i protocolli di Microsoft per collegarsi a sistemi Windows sempre con il programma KRDC.
 
+## Giochi e Steam
+
 A differenza di quello che si pensa, GNU Linux ha una grandissima varietà di giochi ed è ormai superfluo dire che questi giochi possono funzionare indipendentemente dal desktop usato, questa lista comprende passatempi, come solitari e arcade, oppure giochi più complicati, come gare d'auto e sparatutto, non poteva mancare anche una versione di Mame, il famoso emulatore di ROM di giochi delle vecchie console, ricordando che è illegare giocare con ROM se non si possiede il gioco originale. Una lista completa di tutti i giochi disponibili è disponibile nel sito ufficiale tra cui è necessario citare i migliori: Urban terror, Nequiz, OpenArena, Warzone 2100, Super Tux e Super Tux Kart, FreeCiv e FreeDoom.
 
-Il gioco Minecraft è disponibile per GNU LINUX: dal sito ufficiale è possibile scaricare che risulta molto veloce, una volta scaricata la versione basta lanciare il pacchtto-jar auto-installante per avere il gioco disponibile nel proprio sistema. Il pacchetto di Minecraft è disponibile per l'installazione anche da Snapd.
+Il gioco **Minecraft** è disponibile per GNU LINUX: dal sito ufficiale è possibile scaricare che risulta molto veloce, una volta scaricata la versione basta lanciare il pacchtto-jar auto-installante per avere il gioco disponibile nel proprio sistema. Il pacchetto di Minecraft è disponibile per l'installazione anche da Snapd.
 
 Cedega è stato un progetto per far funzionare giochi e programmi compilati per Microsoft Windows sui sistemi GNU Linux, il progetto era a pagamento acquistabile direttamente dal sito ufficiale, purtroppo da qualche anno il progetto è stato abbandonato e non è più consigliato usare tale programma.
 
-Per i sistemi GNU Linux e Debian è disponibile l'installer del launcher Steam scaricabile da snap con il solito comando
+Per i sistemi GNU Linux e Debian è disponibile l'installer del launcher **Steam** scaricabile da snap con il solito comando
 ```
 # snap install steam
 ```
@@ -410,6 +470,8 @@ E' anche possibile lanciare il comando:
 ```
 per vedere se il demone Apache è attivo nel sistema.
 
+## Sistema di stampa CUPS
+
 Da notare che in GNU Linux quasi tutto è un demone, il sistema di stampa e la condivisione di file in rete sono gli esempi più semplici e in questo capitolo vedremo come installare i più semplici e utili demoni disponibili nella nostra distribuzione, notare che quando abbiamo installato il sistema base, abbiamo già installato alcuni demoni tra qui il demone grafico X (con i desktop) e il sistema della shell che usiamo per lanciare i comandi. Per quanto riguarda i demoni specifici di web-server e database vengono presentati nella sezione dedicata alla programmazione, in questa sezione sono presentati solo i demoni utili per l'utilizzo generico in modo da permettere ad un lettore di poter saltare il capitolo della programmazione se non interessato all'argomento.
 
 In GNU Linux la gestione dei servizi per stampare e la gestione delle stampanti come periferiche viene gestito dal progetto CUPS che mette a disposizione un insieme di demoni e programmi per stampare, il problema principale è che non tutte le case produttrici di stampanti sviluppano driver per i sistemi GNU Linux, la situazione è molto migliorata nell'ultimo decennio e ormai tutte le stampanti di ultima generazione hanno driver disponibili automaticamente su Debian oppure è possibile usare un driver generico che funziona su tutti i modelli di una generazione. Il demone CUPS (acronimo di Common UNIX Printing System) è semplice come installare tutte le applicazioni che abbiamo già visto: con Synaptic bisogna installare i pacchetti cups, apsfilters e foomatic-db senza il pacchetto lpr che è un sostituto molto vecchio.
@@ -420,7 +482,9 @@ http:\\localhost:631\
 ```
 per accedere al programma web di gestione del server di stampa. Da questa comoda interfaccia si possono gestire le stampanti (installarle, cancellarle, fermarle) e si possono anche gestire i processi di stampa. Oltre all'interfaccia web di CUPS, i vari Desktop manager mettono a disposizione vari programmi per la configurazione le stampanti oppure è possibile usare il pannello di controllo WebMin. Per condividere una stampante locale in una rete locale è necessario aver installato anche il demone SAMBA e dal condivisione potrà essere configurata direttamente dal pannello di amministrazione.
 
-Il servizio per la condivisione di file, cartelle periferiche in una rete LAN è compreso nel KernelLinux e non deve essere installato nessun pacchetto supplementare: il protocollo SSL è disponibile grazie ai pacchetti openssh-server e openssh-client. Per collegare due o più nodi con i sistemi GNU Linux basta collegarsi usando il protocollo ssh o sftp, standard ormai usato in tutti i sistemi. Se nella rete invece sono presenti nodi con altri sistemi operativi è necessario usare il servizio di rete Samba che permette di condividere file e stampanti tra i vari sistemi operativi, per attivarlo vi basta installare il pacchetto Samba: il demone della condivisione con il protocollo NetBios usato dal sistema operativo MsWindows e anche dai sistemi operativi di Apple. La configurazione del demone può essere fatta nel file specifico:
+## Condivisioni di rete con SSH e Samba
+
+Il servizio per la condivisione di file, cartelle periferiche in una rete LAN è compreso nel KernelLinux e non deve essere installato nessun pacchetto supplementare: il protocollo **SSH** è disponibile grazie ai pacchetti ```openssh-server``` e ```openssh-client``. Per collegare due o più nodi con i sistemi GNU Linux basta collegarsi usando il protocollo ssh o sftp, standard ormai usato in tutti i sistemi. Se nella rete invece sono presenti nodi con altri sistemi operativi è necessario usare il servizio di rete **Samba** che permette di condividere file e stampanti tra i vari sistemi operativi, per attivarlo vi basta installare il pacchetto Samba: il demone della condivisione con il protocollo NetBios usato dal sistema operativo MsWindows e anche dai sistemi operativi di Apple. La configurazione del demone può essere fatta nel file specifico:
 ```
 /etc/samba/smb.conf
 ```
@@ -441,6 +505,9 @@ così sarà possibile accedere via Explorer inserendo nella barra degli indirizz
 ```
 net use L: \\myserver\myshare /u:myuser mypassword
 ```
+
+## I RunLevel
+
 Un runlevel è uno stato logico del sistema in cui è possibile eseguire un insieme di operazioni, nei sistemi basati su Debian si usa lo standard SysV ed esistono 7 livelli, tutti i livelli sono basati su script eseguiti come link e contenuti in una cartella predefinita:
 ```
 /etc/init.d
@@ -490,7 +557,9 @@ che contiene tutti i comandi eseguiti all'avvio del sistema, è sempre sconsigli
 ```
 Per amministrare al meglio questi componenti potete modificare i file e gli script a mano oppure io consiglio di usare il pannello webmin dove è disponibile tutta una sezione per la gestione e la modifica dei componenti dei runlevel, nell'ambiente grafico è possibile trovare l'applicazione rcconf disponibile sui repository Debian e quindi installabili tramite Synaptic.
 
-Un demone base di tutti i sistemi GNU Linux si chiama crontab e permette la schedulazione e l'esecuzione di comando ad un orario e/o frequenze prefissati, tale demone viene lanciato in backgrouond all'avvio del sistema e si basa sul file di configurazione
+## Schedulazioni con Cron
+
+Un demone base di tutti i sistemi GNU Linux si chiama **crontab** e permette la schedulazione e l'esecuzione di comando ad un orario e/o frequenze prefissati, tale demone viene lanciato in backgrouond all'avvio del sistema e si basa sul file di configurazione
 ```
 /etc/crontab
 ```
@@ -548,7 +617,9 @@ il comando verrà eseguito nei giorni feriali (da lunedì a venerdì) di tutti i
 ```
 Bisogna sempre tenere conto che cron esegue gli script al momento indicato solo se il sistema è acceso e il server crontab è avviato, se il sistema è spento o se il demone crontab viene arrestato, il comando non viene eseguito nemmeno quando crontab viene avviato successivamente. Come indicato per altri demoni, anche questo demone può essere facilmente configurato da WebMin senza la necessità di modificare il file a mano ma basta utilizzare l'interfaccia web per configurare il demone della schedulazione.
 
-Per il controllo da remoto dei sistemi è possibile usare rdesktop compatibile il sistema di condivisione di MsWindows e potete provare il programma TeamViwever che permette di controllare da remoto in maniera indipendente. Uno dei programmi più usati è VNC, per installare VNC dovete installare i pacchetti
+## Controllo remoto
+
+Per il controllo da remoto dei sistemi è possibile usare **rdesktop** compatibile il sistema di condivisione di MsWindows e potete provare il programma TeamViwever che permette di controllare da remoto in maniera indipendente. Uno dei programmi più usati è VNC, per installare VNC dovete installare i pacchetti
 ```
 x11vnc vnc-java
 ```
@@ -570,15 +641,7 @@ ufw allow 3389/tcp
 ```
 Come client è possibile utilizzare il programma Remmina, grazie al quale è possibile utilizzare il protocollo RDP per collegarsi ad un server remoto.
 
-Oltre ai più comuni demoni indispensabili in un ambiente di casa o workstation, sono disponibili una serie di demoni per la gestione di servizi avanzati per determinate situazioni:
-
-- Se si vuole installare un demone FTP, la scelta più semplice è ProFTPD che si installa semplicemente scegliendo il pacchetto proftpd-basic da Synaptic (oppure da riga di comando tramite apt), l'installazione del pacchetto il sistema configurerà automaticamente tutto con dei valori di default che permettono già di usare il protocollo, grazie alle configurazioni base ogni utente di sistema può accedere con un client FTP alla home directory degli utenti con le credenziali del sistema. Per le configurazioni del demone è consigliato l'uso del pannello di controllo WebMin.
-- Se si necessita di un Proxy per la vostra rete LAN, i sistemi GNU Linux dispongono di un server molto potente di nome Squid, ma vi sconsiglio di installarlo se non ne avete bisogno in quanto il server potrebbe rallentare il sistema anche se non lo utilizzate, questo demone ha una vasta varietà di usi: rendere più veloce un demone web usando una cache per richieste ripetute e fornisce un servizio di ottimizzazione per la cache di rete anche per l'uso di risorse condivise all'interno della rete e, infine, filtri sul traffico permesso o bloccato.
-- Postfix è un demone mail e potete installarlo dal pacchetto omonimo e per le configurazioni conviene sempre usare WebMin oppure cercare i vari file di configurazioni a mano, per i servizi pop e imap è necessario installare e configurare courier tramite WebMin, è consigliato anche provare PostfixAdminm: una applicazione web per la gestione del demone mail ma solamente se è veramente usato, altrimenti è sconsigliata l'installazione di un demone così pesante se inutile.
-
-Si rimanda al sito ufficiale per l'elenco completo
-
-# Programmazione in Debian parte 1
+# Programmazione in Debian
 
 Il tema della programmazione è il tema principale di scrive questa serie di articoli e saranno presentati vari articoli riguardo a questo scottante tema. In questo non sono esposte le varie teorie sulla programmazione e non è nemmeno una guida ai vari linguaggi di programmazione ma vengono solo presentati strumenti e comandi che un programmatore ha a disposizione per lavorare e iii divertirsi iii (perché dovrebbe essere anche un divertimento), sono presenti semplici esempi di codice nei vari linguaggi di programmazione solo per le verifiche base.
 
@@ -607,7 +670,9 @@ echo param=$param
 ```
 Si rimanda alla documentazione ufficiale per maggiori riguardo al tema dello script sh.
 
-I linguaggi C e il C++ sono i due linguaggi base di tutto il mondo GNU Linux, chiunque voglia scrivere e/o modificare programmi deve conoscere un po' di questi linguaggi.
+## C
+
+I linguaggi **C** e il **C++** sono i due linguaggi base di tutto il mondo GNU Linux, chiunque voglia scrivere e/o modificare programmi deve conoscere un po' di questi linguaggi.
 
 Il compilatore principale e più usato è g++ (g plus plus), che si trovare anche con il nome di gpp nell'elenco pacchetti. Il compilatore viene sempre installato in automatico nell'installazione del sistema base e non può essere tolto perché serve a moltissime applicazioni e risulta spesso indispensabile per il funzionamento del sistema base. Esistono due metodi principali per eseguire la compilazione di un file C/C++: via terminale oppure utilizzare un ambiente di sviluppo integrato, per poter compilare dei sorgenti è consigliabile installare il pacchetto build-essential infatti, dopo averlo installato, potete tranquillamente scrivere il vostro codice in un editor di testo qualunque, come Gedit, poi salvarlo con estensione .cpp per poi eseguire i comandi:
 ```
@@ -621,7 +686,9 @@ ed ecco il nostro programma in esecuzione nel terminale.
 
 Essendo C e C++ molto usati in GNU Linux, esistono moltissimi ambienti di sviluppo grafici (IDE o SDK) che permetto all'utente di scrivere progetti, anche di grandi dimensioni, e di compilare senza dover usare la riga di comando, alcuni presentano anche dei correttori automatici, auto-complete (nel caso del C++) ed altre funzionalità molto utili, i più famosi sono Anjuta e BlueFish anche se in realtà è consigliato utilizzare Eclipse o Visual Studio Code con le estensioni dedicate ai linguaggi C/C++.
 
-Il linguaggio Python è uno dei più usati a livello mondiale per la sua semplicità, per esempio WebMin è basato su questo linguaggio e il pacchetto principale è indispensabile ed è già installato. Per installare il pacchetto di enviroment e di sviluppo per eseguire script scritti nel linguaggio python basta lanciare il comando di installazione del pacchetto venv (abbreviazione di vistual-environment):
+## Python
+
+Il linguaggio **Python** è uno dei più usati a livello mondiale per la sua semplicità, per esempio WebMin è basato su questo linguaggio e il pacchetto principale è indispensabile ed è già installato. Per installare il pacchetto di enviroment e di sviluppo per eseguire script scritti nel linguaggio python basta lanciare il comando di installazione del pacchetto venv (abbreviazione di vistual-environment):
 ```
 apt-get install python3-venv
 ```
@@ -667,6 +734,8 @@ Essendo GNU Linux una piattaforma molto usata negli ambienti universitari e nei 
 
 Per quanto riguarda il calcolo numerico la scelta è molto varia e il mondo GNU Linux dispone di molte applicazioni che possono essere utili, tra cui Scilab, Octave e MatLab, programmi open-source e usatissimi a scopo didattico nelle università di tutto il mondo anche se sicuramente il programma più famoso in assoluto per il calcolo numerico è un programma chiamato Mathematica, che non è gratuito e nemmeno open-source ma è anche un potente linguaggio di programmazione interpretato, sicuramente la sua completezza e la sua potenza si paga notevolmente.
 
+## LaTeX
+
 Per chi vuole utilizzare il famosissimo linguaggio LaTeX per creare documenti, ci sono alcuni programmi che lo aiuteranno notevolmente alla gestione dei documenti, per prima cosa bisogna andare ad installare tutti i pacchetti necessari: bisogna installare i pacchetti che iniziano per LaTeX evitando di selezionare le estensioni per le lingue orientali se non servono, poi si può lanciare la compilazione da riga di comando oppure usare un ambiente grafico che esegua la compilazione con un semplice click su un bottone. Per la compilazione a mano, dopo aver scritto il documento con un semplice editor di testo (come kEdit o gEdit), la compilazione è lanciata con il comando:
 ```
 $ latex miodocumento.tex
@@ -682,6 +751,8 @@ $ pdflatex miodocumento.tex
 Un'altra opzione è quella di usare l'utilissimo programma Kile: il miglior programma per GNU Linux per scrivere documenti in linguaggio LaTeX: consigliato e indispensabile per chi vuole scrivere documenti di grandi dimensioni, da usare anche la possibilità di creare dei progetti in modo tale da dividere i documenti in file più piccoli e più semplici da gestire, notare anche che con la seconda barra in alto si evita di dover andare a scrivere i comandi sulla shell ma basta fare un click con il mouse.
 
 *La versione PDF di questo documento è scritta in LaTeX utilizzando l'editor Kile*
+
+## Notify e Zenity
 
 Se si utilizza un sistema con un gestore desktop è possibile usare dei comandi base per visualizzare dei messaggi tramite notifiche o tramite piccole finestre di dialogo, per esempio per visualizzare una notifica nel desktop basta lanciare il comando
 ```
@@ -710,7 +781,7 @@ Tuttavia se si vuole schedulare una finestra creata con zenity con Crontab (o vi
 DISPLAY=:0.0 zenity --question --title="Title" --text="What to do?"
 ```
 
-# Programmazione in Debian parte 2
+## LAMP 
 
 Quando si pensa ai sistemi GNU Linux si pensa anche al matrimonio del secolo chiamato LAMP: l'unione perfetta tra GNU Linux, Apache, MySql & Php. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione unendo i pacchetti con un semplice comando:
 ```
@@ -722,7 +793,10 @@ Una volta installati i pacchetti questi vengono auto-configurati tanto che il se
 ```
 http://localhost/
 ```
-Se un programmatore vuole configurare Apache inserendo una nuova cartella web deve andare a modificare i file di configurazione del server Apache, purtroppo non esiste una applicazione in grado di farlo in maniera grafica e veloce: per attivare una nuova applicazione web è necessario modificare il file di configurazione di Apache
+
+### Apache 
+
+Se un programmatore vuole configurare **Apache** inserendo una nuova cartella web deve andare a modificare i file di configurazione del server Apache, purtroppo non esiste una applicazione in grado di farlo in maniera grafica e veloce: per attivare una nuova applicazione web è necessario modificare il file di configurazione di Apache
 ```
 /etc/apache2/apache2.conf
 ```
@@ -761,7 +835,9 @@ Alias "/Php/" "/mnt/Dati/Php/"
 ```
 *bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione!*.
 
-Il demone database MySql è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione mariadb che è la versione open-source e libera e sono previsti due pacchetti principali (mariadb-client e mariadb-server), all'installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
+### MySql
+
+Il demone database **MySql** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione mariadb che è la versione open-source e libera e sono previsti due pacchetti principali (mariadb-client e mariadb-server), all'installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
 ```
 $ mysql_secure_installation
 ```
@@ -821,7 +897,9 @@ che nei sistemi Debian si trova nel path
 ```
 Con questo comando è possibile modificare le configurazioni del interprete/compilatore, si rimanda alla documentazione ufficiale per maggior dettagli riguardo a questo tema.
 
-Per guardo riguarda la programmazione di applicazioni web Node.js e NPM hanno cambiato il mondo facilitando il lavoro degli sviluppatori: Node.js è lo strumento che consente agli sviluppatori di eseguire script al di fuori del browser web mentre NPM è il gestore di pacchetti per la gestione dei moduli Nodejs. L'installazione di questi due tool in una distribuzione Debian è facile e prevede l'installazione di due pacchetti
+## Node e NPM
+
+Per guardo riguarda la programmazione di applicazioni web **Node.js** e **NPM** hanno cambiato il mondo facilitando il lavoro degli sviluppatori: Node.js è lo strumento che consente agli sviluppatori di eseguire script al di fuori del browser web mentre NPM è il gestore di pacchetti per la gestione dei moduli Nodejs. L'installazione di questi due tool in una distribuzione Debian è facile e prevede l'installazione di due pacchetti
 ```
 apt-get install nodejs npl curl -y
 ```
@@ -847,9 +925,11 @@ $ npm start
 ```
 e poi andare all'indirizzo della applicazione web locale. Si rimanda alla documentazione dei tool e delle librerie per maggior in formazioni.
 
+## Java e Tomcat
+
 Il rapporto tra GNU Linux e Java è sempre stato un po' travagliato, questo perché le società che hanno i diritti sul linguaggio e sui compilatori non rilasciavano versioni open-source andando in contrasto con le politiche open di GNU Linux e di Debian, questo portò molte distribuzioni a togliere le versioni ufficiali java e comprendere alcune JVM (Java Virtual Machine) alternative e libere (come Cacao, Javacc, Gcj). Fortunatamente, sono state create nel tempo versioni open dell'ambiente JDK, queste sono state nuovamente inserite nei repository ufficiali ed oggi sono disponibili pacchetti con il nome "openjdk". L'ambiente Java runtime in Debian cioè il famoso JRE può essere trovato nei pacchetti openjdk-11-jre oppure le versioni precedenti a seconda della versione richiesta, la versione 11 dovrebbe essere istallato in automatico all'installazione iniziale del sistema base mentre il pacchetto per il plugin per browser era icedtea-8-plugin ma oggi è considerato obsoleto.
 
-Se presente un ambiente LAMP, è possibile aggiungere il demone Tomcat per utilizzare le vostre applicazioni web che usano servlet e applicazioni in Java come semplici JSP. Per l'installazione i passi da seguire sono veloci: Debian mette a disposizione dei pacchetti già preconfigurati con delle impostazioni base adatte a chi vuole programmare in locale, è ovvio che Tomcat necessita di configurazioni avanzate se il server deve essere usato come server di produzione ma, se lo scopo è usarlo come server di sviluppo, è possibile sfruttare le configurazioni base che Debian vi mette a disposizione; dopo aver verificato di aver installato il LAMP correttamente, vi basta installare tutti i pacchetti che iniziano con il nome tomcat10 e l'installazione è terminata, poi dovete modificare il file:
+Se presente un ambiente LAMP, è possibile aggiungere il demone **Tomcat** per utilizzare le vostre applicazioni web che usano servlet e applicazioni in Java come semplici JSP. Per l'installazione i passi da seguire sono veloci: Debian mette a disposizione dei pacchetti già preconfigurati con delle impostazioni base adatte a chi vuole programmare in locale, è ovvio che Tomcat necessita di configurazioni avanzate se il server deve essere usato come server di produzione ma, se lo scopo è usarlo come server di sviluppo, è possibile sfruttare le configurazioni base che Debian vi mette a disposizione; dopo aver verificato di aver installato il LAMP correttamente, vi basta installare tutti i pacchetti che iniziano con il nome tomcat10 e l'installazione è terminata, poi dovete modificare il file:
 ```
 /etc/tomcat10/tomcat-users.xml
 ```
@@ -901,9 +981,9 @@ Per Eclipse sono consigliati i seguenti plugin scaricabili dal marketplace uffic
 
 Il tool maven e glade sono disponibili nel pacchetto ufficiale e possono essere facilmente scaricati dai repository di Debian tramite i programmi di gestione dei pacchetti.
 
-# Programmazione in Debian parte 3
+## GIT
 
-Il tool GIT è il programma per il controllo delle versioni di software e distribuzione più usato al mondo, inizialmente proprio creato per la gestione degli sviluppi del KernelLinux, ad oggi è usato in tutto il mondo anche delle grandi aziende per i progetti di grandissimi progetti. Il sistema può essere installato con l'omonimo pacchetto e per la configurazione basta lanciare i comandi
+Il tool **GIT** è il programma per il controllo delle versioni di software e distribuzione più usato al mondo, inizialmente proprio creato per la gestione degli sviluppi del KernelLinux, ad oggi è usato in tutto il mondo anche delle grandi aziende per i progetti di grandissimi progetti. Il sistema può essere installato con l'omonimo pacchetto e per la configurazione basta lanciare i comandi
 ```
 git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
@@ -919,7 +999,9 @@ git push -u origin master
 ```
 è possibile anche usare il plugin dedicato di Eclipse o Visual Studio Code per la gestione dei repository e la gestione dei commit/push. Inoltre esistono dei piccoli grandi tool grafici come git-cola o gitg, sono sicuramente da provare ed è da notare anche la simpatica descrizione del gitCola in Synaptic. Guide complete di GIT sono disponibili nelle pagine dedicate a JavaEE con Eclipse e Angular.
 
-Visual Studio Code è un programma per lo sviluppo, rilasciato da Microsoft gratuitamente anche per la piattaforma GNU Linux, può essere usato per quasi tutti i linguaggi: ad oggi è considerato il miglior programma per tanti linguaggi come PHP, Javascript e Typescript. Può essere facilmente scaricato dal sito di microsoft, le istruzione per l'installazione variano spesso quindi bisogna sempre controllare alla pagina ufficiale la sezione dedicata a Debian.
+## Visual Studio Code
+
+**Visual Studio Code** è un programma per lo sviluppo, rilasciato da Microsoft gratuitamente anche per la piattaforma GNU Linux, può essere usato per quasi tutti i linguaggi: ad oggi è considerato il miglior programma per tanti linguaggi come PHP, Javascript e Typescript. Può essere facilmente scaricato dal sito di microsoft, le istruzione per l'installazione variano spesso quindi bisogna sempre controllare alla pagina ufficiale la sezione dedicata a Debian.
 
 Ad oggi esistono più modi di configurare il repository e installare il programma, per esempio:
 ```
@@ -945,7 +1027,9 @@ Poi infatti basta lanciare il comando dall'icona che compare nel menù del deskt
 - docker
 - aws toolkit
 
-Postman Icon Vector SVG Icon - SVG RepoAnche per Postman non esiste il pacchetto Debian ufficiale e per poterlo installare esistono due possiblità: scaricarlo dai server di snap con un semplice click oppure scaricare l'installer in formato tar.gz dal sito ufficiale e poi installare il programma con i comandi:
+## Postman
+
+Anche per **Postman** non esiste il pacchetto Debian ufficiale e per poterlo installare esistono due possiblità: scaricarlo dai server di snap con un semplice click oppure scaricare l'installer in formato tar.gz dal sito ufficiale e poi installare il programma con i comandi:
 ```
 # tar -xzf Postman-linux-x64-*.tar.gz
 # sudo rm -rf /opt/Postman
@@ -964,7 +1048,9 @@ EOF
 ```
 con l'ultimo comando si è creata la voce di menù da cui è possibile accedere al programma velocemente, poi gli aggiornamenti vengono scaricati automaticamente dal programma stesso.
 
-Per gli ambienti GNU Linux sono disponibili molti diversi DBMS, il più usato ovviamente è  MySql, già descritto nella sezione su LAMP, ma nel tempo sono stati sviluppati altri gestori di base dati più o meno open-source, uno dei più famoso e più usati è PostgreSQL, questo è disponibile nei repository ufficiali con dei pacchetti pronti, infatti basta installare i pacchetti base:
+## PostgreSQL
+
+Per gli ambienti GNU Linux sono disponibili molti diversi DBMS, il più usato ovviamente è  MySql, già descritto nella sezione su LAMP, ma nel tempo sono stati sviluppati altri gestori di base dati più o meno open-source, uno dei più famoso e più usati è **PostgreSQL**, questo è disponibile nei repository ufficiali con dei pacchetti pronti, infatti basta installare i pacchetti base:
 ```
 # apt-get install postgresql-13 postgresql-all ufw
 ```
@@ -1006,7 +1092,9 @@ Per collegarsi al database PostgreSQL è possibile usare qualunque programma com
 ```
 da notare che con l'ultimo comandi si è abilitato l'accesso via web dall'indirizzo localhost/pgadmin4.
 
-File:MongoDB Logo.svg - WikipediaPer quanto riguarda il MongoDB l'installazione è un attimo più complicata perché si deve scaricare da un repository proprietario e non da quelli ufficiali di Debian.
+## MongoDB
+
+Per quanto riguarda il **MongoDB** l'installazione è un attimo più complicata perché si deve scaricare da un repository proprietario e non da quelli ufficiali di Debian.
 ```
 # apt-get install dirmngr gnupg apt-transport-https software-properties-common ca-certificates
 # curl -fsSL https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
@@ -1043,7 +1131,9 @@ https://robomongo.org/download
 ```
 dove è possibile trovare la guida per l'installazione e la configurazione del tool.
 
-Per chi usa il cloud AWS è indispensabile usare i comandi da riga di comando Command Line interface AWS-CLI e AWS-SAM, entrambi sono facilmente configurabili in pochi istanti grazie ai tool messi a disposizione direttamente da AWS. L'installazione della CLI è facilissima e basta seguire i passi descritti nella documentazione ufficiale:
+## AWS CLI e SAM
+
+Per chi usa il cloud **AWS** è indispensabile usare i comandi da riga di comando Command Line interface **AWS-CLI** e **AWS-SAM**, entrambi sono facilmente configurabili in pochi istanti grazie ai tool messi a disposizione direttamente da AWS. L'installazione della CLI è facilissima e basta seguire i passi descritti nella documentazione ufficiale:
 ```
 $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
 $ unzip awscliv2.zip
@@ -1087,7 +1177,9 @@ $ sls
 ```
 Alcuni esempi di utilizzo di SLS sono disponibili sulla pagina dedicata al cloud AWS.
 
-Per la installazione del demone dei Docker basta installare i pacchetti omonimi: docker e docker-compose presenti nei repository ufficiali e poi possono i vari comandi dei docker per gestire il demone:
+## Docker
+
+Per la installazione del demone dei **Docker** basta installare i pacchetti omonimi: docker e docker-compose presenti nei repository ufficiali e poi possono i vari comandi dei docker per gestire il demone:
 ```
 # systemctl status docker
 # systemctl start docker
