@@ -8,8 +8,13 @@
 *writted by AlNao*
 
 
+In questa pagina sono elencati tutti gli articoli riguardo a GNU Linux Debian alla versione 12 chiamata **Bookworm**.
+
+
+E' garantito il permesso di copiare, distribuire e/o modificare questo documento in base ai termini della GNU Free Documentation License, Versione 1.2 o ogni versione successiva pubblicata dalla Free Software Foundation. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation.
+
 # Indice
-- [Introduzione a Debian](#Introduzione-a-Debian)
+- [Introduzione](#Introduzione)
 - [Come installare Debian 12](#Come-installare-Debian-12)
 - [Come gestire i file e le partizioni](#Come-gestire-i-file-e-le-partizioni)
   - [Gestione dei permessi](#Gestione-dei-permessi)
@@ -59,12 +64,10 @@
   - [Gestione dei backup](#Gestione-dei-backup)
   - [Gestione delle macchine virtuali](#Gestione-delle-macchine-virtuali)
 
-# Introduzione a Debian
-In questa pagina sono elencati tutti gli articoli riguardo a GNU Linux Debian alla versione 12 chiamata **Bookworm**.
+# Introduzione
 
-*E' garantito il permesso di copiare, distribuire e/o modificare questo documento in base ai termini della GNU Free Documentation License, Versione 1.2 o ogni versione successiva pubblicata dalla Free Software Foundation. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation.*
 
-Questo manuale viene aggiornato dal 2006, anno di scrittura della prima versione della mitica Debian 3.1 Sarge, ogni due anni esce una versione nuova del sistema operativo Debian, questo comporta una revisione completa di tutti gli argomenti trattati. E' in corso l'aggiornamento degli articoli alla nuova versione uscita nell'estate 2023 e a breve sarà possibile scaricare la versione PDF del AlNao Debian HandBook con tutti gli articoli. Tutti gli articoli completi e la versione di questo manuale della versione 11 sono disponibili nella vecchia versione del sito che rimarrà disponibile finché tutti gli articoli saranno aggiornati in questa pagina.
+Questo manuale viene aggiornato dal 2006, anno di scrittura della prima versione della *mitica* Debian 3.1 Sarge, ogni due anni esce una versione nuova del sistema operativo Debian, questo comporta una revisione completa di tutti gli argomenti trattati. Questa è la versione della versione 12.1, le precedenti vesioni erano in formato PDF e nel sito web [alnao.it](https://www.alnao.it/).
 
 Questo documento nasce dalla personale esigenza di avere un registro delle attività eseguite negli anni per la gestione dei sistemi GNU Linux e Debian, sia in ambito professionale sia in ambito personale. La necessità di riordinare il contenuto di grossi blocchi di appunti sparsi e raccolte di pagine web mi ha portato a scrivere un vero documento ordinato che negli anni si è evoluto visti i numerosi e frequenti aggiornamenti. In maniera molto ambiziosa l'ho chiamato documento e manuale, visto che ha anche di condivisione delle mie personali esperienze e conoscenze, seguendo proprio lo spirito base del mondo Open-source e GNU Linux. Rispetto alle precedenti versioni, questa versione è scritta senza sotto-sezioni e con articoli che parlano di singolo argomento in maniera completa. Ho sempre cercato il tempo per scrivere e per correggere gli errori di grammatica e di battitura di cui questo documento è pieno, cerco anche di essere chiaro e non ripetitivo ma non sempre trovo il tempo e le energie per fare tutto e poi sistemare tutto, non avendo nessun scopo di guadagno mi auguro che il lettore comprenda che questa è un documento amatoriale e che non pretenda troppo da questo manuale, ovviamente le cose scritte sono (quasi) sempre verificate anche se ovviamente si possono trovare guide con maggiori dettagli. Essendo un documento amatoriale ed essendo un testo scritto nei miei ritagli di tempo libero senza l'uso di nessun aiuto automatico come le IA, mi auguro che il lettore non abbia la pretesa che questo manuale descriva con precisione il modo migliore per installare e configurare un sistema perfettamente funzionante. 
 
@@ -80,7 +83,7 @@ Per chiarezza di esposizione e per garantire anche precisione delle descrizioni,
 - Viene usato lo stile ```macchina di scrivere``` per indicare messaggi mostrati a video dal sistema, i caratteri inseriti da tastiera e i nomi dei file, facendo sempre attenzione alla distinzione fra lettere minuscole e maiuscole.
 - Viene usato lo stile **Grassetto** quando si indicano, per la prima volta, nomi di programmi o dei pacchetti di particolare importanza.
 - Viene usato lo stile *corsivo* quando si vogliono evidenziare commenti personali o note non ufficiali.
-- Vengono usati dei riquadri oppure il <span style="color:orange;">testo in rosso</span> quando si vogliono inserire delle note importanti che meritano maggiore attenzione dall'utente.
+- Vengono usati dei riquadri oppure il $\textcolor{orange}{\textsf{testo in rosso}}$ quando si vogliono inserire delle note importanti che meritano maggiore attenzione dall'utente.
 
 Dopo la scrittura di ogni comando è sottintesa la pressione del tasto invio (enter).
 
@@ -92,7 +95,7 @@ Un utilizzatore di GNU Linux deve imparare fin da subito a prestare attenzione a
 
 La fase di installazione di un sistema operativo è sicuramente una delle fasi può complesse, in questo capitolo sono descritte tutte le fasi passo dopo passo ma grazie al programma grafico di installazione questa è molto semplice e veloce. Tale guida è valida anche per le precedenti versioni di Debian e anche per le successive, infatti dalla mitica versione 3.1 di Debian, chiamata Sarge, il programma di installazione ha subito poche variazioni. Una guida ufficiale per l'installazione può essere trovata nel sito ufficiale di Debian, questo capitolo vuole esserne un riassunto semplice ma completo. Molte distribuzioni di GNU Linux sono gratuite e possono essere scaricate direttamente da internet senza problemi, all'interno del sito ufficiale di Debian www.debian.org è possibile trovare tutte le immagini del DVD di installazione e tutte le informazioni sul sistema operativo; è possibile trovare i DVD di Debian anche pubblicati su riviste o manuali. Per scaricare il DVD per l’installazione basta andare nel sito, entrare nella sezione "Download" o "Getting Debian" e cliccare sul link per il download del file ISO, la versione consigliata è quella di tipo "installazione via rete" chiamata "netinst" ma è possibile scegliere altri tipi di pacchetti nel link "Other Releases". E' possibile scaricare le immagini ISO di grandi dimensioni anche via applicativi peer-to-peer come BTorrent (oppure KTorrent per chi usa già GNU Linux).
 
-<span style="color:orange;">Nota: Scaricare l'immagine ISO di Debian da un sistema Torrent (o da qualsiasi altro sistema di peer-to-peer) non è illegale in quanto Debian è free e coperto da licenza GNU che permette il download e l’uso delle immagini. Scaricare film, musica, software con piattaforme peer-to-peer può essere illegale se i contenuti scaricati sono coperti copyright e/o coperti da licenza proprietaria.</span>
+$\textcolor{orange}{\text{Nota: Scaricare l'immagine ISO di Debian da un sistema Torrent (o da qualsiasi altro sistema di peer-to-peer) non è illegale in quanto Debian è free e coperto da licenza GNU che permette il download e l’uso delle immagini. Scaricare film, musica, software con piattaforme peer-to-peer può essere illegale se i contenuti scaricati sono coperti copyright e/o coperti da licenza proprietaria.}}$
 
 E' disponibile nel sito anche una versione "Live" di Debian, cioè una versione che non necessita di una installazione ma può essere avviata dal dispositivo (USB o DVD).all'interno di questa versione è presente il programma di installazione che presenta gli stessi passi descritti per la versione di installazione normale, anche nel caso della versione live è necessario creare un dispositivo da avviare dal BIOS del sistema, si rimanda alla documentazione ufficiale per maggiori informazioni riguardo a questa versione.
 
@@ -1538,15 +1541,12 @@ Da notare che il pacchetto è costantemente in aggiornamento quindi bisogna semp
 Nessun contenuto in questo repository è stato creato con IA o automaticamente, tutto il codice è stato scritto con molta pazienza da Alberto Nao. Se il codice è stato preso da altri siti/progetti è sempre indicata la fonte. Per maggior informazioni visitare il sito [alnao.it](https://www.alnao.it/).
 
 
+
+
 ## License
 Public projects 
 <a href="https://it.wikipedia.org/wiki/GNU_General_Public_License"  valign="middle"><img src="https://img.shields.io/badge/License-GNU-blue" style="height:22px;"  valign="middle"></a> 
 *Free Software!*
 
+E' garantito il permesso di copiare, distribuire e/o modificare questo documento in base ai termini della GNU Free Documentation License, Versione 1.2 o ogni versione successiva pubblicata dalla Free Software Foundation. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation.
 
-```
-| col 1      | col 2      |
-|------------|-------------|
-| image 1 | a |
-![debian_logo](https://www.debian.org/Pics/debian-logo-1024x576.png)
-```
