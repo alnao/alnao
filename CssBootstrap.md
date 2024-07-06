@@ -1,3 +1,8 @@
+# Css & Bootstrap notes 
+
+*writted by AlNao*
+
+
 # Indice
 - [Css3](#Introduzione-a-Css3)
   - [Cosa è il Responsive web design](#Il-Responsive-web-design)
@@ -11,6 +16,8 @@
   - [Come gestire inserimento di valori in form](#Come-gestire-inserimento-di-valori-in-form)
   - [Come gestire trasformazioni e transazioni con animazioni](#Come-gestire-trasformazioni-e-transazioni-con-animazioni)
   - [Come personalizzare fogli di stile con le variabili](#Come-personalizzare-fogli-di-stile-con-le-variabili)
+- [Bootstrap](#Bootstrap) 
+- Font e simboli
 - Esempi di Css3
   - Focus
   - Libro            
@@ -18,8 +25,7 @@
   - Login with button 
   - ModalDate
   - Tooltip   
-- Bootstrap
-- Font e simboli
+
 
 # Introduzione a Css3
 
@@ -805,6 +811,102 @@ import './index.scss';
 ```
 Ovviamente questo è un esempio che semplifica molto l'uso di SASS nelle librerie javascript, si rimanda alla documentazione ufficiale per tutti i dettagli.
 
+
+# Bootstrap
+Per la pagina iniziale di Bootstrap 5 vedere la [documentazione ufficiale](https://getbootstrap.com/docs/5.0/getting-started/introduction/).
+
+```
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+
+    <!-- Optional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
+```
+Oppure scaricare dalla pagina [download](https://getbootstrap.com/docs/5.0/getting-started/download/).
+
+
+- Per i progetti **NPM**, vedere il repository ufficiale
+  ```
+  https://github.com/twbs/bootstrap-npm-starter
+  ```
+  che a me non funziona *ma non importa*.
+
+
+- Per i progetti **Angular**:
+  - Comandi per la creazione del progetto
+    ```
+    npm install -g @angular/cli
+    ng new progetto
+    cd progetto
+    ng generate component component-name
+    ng serve
+    ```
+  - Comandi per l'import della libreria
+    ```
+    npm install bootstrap --save
+    ```
+  - Se ```css``` aggiungere nel file css generale
+    ```
+    @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+    ```
+  - Se ```scss``` aggiungere 
+    ```
+    @import "bootstrap/scss/bootstrap";
+    ```
+  - Nel componente ```app.component.html``` aggiungere il codice di prova
+    ```
+    <h1>Titolo </h1>
+    <div class="text-success">Verde</div>
+    <div class="btn btn-info">Bottone</div>
+    ```
+- Per i progetti **React**:
+  - Comandi per la creazione del progetto
+    ```
+    npx create-react-app react-app
+    cd react-app
+    npm start
+    ```
+  - Se ```css``` installazione di bootstrap
+    ```
+    npm install bootstrap
+    import "bootstrap/dist/css/bootstrap.min.css";
+    ```
+    Esempio di codice:
+    ```
+    import './App.css';
+    import "bootstrap/dist/css/bootstrap.min.css";
+    function App() {
+      return (
+        <div className="App">
+          <h1>Titolo </h1>
+          <div class="text-success">Verde</div>
+          <div class="btn btn-info">Bottone</div>
+        </div>
+      );
+    }
+    export default App;
+    ```
+  - Se ```scss``` installazione di bootstrap
+    ```
+    npm i node-sass
+    ```
+    Esempio di codice  nel file ```style.scss```:
+    ```
+    @import “../node_modules/bootstrap/scss/bootstrap.scss”;
+    ```
 
 # AlNao.it
 Nessun contenuto in questo repository è stato creato con IA o automaticamente, tutto il codice è stato scritto con molta pazienza da Alberto Nao. Se il codice è stato preso da altri siti/progetti è sempre indicata la fonte. Per maggior informazioni visitare il sito [alnao.it](https://www.alnao.it/).
