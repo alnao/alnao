@@ -434,7 +434,10 @@ Le indicazione di best practice consigliano, quasi obbligano, a dividere i templ
     </body>
     </html>
     ```
-Questi tre file bastano per visualizzare il tema ma non permettono di usare le funzionalità di "page" e "articoli" del framework per il quali è indispensabile creare due file dedicati che saranno introdotti in un articolo dedicato.
+Questi tre file bastano per visualizzare il tema ma non permettono di usare le funzionalità di "page" e "articoli" del framework per il quali è indispensabile creare due file dedicati.
+
+## Come sviluppare un tema parte 4
+*coming soon* 
 
 
 # AlNao.it

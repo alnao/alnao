@@ -324,6 +324,26 @@ $ snap install nomeprogramma
 ```
 l'elenco di tutte le migliaia di programmi disponibili si trova nel sito ufficiale snapcraft.io, un esempio di applicazione consigliata su questo sistema è Spotify.
 
+Sulla nuova versione di Debian gli aggiornamenti vengono eseguiti in automatico, questo per facilitare la vita a chi utilizza il sistema e non conosce bene la gestione dei pacchetti, si può vedere la configurazione degli aggiornamenti automatici con i comandi:
+```
+# systemctl status apt-daily.timer
+# systemctl status apt-daily.service
+# systemctl status apt-daily-upgrade.timer
+# systemctl status apt-daily-upgrade.service
+```
+Sempre con il gestore del sistema è possibile disattivare/attivare gli aggiornamento automatici con i comandi:
+```
+# systemctl disable apt-daily.timer
+# systemctl disable apt-daily.service
+# systemctl disable apt-daily-upgrade.timer
+# systemctl disable apt-daily-upgrade.service
+# systemctl status apt-daily.timer
+```
+Inoltre è possibile, anche se sconsigliato, modificare il file di configurazione
+```
+more /lib/systemd/system/apt-daily.timer 
+```
+
 ## Editor di testo
 
 Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs, forse troppo complicati per utenti poco esperti, i programmi più semplici da usare da riga di comando sono pico e nano che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è **kEdit** ma è possibile usare anche i programmi di GNOME come **gEdit** oppure **mousepad**. Tuttavia il programma più completo è Kate che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni ad apparenza strani' e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o posso essere senza estensione come il file fstab. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare jEdit, questi due programmi sono i più famosi e potenti programmi per la modifica di file dei testo.
@@ -866,7 +886,7 @@ $ mysql
 > INSERT INTO prova (Nome,Sito) VALUES ('Alberto Nao','www.alnao.it');
 > SELECT * FROM prova;
 ```
-Con questi comandi è stata creata una piccola tabella nel database test, inserita una riga sulla tabella e l'ultima query visualizza la riga appena inserita, in questo modo sono state eseguite tutte le istruzioni base del demone MySql. Per quanto riguarda l'applicazione-sito PhpMyAdmin, dalla versione 10 di Debian, non è più disponibile nei Repository ufficiali e deve essere scaricato manualmente dal sito ufficiale e posizionato in una cartella per poi lanciare i comandi di configurazione (per la configurazione dei permessi e del apache.conf). In alternativa all'ormai obsoleto PhpMyAdmin è consigliabile usare programmi più evoluti per la gestione del database come MySql-Workbench, per installarlo basta usare il repository snap e lanciare il comando:
+Con questi comandi è stata creata una piccola tabella nel database test, inserita una riga sulla tabella e l'ultima query visualizza la riga appena inserita, in questo modo sono state eseguite tutte le istruzioni base del demone MySql. Per quanto riguarda l'applicazione-sito PhpMyAdmin, dalla versione 10 di Debian, non è più disponibile nei Repository ufficiali e deve essere scaricato manualmente dal sito ufficiale e posizionato in una cartella per poi lanciare i comandi di configurazione (per la configurazione dei permessi e del apache.conf). In alternativa all'ormai obsoleto PhpMyAdmin è consigliabile usare programmi più evoluti per la gestione del database come **MySql-Workbench**, per installarlo basta usare il repository snap e lanciare il comando:
 ```
 snap install mysql-workbench-community
 ```
@@ -1020,15 +1040,17 @@ Poi infatti basta lanciare il comando dall'icona che compare nel menù del deskt
 - git graph
 - git history
 - intellicode
-- extenpion pack for java
+- extension pack for java
 - language support for java
 - maven for java
 - project manager for java
 - test runner for java
+- spring boot tools
 - pylance
 - python
 - docker
 - aws toolkit
+- sqLite viewer
 
 ## Postman
 
@@ -1182,7 +1204,7 @@ Alcuni esempi di utilizzo di SLS sono disponibili sulla pagina dedicata al cloud
 
 ## Docker
 
-Per la installazione del demone dei **Docker** basta installare i pacchetti omonimi: docker e docker-compose presenti nei repository ufficiali e poi possono i vari comandi dei docker per gestire il demone:
+Per la installazione del demone dei **Docker** basta installare i pacchetti omonimi: `docker`, `docker-compose` e `docker-compose-plugin` presenti nei repository ufficiali e poi possono i vari comandi dei docker per gestire il demone:
 ```
 # systemctl status docker
 # systemctl start docker
