@@ -17,6 +17,7 @@
   - [Come gestire trasformazioni e transazioni con animazioni](#Come-gestire-trasformazioni-e-transazioni-con-animazioni)
   - [Come personalizzare fogli di stile con le variabili](#Come-personalizzare-fogli-di-stile-con-le-variabili)
 - [Bootstrap](#Bootstrap) 
+  - [Pagina base con Bootstrap](#Pagina-base-con-Bootstrap)
 - Font e simboli
 - Esempi di Css3
   - Focus
@@ -907,6 +908,206 @@ Oppure scaricare dalla pagina [download](https://getbootstrap.com/docs/5.0/getti
     ```
     @import “../node_modules/bootstrap/scss/bootstrap.scss”;
     ```
+
+## Pagina base con Bootstrap
+Per creare una pagina base si può usare il [template ufficiale](https://getbootstrap.com/docs/5.2/getting-started/introduction/)
+```
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+  </head>
+  <body>
+    <h1>Hello, world!</h1>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  </body>
+</html>
+```
+e si può personalizzare la pagina con diversi stili e componenti, per esempio:
+```
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Dati Finanziari</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bs-primary: #2F4858;
+            --bs-primary-rgb: 47,72,88;
+        }
+        .btn-primary {
+            --bs-btn-bg: #2F4858;
+            --bs-btn-border-color: #2F4858;
+            --bs-btn-hover-bg: #243847;
+            --bs-btn-hover-border-color: #243847;
+            --bs-btn-active-bg: #1a2936;
+            --bs-btn-active-border-color: #1a2936;
+        }
+        .navbar, .card-header {
+            background-color: var(--bs-primary) !important;
+            color: white;
+        }
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        .datepicker {
+            z-index: 1060 !important;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingOverlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Caricamento...</span>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-dark bg-primary mb-4">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">Gestione Dati Finanziari</span>
+        </div>
+    </nav>
+
+    <div class="container">
+      <!-- Sezione 1: Form di inserimento -->
+      <div class="card mb-4" id="formSection">
+          <div class="card-header">
+              <h5 class="mb-0">Form di Inserimento</h5>
+          </div>
+          <div class="card-body">
+              <form id="insertForm">
+                  <table class="table table-borderless">
+                      <tr>
+                          <td><label for="importo">Importo</label></td>
+                          <td><input type="number" class="form-control" id="importo" required></td>
+                          <td><label for="intestazionePratica">Intestazione pratica</label></td>
+                          <td><input type="text" class="form-control" id="intestazionePratica"></td>
+                      </tr>
+                      <tr>
+                          <td><label for="causale">Causale</label></td>
+                          <td colspan="3"><input type="text" class="form-control" id="causale"></td>
+                      </tr>
+                      <tr>
+                          <td><label for="tipoTassoCreditore">Tipo tasso</label></td>
+                          <td>
+                              <select id="tipoTassoCreditore" class="form-select" required>
+                                  <option value="Fisso">Fisso</option>
+                                  <option value="Variabile">Variabile</option>
+                                  <option value="BCE">BCE</option>
+                              </select>
+                          </td>
+                          <td><label for="tasso">Tasso (%)</label></td>
+                          <td><input type="number" class="form-control" id="tasso" step="0.01" required></td>
+                      </tr>
+                  </table>
+                  <button type="submit" class="btn btn-primary">Calcola</button>
+              </form>
+          </div>
+      </div>
+
+      <!-- Sezione 2: Risultati calcolo -->
+      <div class="card mb-4" id="resultSection" style="display: none;">
+          <div class="card-header">
+              <h5 class="mb-0">Risultati Calcolo</h5>
+          </div>
+          <div class="card-body">
+              <button id="backToForm" class="btn btn-primary mb-3">Torna al Form</button>
+              <div id="inputSummary" class="mb-4"></div>
+              <div class="table-responsive">
+                  <table id="resultTable" class="table table-striped table-hover">
+                      <thead>
+                          <tr>
+                              <th>Incrementale</th>
+                              <th>Data da</th>
+                              <th>Data a</th>
+                              <th>Giorni periodo</th>
+                              <th>Capitale</th>    
+                              <th>Tasso</th>
+                              <th>Interessi</th>
+                              <th>Saldo</th>
+                          </tr>
+                      </thead>
+                      <tbody></tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.it.min.js"></script>
+    <script>
+        window.addEventListener('load', fetchData);
+        async function fetchData() {
+            try {
+                // TODO: chiamata API
+            } catch (error) {
+                console.log(error);
+            } finally {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        }
+        document.getElementById('tipoTassoCreditore').addEventListener('change', function() {
+            const tasso = document.getElementById('tasso');
+            this.value === 'BCE' ? tasso.value="3" : tasso.value="";
+            tasso.disabled = (this.value === 'BCE');
+        });
+        document.getElementById('insertForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            calcola();
+        });
+        function calcola(){
+          const importo = parseFloat(document.getElementById('importo').value);
+          const tasso = parseFloat(document.getElementById('tasso').value) / 100;
+          const data=[{'incrementale':1, 'dataDa':'01/01/2024', 'dataA':'31/12/2024', 'giorniPeriodo':365, 
+            'capitale':importo, 'tasso':tasso*100,'interessi':importo*tasso , 'saldo':importo*tasso+importo}]
+          //TODO
+          document.getElementById('formSection').style.display = 'none';
+          document.getElementById('resultSection').style.display = 'block';
+          renderResultTable(data);
+        }
+        function renderResultTable(data) {
+            const tbody = document.querySelector('#resultTable tbody');
+            tbody.innerHTML = '';
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                ['incrementale', 'dataDa', 'dataA', 'giorniPeriodo', 'capitale','tasso', 'interessi', 'saldo'].forEach(key => {
+                    const td = document.createElement('td');
+                    td.textContent = row[key];
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+        document.getElementById('backToForm').addEventListener('click', function() {
+            document.getElementById('formSection').style.display = 'block';
+            document.getElementById('resultSection').style.display = 'none';
+        });
+
+    </script>
+  </body>
+</html>
+```
 
 # AlNao.it
 Nessun contenuto in questo repository è stato creato con IA o automaticamente, tutto il codice è stato scritto con molta pazienza da Alberto Nao. Se il codice è stato preso da altri siti/progetti è sempre indicata la fonte. Per maggior informazioni visitare il sito [alnao.it](https://www.alnao.it/).
