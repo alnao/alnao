@@ -51,7 +51,8 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
   - [Postman](#Postman)
   - [PostgreSQL](#PostgreSQL)
   - [MongoDB](#MongoDB)
-  - [AWS CLI e SAM](#AWS-CLI-e-SAM)
+  - [AWS](#AWS)
+      - [Gestione EC2 con Debian 12](#Gestione-EC2-con-Debian-12)
   - [Docker](#Docker)
 - [I comandi comuni della shell](#I-comandi-comuni-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
@@ -1156,7 +1157,7 @@ https://robomongo.org/download
 ```
 dove è possibile trovare la guida per l'installazione e la configurazione del tool.
 
-## AWS CLI e SAM
+## AWS
 
 Per chi usa il cloud **AWS** è indispensabile usare i comandi da riga di comando Command Line interface **AWS-CLI** e **AWS-SAM**, entrambi sono facilmente configurabili in pochi istanti grazie ai tool messi a disposizione direttamente da AWS. L'installazione della CLI è facilissima e basta seguire i passi descritti nella documentazione ufficiale:
 ```
@@ -1201,6 +1202,51 @@ oppure:
 $ sls
 ```
 Alcuni esempi di utilizzo di SLS sono disponibili sulla pagina dedicata al cloud AWS.
+
+
+### Gestione EC2 con Debian 12
+Il cloud AWS mette a disposizione molte **AMI** (immagini) con il sistema operativo Debian12, la lista può essere recuperata in molti siti ufficiali oppure lanciando il comando AWS-CLI:
+```
+aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+```
+
+
+Per avviare una istanza con una specifica AMI si può usare il comando:
+```
+aws ec2 run-instances --image-id ami-XXXXXXXXXXXXXXXXX --instance-type t2.micro --key-name your-key-pair --security-group-ids sg-XXXXXXXXXXXXXXXXX --subnet-id subnet-XXXXXXXXXXXXXXXXX --count 1
+# Creare un volume e aggiungerlo all'istanza
+aws ec2 create-volume --volume-type gp2 --size 20 --availability-zone us-east-1a
+aws ec2 attach-volume --volume-id vol-XXXXXXXXXXXXXXXXX --instance-id i-XXXXXXXXXXXXXXXXX --device /dev/sdf
+# Creare una AMI a partire da una istanza
+aws ec2 create-image --instance-id i-XXXXXXXXXXXXXXXXX --name "My-Debian-AMI" --description "AMI personalizzata basata su Debian"
+# Descrivere una instanza
+aws ec2 describe-instance-status --instance-ids i-XXXXXXXXXXXXXXXXX
+# Creare una metrica Cloudwatch per il monitoraggio della istanza
+aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimensions Name=InstanceId,Value=i-XXXXXXXXXXXXXXXXX --start-time $(date -u +"%Y-%m-%dT%H:%M:%SZ" --date "1 hour ago") --end-time $(date -u +"%Y-%m-%dT%H:%M:%SZ") --period 300 --statistics Average
+```
+
+
+Una volta avviata una istanza è possibile collegarsi e configurarla, qui riportati alcuni dei principali comandi:
+```
+ssh -i /path/to/your-key-pair.pem admin@your-instance-public-ip
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y apache2 nginx mysql-server php
+```
+
+
+Per potersi collegare ovviamente bisogna ricordarsi di aprire la porta SSH-332
+```
+# Permettere accesso SSH da qualsiasi IP
+aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 0.0.0.0/0
+# Permettere accesso SSH solo da un IP specifico
+aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr IP_ADDRESS/32
+# Permettere accesso SSH da un range di IP
+aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 192.168.1.0/24
+```
+
 
 ## Docker
 
@@ -1355,7 +1401,9 @@ $ mmv '*.ps' '#1.eps'
 ```
 per rinominare tutti i file da .ps a .eps, per maggiori informazioni e una guida completa potete vedere il comando man di mmv. Il metodo più semplice rimangono i programmi di gestione file del desktop che tutti quanti usano mmv ma basta un semplice click per eseguire il comando, è possibile provare in Dolphin, Konqueror, Total Commander o qualsiasi altro filemanager presente nel sistema Debian.
 
+
 ## Manipolazione video
+
 Per la manipolazione di file video si possono usare diversi comandi, il principale è **ffmeg** che permette di manipolare file video da riga di comando con una sintassi molto complessa, si rimanda al sito ufficiale per tutti i dettagli e l'elenco di tutte le funzionalità messe a disposizione da questo tool.
 Le principali operazioni disponibili sono
 - Ruotare un video (per esempio se ripreso in verticale)
@@ -1376,6 +1424,7 @@ Le principali operazioni disponibili sono
 	ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
   ```
 
+
 ## Il bootloader Grub
 
 Durante l'installazione al passo Copia del sistema base e impostazioni finali è stato installato nel proprio sistema il sistema **Grub**, questo è il componente della piattaforma GNU Linux che avvia il sistema operativo all'accensione del sistema: dopo l'accensione infatti compare con una schermata che permette di avviare il sistema GNU Linux in diverse modalità ed eventualmente sistemi operativi diversi se sono installate diverse versioni del KernelLinux o altri sistemi operativi, un utente non esperto deve evitare di eseguire modifiche lasciando i valori di default ma un utente più esperto potrà avviare il sistema ottimizzato a seconda delle proprie esigenze.
@@ -1392,6 +1441,7 @@ ma non bisogna MAI modificarlo a mano visto che ci sono una serie di comandi che
 # grub-install --root-directory=/mnt /dev/sdX
 ```
 ripristina la versione di Grub2 nel sistema, ovviamente i parametri mnt e sdX devono essere modificati con la configurazione del sistema.
+
 
 ## Gestione del gestino
 
@@ -1414,7 +1464,8 @@ per esempio è possibile inserire questo comandi nello script rc.local per svuot
 ```
 e anche in questo caso basta pulire queste cartelle a mano oppure semplicemente svuotare il cestino dal desktop.
 
-# Il comando Sudo
+
+## Il comando Sudo
 
 Il comando **sudo** consente agli utenti senza privilegi di amministratore, di eseguire i comandi come super-utente senza dover effettuare la login come super-utente e senza conoscere la password dell'utente amministratore, in alcune distribuzioni derivate da Debian come Knoppix o Ubuntu questo comando è impostato di default perché non viene usato l'utente root mentre per chi usa Debian o altre distribuzioni GNU Linux questo comando è sconsigliato ma è possibile configurare il comando sudo, di default questo comando non viene installato durante la fase di installazione del sistema base e per averlo a disposizione basta installare il pacchetto sudo, con il comando:
 ```
@@ -1444,6 +1495,7 @@ $ sudo passwd root <nuovapassword>
 ```
 questo perché in quasi tutte le live il comando sudo viene usato al posto dell'utenza root e questo viene ereditato nelle installazioni che vengono avviate da sistemi live.
 
+
 ## Comandi per il controllo del sistema
 
 Esistono dei comandi specifici e dedicati al controllo di parti specifiche del sistema, questo articolo vuole essere un riassunto incompleto di questa categoria di comandi per Gnu Linux. Da ricordare che quasi tutte questi sistemi possono essere sostituiti da WebMin, pannello di controllo completo e facile da usare molto più semplice di tanti programmi divisi che possono risultare complessi da imparare ed usare.
@@ -1468,7 +1520,8 @@ Il comando **kill** consente di interrompere l'esecuzione di un processo conosce
 
 Per la gestione della memoria RAM, è possibile usare il comando **free** per avere una visione completa della situazione e che offre inoltre dettagli sulla memoria libera nella partizione di swap, utilizzata come supplemento alla memoria RAM disponibile sul sistema, è suggerito l'uso dei parametri "-l" che visualizzano lo stato della memoria e "-k" che visualizza l'output in KByte oppure "-m" che visualizza l'outout in MByte. Per la gestione dei dischi esiste il comando df che permette di eseguire un'operazione simile a free ma sui dispositivi di archiviazione: il suo scopo è infatti quelli di fornire informazioni sullo stato dell'hard disk del computer in uso e di ogni altro file system montato (pen drive, hard disk esterni e qualsiasi altra periferica esterna montata). Il comando df può essere eseguito sia senza alcun dispositivo target che seguito dal percorso di determinati file system: nel primo caso mostra lo spazio libero su ogni file system montato, nel secondo invece si limita a quelli selezionati manualmente.
 
-# Configurazione di rete
+
+## Configurazione di rete
 
 Esistono diversi tool per configurare del demone di rete: editare i singoli file di configurazione, usare comandi shell come **ifconfig**, usare gli strumenti con interfaccia grafica oppure l'uso di web webmin: GNU Linux e Debian mettono a disposizione moltissimi comandi per la gestione della rete, in particolare si può fare qualsiasi cosa anche senza ambiente grafico o Desktop, ovviamente bisogna ben sapere cosa fare e quindi conoscere tutte le teorie sulla rete, i protocolli (IP/TCP) e le impostazioni di sicurezza. In questo documento elenco solo alcuni comandi base che possono essere utili a tutti gli usi, i principali file di configurazione del demone di rete sono:
  
@@ -1506,6 +1559,7 @@ $ wondershaper -a enp3s0 -d 10000 -u 6500
 ```
 da notare che i limiti sono in Kbps.
 
+
 ## Gestione dei backup
 
 Qualsiasi uso si faccia di un sistema informatico è sempre importante disporre di un sistema di backup ed eventualmente il restore dei dati, grazie ai tanti cloud come Dropbox o Google-Drive è possibile fare tutto tramite internet in maniera veloce, nel mondo GNU Linux esistono molti strumenti che servono proprio per eseguire i backup dei sistema, una lista incompleta di strumenti disponibili su Debian:
@@ -1535,6 +1589,7 @@ Il kernel mette a disposizione anche il comando **dd** che è possibile usare pe
 dd if=/dev/partizione bs=32M | gzip -c > /mnt/Dati/FileBackukp.dd.gz
 ```
 
+
 ## Gestione delle macchine virtuali
 Per GNU Linux esistono diversi sistemi di virtualizzazione, lo storico sistema nativo è chiamato **Qemu** poi evoluto nel progetto **Kdm** la cui interfaccia utente è la **Virsh** ed esistono moltissime guide, si rimanda alla documentazione ufficiale per maggiori dettagli, link da inserire tuttavia la configurazione e creazione con Qemu è considerata obsoleta in quanto nelle ultime versioni di Debian non si usa praticamente mai questo tipo di configurazione.
 
@@ -1557,6 +1612,7 @@ Per quanto riguarda il programma **VirtualBox** non esiste un repository aggiorn
 # ./VirtualBox*
 ```
 Da notare che il pacchetto è costantemente in aggiornamento quindi bisogna sempre controllare l'ultima versione disponibile dal sito ufficiale di VirtualBox per rimanere aggiornati.
+
 
 
 # AlNao.it
