@@ -16,16 +16,19 @@
   - [Come gestire inserimento di valori in form](#Come-gestire-inserimento-di-valori-in-form)
   - [Come gestire trasformazioni e transazioni con animazioni](#Come-gestire-trasformazioni-e-transazioni-con-animazioni)
   - [Come personalizzare fogli di stile con le variabili](#Come-personalizzare-fogli-di-stile-con-le-variabili)
-- [Bootstrap](#Bootstrap) 
-  - [Pagina base con Bootstrap](#Pagina-base-con-Bootstrap)
-- Font e simboli
-- Esempi di Css3
+- [Tool e librerie](#Tool-e-librerie)
+  - [Bootstrap](#Bootstrap) 
+    - [Pagina base con Bootstrap](#Pagina-base-con-Bootstrap)
+  - [boxicons](#boxicons)
+- [Esempi di Css3](#Esempi-di-css3)
+  - [Tooltip](#Tooltip)
+  - Portafoglio: tabella di contenuti dinamica e responsive
   - Focus
   - Libro            
   - Luci e arcobaleno
   - Login with button 
   - ModalDate
-  - Tooltip   
+
 
 
 # Introduzione a Css3
@@ -813,7 +816,9 @@ import './index.scss';
 Ovviamente questo è un esempio che semplifica molto l'uso di SASS nelle librerie javascript, si rimanda alla documentazione ufficiale per tutti i dettagli.
 
 
-# Bootstrap
+# Tool e librerie 
+
+## Bootstrap
 Per la pagina iniziale di Bootstrap 5 vedere la [documentazione ufficiale](https://getbootstrap.com/docs/5.0/getting-started/introduction/).
 
 ```
@@ -1105,6 +1110,97 @@ e si può personalizzare la pagina con diversi stili e componenti, per esempio:
         });
 
     </script>
+  </body>
+</html>
+```
+
+## Boxicons
+Boxicons è una libreria open source di icone web che offre oltre 1500 icone vettoriali di alta qualità, disponibili in stile regular, solid e outline. 
+Per utilizzarla basta includere il tag nel head del HTML 
+```
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+```
+e poi inserire le icone con tag come 
+```
+<i class='bx bx-home'></i>
+```
+oppure
+```
+<i class='bx bxs-heart'></i>.
+```
+Per esempio, per inserire un gruppo social:
+```
+.social-icons a{
+  display:inline-flex;
+  padding:10px;
+  border: 2px solid #999999;
+  border-radius:8px;
+  font-size:24px;
+  color:#aaaaaa;
+  text-decoration:none;
+  margin:0 8px;
+}
+
+<div class="social-icons">
+  <a href="#"><i class='bx bxl-google' ></i></a>
+  <a href="#"><i class='bx bxl-facebook' ></i></a>
+  <a href="#"><i class='bx bxl-github' ></i></a>
+  <a href="#"><i class='bx bxl-linkedin' ></i></a>
+</div>
+```
+
+# Esempi di Css3
+
+
+## Tooltip
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip .tooltiptext::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #555 transparent transparent transparent;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    </style>
+  </head>
+  <body style="text-align:center;">
+    <h2>Tooltip</h2>
+    <p>Move the mouse over the text below:</p>
+    <div class="tooltip">Hover over me
+      <span class="tooltiptext">Tooltip text</span>
+    </div>
   </body>
 </html>
 ```
