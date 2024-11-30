@@ -57,6 +57,7 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
 - [I comandi comuni della shell](#I-comandi-comuni-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
+  - [Manipolazione video](#Manipolazione-video)
   - [Il bootloader Grub](#Il-bootloader-Grub)
   - [Gestione del gestino](#Gestione-del-gestino)
   - [Il comando Sudo](#Il-comando-Sudo)
@@ -1405,16 +1406,16 @@ per rinominare tutti i file da .ps a .eps, per maggiori informazioni e una guida
 ## Manipolazione video
 
 Per la manipolazione di file video si possono usare diversi comandi, il principale è **ffmeg** che permette di manipolare file video da riga di comando con una sintassi molto complessa, si rimanda al sito ufficiale per tutti i dettagli e l'elenco di tutte le funzionalità messe a disposizione da questo tool.
-Le principali operazioni disponibili sono
-- Ruotare un video (per esempio se ripreso in verticale)
+Le principali operazioni disponibili sono:
+- Ruotare un video (per esempio se ripreso in verticale):
   ```		
   ffmpeg -i input.mp4 -vf "rotate=45*(PI/180)" output.mp4
   ```
-- Tagliare un video da un punto ad un altro 
+- Tagliare un video da un punto ad un altro indicando il minutaggio di partenza e di fine taglio:
   ```
   ffmpeg -i input.mkv -ss 00:00:00 -t 00:02:30 -acodec copy -vcodec copy output.mkv
   ```
-- Unire più files in uno unico (con questo modo i video sorgenti possono avere dimensioni e risoluzioni diverse, convertendo tutto in MP4 poi in TS e poi unendoli):
+- Unire più files in uno unico file, con questo modo i video sorgenti possono avere dimensioni e risoluzioni diverse, convertendo tutto in MP4 poi in TS per poterli unire nonostante le dimensioni diverse:
 	```
 	ffmpeg -i file1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt1.ts
 	ffmpeg -i file2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt2.ts

@@ -22,13 +22,13 @@
   - [boxicons](#boxicons)
 - [Esempi di Css3](#Esempi-di-css3)
   - [Tooltip](#Tooltip)
+  - [Loader](#Loader)
+  - ModalDate
+  - Login with button 
   - Portafoglio: tabella di contenuti dinamica e responsive
   - Focus
   - Libro            
   - Luci e arcobaleno
-  - Login with button 
-  - ModalDate
-
 
 
 # Introduzione a Css3
@@ -1149,6 +1149,89 @@ Per esempio, per inserire un gruppo social:
 </div>
 ```
 
+E' possibile unire la libreria BoxIcons con boostrap usando entrambi i CSS messi a disposizione delle librerie, per esempio:
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .icon-card {
+            transition: transform 0.2s;
+        }
+        .icon-card:hover {
+            transform: translateY(-5px);
+        }
+        .bx {
+            font-size: 2.5rem;
+            color: #0d6efd;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4">Boxicons Demo</h1>
+            <p class="lead text-muted">Una raccolta di icone moderne per il tuo sito web</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-sm-6 col-md-4">
+                <div class="icon-card card h-100 shadow-sm text-center p-4">
+                    <div class="card-body">
+                        <i class="bx bxs-heart mb-3"></i>
+                        <p class="card-text text-muted">bxs-heart</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="icon-card card h-100 shadow-sm text-center p-4">
+                    <div class="card-body">
+                        <i class="bx bxs-star mb-3"></i>
+                        <p class="card-text text-muted">bxs-star</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="icon-card card h-100 shadow-sm text-center p-4">
+                    <div class="card-body">
+                        <i class="bx bxs-message mb-3"></i>
+                        <p class="card-text text-muted">bxs-message</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="icon-card card h-100 shadow-sm text-center p-4">
+                    <div class="card-body">
+                        <i class="bx bxs-user mb-3"></i>
+                        <p class="card-text text-muted">bxs-user</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="icon-card card h-100 shadow-sm text-center p-4">
+                    <div class="card-body">
+                        <i class="bx bxs-bell mb-3"></i>
+                        <p class="card-text text-muted">bxs-bell</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="icon-card card h-100 shadow-sm text-center p-4">
+                    <div class="card-body">
+                        <i class="bx bxs-bookmark mb-3"></i>
+                        <p class="card-text text-muted">bxs-bookmark</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+```
+
+
 # Esempi di Css3
 
 
@@ -1204,6 +1287,246 @@ Per esempio, per inserire un gruppo social:
   </body>
 </html>
 ```
+
+## Loader
+Nello sviluppo di pagine e siti chep resntano elementi caricati con tecnologie asincrone è indispensabile usare i *loader* per indicare al visitatore che la pagina sta caricando sezioni e/o dati. Per creare elementi grafici *loader* esistono vari metodi che possono essere usate, la più usata e comune è l'uso di keyframes e animazioni di css per ruotare o animare elementi. Per esempio per ruotare una immagine statica 
+```
+  .spin {
+      animation: spin 2s linear infinite;
+  }
+  @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+  }
+```
+Oppure per creare uno slider animato
+```
+    .loaderNao{
+    	font-size:64px;
+    	font-weight:bold;
+    	color:#bb86fc;
+    	padding:14px;
+      background: linear-gradient(currentColor 0 0) bottom left / 0% 3px no-repeat;
+      animation: loaderNaoKey 3s linear infinite;
+    }
+    @keyframes loaderNaoKey {
+      100% {
+        background-size: 100% 3px;
+      }
+    }
+```
+Un esempio completo di diversi metodi di loader combinando bootstrap con le icone boxicons:
+```
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        .loader {
+            font-size: 2rem;
+        }
+        .spin {
+            animation: spin 2s linear infinite;
+        }
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .bounce {
+            animation: bounce 1s ease infinite;
+        }
+        .horizontal-loader {
+            width: 100%;
+            height: 4px;
+            background-color: #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+        .horizontal-loader::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            background-color: #0d6efd;
+            animation: horizontalLoad 1.5s infinite ease-in-out;
+        }
+        .vertical-dots {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #0d6efd;
+            border-radius: 50%;
+            animation: dotBounce 0.8s infinite;
+        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        .horizontal-dots {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        .horizontal-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #0d6efd;
+            border-radius: 50%;
+            animation: dotPulse 1s infinite;
+        }
+        .horizontal-dot:nth-child(2) { animation-delay: 0.2s; }
+        .horizontal-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes horizontalLoad {
+            0% { left: -40%; }
+            100% { left: 100%; }
+        }
+        @keyframes dotBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes dotPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+        .loaderNao{
+          font-size:64px;
+          font-weight:bold;
+          color:#bb86fc;
+          padding:14px;
+            background: linear-gradient(currentColor 0 0) bottom left / 0% 3px no-repeat;
+            animation: loaderNaoKey 3s linear infinite;
+        }
+        @keyframes loaderNaoKey {
+          100% {
+            background-size: 100% 3px;
+          }
+        }
+        .loaderNao2{
+          border:16px solid black;
+          border-radius:50%;
+          border-top: 16px solid lightgray;
+          width: 5rem;
+          height:5rem;
+          padding:1px;
+          animation: loaderNaoKey2 2s linear infinite;
+        }
+        @keyframes loaderNaoKey2 {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="text-center mb-5">Loader Animati con Boxicons</h1>
+        <div class="row g-4 justify-content-center">
+            <!-- Loader con rotazione -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <i class="bx bx-loader loader spin text-primary mb-3"></i>
+                        <h5 class="card-title">Loader Rotante</h5>
+                        <p class="card-text text-muted">Animazione di rotazione continua</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Loader con pulsazione -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <i class="bx bxs-circle loader pulse text-primary mb-3"></i>
+                        <h5 class="card-title">Loader Pulsante</h5>
+                        <p class="card-text text-muted">Effetto di pulsazione</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Loader con rimbalzo -->
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <i class="bx bxs-square loader bounce text-primary mb-3"></i>
+                        <h5 class="card-title">Loader Rimbalzante</h5>
+                        <p class="card-text text-muted">Animazione di rimbalzo</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Loader orizzontale -->
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body p-5">
+                        <div class="horizontal-loader mb-3"></div>
+                        <h5 class="card-title text-center">Loader Orizzontale</h5>
+                        <p class="card-text text-muted text-center">Barra di caricamento orizzontale</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Loader verticale con punti -->
+            <div class="col-md-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <div class="vertical-dots mb-3">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <h5 class="card-title">Loader Verticale</h5>
+                        <p class="card-text text-muted">Punti rimbalzanti verticali</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Loader orizzontale con punti -->
+            <div class="col-md-3">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center p-5">
+                        <div class="horizontal-dots mb-3">
+                            <div class="horizontal-dot"></div>
+                            <div class="horizontal-dot"></div>
+                            <div class="horizontal-dot"></div>
+                        </div>
+                        <h5 class="card-title">Loader Orizzontale Punti</h5>
+                        <p class="card-text text-muted">Punti pulsanti orizzontali</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center p-5">
+                      <div class="loaderNao">Loading ...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body text-center p-5">
+                      <div class="loaderNao2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+```
+
+
+
+
 
 # AlNao.it
 Nessun contenuto in questo repository è stato creato con IA o automaticamente, tutto il codice è stato scritto con molta pazienza da Alberto Nao. Se il codice è stato preso da altri siti/progetti è sempre indicata la fonte. Per maggior informazioni visitare il sito [alnao.it](https://www.alnao.it/).
