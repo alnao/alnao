@@ -29,6 +29,8 @@
   - Focus
   - Libro            
   - Luci e arcobaleno
+  - [Broadcast](#Broadcast)
+  - [WebSocket-Chat](#WebSocket-Chat)
 
 
 # Introduzione a Css3
@@ -1524,7 +1526,192 @@ Un esempio completo di diversi metodi di loader combinando bootstrap con le icon
 </html>
 ```
 
+## Broadcast
+Il Broadcast in JavaScript è implementato attraverso il [BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API), che permette la comunicazione tra diverse finestre, tab, iframe o worker che appartengono alla stessa origine (stesso dominio). È come un sistema di messaggistica che permette di inviare messaggi a tutti i "listener" interessati. Esempio preso spunto dal [video](https://www.youtube.com/watch?v=l-tJt0S4kgE).
+Ecco un esempio pratico di utilizzo:
+```
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      .hidden{display: none;}
+    </style>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div class="warning hidden" id="warning">
+        <h2>Warning</h2>
+        <p>Hai aperto la pagina in un'altra tab!</p>
+      </div>
+      <div id="whatsapp-container" class="whatsapp-container">
+        <h2>Whatsapp</h2>
+        <p>Questa è la pagina di whatsapp</p>
+      </div>
+    </main>
+    <footer></footer>
+    <script>
+      const warningElement = document.getElementById('warning');
+      const whatsappContainerElem= document.getElementById('whatsapp-container');
+      const broadcast = new BroadcastChannel('whatsapp-tab');
+      broadcast.postMessage("new-tab");
+      console.log(" broadcast message sent")
+      broadcast.onmessage = (event) => {
+        console.log(" broadcast message received " + event.data);
+        if(event.data === 'new-tab') {
+          warningElement.classList.remove("hidden");
+          whatsappContainerElem.classList.add("hidden");
+        }
+      }
+    </script>
+  </body>
+</html>
+```
+## WebSocket-Chat
+Il Broadcast Channel funziona solo tra finestre/tab dello stesso browser. Non può comunicare tra browser diversi (per esempio tra Chrome e Firefox) per motivi di sicurezza e privacy. Se hai bisogno di comunicare tra browser diversi, dovresti considerare alternative come WebSocket per comunicazione real-time attraverso un server. I comandi per installare un ws con node e npm:
+```
+mkdir websocket-server
+cd websocket-server
+npm init -y
+npm install ws
+node server.js
+```
+Il codice di esempio che implementa WebSocket potrebbe essere:
+```
+const WebSocket = require('ws');
+// Crea un server WebSocket sulla porta 8088
+const wss = new WebSocket.Server({ port: 8088 });
+// Tiene traccia dei client connessi e dei nomi utente
+let connectedClients = new Set();
+let activeUsernames = new Set();
+// Gestisce le nuove connessioni
+wss.on('connection', (ws, req) => {
+    let username = null;
+    // Gestisce i messaggi ricevuti
+    ws.on('message', (message) => {
+        try {
+            const data = JSON.parse(message);
+            // Gestisce il login
+            if (data.type === 'login') {
+                if (activeUsernames.has(data.username)) {
+                    ws.send(JSON.stringify({
+                        type: 'login_response',
+                        success: false,
+                        message: 'Username già in uso'
+                    }));
+                    return;
+                }
+                username = data.username;
+                activeUsernames.add(username);
+                connectedClients.add(ws);
+                ws.send(JSON.stringify({
+                    type: 'login_response',
+                    success: true,
+                    message: 'Login effettuato con successo'
+                }));
+                // Notifica tutti della nuova connessione
+                broadcastMessage({
+                    type: 'system',
+                    message: `${username} è entrato nella chat`
+                });
+                console.log(`${username} si è connesso. Totale utenti: ${activeUsernames.size}`);
+                return;
+            }
+            // Gestisce i messaggi normali
+            if (username && data.type === 'message') {
+                broadcastMessage({
+                    type: 'message',
+                    username: username,
+                    message: data.message
+                });
+            }
+        } catch (error) {
+            console.error('Errore nella gestione del messaggio:', error);
+        }
+    });
+    // Gestisce la disconnessione
+    ws.on('close', () => {
+        if (username) {
+            activeUsernames.delete(username);
+            connectedClients.delete(ws);
+            
+            broadcastMessage({
+                type: 'system',
+                message: `${username} ha lasciato la chat`
+            });
 
+            console.log(`${username} si è disconnesso. Totale utenti: ${activeUsernames.size}`);
+        }
+    });
+    // Gestisce gli errori
+    ws.on('error', (error) => {
+        console.error('Errore WebSocket:', error);
+        if (username) {
+            activeUsernames.delete(username);
+            connectedClients.delete(ws);
+        }
+    });
+});
+// Funzione per inviare messaggi a tutti i client
+function broadcastMessage(message) {
+    const messageString = JSON.stringify(message);
+    connectedClients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+            client.send(messageString);
+        }
+    });
+}
+// Log quando il server si avvia
+console.log('Server WebSocket in ascolto sulla porta 8088');
+// Gestisce gli errori del server
+wss.on('error', (error) => {
+    console.error('Errore del server:', error);
+});
+// Pulizia alla chiusura del server
+process.on('SIGTERM', () => {
+    console.log('Chiusura del server...');
+    wss.close(() => {
+        console.log('Server chiuso');
+        process.exit(0);
+    });
+});
+```
+Il client si collega il websocket con metodo specifico:
+```
+// Connetti al WebSocket
+function connectWebSocket() {
+    ws = new WebSocket('ws://localhost:8088');
+    ws.onopen = () => {
+        login(username);
+    };
+    ws.onclose = () => {
+        document.getElementById('statusText').textContent = 'Disconnesso';
+        document.getElementById('statusText').classList.remove('text-green-200');
+        disableChat();
+        setTimeout(connectWebSocket, 3000);
+    };
+    ws.onerror = (error) => {
+        console.error('WebSocket Error:', error);
+        disableChat();
+    };
+    ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        switch(data.type) {
+            case 'login_response':
+                handleLoginResponse(data);
+                break;
+            case 'message':
+                handleChatMessage(data);
+                break;
+            case 'system':
+                addSystemMessage(data.message);
+                break;
+        }
+    };
+}
+```
 
 
 
