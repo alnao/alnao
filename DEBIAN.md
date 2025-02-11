@@ -54,6 +54,7 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
   - [AWS](#AWS)
       - [Gestione EC2 con Debian 12](#Gestione-EC2-con-Debian-12)
   - [Docker](#Docker)
+  - [Kubernetes](#Kubernetes)
 - [I comandi comuni della shell](#I-comandi-comuni-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
@@ -1314,6 +1315,120 @@ e nella login bisogna inserire username e password indicati in creazione del doc
 # docker stop NUMERO
 ```
 dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutti i docker attivi nel demone.
+
+
+## Kubernetes
+Per installare **Kubernetes**, detto anche *K8S*, è necessario aver installato il sistema Docker che deve essere funzionante. L'installazione di Kubernets non è semplicissima visto che il demone non è compreso nei repository ufficiali e ci sono molte versioni incompatibili tra loro, è infatti configurabile da sorgente esterna, per esempio usando la versione 1.32 stabile:
+```
+# systemctl status docker
+# curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernets-apt-keyring-gpg
+# chmod 666 /etc/apt/keyrings/kubernets-apt-keyring-gpg 
+# echo 'deb [signed-by=/etc/apt/keyrings/kubernets-apt-keyring-gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list
+# cat /etc/apt/sources.list.d/kubernetes.list
+# chmod 644 /etc/apt/sources.list.d/kubernetes.list
+# apt-get update 
+# apt-get install kubeadm kubelet kubectl containernetworking-plugins
+# apt-mark hold kubeadm kubelet kubectl
+# systemctl status kubelet
+```
+Per il corretto funzionamento di Kubernets è fondamentale disattivare il sistem swap del sistema operativo con i comandi:
+```
+# swapoff -a
+# sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+```
+Inoltre è necessario eseguire una serie di configurazioni in alcuni files di sistema:
+```
+# echo "overlay" >> /etc/modules-load.d/containerd.conf
+# echo "br_netfilter" >> /etc/modules-load.d/containerd.conf
+# cat /etc/modules-load.d/containerd.conf
+# modprobe overlay
+# modprobe br_netfilter
+# ls /usr/lib/cni/
+# mkdir -p /opt/cni/bin
+# ln -s /usr/lib/cni/* /opt/cni/bin/
+# echo "net.bridge.bridge-nf-call-ip6tables = 1" >> /etc/sysctl.d/kubernetes.conf
+# echo "net.bridge.bridge-nf-call-iptables = 1" >> /etc/sysctl.d/kubernetes.conf
+# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/kubernetes.conf
+# cat /etc/sysctl.d/kubernetes.conf
+# nano /etc/containerd/config.toml
+  se presente una riga di disabled_plugins commentarla
+# cat /etc/containerd/config.toml
+# echo 'KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs"' >> /etc/default/kubelet
+# cat /etc/default/kubelet
+# echo '{ "exec-opts": ["native.cgroupdriver=systemd"] }' >> /etc/docker/daemon.json
+# cat /etc/docker/daemon.json
+# systemctl daemon-reload && systemctl restart docker
+# systemctl restart containerd
+# hostnamectl
+```
+In caso di errori sui plugin di Kubernetes visualizzati con il comando `journalctl -u kubelet -f` bisogna eseguire i comandi:
+```
+# journalctl -u kubelet -f
+# kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+# cp /opt/cni/bin/flannel /usr/lib/cni
+# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+# cp /opt/cni/bin/calico-ipam /usr/lib/cni
+# cp /opt/cni/bin/calico /usr/lib/cni
+```
+Con questo ultimo comando è possibile recuperare il nome dell'host, indispensbile per i successivi passi, è possibile modificarlo con il comando
+```
+# hostnamectl set-hostname nomehost
+```
+Per avviare e configurare il servizio è necessario lanciar eil comando
+```
+# kubeadm init --control-plane-endpoint=cirilla --upload-certs --pod-network-cidr=10.244.0.0/16
+```
+Per inizializzare un cluster e configurare una rete Container Network Interface (CNI):
+```
+$ mkdir -p $HOME/.kube
+$ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+$ chown $(id -u):$(id -g) $HOME/.kube/config
+$ kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+$ kubectl taint nodes --all node-role.kubernetes.io/control-plane-	
+$ kubectl taint nodes --all node.kubernetes.io/disk-pressure-
+$ kubectl get nodes	
+```
+
+Il cluster è ora pronto. Per aggiungere nodi worker, per esempio è possibile eseguire il comando `kubeadm join` per la gestione dei nodi. Una sequenza utile per l'avvio di un servizio è:
+```
+# kubectl apply -f deployment.yml 
+# kubectl apply -f service.yml
+```
+Per rimuovere i servizi è possibile usare i comandi:
+```
+# kubectl delete all -l app=esempio01
+# kubectl delete all -l app=esempio01
+# kubeadm reset
+```
+Mentre i log e i dettagli possono essere recuperati con i comandi:
+```
+# kubectl get all -l app=esempio01
+
+# cat /var/log/syslog | grep kubelet
+# kubectl get nodes	
+# kubectl get pods
+# kubectl get events -A
+# kubectl get events --sort-by='.lastTimestamp'
+# kubectl describe node | grep -i capacity -A 5
+# kubectl logs -f deployment/esempio01
+
+# journalctl -u kubelet -f
+```
+
+Un esempio di avvio di un server Nginx su un nodo dedicato:
+```
+# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+# kubectl get nodes
+# kubectl create deployment nginx --image=nginx
+# kubectl expose deployment nginx --type=NodePort --port=80
+# kubectl get deployment nginx
+# kubectl get service nginx
+# curl http://<node-ip>:<node-port>
+	
+# kubectl delete deployment nginx
+# kubectl delete all -l app=nginx
+# kubectl get all -l app=nginx
+```
 
 # I comandi comuni della shell
 
