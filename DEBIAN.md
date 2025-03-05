@@ -1559,6 +1559,21 @@ ma non bisogna MAI modificarlo a mano visto che ci sono una serie di comandi che
 ripristina la versione di Grub2 nel sistema, ovviamente i parametri mnt e sdX devono essere modificati con la configurazione del sistema.
 
 
+Se è necessario aggiungere un sistema operativo non presente su Grub è possibile lanciare il comando
+```
+# sudo update-grub
+```
+Tuttavia alcuni sistemi operativi recenti sono bloccati di default, se non presenti bisogna modificare il file di configurazione:
+```
+/etc/default/grub
+```
+aggiungendo, o decommentando la riga:
+```
+GRUB_DISABLE_OS_PROBER=false
+```
+Se questa configurazione non è attiva (quindi impostata su "true" o assente), GRUB non rileverà automaticamente gli altri sistemi operativi installati sul computer.
+
+
 ## Gestione del gestino
 
 La gestione del **cestino** viene gestita dai vari Desktop (GNOME, KDE o XFCE), e come per altri sistemi, anche in Debian il cestino in realtà è una semplice cartella particolare dove vengono parcheggiati temporaneamente i file in attesa di una cancellazione definitiva, in realtà il Kernel di GNU Linux non gestisce nativamente il cestino, infatti se un utente usa i comandi:
