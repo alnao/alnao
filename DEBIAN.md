@@ -54,7 +54,10 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
   - [AWS](#AWS)
       - [Gestione EC2 con Debian 12](#Gestione-EC2-con-Debian-12)
   - [Docker](#Docker)
-  - [Kubernetes](#Kubernetes)
+    - [Esempio con Pgadmin4](#Esempio-con-Pgadmin4)
+    - [Creazione ed avvio di una immagine](#Creazione-ed-avvio-di-una-immagine)
+    - [Docker compose](#Docker-compose)
+    - [Kubernetes](#Kubernetes)
 - [I comandi comuni della shell](#I-comandi-comuni-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
@@ -1267,14 +1270,18 @@ Si può analizzare le immagini docker in esecuzione con il comando:
 ```
 # docker ps
 ```
-se si dispone di un file YML o YAML con la configurazione del docker basta lanciare i comandi
+Per fermare una esecuzione dell'immagine bisogna lanciare il comando:
 ```
-# docker-compose up -d
+# docker stop NUMERO
 ```
-per scaricare e avviare il demone dei contenitori, per esempio usare pgAdmin4 su un docker basta:
+dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutti i docker attivi nel demone.
+
+
+### Esempio con Pgadmin4
+Per scaricare e avviare una immagine contenente un demone bisogna identificare la sua immagine e lanciare i comandi:
 ```
-# mkdir ~/dockerPadmin4
-# cd ~/dockerPadmin4
+# mkdir ~/dockerPgadmin4
+# cd ~/dockerPgadmin4
 # docker pull dpage/pgadmin4
 # docker run -p 5050:80 -e "PGADMIN_DEFAULT_EMAIL=postgres" -e "PGADMIN_DEFAULT_PASSWORD=password" -d dpage/pgadmin4
 # docker-compose up -d
@@ -1310,14 +1317,108 @@ alla fine è possibile collegarsi al PgAdmin4 via web all'indirizzo
 ```
 http://localhost:5050/browser/
 ```
-e nella login bisogna inserire username e password indicati in creazione del docker, per collegarsi al PostgreSql bisogna configurare l'indirizzo IP (il valore localhost non sempre funziona) e selezionando la voce "SSL Compression". Per fermare il docker bisogna lanciare il comando:
+e nella login bisogna inserire username e password indicati in creazione del docker, per collegarsi al PostgreSql bisogna configurare l'indirizzo IP (il valore localhost non sempre funziona) e selezionando la voce "SSL Compression". Per fermare una esecuzione dell'immagine bisogna lanciare il comando:
 ```
 # docker stop NUMERO
 ```
 dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutti i docker attivi nel demone.
 
 
-## Kubernetes
+
+### Creazione ed avvio di una immagine
+Per la creazione di una immagine è indispensabile creare un `Dockerfile` (*file senza estensione*). Un Dockerfile è un file di testo che contiene una serie di istruzioni per creare un'immagine Docker automatizzando il processo di configurazione e installazione, consentendo di definire l'ambiente di esecuzione per un'applicazione in modo riproducibile e consistente. Alcuni semplici esempi di file sono:
+- immagine ubuntu con installata l'ultima vesione python3:
+  ```
+  FROM ubuntu:20.04
+  RUN apt-get update && apt-get install -y python3
+  CMD ["python3"]
+  ```
+- una piccola applicazione python che esegue uno script con la libreria pandas:
+  ```
+  FROM python:3.8
+  ADD script.py .
+  RUN pip install pandas
+  CMD ["python","./script.py"]
+  ```
+I comandi per preparare e avviare una immagine sono:
+```
+docker build -t nome-immagine .
+docker images
+docker run nome-immagine
+```
+Mentre è possibile "entrare" direttamente nell'immagine con il comando 
+```
+docker run -it mia-immagine /bin/bash
+```
+Il comando **docker exec** serve per eseguire un comando all'interno di un container Docker già in esecuzione . È particolarmente utile quando vuoi interagire con un container attivo senza doverlo fermare o riavviare. La sintassi è:
+```
+docker exec [OPZIONI] NOME_CONTAINER COMANDO [ARGOMENTI]
+```
+come per esempio
+```
+docker exec -it NOME_CONTAINER /bin/bash
+```
+
+### Docker compose
+Docker Compose è uno strumento che semplifica la gestione e l'orchestrazione di applicazioni multi-container, permette infatti di definire e avviare più servizi, reti e volumi in un unico file YAML (docker-compose.yml) e gestirli con un solo comando.
+Per esempio una applicazione python con collegato un database PostgreSql:
+```
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=postgresql://user:password@db:5432/mydatabase
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+Dove il progetto web è definito da un Dockerfile del tipo:
+```
+# Usa un'immagine Python ufficiale
+FROM python:3.9-slim
+# Imposta la directory di lavoro
+WORKDIR /app
+# Copia i file necessari
+COPY requirements.txt .
+# Installa le dipendenze
+RUN pip install --no-cache-dir -r requirements.txt
+# Copia il resto dell'applicazione
+COPY . .
+# Espone la porta su cui gira l'app Flask
+EXPOSE 5000
+# Avvia l'applicazione
+CMD ["python", "app/routes.py"]
+```
+Per avviare il progetto basta lanciare il comando:
+```
+# docker-compose up -d
+```
+Mentre per spegnere il tutto bisogna usare il comando:
+```
+docker-compose down
+```
+
+
+### Kubernetes
 Per installare **Kubernetes**, detto anche *K8S*, è necessario aver installato il sistema Docker che deve essere funzionante. L'installazione di Kubernets non è semplicissima visto che il demone non è compreso nei repository ufficiali e ci sono molte versioni incompatibili tra loro, è infatti configurabile da sorgente esterna, per esempio usando la versione 1.32 stabile:
 ```
 # systemctl status docker
