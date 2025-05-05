@@ -58,7 +58,8 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
     - [Creazione ed avvio di una immagine](#Creazione-ed-avvio-di-una-immagine)
     - [Docker compose](#Docker-compose)
     - [Kubernetes](#Kubernetes)
-- [I comandi comuni della shell](#I-comandi-comuni-della-shell)
+  - [Android]
+- [I comandi della shell](#I-comandi-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
   - [Manipolazione video](#Manipolazione-video)
@@ -231,6 +232,38 @@ questo metodo è consigliato rispetto all'uso del DEV in quanto alcuni sistemi p
 
 Modificare lo schema delle partizioni è una operazione complessa alto rischio di perdita di dati; la mia esperienza mi ha portato a non modificare mai le partizioni dei dischi se su questo è installato il sistema operativo o se ci sono dati importanti, quando si deve modificare una qualsiasi partizione contenente dati, conviene sempre eseguire una copia di backup di tutte le partizioni comprese quelle non modificate. Le cose si complicano ancora di più quando nello stesso disco ci sono più partizioni di tipo diverso come quelle di MsWindows (con filesystem di tipo NTFS o FAT32) e partizioni GNU Linux (con filesystem di tipo le Ext3 o Ext4), questo perché i programmi di partizionamento di un sistema operativo difficilmente trattano al meglio le partizioni degli altri sistemi con l'ovvio rischio di perdere partizioni che un programma non riconosce, per evitare questi contrasti fra sistemi operativi si possono usare programmi specializzati che cercano di gestire al meglio le partizioni di tutti i tipi, su Debian è disponibile il programma GParted per permette di gestire e modificare la struttura delle partizioni dei dischi.
 
+
+Per la gestione delle partizioni di tipo **swap**, è possibile confiurare le partizioni fisiche le file `fstab` come le normali partizioni, per esempio la riga:
+```
+/dev/sda2 none swap sw 0 0
+```
+Per visualizzare l'elenco delle partizioni swap si possono usare i comandi del sistema operativo:
+```
+swapon --show
+free -h
+df -h
+```
+Le ultime versione del Kernel Linux permettono di creare e montare dei file come fossero delle partizioni swap, per creare e montare il file si possono essere eseguire i comandi:
+```
+fallocate -l 1G swapfile
+ls -lh swapfile
+chmod 600 swapfile
+mkswap swapfile
+swapon swapfile
+```
+infine è possibile inserire la configurazione nel file `fstab` impostando il path assoluto del file swapfile creato, per esempio con il comando
+```
+echo '/path/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+Il parametro di configurazione `swappiness` indica al sistema operativo quanto spesso eseguire l'operazione di trasferimento dalla memoria RAM verso lo spazio swap, è una percentuale da zero a cento e di default è impostata a sesanta, può essere verificata e modificata con i comandi:
+```
+$ cat /proc/sys/vm/swappiness
+# sysctl vm.swappiness=10
+# nano /etc/sysctl.conf
+```
+
+
 # Come gestire i pacchetti Debian e il pannello di controllo
 
 Per utilizzare al meglio i sistemi Debian è indispensabile conoscere la gestione dei pacchetti: i pacchetti sono un insieme di file organizzati e compressi in directory in modo che possano essere installati nel sistema velocemente e con ordine; esistono molti modi di compilare e preparare i pacchetti, Debian ha imposto da anni un suo standard che è facilmente riconoscibile per i file di estensione deb mentre altre distribuzioni possono avere altri formati come rpm. Uno dei motivi per cui Debian è molto famosa è proprio per la gestione eccellente dei pacchetti perché, pur contando oltre 25.000 pacchetti ufficiale, esiste un repository centrale che gestisce le le dipendenze in modo semplice e ordinato: ogni pacchetto ha una versione e una lista di dipendenze infatti ogni pacchetto al suo interno ha l'informazione di quali pacchetti sono necessari e con i quali entra in conflitto, per esempio il pacchetto "apache2-mpm-prefork" dipende dal pacchetto "apache2.2-common" e entra in conflitto con il pacchetto "apache2-mpm", tutto questo dipende anche delle versioni, cioè ogni pacchetto è segnato anche da una versione, per esempio nel mio sistema è installato il pacchetto "apache2-mpm-prefork" alla versione 2.2.8-3: questo vuol dire che il pacchetto è alla versione 2.2.8 ma è la terza compilazione del pacchetto. Per fortuna i programmi che andremo ad usare gestiscono automaticamente con ordine e precisione i pacchetti quindi l'utente non deve mai preoccuparsi di risolvere le dipendenze.
@@ -388,7 +421,7 @@ Per installare il browser **Opera** è necessario aggiungere il repository propr
 # add-apt-repository "deb [arch=i386,amd64] https://deb.opera.com/opera-stable/ stable non-free"
 # apt install opera-stable
 ```
-Per il browser **Google Chrome** è consigliato scaricare e installare la versione dal repository proprietario di google:
+Per installare il browser **Google Chrome** è consigliato scaricare e installare la versione dal repository proprietario di google:
 ```
 # wget -qO - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg
 # echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
@@ -396,6 +429,25 @@ Per il browser **Google Chrome** è consigliato scaricare e installare la versio
 # sudo apt install -y google-chrome-stable
 ```
 da notare che questa installazione va automaticamente ad aggiungere il repository per i successivi aggiornamenti. Nei repository ufficiali di Debian è disponibile anche **Chromium**: un web browser open source da cui deriva Google Chrome, inizialmente l'idea di Google era quella di mantenere un solo progetto ma alla fine si sono creati due progetti paralleli che hanno sviluppi simili ma non uguali tanto che i browser hanno comportamenti differenti a volte. Per quanto riguarda i programmi per gestire le mail potete usare il programma di Firefox che potete trovare con il nome di **Thunderbind Mail** oppure con il nome **IceDove**, però potete usare anche altri programmi nativi come Evolution, Balsa, Gnus e Pine. 
+
+
+Per quanto riguarda il browser **Microsoft Edge** esiste, ad oggi, una versione di prova, definita *developer version*, scaricabile dal sito ufficiale di microsoft
+```
+https://www.microsoft.com/en-us/edge/download/insider?cc=1&platform=linux&cs=3182488620
+```
+oppure è possible procedere con l'installazione tramite il gestore dei pacchetti, configurando la sorgente corretta con i comandi:
+```
+## Setup
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge-beta.list'
+sudo rm microsoft.gpg
+## Install
+sudo apt update
+sudo apt install microsoft-edge-beta
+```
+Si rimanda alla pagina ufficiale per tutte le informazioni e i dettagli tecnici.
+
 
 ## Skype e Discord
 
@@ -471,6 +523,7 @@ Per i sistemi GNU Linux e Debian è disponibile l'installer del launcher **Steam
 ```
 E' possibile installare anche il launcer di EpicGames, si rimanda al sito ufficiale in quanto è necessario scaricare e usare Wine come emulatore, tuttavia io sconsiglio l'uso di Wine se non strettamente necessario.
 
+
 # Come gestire i demoni di Debian
 
 In informatica non esiste uno standard che definisca esattamente cosa è un server e cosa è un servizio, la differenza spesso non è così evidente e i termini vengono spesso confusi anche a causa di traduzioni non precisissime, in questo documento non sono presenti definizioni o trattati tecnici a riguardo e verrà usato il termine demoni (dal termine inglese deamon), termine usato quasi sempre nel mondo GNU LINUX per identificare sia i server sia i servizi. Con le dovute cautele prendiamo per vera la definizione più usata cioè che un demone è un processo in esecuzione in background sempre attivo, senza il bisogno di un gestione diretta dell'utente e che risponde quando viene invocato, un esempio classico è il demone CUPS che gestisce le stampe, questo rimane attivo in background e resta in ascolto finché qualcuno non lo invoca lanciando una stampa.
@@ -499,6 +552,7 @@ E' anche possibile lanciare il comando:
 ```
 per vedere se il demone Apache è attivo nel sistema.
 
+
 ## Sistema di stampa CUPS
 
 Da notare che in GNU Linux quasi tutto è un demone, il sistema di stampa e la condivisione di file in rete sono gli esempi più semplici e in questo capitolo vedremo come installare i più semplici e utili demoni disponibili nella nostra distribuzione, notare che quando abbiamo installato il sistema base, abbiamo già installato alcuni demoni tra qui il demone grafico X (con i desktop) e il sistema della shell che usiamo per lanciare i comandi. Per quanto riguarda i demoni specifici di web-server e database vengono presentati nella sezione dedicata alla programmazione, in questa sezione sono presentati solo i demoni utili per l'utilizzo generico in modo da permettere ad un lettore di poter saltare il capitolo della programmazione se non interessato all'argomento.
@@ -510,6 +564,7 @@ Una volta installati i pacchetti necessari il tutto, basta aprire un browser e a
 http:\\localhost:631\
 ```
 per accedere al programma web di gestione del server di stampa. Da questa comoda interfaccia si possono gestire le stampanti (installarle, cancellarle, fermarle) e si possono anche gestire i processi di stampa. Oltre all'interfaccia web di CUPS, i vari Desktop manager mettono a disposizione vari programmi per la configurazione le stampanti oppure è possibile usare il pannello di controllo WebMin. Per condividere una stampante locale in una rete locale è necessario aver installato anche il demone SAMBA e dal condivisione potrà essere configurata direttamente dal pannello di amministrazione.
+
 
 ## Condivisioni di rete con SSH e Samba
 
@@ -534,6 +589,7 @@ così sarà possibile accedere via Explorer inserendo nella barra degli indirizz
 ```
 net use L: \\myserver\myshare /u:myuser mypassword
 ```
+
 
 ## I RunLevel
 
@@ -585,6 +641,7 @@ che contiene tutti i comandi eseguiti all'avvio del sistema, è sempre sconsigli
 #rm -r /home/alnao/.local/share/Trash/files/*
 ```
 Per amministrare al meglio questi componenti potete modificare i file e gli script a mano oppure io consiglio di usare il pannello webmin dove è disponibile tutta una sezione per la gestione e la modifica dei componenti dei runlevel, nell'ambiente grafico è possibile trovare l'applicazione rcconf disponibile sui repository Debian e quindi installabili tramite Synaptic.
+
 
 ## Schedulazioni con Cron
 
@@ -646,6 +703,7 @@ il comando verrà eseguito nei giorni feriali (da lunedì a venerdì) di tutti i
 ```
 Bisogna sempre tenere conto che cron esegue gli script al momento indicato solo se il sistema è acceso e il server crontab è avviato, se il sistema è spento o se il demone crontab viene arrestato, il comando non viene eseguito nemmeno quando crontab viene avviato successivamente. Come indicato per altri demoni, anche questo demone può essere facilmente configurato da WebMin senza la necessità di modificare il file a mano ma basta utilizzare l'interfaccia web per configurare il demone della schedulazione.
 
+
 ## Controllo remoto
 
 Per il controllo da remoto dei sistemi è possibile usare **rdesktop** compatibile il sistema di condivisione di MsWindows e potete provare il programma TeamViwever che permette di controllare da remoto in maniera indipendente. Uno dei programmi più usati è VNC, per installare VNC dovete installare i pacchetti
@@ -669,6 +727,7 @@ aggiungendo la riga
 ufw allow 3389/tcp
 ```
 Come client è possibile utilizzare il programma Remmina, grazie al quale è possibile utilizzare il protocollo RDP per collegarsi ad un server remoto.
+
 
 # Programmazione in Debian
 
@@ -699,6 +758,7 @@ echo param=$param
 ```
 Si rimanda alla documentazione ufficiale per maggiori riguardo al tema dello script sh.
 
+
 ## C
 
 I linguaggi **C** e il **C++** sono i due linguaggi base di tutto il mondo GNU Linux, chiunque voglia scrivere e/o modificare programmi deve conoscere un po' di questi linguaggi.
@@ -714,6 +774,7 @@ $ ./a.out
 ed ecco il nostro programma in esecuzione nel terminale.
 
 Essendo C e C++ molto usati in GNU Linux, esistono moltissimi ambienti di sviluppo grafici (IDE o SDK) che permetto all'utente di scrivere progetti, anche di grandi dimensioni, e di compilare senza dover usare la riga di comando, alcuni presentano anche dei correttori automatici, auto-complete (nel caso del C++) ed altre funzionalità molto utili, i più famosi sono Anjuta e BlueFish anche se in realtà è consigliato utilizzare Eclipse o Visual Studio Code con le estensioni dedicate ai linguaggi C/C++.
+
 
 ## Python
 
@@ -763,6 +824,7 @@ Essendo GNU Linux una piattaforma molto usata negli ambienti universitari e nei 
 
 Per quanto riguarda il calcolo numerico la scelta è molto varia e il mondo GNU Linux dispone di molte applicazioni che possono essere utili, tra cui Scilab, Octave e MatLab, programmi open-source e usatissimi a scopo didattico nelle università di tutto il mondo anche se sicuramente il programma più famoso in assoluto per il calcolo numerico è un programma chiamato Mathematica, che non è gratuito e nemmeno open-source ma è anche un potente linguaggio di programmazione interpretato, sicuramente la sua completezza e la sua potenza si paga notevolmente.
 
+
 ## LaTeX
 
 Per chi vuole utilizzare il famosissimo linguaggio LaTeX per creare documenti, ci sono alcuni programmi che lo aiuteranno notevolmente alla gestione dei documenti, per prima cosa bisogna andare ad installare tutti i pacchetti necessari: bisogna installare i pacchetti che iniziano per LaTeX evitando di selezionare le estensioni per le lingue orientali se non servono, poi si può lanciare la compilazione da riga di comando oppure usare un ambiente grafico che esegua la compilazione con un semplice click su un bottone. Per la compilazione a mano, dopo aver scritto il documento con un semplice editor di testo (come kEdit o gEdit), la compilazione è lanciata con il comando:
@@ -780,6 +842,7 @@ $ pdflatex miodocumento.tex
 Un'altra opzione è quella di usare l'utilissimo programma Kile: il miglior programma per GNU Linux per scrivere documenti in linguaggio LaTeX: consigliato e indispensabile per chi vuole scrivere documenti di grandi dimensioni, da usare anche la possibilità di creare dei progetti in modo tale da dividere i documenti in file più piccoli e più semplici da gestire, notare anche che con la seconda barra in alto si evita di dover andare a scrivere i comandi sulla shell ma basta fare un click con il mouse.
 
 *La versione PDF di questo documento è scritta in LaTeX utilizzando l'editor Kile*
+
 
 ## Notify e Zenity
 
@@ -810,6 +873,7 @@ Tuttavia se si vuole schedulare una finestra creata con zenity con Crontab (o vi
 DISPLAY=:0.0 zenity --question --title="Title" --text="What to do?"
 ```
 
+
 ## LAMP 
 
 Quando si pensa ai sistemi GNU Linux si pensa anche al matrimonio del secolo chiamato LAMP: l'unione perfetta tra GNU Linux, Apache, MySql & Php. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione unendo i pacchetti con un semplice comando:
@@ -822,6 +886,7 @@ Una volta installati i pacchetti questi vengono auto-configurati tanto che il se
 ```
 http://localhost/
 ```
+
 
 ### Apache 
 
@@ -863,6 +928,7 @@ Alias "/Php/" "/mnt/Dati/Php/"
 </Directory>
 ```
 *bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione!*.
+
 
 ### MySql
 
@@ -926,6 +992,7 @@ che nei sistemi Debian si trova nel path
 ```
 Con questo comando è possibile modificare le configurazioni del interprete/compilatore, si rimanda alla documentazione ufficiale per maggior dettagli riguardo a questo tema.
 
+
 ## Node e NPM
 
 Per guardo riguarda la programmazione di applicazioni web **Node.js** e **NPM** hanno cambiato il mondo facilitando il lavoro degli sviluppatori: Node.js è lo strumento che consente agli sviluppatori di eseguire script al di fuori del browser web mentre NPM è il gestore di pacchetti per la gestione dei moduli Nodejs. L'installazione di questi due tool in una distribuzione Debian è facile e prevede l'installazione di due pacchetti
@@ -953,6 +1020,7 @@ $ cd prova
 $ npm start
 ```
 e poi andare all'indirizzo della applicazione web locale. Si rimanda alla documentazione dei tool e delle librerie per maggior in formazioni.
+
 
 ## Java e Tomcat
 
@@ -1010,6 +1078,7 @@ Per Eclipse sono consigliati i seguenti plugin scaricabili dal marketplace uffic
 
 Il tool maven e glade sono disponibili nel pacchetto ufficiale e possono essere facilmente scaricati dai repository di Debian tramite i programmi di gestione dei pacchetti.
 
+
 ## GIT
 
 Il tool **GIT** è il programma per il controllo delle versioni di software e distribuzione più usato al mondo, inizialmente proprio creato per la gestione degli sviluppi del KernelLinux, ad oggi è usato in tutto il mondo anche delle grandi aziende per i progetti di grandissimi progetti. Il sistema può essere installato con l'omonimo pacchetto e per la configurazione basta lanciare i comandi
@@ -1027,6 +1096,7 @@ git commit -m "add README"
 git push -u origin master
 ```
 è possibile anche usare il plugin dedicato di Eclipse o Visual Studio Code per la gestione dei repository e la gestione dei commit/push. Inoltre esistono dei piccoli grandi tool grafici come git-cola o gitg, sono sicuramente da provare ed è da notare anche la simpatica descrizione del gitCola in Synaptic. Guide complete di GIT sono disponibili nelle pagine dedicate a JavaEE con Eclipse e Angular.
+
 
 ## Visual Studio Code
 
@@ -1058,6 +1128,7 @@ Poi infatti basta lanciare il comando dall'icona che compare nel menù del deskt
 - aws toolkit
 - sqLite viewer
 
+
 ## Postman
 
 Anche per **Postman** non esiste il pacchetto Debian ufficiale e per poterlo installare esistono due possiblità: scaricarlo dai server di snap con un semplice click oppure scaricare l'installer in formato tar.gz dal sito ufficiale e poi installare il programma con i comandi:
@@ -1078,6 +1149,7 @@ Categories=Development;
 EOF
 ```
 con l'ultimo comando si è creata la voce di menù da cui è possibile accedere al programma velocemente, poi gli aggiornamenti vengono scaricati automaticamente dal programma stesso.
+
 
 ## PostgreSQL
 
@@ -1123,6 +1195,7 @@ Per collegarsi al database PostgreSQL è possibile usare qualunque programma com
 ```
 da notare che con l'ultimo comandi si è abilitato l'accesso via web dall'indirizzo localhost/pgadmin4.
 
+
 ## MongoDB
 
 Per quanto riguarda il **MongoDB** l'installazione è un attimo più complicata perché si deve scaricare da un repository proprietario e non da quelli ufficiali di Debian.
@@ -1161,6 +1234,7 @@ Un tool grafico per poter usare mongo è Robomongo che purtroppo non è disponib
 https://robomongo.org/download
 ```
 dove è possibile trovare la guida per l'installazione e la configurazione del tool.
+
 
 ## AWS
 
@@ -1210,6 +1284,7 @@ Alcuni esempi di utilizzo di SLS sono disponibili sulla pagina dedicata al cloud
 
 
 ### Gestione EC2 con Debian 12
+
 Il cloud AWS mette a disposizione molte **AMI** (immagini) con il sistema operativo Debian12, la lista può essere recuperata in molti siti ufficiali oppure lanciando il comando AWS-CLI:
 ```
 aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
@@ -1278,6 +1353,7 @@ dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutt
 
 
 ### Esempio con Pgadmin4
+
 Per scaricare e avviare una immagine contenente un demone bisogna identificare la sua immagine e lanciare i comandi:
 ```
 # mkdir ~/dockerPgadmin4
@@ -1324,8 +1400,8 @@ e nella login bisogna inserire username e password indicati in creazione del doc
 dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutti i docker attivi nel demone.
 
 
-
 ### Creazione ed avvio di una immagine
+
 Per la creazione di una immagine è indispensabile creare un `Dockerfile` (*file senza estensione*). Un Dockerfile è un file di testo che contiene una serie di istruzioni per creare un'immagine Docker automatizzando il processo di configurazione e installazione, consentendo di definire l'ambiente di esecuzione per un'applicazione in modo riproducibile e consistente. Alcuni semplici esempi di file sono:
 - immagine ubuntu con installata l'ultima vesione python3:
   ```
@@ -1359,7 +1435,9 @@ come per esempio
 docker exec -it NOME_CONTAINER /bin/bash
 ```
 
+
 ### Docker compose
+
 Docker Compose è uno strumento che semplifica la gestione e l'orchestrazione di applicazioni multi-container, permette infatti di definire e avviare più servizi, reti e volumi in un unico file YAML (docker-compose.yml) e gestirli con un solo comando.
 Per esempio una applicazione python con collegato un database PostgreSql:
 ```
@@ -1419,6 +1497,7 @@ docker-compose down
 
 
 ### Kubernetes
+
 Per installare **Kubernetes**, detto anche *K8S*, è necessario aver installato il sistema Docker che deve essere funzionante. L'installazione di Kubernets non è semplicissima visto che il demone non è compreso nei repository ufficiali e ci sono molte versioni incompatibili tra loro, è infatti configurabile da sorgente esterna, per esempio usando la versione 1.32 stabile:
 ```
 # systemctl status docker
@@ -1531,7 +1610,43 @@ Un esempio di avvio di un server Nginx su un nodo dedicato:
 # kubectl get all -l app=nginx
 ```
 
-# I comandi comuni della shell
+
+## Android
+
+Esistono molti metodi per eseguire la cattura di un sistema esterno Andoid, è possibile persino prendere il controllo, il sistema più famoso è **scrcpy** che permette di catturare il display di un altro dispositivo. Si può installare tramite il sistema snap con il comando:
+```
+snap install scrcpy
+```
+Oppure installare il pacchetto direttamente da GitHub:
+```
+sudo apt install ffmpeg libsdl2-2.0-0 adb wget gcc git pkg-config meson ninja-build libsdl2-dev libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
+git clone https://github.com/Genymobile/scrcpy
+cd scrcpy
+./install_release.sh
+scrcpy --version
+adb devices
+```
+Se il disposibito è correttamente collegato e configurato l'ultimo comando visualizza il dispositivo disponibile, per avviare il sistema di condivisione basta lanciare il programma o il comando
+```
+scrcpy
+```
+Prima di eseguire questo processo bisogna ricordarsi che è necessario attivare la modalitatà *developer* sul sistema android cliccando sette volte sul "build number" nelle impostazioni del dispositivo ("about device" in alcune versione) e successivamente bisogna bisogna attivare anche l'opzione "USB debugging", senza questa configurazione non il programma adb non visualizza il dispositivo e non è possibile condividere le videate dei dispositivi.
+
+
+Tramite il programma è possibile condividere la camera, registrare video/audio e altre operazioni, si riportano alcuni esempi:
+```
+scrcpy --video-source=camera
+scrcpy --audio-source=mic # or --audio-source=output
+scrcpy --video-source=camera --no-audio # audio isn't forwarded
+scrcpy --record=file.mp4
+scrcpy --no-audio --record=file.mp4 # to only record the video
+scrcpy --no-video --audio-codec=raw --record=file.wav # to only record the audio
+scrcpy --new-display=1920x1080 --start-app=org.videolan.vlc
+```
+Si rimanda alla documentazione ufficiale per i dettagli di tutti i comandi e i dettagli.
+
+
+# I comandi della shell
 
 Questo articolo vuole essere un riassunto il più possibile completo e chiaro riguardo ai comandi di GNU Liunx e le varie possibilità di utilizzo della shell.
 
@@ -1838,12 +1953,23 @@ questo processo installa il programma e crea la voce di menù nel desktop, il pr
 
 Per quanto riguarda il programma **VirtualBox** non esiste un repository aggiornato per Debian ma solo per la versione per Debian 10 considerata obsoleta. Il programma comunque può essere scaricato dal sito del programma dalla versione per tutte le distribuzioni GNU Linux ed installata facilmente con pochi comandi:
 ```
+# apt install lsb-release
+# echo "deb http://deb.debian.org/debian $(lsb_release -cs)-backports main contrib" | tee /etc/apt/sources.list.d/backports.list
+# apt install fasttrack-archive-keyring
+# echo "deb http://fasttrack.debian.net/debian-fasttrack/ $(lsb_release -cs)-fasttrack main contrib" | sudo tee /etc/apt/sources.list.d/fasttrack.list
+# echo "deb http://fasttrack.debian.net/debian-fasttrack/ $(lsb_release -cs)-backports-staging main contrib" | sudo tee -a /etc/apt/sources.list.d/fasttrack.list
+# apt update
+# apt install virtualbox
+# apt install virtualbox-guest-x11
+```
+Da notare che esiste anche la possibilità di scaricare manualmente il pacchetto di installazione dal sito ufficiale con i comandi:
+```
 # apt install build-essential linux-headers-amd64
 # wget https://download.virtualbox.org/virtualbox/6.1.22/VirtualBox-6.1.22-144080-Linux_amd64.run
 # chmod +x VirtualBox*
 # ./VirtualBox*
 ```
-Da notare che il pacchetto è costantemente in aggiornamento quindi bisogna sempre controllare l'ultima versione disponibile dal sito ufficiale di VirtualBox per rimanere aggiornati.
+Il pacchetto è costantemente in aggiornamento quindi bisogna sempre controllare l'ultima versione disponibile dal sito ufficiale di VirtualBox per rimanere aggiornati.
 
 
 
