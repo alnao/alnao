@@ -58,7 +58,9 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
     - [Creazione ed avvio di una immagine](#Creazione-ed-avvio-di-una-immagine)
     - [Docker compose](#Docker-compose)
     - [Kubernetes](#Kubernetes)
-  - [Android]
+    - [Minikube](#Minikube)
+    - [Helm](#Helm)
+  - [Android](#Android)
 - [I comandi della shell](#I-comandi-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
@@ -1511,6 +1513,10 @@ Per installare **Kubernetes**, detto anche *K8S*, è necessario aver installato 
 # apt-mark hold kubeadm kubelet kubectl
 # systemctl status kubelet
 ```
+In caso kubectl non sia presente è possibile installo con snap con il comando
+```
+# snap install kubectl --classic
+```
 Per il corretto funzionamento di Kubernets è fondamentale disattivare il sistem swap del sistema operativo con i comandi:
 ```
 # swapoff -a
@@ -1609,6 +1615,102 @@ Un esempio di avvio di un server Nginx su un nodo dedicato:
 # kubectl delete all -l app=nginx
 # kubectl get all -l app=nginx
 ```
+
+
+### Minikube
+**Minikube** è uno strumento che permette di eseguire un cluster Kubernetes locale su una singola macchina, ideale per un ambiente di sviluppo e/o di test, è possibile usarlo per provare applicazioni Kubernetes senza dover configurare un vero cluster cloud o on-premise su Server.
+
+
+Per installare minikube conviene usare il pacchetto disponbile da google, la sequenza di istruzioni da eseguire è
+```
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+sudo dpkg -i minikube_latest_amd64.deb
+minikube version
+sudo chmod 666 /var/run/docker.sock
+docker version --format {{.Server.Os}}-{{.Server.Version}}:{{.Server.Platform.Name}}
+minikube start --memory=4096 --cpus=2
+minikube start --memory=4096 --cpus=2 --force
+  http://localhost:9000/
+minikube status
+minikube stop
+```
+da notare che esistono diverse guide con diverse sorgenti, conviene sempre controllare il [sito ufficiale](https://minikube.sigs.k8s.io/docs/start/).
+
+
+Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
+* Avvio di un server nging 
+  ```
+	minikube start --driver=docker --memory=2048 --cpus=2
+	kubectl create deployment nginx --image=nginx
+	kubectl get pods
+	kubectl expose deployment nginx --type=NodePort --port=80
+	kubectl get services
+	curl http://$(minikube ip):$(kubectl get service nginx -o jsonpath='{.spec.ports[0].nodePort}')
+	kubectl delete service nginx
+	kubectl delete deployment nginx
+	minikube stop
+  ```
+* Avvio di un sever nging con file servide dedicato
+  - File `nginx-service.yaml`
+    ```
+		apiVersion: v1
+		kind: Service
+		metadata:
+		  name: nginx
+		spec:
+		  type: NodePort
+		  ports:
+			- port: 80
+			  targetPort: 80
+			  nodePort: 30042   # 👈 Porta esterna (deve essere tra 30000-32767)
+		  selector:
+			app: nginx
+    ```
+  - Comandi per la creazione
+    ```
+	  minikube start --driver=docker --memory=2048 --cpus=2
+	  kubectl create deployment nginx --image=nginx
+    kubectl apply -f nginx-service.yaml
+    curl http://$(minikube ip):$(kubectl get service nginx -o jsonpath='{.spec.ports[0].nodePort}')
+    kubectl delete service nginx
+    kubectl delete deployment nginx
+    minikube stop
+    ```
+
+    
+Per la creazione di servizi con kubectl sviluppati in Java e Python si rimanda alle varie guide:
+- Microservizi sviluppati con Java Spring Boot
+  ```
+  https://github.com/alnao/JavaSpringBootExample  
+  ```
+- Microservizi sviluppati con Python
+  ```
+  https://github.com/alnao/PythonExamples/tree/master/Docker
+  ```
+
+
+Da notare che assieme a minikube conviene usare anche **freelens**: un'estensione di Minikube che permette di ispezionare e gestire facilmente i servizi, le risorse e i log del cluster Kubernetes in locale, con FreeLens è possibile visualizzare dashboard, analizzare pod e debuggare applicazioni senza dover usare molti comandi a terminale. L'installazione è molto semplice utilizzando snap con il comando
+```
+snap install freelens --classic
+```
+La configurazione è praticamente automatica per il server in locale, per server remoti la configurazione può essere complicata perchè regolata dal file
+```
+~/.kube/config
+```
+si rimanda alle varie guide in internet per la configurazione di questo files (*a me non ha mai funzionato*).
+
+
+### Helm
+**Helm** è un package manager per Kubernetes, simile a apt o yum nei sistemi Linux. Consente di installare, configurare e gestire facilmente applicazioni su un cluster Kubernetes. Gli **Helm Charts** sono pacchetti predefiniti che descrivono come un'applicazione deve essere distribuita.
+Installare e configurare heml non è una cosa semplice, qui si riportano i passi più importanti. Per l'installazione si può configuare una sorgente: 
+```
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+sudo apt-get install apt-transport-https --yes
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+apt-get update
+apt-get install helm
+```
+
 
 
 ## Android
