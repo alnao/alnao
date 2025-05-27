@@ -2074,10 +2074,65 @@ Da notare che esiste anche la possibilità di scaricare manualmente il pacchetto
 Il pacchetto è costantemente in aggiornamento quindi bisogna sempre controllare l'ultima versione disponibile dal sito ufficiale di VirtualBox per rimanere aggiornati.
 
 
+## Creazione di un servizio
+Per avviare un servizio personalizzato all'avvio del tuo sistema Debian è possibile creare un servizio manualmente, configurandolo con precisione in base alle tue esigenze specifiche. Per esempio in un sistema *Docker* è possibile creare un sistema di pulizia automatica delle risorse Docker non utilizzate. Questo è fondamentale per prevenire l'accumulo di immagini orfane, container fermi, volumi e network inutilizzati, che possono consumare molto spazio su disco e risorse di sistema. Inizialmente, l'obiettivo era automatizzare i comandi `docker container prune`, `docker image prune`, `docker volume prune`, `docker network prune` e `docker image prune -a`. Questi comandi sono essenziali per liberare spazio e possono essere combinati con il flag `-f` (o `--force`) che permette di eseguire la pulizia senza interazione.
+
+
+L'obbiettivo è far in modo che la pulizia venga eseguita automaticamente all'avvio del sistema, è sconsigliato l'uso di crontab per la sua minore robustezza in ambienti di sistema ed è sempre sconsigliato il metodo legacy di *rc.local*. La soluzione più moderna e affidabile è **Systemd**, il servizio `docker-cleanup.service` è stato creatp per eseguire uno script Bash contenente i comandi di pulizia Docker.
+
+
+Esempio del file `/usr/local/bin/docker-cleanup.sh`:
+```
+#!/bin/bash
+
+# Aggiungi un piccolo ritardo per assicurarti che Docker sia completamente avviato
+sleep 10
+
+# Esegui i comandi di pulizia
+/usr/bin/docker container prune -f &
+/usr/bin/docker image prune -f &
+/usr/bin/docker volume prune -f &
+/usr/bin/docker network prune -f &
+/usr/bin/docker image prune -a -f &
+
+# Oppure, se preferisci il comando unificato:
+# /usr/bin/docker system prune -a -f --volumes
+
+# Potresti voler registrare l'output per debug
+echo "Docker cleanup completed at $(date)" >> /var/log/docker_cleanup.log
+```
+Il file di configurazione `/etc/systemd/system/docker-cleanup.service`
+```
+[Unit]
+Description=Docker Cleanup Service
+After=docker.service network-online.target
+Wants=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/docker-cleanup.sh
+#RemainAfterExit=yes
+# Non usare RemainAfterExit=yes se vuoi che Systemd lo consideri completato e non lo tenga "attivo"
+User=root  # O l'utente che ha i permessi per eseguire Docker
+Group=root # O il gruppo che ha i permessi per eseguire Docker
+
+[Install]
+WantedBy=multi-user.target
+```
+I comandi finali per configurare l'avvio sono:
+```
+chmod +x /usr/local/bin/docker-cleanup.sh
+systemctl daemon-reload
+chmod 666 /var/log/docker_cleanup.log 
+systemctl enable docker-cleanup.service
+systemctl start docker-cleanup.service
+systemctl status docker-cleanup.service
+journalctl -xeu docker-cleanup.service
+```
+
 
 # AlNao.it
 Nessun contenuto in questo repository è stato creato con IA o automaticamente, tutto il codice è stato scritto con molta pazienza da Alberto Nao. Se il codice è stato preso da altri siti/progetti è sempre indicata la fonte. Per maggior informazioni visitare il sito [alnao.it](https://www.alnao.it/).
-
 
 
 
