@@ -55,11 +55,13 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
       - [Gestione EC2 con Debian 12](#Gestione-EC2-con-Debian-12)
   - [Docker](#Docker)
     - [Esempio con Pgadmin4](#Esempio-con-Pgadmin4)
+    - [Configurazione di rete di Docker](#Configurazione-di-rete-di-Docker)
     - [Creazione ed avvio di una immagine](#Creazione-ed-avvio-di-una-immagine)
     - [Docker compose](#Docker-compose)
     - [Kubernetes](#Kubernetes)
     - [Minikube](#Minikube)
     - [Helm](#Helm)
+    - [Portainer](#Portainer)
   - [Android](#Android)
 - [I comandi della shell](#I-comandi-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
@@ -1355,51 +1357,92 @@ dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutt
 
 
 ### Esempio con Pgadmin4
+A scopo di esempio si mostrano i passaggi per l'installazione di PgAdmin4 su Docker:
+- scaricare e avviare l'immagine contenente 
+  ```
+  # mkdir ~/dockerPgadmin4
+  # cd ~/dockerPgadmin4
+  # docker pull dpage/pgadmin4
+  # docker run -p 5050:80 -e "PGADMIN_DEFAULT_EMAIL=postgres" -e "PGADMIN_DEFAULT_PASSWORD=password" -d dpage/pgadmin4
+  # docker-compose up -d
+  # docker ps
+  ```
+- ovviamente bisogna prestare attenzione che le porte indicate non siano già occupate da altri server, per questo c'è il mapping dalla porta 80 alla 5050
+- potrebbe essere necessario aprire le porte del firewall locale per le porte con i comandi:
+  ```
+  # /usr/sbin/iptables -I INPUT 1 -i eth0 -p tcp --dport 5050 -j ACCEPT
+  # /usr/sbin/service iptables save
+  # /usr/sbin/iptables --list
+  ```
+- nel file di configurazione del server PostgreSql `/etc/postgresql/11/main/postgresql.conf` è necessario aggiungere la riga
+  ```
+  listen_addresses = '*'
+  ```
+- aggiungere la porta nel file di configurazione `/etc/postgresql/11/main/pg_hba.conf`
+  ```
+  host all all 0.0.0.0/0 md5
+  ```
+- riavviare il server Postgresql: 
+  ```
+  # /etc/init.d/postgresql restart
+  ```
+- alla fine è possibile collegarsi al PgAdmin4 via web all'indirizzo
+  ```
+  http://localhost:5050/browser/
+  ```
+- nella login bisogna inserire username e password indicati in creazione del docker, per collegarsi al PostgreSql bisogna configurare l'indirizzo IP (il valore localhost non sempre funziona) e selezionando la voce "SSL Compression"
+- per fermare una esecuzione dell'immagine bisogna lanciare il comando:
+  ```
+  # docker stop NUMERO
+  ```
+  dove il NUMERO è il valore ritornato dal comando `docker ps` che mostra l'elenco di tutti i docker attivi nel demone.
 
-Per scaricare e avviare una immagine contenente un demone bisogna identificare la sua immagine e lanciare i comandi:
+
+### Configurazione di rete di Docker
+Docker è uno strumento potente per la containerizzazione delle applicazioni, e la gestione della rete è un aspetto fondamentale per consentire ai container di comunicare tra loro e con il mondo esterno. È buona pratica creare reti definite dall'utente invece di affidarsi alla rete bridge predefinita, questo offre i seguenti vantaggi:
+- Isolamento Migliore: I container sono isolati sulla propria rete definita dall'utente.
+- Risoluzione dei Nomi: I container all'interno della stessa rete definita dall'utente possono comunicare tra loro usando il nome del container come hostname (risoluzione DNS automatica).
+- Portabilità: Le configurazioni di rete possono essere incluse nei file Docker Compose, rendendo più facile spostare le applicazioni tra ambienti.
+
+
+I principali comandi di Docker per la gestione della rete sono:
+- `docker network ls`: Elenca le reti disponibili
+- `docker network create <nome_rete>`: Crea una nuova rete
+- `docker run --network=<nome_rete> <immagine>`: Avvia un container collegandolo a una rete specifica
+- `docker network connect <nome_rete> <nome_container>`: Collega un container in esecuzione a una rete.
+- `docker network rm <nome_rete>`: Rimuove una rete.
+
+
+Per rendere una porta esposta accessibile dall'esterno dell'host Docker, è necessario utilizzare il flag -p (o --publish) con il comando docker run. Questo mappa una porta dell'host a una porta del container. Per esempio:
 ```
-# mkdir ~/dockerPgadmin4
-# cd ~/dockerPgadmin4
-# docker pull dpage/pgadmin4
-# docker run -p 5050:80 -e "PGADMIN_DEFAULT_EMAIL=postgres" -e "PGADMIN_DEFAULT_PASSWORD=password" -d dpage/pgadmin4
-# docker-compose up -d
-# docker ps
+docker run -p 8080:80 <immagine>
+``` 
+mappa la porta 8080 dell'host verso la porta 80 del container.
+E' possibile che le reti create da docker vadano in contrasto con indirizzi ip di reti locali, è possibile identificare quali indirizzi di rete sono "occupati" con il comando 
 ```
-in questa sequenza di comandi si è scaricato e attivato il docker PgAdmin4 sul demone locale con la configurazione delle porte, ovviamente bisogna prestare attenzione che non siano già occupate da altri server, in particolare potrebbe essere necessario aprire le porte del firewall locale per le porte con i comandi:
+ip route
 ```
-# /usr/sbin/iptables -I INPUT 1 -i eth0 -p tcp --dport 5432 -j ACCEPT
-# /usr/sbin/service iptables save
-# /usr/sbin/iptables --list
+che ritorna righe del tipo
 ```
-e sul server PostgreSql è necessario aggiungere la riga
+172.18.0.0/16 dev br-24119fc62408 proto kernel scope link src 172.18.0.1 linkdown 
 ```
-listen_addresses = '*'
+Tipicamente le reti `br-xxxxxxx` sono quelle occupate dal sistema.
+Tipicamente Docker inizia da `172.18.x.x` o da `172.20.x.x`. Per cambiare questa impostazione è possibile modificare il file di configurazione
 ```
-se non presente nel file di configurazione
+{
+  "default-address-pools": [
+    {
+	    "base": "172.31.0.0/16",
+	    "size": 24
+	  }
+	]
+	,"dns": ["8.8.8.8", "1.1.1.1"]
+}
 ```
-/etc/postgresql/11/main/postgresql.conf
+e poi bisogna rivviare il Docker con il comando
 ```
-e aggiungere la porta
+sudo service docker restart
 ```
-host all all 0.0.0.0/0 md5
-```
-nel file di configurazione
-```
-/etc/postgresql/11/main/pg_hba.conf
-```
-e poi riavviare il server con
-```
-# /etc/init.d/postgresql restart
-```
-alla fine è possibile collegarsi al PgAdmin4 via web all'indirizzo
-```
-http://localhost:5050/browser/
-```
-e nella login bisogna inserire username e password indicati in creazione del docker, per collegarsi al PostgreSql bisogna configurare l'indirizzo IP (il valore localhost non sempre funziona) e selezionando la voce "SSL Compression". Per fermare una esecuzione dell'immagine bisogna lanciare il comando:
-```
-# docker stop NUMERO
-```
-dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutti i docker attivi nel demone.
 
 
 ### Creazione ed avvio di una immagine
@@ -1668,8 +1711,8 @@ Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
     ```
   - Comandi per la creazione
     ```
-	  minikube start --driver=docker --memory=2048 --cpus=2
-	  kubectl create deployment nginx --image=nginx
+    minikube start --driver=docker --memory=2048 --cpus=2
+    kubectl create deployment nginx --image=nginx
     kubectl apply -f nginx-service.yaml
     curl http://$(minikube ip):$(kubectl get service nginx -o jsonpath='{.spec.ports[0].nodePort}')
     kubectl delete service nginx
@@ -1711,6 +1754,29 @@ apt-get update
 apt-get install helm
 ```
 
+
+### Portainer
+**Portainer** è una piattaforma leggera, open-source, progettata per semplificare la gestione di ambienti Docker, Docker Swarm e Kubernetes attraverso una interfaccia grafica *web-based*. Consente di controllare, monitorare e configurare container, immagini, volumi, reti e stack, senza necessità di ricorrere esclusivamente alla riga di comando. L’uso di Portainer consente di:
+- Ridurre la complessità operativa nella gestione dei container
+- Visualizzare lo stato dell’infrastruttura Docker/Kubernetes in tempo reale
+- Creare, modificare e rimuovere risorse: in pochi clic (container, immagini, stack, reti, volumi)
+- Gestire stack Docker Compose: tramite un'interfaccia web
+- Controllare più ambienti: (locali e remoti) da un'unica dashboard
+
+
+Per installare Portainer si può usare lo stesso docker, con i comandi:
+```
+docker volume create portainer_data
+docker run -d -p 9001:9000 --name portainer -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+```
+Oppure basta aggiungere un `--restart=always` per averlo disponibile ad ogni avvio del sistema. Una volta installato l'interfaccia web è disponibile all'indirizzo `http://localhost:9001` (in questo esempio è stata scelta la porta 9001 perchè la 9000 potrebbe essere già occupata). Al primo avvio, verrà richiesto di configurare un utente amministratore e selezionare l’ambiente Docker da gestire.
+
+
+Portainer supporta **Kubernetes** a partire dalla versione 1.11 in poi ed è in grado di collegarsi a un cluster Kubernetes locale oppure a cluster remoti (su cloud o in infrastrutture on-premise) fornendo una dashboard semplificata per workload, namespace, pod, ingress, storage, ecc. È possibile installare Portainer direttamente nel cluster tramite Helm o manifest YAML:
+```
+kubectl apply -n portainer -f https://downloads.portainer.io/ce2-17/portainer.yaml
+```
+È possibile aggiungere un ambiente Kubernetes remoto in Portainer con un *Agent remoto Portainer* da installare nel cluster remoto per facilitare la connessione oppure con Kubeconfig: fornendo manualmente un file kubeconfig con credenziali e endpoint API.
 
 
 ## Android
