@@ -1418,6 +1418,8 @@ Per rendere una porta esposta accessibile dall'esterno dell'host Docker, è nece
 docker run -p 8080:80 <immagine>
 ``` 
 mappa la porta 8080 dell'host verso la porta 80 del container.
+
+
 E' possibile che le reti create da docker vadano in contrasto con indirizzi ip di reti locali, è possibile identificare quali indirizzi di rete sono "occupati" con il comando 
 ```
 ip route
@@ -1426,8 +1428,9 @@ che ritorna righe del tipo
 ```
 172.18.0.0/16 dev br-24119fc62408 proto kernel scope link src 172.18.0.1 linkdown 
 ```
-Tipicamente le reti `br-xxxxxxx` sono quelle occupate dal sistema.
-Tipicamente Docker inizia da `172.18.x.x` o da `172.20.x.x`. Per cambiare questa impostazione è possibile modificare il file di configurazione
+
+
+Tipicamente le reti `br-xxxxxxx` sono quelle occupate dal demone-Docker che *tipicamente* iniziano con `172.18.x.x` o `172.20.x.x`. Per cambiare questa impostazione è possibile modificare il file di configurazione `/etc/docker/daemon.json`:
 ```
 {
   "default-address-pools": [
@@ -1439,7 +1442,7 @@ Tipicamente Docker inizia da `172.18.x.x` o da `172.20.x.x`. Per cambiare questa
 	,"dns": ["8.8.8.8", "1.1.1.1"]
 }
 ```
-e poi bisogna rivviare il Docker con il comando
+dopo la modifica del file di configurazione bisogna rivviare il demone-Docker con il comando
 ```
 sudo service docker restart
 ```
