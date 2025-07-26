@@ -1,4 +1,4 @@
-# Css & Bootstrap notes 
+  # Css & Bootstrap notes 
 
 *writted by AlNao*
 
@@ -23,6 +23,7 @@
 - [Esempi di Css3](#Esempi-di-css3)
   - [Tooltip](#Tooltip)
   - [Loader](#Loader)
+  - [Datepicker](#Datepicker)
   - ModalDate
   - Login with button 
   - Portafoglio: tabella di contenuti dinamica e responsive
@@ -1525,6 +1526,223 @@ Un esempio completo di diversi metodi di loader combinando bootstrap con le icon
 </body>
 </html>
 ```
+
+## Datepicker
+La gestione delle date rappresenta uno degli aspetti più frequenti nello sviluppo di applicazioni web moderne. Che si tratti di prenotazioni, pianificazione di eventi o selezione di periodi temporali, la necessità di fornire agli utenti strumenti intuitivi e funzionali per la scelta delle date è diventata una priorità nel design dell'esperienza utente. Le interfacce tradizionali spesso si limitano a semplici campi di input che richiedono la digitazione manuale delle date, approccio che può generare errori di formato e frustrazioni negli utenti. In risposta a questa problematica, l'integrazione di componenti datepicker all'interno di finestre modali offre una soluzione che combina accessibilità, controllo e validazione automatica.
+
+
+L'implementazione di una modal dotata di datepicker jQuery UI rappresenta un equilibrio tra funzionalità avanzate e semplicità d'uso. Questa soluzione consente di sfruttare le capacità di localizzazione, validazione e personalizzazione offerte dalla libreria jQuery UI, mantenendo al contempo un'interfaccia pulita e non invasiva per l'utente finale. Nel presente articolo verrà analizzata una implementazione pratica che dimostra come integrare efficacemente questi componenti, evidenziando le scelte tecniche adottate e i benefici derivanti dall'utilizzo di questa architettura nell'ambito dello sviluppo web front-end.
+Codice header:
+```
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- jQuery e jQuery UI CSS/JS -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/ui-lightness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Localizzazione italiana per jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/i18n/datepicker-it.min.js"></script>
+<style>
+    .date-input-group input {
+        transition: border-color 0.3s;
+    }
+    .date-input-group input:focus {
+        outline: none;
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    }
+    .result-container {
+        display: none;
+    }
+    .date-card {
+        border-left: 4px solid #0d6efd;
+    }
+    /* Personalizzazione jQuery UI Datepicker */
+    .ui-datepicker {
+        font-size: 14px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+    }
+    .ui-datepicker-header {
+        border-radius: 6px 6px 0 0;
+    }
+    /* Assicura che il datepicker sia sopra la modal di Bootstrap */
+    .ui-datepicker {
+        z-index: 1070 !important;
+    }
+</style>
+```
+Codice HTML:
+```
+    <h1 class="display-5 mb-4">Modal con jQuery Datepicker e Bootstrap 5</h1>
+    <p class="lead">Clicca il pulsante per aprire la modal e selezionare un periodo di date.</p>
+    ...
+    <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#dateModal">
+      Seleziona Periodo
+    </button>
+    ...
+
+    <!-- Container per i risultati -->
+    <div id="resultContainer" class="result-container mt-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Periodo Selezionato</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="date-card bg-light p-3 rounded">
+                            <strong class="d-block text-primary">Data di Inizio:</strong>
+                            <span id="selectedStartDate" class="fs-6"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="date-card bg-light p-3 rounded">
+                            <strong class="d-block text-primary">Data di Fine:</strong>
+                            <span id="selectedEndDate" class="fs-6"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3 p-2 bg-info bg-opacity-10 rounded">
+                    <strong class="text-info">Durata:</strong> <span id="duration"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    ...
+    <div class="modal fade" id="dateModal" tabindex="-1" aria-labelledby="dateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h1 class="modal-title fs-5" id="dateModalLabel">Seleziona Periodo</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="date-input-group">
+                                <label for="startDate" class="form-label fw-bold">Data di Inizio</label>
+                                <input type="text" class="form-control form-control-lg" id="startDate" name="startDate" readonly placeholder="Seleziona data inizio">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="date-input-group">
+                                <label for="endDate" class="form-label fw-bold">Data di Fine</label>
+                                <input type="text" class="form-control form-control-lg" id="endDate" name="endDate" readonly placeholder="Seleziona data fine">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="clearDates()">Pulisci</button>
+                    <button type="button" class="btn btn-primary" onclick="saveDates()">Conferma</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+```
+Codice Javascript:
+```
+$(document).ready(function() {
+    // Configurazione globale per jQuery UI Datepicker in italiano
+    $.datepicker.setDefaults($.datepicker.regional['it']);
+
+    // Inizializzazione dei datepicker
+    $("#startDate").datepicker({
+        dateFormat: 'dd/mm/yy',
+        minDate: 0, // Non permette date passate
+        maxDate: '+2y', // Massimo 2 anni nel futuro
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        onSelect: function(selectedDate) {
+            // Aggiorna la data minima per il campo "data di fine"
+            var minDate = $(this).datepicker('getDate');
+            $("#endDate").datepicker('option', 'minDate', minDate);
+
+            // Se la data di fine è precedente a quella di inizio, la svuota
+            var endDate = $("#endDate").datepicker('getDate');
+            if (endDate && endDate < minDate) {
+                $("#endDate").val('');
+            }
+        }
+    });
+
+    $("#endDate").datepicker({
+        dateFormat: 'dd/mm/yy',
+        minDate: 0,
+        maxDate: '+2y',
+        showButtonPanel: true,
+        changeMonth: true,
+        changeYear: true,
+        onSelect: function(selectedDate) {
+            // Aggiorna la data massima per il campo "data di inizio"
+            var maxDate = $(this).datepicker('getDate');
+            $("#startDate").datepicker('option', 'maxDate', maxDate);
+        }
+    });
+
+    // Gestione eventi Bootstrap modal
+    $('#dateModal').on('shown.bs.modal', function () {
+        // Modal aperta - puoi aggiungere logica se necessario
+    });
+
+    $('#dateModal').on('hidden.bs.modal', function () {
+        // Modal chiusa - puoi aggiungere logica se necessario
+    });
+});
+
+// Funzione per pulire le date
+function clearDates() {
+    $('#startDate, #endDate').val('');
+    // Reset delle opzioni min/max date
+    $("#startDate").datepicker('option', {minDate: 0, maxDate: '+2y'});
+    $("#endDate").datepicker('option', {minDate: 0, maxDate: '+2y'});
+}
+
+// Funzione per salvare le date
+function saveDates() {
+    const startDate = $('#startDate').val();
+    const endDate = $('#endDate').val();
+
+    if (!startDate || !endDate) {
+        // Usa il toast di Bootstrap per gli avvisi
+        showToast('Per favore seleziona entrambe le date', 'warning');
+        return;
+    }
+
+    // Calcola la durata
+    const start = $("#startDate").datepicker('getDate');
+    const end = $("#endDate").datepicker('getDate');
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 per includere entrambi i giorni
+
+    // Mostra i risultati
+    $('#selectedStartDate').text(startDate);
+    $('#selectedEndDate').text(endDate);
+    $('#duration').text(diffDays + ' giorni');
+
+    $('#resultContainer').slideDown(400);
+
+    // Chiudi la modal usando Bootstrap
+    var modal = bootstrap.Modal.getInstance(document.getElementById('dateModal'));
+    modal.hide();
+
+    // Scroll verso i risultati
+    $('html, body').animate({
+        scrollTop: $("#resultContainer").offset().top - 20
+    }, 500);
+
+}
+```
+
 
 ## Broadcast
 Il Broadcast in JavaScript è implementato attraverso il [BroadcastChannel API](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API), che permette la comunicazione tra diverse finestre, tab, iframe o worker che appartengono alla stessa origine (stesso dominio). È come un sistema di messaggistica che permette di inviare messaggi a tutti i "listener" interessati. Esempio preso spunto dal [video](https://www.youtube.com/watch?v=l-tJt0S4kgE).

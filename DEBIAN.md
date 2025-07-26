@@ -82,7 +82,7 @@ Questo manuale viene aggiornato dal 2006, anno di scrittura della prima versione
 
 Questo documento nasce dalla personale esigenza di avere un registro delle attività eseguite negli anni per la gestione dei sistemi GNU Linux e Debian, sia in ambito professionale sia in ambito personale. La necessità di riordinare il contenuto di grossi blocchi di appunti sparsi e raccolte di pagine web mi ha portato a scrivere un vero documento ordinato che negli anni si è evoluto visti i numerosi e frequenti aggiornamenti. In maniera molto ambiziosa l'ho chiamato documento e manuale, visto che ha anche di condivisione delle mie personali esperienze e conoscenze, seguendo proprio lo spirito base del mondo Open-source e GNU Linux. Rispetto alle precedenti versioni, questa versione è scritta senza sotto-sezioni e con articoli che parlano di singolo argomento in maniera completa. Ho sempre cercato il tempo per scrivere e per correggere gli errori di grammatica e di battitura di cui questo documento è pieno, cerco anche di essere chiaro e non ripetitivo ma non sempre trovo il tempo e le energie per fare tutto e poi sistemare tutto, non avendo nessun scopo di guadagno mi auguro che il lettore comprenda che questa è un documento amatoriale e che non pretenda troppo da questo manuale, ovviamente le cose scritte sono (quasi) sempre verificate anche se ovviamente si possono trovare guide con maggiori dettagli. Essendo un documento amatoriale ed essendo un testo scritto nei miei ritagli di tempo libero senza l'uso di nessun aiuto automatico come le IA, mi auguro che il lettore non abbia la pretesa che questo manuale descriva con precisione il modo migliore per installare e configurare un sistema perfettamente funzionante. 
 
-In questo documento viene esposto, in maniera più oggettiva possibile, il concetto che GNU Linux è un sistema operativo e Debian una distruzione disponibile, questo documento ha lo scopo di descriverne il processo di installazione e configurazione.  Questo manuale NON contiene slogan del tipo "perchè usare Linux", "open source è meglio" oppure "Linux è meglio di altri sistemi operativi", questi argomenti da bar vengono lasciati a chi è più competente in materia di chiacchiere inutili. Tecnicamente c'è molta di differenza tra un sistema operativo classico (come MS Windows e/o Apple Mac OS) e quello che viene comunemente chiamato Linux: siamo abituati a dire giustamente che MS Windows è un sistema operativo mentre il pacchetto MS Word compreso nel pacchetto MS Office è un programma, GNU Linux invece comprende entrambe le parti, esiste il cuore centrale di GNU Linux, chiamato Kernel Linux che può essere definito come il sistema operativo (cioè l'insieme di tutti quei programmi essenziali al funzionamento del sistema base), nei sistemi GNU Linux sono compresi anche tutti i programmi di uso più comune, come quelli per l'ufficio, la navigazione web, giochi, grafica, ecc..., al termine di una installare di un sistema GNU Linux l'utente si ritrova installati tutti i programmi base e, dai DVD o dai Mirror presenti su internet, può scaricare altri programmi senza dover cercare su altri siti, questa filosofia di unire sistema operativo e programmi è stata molto rimarcata in questi anni, basti pensa che i Mirror Debian contengono oltre 50.000 pacchetti e circa 10.000 programmi diversi.
+In questo documento viene esposto, in maniera più oggettiva possibile, il concetto che GNU Linux è un sistema operativo e Debian una distribuzione disponibile, questo documento ha lo scopo di descriverne il processo di installazione e configurazione.  Questo manuale NON contiene slogan del tipo "perchè usare Linux", "open source è meglio" oppure "Linux è meglio di altri sistemi operativi", questi argomenti da bar vengono lasciati a chi è più competente in materia di chiacchiere inutili. Tecnicamente c'è molta di differenza tra un sistema operativo classico (come MS Windows e/o Apple Mac OS) e quello che viene comunemente chiamato Linux: siamo abituati a dire giustamente che MS Windows è un sistema operativo mentre il pacchetto MS Word compreso nel pacchetto MS Office è un programma, GNU Linux invece comprende entrambe le parti, esiste il cuore centrale di GNU Linux, chiamato Kernel Linux che può essere definito come il sistema operativo (cioè l'insieme di tutti quei programmi essenziali al funzionamento del sistema base), nei sistemi GNU Linux sono compresi anche tutti i programmi di uso più comune, come quelli per l'ufficio, la navigazione web, giochi, grafica, ecc..., al termine di una installare di un sistema GNU Linux l'utente si ritrova installati tutti i programmi base e, dai DVD o dai Mirror presenti su internet, può scaricare altri programmi senza dover cercare su altri siti, questa filosofia di unire sistema operativo e programmi è stata molto rimarcata in questi anni, basti pensa che i Mirror Debian contengono oltre 50.000 pacchetti e circa 10.000 programmi diversi.
 
 In un pc o in un notebook, è possibile installare GNU Linux anche se è già presente un altro sistema operativo senza grossi problemi e i due sistemi possono essere installati in parallelo, alcune distribuzioni permettono persino di installare i due sistemi nella stessa partizione di disco. Le distribuzioni di GNU Linux sono community o aziende che preparano DVD oppure Mirror Web dove scaricare il sistema di installazione più velocemente, ogni distribuzione ha le proprie caratteristiche ma bisogna sempre ricordare che il cuore del sistema operativo Kernel Linux è sempre lo stesso. In questo documento si parla tipicamente solo della distribuzione Debian, ma leggendo questa guida potrete trovare spunti per qualsiasi distribuzione derivata come Ubuntu mentre per distribuzioni non derivate molti comandi non possono essere usati. Nel mio caso ho scelto di usare Debian perchè dopo vari tentativi, ho valutato la scelta tecnica migliore, fortunatamente dal 2006 ad oggi è stata costantemente aggiornata e supportata così ho dovuto solo tenermi al passo con gli aggiornamenti e non ho dovuto studiarmi un sistema operativo da zero.
 Le versioni di Debian sono divise tra la categorie di stable, testing e unstable; come dice il nome stesso, sono le varie fasi dei vita pacchetti: un pacchetto prima viene inserito nella versione chiamata unstable, poi passa nella testing e, quando viene valutato stabile senza anomalie, un pacchetto viene inserito nella successiva versione stabile di Debian, solamente le versioni stabili vengono numerate mentre alla versione “testing” viene assegnato il numero e il nome della successiva versione stabile mentre la versione “unstabile” non ha un numero di versione. Ad ogni versione viene assegnato anche un nome ispirato ai mitici personaggi del film Toys Story, la versione unstable porta sempre il nome Sid che era il nome del bambino che nel film si divertiva a rompere i giocatoli del protagonista.
@@ -100,7 +100,7 @@ Dopo la scrittura di ogni comando è sottintesa la pressione del tasto invio (en
 
 Questi standard possono essere non convenzionali ad un utente alle prime armi ma scopriremo subito che i caratteri ```#``` e ```$``` vengono usati dal sistema per distinguere la shell di utenti amministratori (root) e utenti normali. Si da per scontato che il lettore abbia la possibilità di collegarsi a internet con una linea abbastanza veloce da poter scaricare i DVD di Debian e che possa scaricare aggiornamenti e pacchetti non compresi nei DVD. Si assume anche che il lettore disponga di un masterizzatore DVD per masterizzare il DVD di installazione, che abbia già il DVD pronto oppure una chiavetta USB vuota. 
 
-Un utilizzatore di GNU Linux deve imparare fin da subito a prestare attenzione a come vengono scritti e inseriti nomi, perché i sistemi basatati su GNU Linux sono sempre case-sensitive, cioè fanno distinzione tra caratteri maiuscoli e minuscoli: durante la lettura di questo manuale bisogna sempre prestare attenzione a come sono scritti i caratteri e fare sempre attenzione a cosa si digita con la tastiera.
+Un utilizzatore di GNU Linux deve imparare fin da subito a prestare attenzione a come vengono scritti e inseriti nomi, perché i sistemi basati su GNU Linux sono sempre case-sensitive, cioè fanno distinzione tra caratteri maiuscoli e minuscoli: durante la lettura di questo manuale bisogna sempre prestare attenzione a come sono scritti i caratteri e fare sempre attenzione a cosa si digita con la tastiera.
 
 # Come installare Debian 12
 
@@ -1233,11 +1233,15 @@ $ mongo
 > db.elenco.insert({nome:"Alberto"})
 > db.elenco.find()}
 ```
-Un tool grafico per poter usare mongo è Robomongo che purtroppo non è disponibile nei pacchetti pronti per debiam ma deve essere scaricato un file installer in formato tar.gz dal sito ufficiale
+Un tool grafico per poter usare e gestire un database mongo è **Mongo-Compass** che è disponibile come pacchetto [ufficiale](https://www.mongodb.com/docs/compass/install/) che può essere scaricato ed installato molto velocemente con pochi domandi:
 ```
-https://robomongo.org/download
+# wget https://downloads.mongodb.com/compass/mongodb-compass_1.46.6_amd64.deb
+# sudo apt install ./mongodb-compass_1.46.6_amd64.deb
+# sudo dpkg -i mongodb-compass_1.46.6_amd64.deb
+# sudo apt-get install -f
+$ mongodb-compass	
 ```
-dove è possibile trovare la guida per l'installazione e la configurazione del tool.
+
 
 
 ## AWS
@@ -1291,9 +1295,9 @@ Alcuni esempi di utilizzo di SLS sono disponibili sulla pagina dedicata al cloud
 
 Il cloud AWS mette a disposizione molte **AMI** (immagini) con il sistema operativo Debian12, la lista può essere recuperata in molti siti ufficiali oppure lanciando il comando AWS-CLI:
 ```
-aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
-aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
-aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
 ```
 
 
@@ -1314,10 +1318,10 @@ aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtiliz
 
 Una volta avviata una istanza è possibile collegarsi e configurarla, qui riportati alcuni dei principali comandi:
 ```
-ssh -i /path/to/your-key-pair.pem admin@your-instance-public-ip
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y apache2 nginx mysql-server php
+$ ssh -i /path/to/your-key-pair.pem admin@your-instance-public-ip
+  sudo apt update
+  sudo apt upgrade -y
+  sudo apt install -y apache2 nginx mysql-server php
 ```
 
 
@@ -1415,14 +1419,14 @@ I principali comandi di Docker per la gestione della rete sono:
 
 Per rendere una porta esposta accessibile dall'esterno dell'host Docker, è necessario utilizzare il flag -p (o --publish) con il comando docker run. Questo mappa una porta dell'host a una porta del container. Per esempio:
 ```
-docker run -p 8080:80 <immagine>
+$ docker run -p 8080:80 <immagine>
 ``` 
 mappa la porta 8080 dell'host verso la porta 80 del container.
 
 
 E' possibile che le reti create da docker vadano in contrasto con indirizzi ip di reti locali, è possibile identificare quali indirizzi di rete sono "occupati" con il comando 
 ```
-ip route
+# ip route
 ```
 che ritorna righe del tipo
 ```
@@ -1444,7 +1448,7 @@ Tipicamente le reti `br-xxxxxxx` sono quelle occupate dal demone-Docker che *tip
 ```
 dopo la modifica del file di configurazione bisogna rivviare il demone-Docker con il comando
 ```
-sudo service docker restart
+# service docker restart
 ```
 
 
@@ -1466,21 +1470,21 @@ Per la creazione di una immagine è indispensabile creare un `Dockerfile` (*file
   ```
 I comandi per preparare e avviare una immagine sono:
 ```
-docker build -t nome-immagine .
-docker images
-docker run nome-immagine
+$ docker build -t nome-immagine .
+$ docker images
+$ docker run nome-immagine
 ```
 Mentre è possibile "entrare" direttamente nell'immagine con il comando 
 ```
-docker run -it mia-immagine /bin/bash
+$ docker run -it mia-immagine /bin/bash
 ```
 Il comando **docker exec** serve per eseguire un comando all'interno di un container Docker già in esecuzione . È particolarmente utile quando vuoi interagire con un container attivo senza doverlo fermare o riavviare. La sintassi è:
 ```
-docker exec [OPZIONI] NOME_CONTAINER COMANDO [ARGOMENTI]
+$ docker exec [OPZIONI] NOME_CONTAINER COMANDO [ARGOMENTI]
 ```
 come per esempio
 ```
-docker exec -it NOME_CONTAINER /bin/bash
+$ docker exec -it NOME_CONTAINER /bin/bash
 ```
 
 
