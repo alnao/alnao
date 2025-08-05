@@ -1202,38 +1202,39 @@ da notare che con l'ultimo comandi si è abilitato l'accesso via web dall'indiri
 
 ## MongoDB
 
-Per quanto riguarda il **MongoDB** l'installazione è un attimo più complicata perché si deve scaricare da un repository proprietario e non da quelli ufficiali di Debian.
+Per quanto riguarda il demone **MongoDB** si può installare utizzando il repository dedicato che necessita di una piccola configurazione come spiegato nel [sito ufficiale](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/):
 ```
-# apt-get install dirmngr gnupg apt-transport-https software-properties-common ca-certificates
-# curl -fsSL https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-# add-apt-repository 'deb https://repo.mongodb.org/apt/debian buster/mongodb-org/4.2 main'
-# apt-get update
-# apt-get install mongodb-org
-# systemctl enable mongod --now
-# mongo --eval 'db.runCommand({ connectionStatus: 1 })'}
+# curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
+# echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | sudo tee  /etc/apt/sources.list.d/mongodb-org-8.0.list
+# sudo apt-get update
+# sudo apt-get install -y mongodb-org
+# sudo systemctl enable mongod --now
+# sudo sudo systemctl start mongod
 ```
-poi bisogna subito configurare la rete per permettere l'accesso, il file di configurazione è
+se si vuole accedere al demone da altri nodi diversi dal nodo in esecuzione bisogna modificare il file di configurazione:
 ```
 /etc/mongod.conf
 ```
-nel quale bisogna verificare le configurazioni base di accesso:
+nel quale bisogna verificare ed eventualmente modificare le configurazioni base di rete nei punti:
 ```
 bindip = 127.0.0.1,indirizziIpCheUsanoMongo
-#port = 27017
+port = 27017
 #auth=true
 ```
-se modificato il file di configurazione, bisogna successivamente riavviare il server con il comando:
+se viene modificato il file di configurazione, bisogna ricordarsi di riavviare il server con il comando:
 ```
 # systemctl restart mongod
 ```
 Per l'accesso da riga di comandi è disponibile una console, un semplice esempio di utilizzo di questo comando:
 ```
-$ mongo
-> use collectiondemo
-> db.elenco.insert({nome:"Alberto"})
-> db.elenco.find()}
+$ mongosh 
+  > db.runCommand({ connectionStatus: 1 })
+  > use collectiondemo
+  > db.elenco.insertOne({nome:"Alberto"})
+  > db.elenco.find()}
+  > exit 
 ```
-Un tool grafico per poter usare e gestire un database mongo è **Mongo-Compass** che è disponibile come pacchetto [ufficiale](https://www.mongodb.com/docs/compass/install/) che può essere scaricato ed installato molto velocemente con pochi domandi:
+Un tool grafico per poter usare e gestire un database MongoDB è **Mongo-Compass**, disponibile come pacchetto nel [sito ufficiale](https://www.mongodb.com/docs/compass/install/) che può essere scaricato ed installato molto velocemente con pochi domandi:
 ```
 # wget https://downloads.mongodb.com/compass/mongodb-compass_1.46.6_amd64.deb
 # sudo apt install ./mongodb-compass_1.46.6_amd64.deb
@@ -1241,7 +1242,6 @@ Un tool grafico per poter usare e gestire un database mongo è **Mongo-Compass**
 # sudo apt-get install -f
 $ mongodb-compass	
 ```
-
 
 
 ## AWS
@@ -1263,7 +1263,14 @@ $ aws s3 ls
 ```
 per visualizzare l'elenco dei bucket presenti nel servizio S3 nella region impostata di default in fase di configurazione. L'elenco dei comandi specifici della CLI è disponibile negli articoli dedicati al servizio AWS.
 
-Per quanto riguarda la CLI-SAM, la versione CLI dedicata ai servizi serverless, i passi da seguire per l'installazione sono:
+
+Per avere una lista di tutte le risorse disponibili nel cloud si può lanciare lo script
+```
+https://github.com/alnao/AwsCloudFormationExamples/blob/master/aws_panoramic.bash
+```
+
+
+Per quanto riguarda il gruppo di comandi della CLI dedicati ai servizi serverless, chiamati **CLI-SAM**, si necessita di una installazione dedicata come indicato nel [sito ufficiale](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html), che elenca i seguenti comandi:
 ```
 # wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
 # unzip aws-sam-cli-linux-x86\_64.zip -d sam-installation
@@ -1272,7 +1279,8 @@ $ sam --version
 ```
 Una guida completa di SAM può essere trovata al sito ufficiale mentre esempi di utilizzo di questo mando si possono trovare nella sezione di AWS del sito alnao.it.
 
-L'installazione di SLS (detta anche serverless-cli) si basa sul sistema di pacakge NPM e bisogna lanciare il comando di installazione del pacchetto dedicato:
+
+L'installazione di **SLS** (detta anche serverless-cli) si basa sul sistema di pacakge NPM e bisogna lanciare il comando di installazione del pacchetto dedicato:
 ```
 $ npm install -g serverless
 ```
@@ -1288,7 +1296,6 @@ oppure:
 ```
 $ sls
 ```
-Alcuni esempi di utilizzo di SLS sono disponibili sulla pagina dedicata al cloud AWS.
 
 
 ### Gestione EC2 con Debian 12
