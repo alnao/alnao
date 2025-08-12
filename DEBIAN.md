@@ -5,13 +5,14 @@
 <img src="https://www.debian.org/Pics/debian-logo-1024x576.png" width="200"> 
 
 
-*writted by AlNao*
+<div style="text-align: right;"><i>writted by AlNao</i></div>
 
 
-In questa pagina sono elencati tutti gli articoli riguardo a GNU Linux Debian alla versione 12 chiamata **Bookworm**.
+In questa pagina sono elencati tutti gli articoli riguardo a GNU Linux Debian alla versione 12 chiamata **Bookworm**. Tutti i dettagli su questa release sono disponibili nella [wiki ufficiale](https://wiki.debian.org/DebianBookworm) e nella [release notes](https://www.debian.org/releases/bookworm/).
 
 
-E' garantito il permesso di copiare, distribuire e/o modificare questo documento in base ai termini della GNU Free Documentation License, Versione 1.2 o ogni versione successiva pubblicata dalla Free Software Foundation. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation.
+Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie**, a breve questo documento sarà aggiornato con le procedure per questa nuova versione di tipo LTS che sarà supportata ufficialmente con aggiornamenti di sicurezza e bug fix fino a dicembre 2026. Tutte le informazioni su questa nuova release sono disponiibli nella [pagina ufficiale](https://www.debian.org/releases/trixie/release-notes/index.it.html).
+
 
 # Indice
 - [Introduzione](#Introduzione)
@@ -74,6 +75,7 @@ E' garantito il permesso di copiare, distribuire e/o modificare questo documento
   - [Configurazione di rete](#Configurazione-di-rete)
   - [Gestione dei backup](#Gestione-dei-backup)
   - [Gestione delle macchine virtuali](#Gestione-delle-macchine-virtuali)
+
 
 # Introduzione
 
@@ -2212,8 +2214,13 @@ journalctl -xeu docker-cleanup.service
 
 
 # AlNao.it
-Nessun contenuto in questo repository è stato creato con IA o automaticamente, tutto il codice è stato scritto con molta pazienza da Alberto Nao. Se il codice è stato preso da altri siti/progetti è sempre indicata la fonte. Per maggior informazioni visitare il sito [alnao.it](https://www.alnao.it/).
+Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di Alberto Nao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
 
+
+Alcuni contenuti e porzioni di codice presenti in questo repository sono stati realizzati anche grazie al supporto di strumenti di intelligenza artificiale, il cui contributo ha permesso di arricchire e velocizzare la produzione del materiale. Ogni informazione e frammento di codice è stato comunque attentamente verificato e validato, con l’obiettivo di garantire la massima qualità e affidabilità dei contenuti offerti. 
+
+
+Per ulteriori dettagli, approfondimenti o richieste di chiarimento, si invita a consultare il sito [alnao.it](https://www.alnao.it/).
 
 
 ## License
