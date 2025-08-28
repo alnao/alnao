@@ -4,7 +4,7 @@
 <!-- PROFILO -->
 <h1 align="center">  
   <!--<img src="https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif" width="30" alt="Ciao!" /> -->
-    <span style="color:#56E39F;">&lt; AlNao /&gt;</span>
+    &lt; AlNao /&gt;
   <!--<img src="https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif" width="30" alt="Ciao!" /> -->
 </h1>
 <p align="center">
@@ -96,7 +96,7 @@
 </table>
 
 
-# <span style="color:#56E39F;">&lt; AlNao /&gt;</span>
+# &lt; AlNao /&gt;
 Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
 
 

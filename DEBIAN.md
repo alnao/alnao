@@ -2223,7 +2223,7 @@ journalctl -xeu docker-cleanup.service
 ```
 
 
-# <span style="color:#56E39F;">&lt; AlNao /&gt;</span>
+# &lt; AlNao /&gt;
 Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
 
 
