@@ -1,9 +1,10 @@
-# Wordpress notes 
+# Wordpress 
 
-*writted by AlNao*
+*Writted by AlNao*. Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nella vecchia versione del blog personale [alnao.it](https://www.alnao.it). Sono riproposti in formato Markdown per conservarli e renderli facilmente consultabili. Alcuni contenuti potrebbero essere datati, ma possono ancora fornire spunti e soluzioni interessanti. Tutti gli articoli sono distribuiti sotto licenza *GNU GPL-3.0*, salvo diversa indicazione.
 
-# Indice
-- [WordPress](#Introduzione-a-Css3)
+
+## Indice
+- [WordPress](#Introduzione-a-WordPress)
   - [Come installare un sito WordPress](#Come-installare-un-sito-WordPress)
   - [Come gestire un sito WordPress](#Come-gestire-un-sito-WordPress)
   - [Come installare un tema WordPress](#Come-installare-un-tema-WordPress)
@@ -20,9 +21,9 @@
 ## Introduzione a WordPress
 
 
-WordPress è un framework che permette di creare siti web gestiti in maniera veloce e semplice da una sezione amministrativa in sicurezza, comunemente questi gestori di contenuti vengono chiamati CMS (content manager system). Inizialmente è stato creato per i siti di tipo Blog, negli anni si è evoluto ed è diventato punto di riferimento per siti di qualsiasi tipo compresi gli e-business e i siti istituzionali di grandi aziende. Il framework è open-source e gratuito quindi può essere usato senza dover pagare nessuna licenza, tuttavia alcuni componenti aggiuntivi come plugin e temi grafici possono essere acquistati e aggiunti con pochi click.
+WordPress è la piattaforma open-source più popolare al mondo per la creazione di siti web e blog. Nato nel 2003 come semplice sistema per la gestione di blog, si è evoluto in un vero e proprio Content Management System (CMS) capace di gestire qualsiasi tipo di sito: dal portfolio personale all’e-commerce, dal sito aziendale al portale di notizie. La forza di WordPress risiede nella sua semplicità d’uso e nella grande flessibilità: grazie a migliaia di temi e plugin gratuiti o a pagamento, è possibile personalizzare ogni aspetto grafico e funzionale del proprio sito senza dover scrivere codice. Tuttavia, per chi desidera andare oltre le funzionalità di base, WordPress offre anche un’architettura solida e documentata che permette agli sviluppatori di creare soluzioni su misura.
 
-WordPress è interamente scritto con il linguaggio di programmazione PHP, è possibile usare un sito senza alcuna conoscenza di programmazione, l'unica fase delicata dove è veramente necessaria è l'installazione dove i passi da eseguire sono molti semplici. Per poter usare e personalizzare la grafica del sito non è necessario nemmeno avere conoscenze di HTML e CSS ma, senza queste conoscenze, sarà inevitable adattarsi ai temi già pronti senza la possibilità di modifiche. Per poter modificare il tema grafico o componenti è necessario conoscere i linguaggi front-end mentre non è necessario conoscere SQL in quanto il framework non lo usa, (è più corretto dire che viene usato solo in casi particolari come nei plugin evoluti). Il framework è studiato per tutti i browser e tutte le piattaforme e usa pochissimo Javascript, che viene usato solo in plugin molto evoluti.
+WordPress è scritto in PHP e utilizza un database MySQL o MariaDB. Può essere installato facilmente su qualsiasi server web e, grazie a una vasta community internazionale, offre supporto, aggiornamenti costanti e una documentazione completa. La gestione dei contenuti avviene tramite un’interfaccia amministrativa intuitiva, accessibile da qualsiasi browser. Per poter usare e personalizzare la grafica del sito non è necessario avere conoscenze di HTML e CSS ma, senza queste conoscenze, sarà inevitable adattarsi ai temi già pronti senza la possibilità di modifiche. Per poter modificare il tema grafico o componenti è necessario conoscere i linguaggi front-end mentre non è necessario conoscere SQL in quanto il framework non lo usa (è più corretto dire che viene usato solo in casi particolari come nei plugin evoluti). Il framework è studiato per tutti i browser e tutte le piattaforme e usa pochissimo Javascript, che viene usato solo in plugin molto evoluti.
 
 In questi articoli non sono trattati argomenti sistemistici come la configurazione del web server, tuttavia si faranno riferimenti utili all'uso, si rimanda alla documentazione ufficiale per approfondimenti. Per poter creare un sito e usare WordPress, è necessario avere a disposizione un server web, come Apache, presso un hosting come Aruba o AWS-Lightsail oppure un server installato nel proprio computer come XAMPP per i sistemi Ms Windows. I costi del dominio e dell'hosting posso variare in base al servizio scelto, è possibile scegliere anche l'hosting ufficiale di wordpress che ha costo zero ma sono legati al dominio principale: i siti generati sono del tipo alnao.wordpress.com.
 
@@ -437,14 +438,28 @@ Le indicazione di best practice consigliano, quasi obbligano, a dividere i templ
 Questi tre file bastano per visualizzare il tema ma non permettono di usare le funzionalità di "page" e "articoli" del framework per il quali è indispensabile creare due file dedicati.
 
 ## Come sviluppare un tema parte 4
-*coming soon* 
+*coming soon o forse mai?!?*
 
 
-# AlNao.it
-Nessun contenuto in questo repository è stato creato con IA o automaticamente, tutto il codice è stato scritto con molta pazienza da Alberto Nao. Se il codice è stato preso da altri siti/progetti è sempre indicata la fonte. Per maggior informazioni visitare il sito [alnao.it](https://www.alnao.it/).
+# <span style="color:#56E39F;">&lt; AlNao /&gt;</span>
+Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
+
+
+Alcuni contenuti e porzioni di codice presenti in questo repository sono stati realizzati anche grazie al supporto di strumenti di intelligenza artificiale, il cui contributo ha permesso di arricchire e velocizzare la produzione del materiale. Ogni informazione e frammento di codice è stato comunque attentamente verificato e validato, con l’obiettivo di garantire la massima qualità e affidabilità dei contenuti offerti. 
+
+
+Per ulteriori dettagli, approfondimenti o richieste di chiarimento, si invita a consultare il sito [AlNao.it](https://www.alnao.it/).
 
 
 ## License
+Made with ❤️ by <a href="https://www.alnao.it">AlNao</a>
+&bull; 
 Public projects 
-<a href="https://it.wikipedia.org/wiki/GNU_General_Public_License"  valign="middle"><img src="https://img.shields.io/badge/License-GNU-blue" style="height:22px;"  valign="middle"></a> 
+<a href="https://www.gnu.org/licenses/gpl-3.0"  valign="middle"> <img src="https://img.shields.io/badge/License-GPL%20v3-blue?style=plastic" alt="GPL v3" valign="middle" /></a>
 *Free Software!*
+
+
+Il software è distribuito secondo i termini della GNU General Public License v3.0. L'uso, la modifica e la ridistribuzione sono consentiti, a condizione che ogni copia o lavoro derivato sia rilasciato con la stessa licenza. Il contenuto è fornito "così com'è", senza alcuna garanzia, esplicita o implicita.
+
+
+The software is distributed under the terms of the GNU General Public License v3.0. Use, modification, and redistribution are permitted, provided that any copy or derivative work is released under the same license. The content is provided "as is", without any warranty, express or implied.

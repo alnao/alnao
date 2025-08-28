@@ -1,14 +1,13 @@
-
 # Debian 12 Handbook
 
 
 <img src="https://www.debian.org/Pics/debian-logo-1024x576.png" width="200"> 
 
 
-<div style="text-align: right;"><i>writted by AlNao</i></div>
+*Writted by AlNao*. Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nella vecchia versione del blog personale [alnao.it](https://www.alnao.it). Sono riproposti in formato Markdown per conservarli e renderli facilmente consultabili. Alcuni contenuti potrebbero essere datati, ma possono ancora fornire spunti e soluzioni interessanti. Tutti gli articoli sono distribuiti sotto licenza *GNU GPL-3.0*, salvo diversa indicazione.
 
 
-In questa pagina sono elencati tutti gli articoli riguardo a GNU Linux Debian alla versione 12 chiamata **Bookworm**. Tutti i dettagli su questa release sono disponibili nella [wiki ufficiale](https://wiki.debian.org/DebianBookworm) e nella [release notes](https://www.debian.org/releases/bookworm/).
+In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian** alla versione 12 chiamata **Bookworm**. Tutti i dettagli su questa release sono disponibili nella [wiki ufficiale](https://wiki.debian.org/DebianBookworm) e nella [release notes](https://www.debian.org/releases/bookworm/).
 
 
 Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie**, a breve questo documento sarà aggiornato con le procedure per questa nuova versione di tipo LTS che sarà supportata ufficialmente con aggiornamenti di sicurezza e bug fix fino a dicembre 2026. Tutte le informazioni su questa nuova release sono disponiibli nella [pagina ufficiale](https://www.debian.org/releases/trixie/release-notes/index.it.html).
@@ -16,6 +15,7 @@ Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie*
 
 # Indice
 - [Introduzione](#Introduzione)
+  - [Cosa, dove, come e perchè](#Cosa-dove-come-perchè)
 - [Come installare Debian 12](#Come-installare-Debian-12)
 - [Come gestire i file e le partizioni](#Come-gestire-i-file-e-le-partizioni)
   - [Gestione dei permessi](#Gestione-dei-permessi)
@@ -79,30 +79,40 @@ Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie*
 
 # Introduzione
 
+Questo documento nasce dalla personale esigenza di avere un registro delle attività eseguite negli anni per la gestione dei sistemi GNU Linux e Debian, sia in ambito professionale sia in ambito personale. La necessità di riordinare il contenuto di grossi blocchi di appunti sparsi e raccolte di pagine web mi ha portato a scrivere un vero documento ordinato che negli anni si è evoluto visti i numerosi e frequenti aggiornamenti. 
 
-Questo manuale viene aggiornato dal 2006, anno di scrittura della prima versione della *mitica* Debian 3.1 Sarge, ogni due anni esce una versione nuova del sistema operativo Debian, questo comporta una revisione completa di tutti gli argomenti trattati. Questa è la versione della versione 12.1, le precedenti vesioni erano in formato PDF e nel sito web [alnao.it](https://www.alnao.it/).
+Il documento è pensato come un vero e proprio “taccuino di bordo”: raccoglie procedure, trucchi, comandi e soluzioni ai problemi più comuni, frutto di esperienze personali e di una continua attività di aggiornamento. Non troverai slogan o confronti inutili con altri sistemi operativi, ma solo ciò che serve davvero per installare, configurare e mantenere Debian efficiente, sicuro e adatto alle tue esigenze, sia in ambito desktop che server.
 
-Questo documento nasce dalla personale esigenza di avere un registro delle attività eseguite negli anni per la gestione dei sistemi GNU Linux e Debian, sia in ambito professionale sia in ambito personale. La necessità di riordinare il contenuto di grossi blocchi di appunti sparsi e raccolte di pagine web mi ha portato a scrivere un vero documento ordinato che negli anni si è evoluto visti i numerosi e frequenti aggiornamenti. In maniera molto ambiziosa l'ho chiamato documento e manuale, visto che ha anche di condivisione delle mie personali esperienze e conoscenze, seguendo proprio lo spirito base del mondo Open-source e GNU Linux. Rispetto alle precedenti versioni, questa versione è scritta senza sotto-sezioni e con articoli che parlano di singolo argomento in maniera completa. Ho sempre cercato il tempo per scrivere e per correggere gli errori di grammatica e di battitura di cui questo documento è pieno, cerco anche di essere chiaro e non ripetitivo ma non sempre trovo il tempo e le energie per fare tutto e poi sistemare tutto, non avendo nessun scopo di guadagno mi auguro che il lettore comprenda che questa è un documento amatoriale e che non pretenda troppo da questo manuale, ovviamente le cose scritte sono (quasi) sempre verificate anche se ovviamente si possono trovare guide con maggiori dettagli. Essendo un documento amatoriale ed essendo un testo scritto nei miei ritagli di tempo libero senza l'uso di nessun aiuto automatico come le IA, mi auguro che il lettore non abbia la pretesa che questo manuale descriva con precisione il modo migliore per installare e configurare un sistema perfettamente funzionante. 
+Il documento viene aggiornato dal 2006, anno di scrittura della prima versione della *mitica* Debian 3.1 Sarge e ogni due anni riceve una revisione completa in corrispondenza dell'uscia della nuova versione del sistema operativo Debian. Questa è la versione della versione 12.1, le precedenti vesioni erano in formato PDF e nel sito web [alnao.it](https://www.alnao.it/).
 
-In questo documento viene esposto, in maniera più oggettiva possibile, il concetto che GNU Linux è un sistema operativo e Debian una distribuzione disponibile, questo documento ha lo scopo di descriverne il processo di installazione e configurazione.  Questo manuale NON contiene slogan del tipo "perchè usare Linux", "open source è meglio" oppure "Linux è meglio di altri sistemi operativi", questi argomenti da bar vengono lasciati a chi è più competente in materia di chiacchiere inutili. Tecnicamente c'è molta di differenza tra un sistema operativo classico (come MS Windows e/o Apple Mac OS) e quello che viene comunemente chiamato Linux: siamo abituati a dire giustamente che MS Windows è un sistema operativo mentre il pacchetto MS Word compreso nel pacchetto MS Office è un programma, GNU Linux invece comprende entrambe le parti, esiste il cuore centrale di GNU Linux, chiamato Kernel Linux che può essere definito come il sistema operativo (cioè l'insieme di tutti quei programmi essenziali al funzionamento del sistema base), nei sistemi GNU Linux sono compresi anche tutti i programmi di uso più comune, come quelli per l'ufficio, la navigazione web, giochi, grafica, ecc..., al termine di una installare di un sistema GNU Linux l'utente si ritrova installati tutti i programmi base e, dai DVD o dai Mirror presenti su internet, può scaricare altri programmi senza dover cercare su altri siti, questa filosofia di unire sistema operativo e programmi è stata molto rimarcata in questi anni, basti pensa che i Mirror Debian contengono oltre 50.000 pacchetti e circa 10.000 programmi diversi.
+In maniera molto ambiziosa l'ho chiamato documento e manuale, Handbook nelle vecchie versioni in lingua inglese. Le varie versioni sono sempre state pubblicate su blog o su documenti pubblici, seguendo lo spirito base del mondo Open-source e GNU Linux. Rispetto alle precedenti versioni, questa versione è scritta senza sotto-sezioni e con articoli che parlano di singolo argomento in maniera completa. 
 
-In un pc o in un notebook, è possibile installare GNU Linux anche se è già presente un altro sistema operativo senza grossi problemi e i due sistemi possono essere installati in parallelo, alcune distribuzioni permettono persino di installare i due sistemi nella stessa partizione di disco. Le distribuzioni di GNU Linux sono community o aziende che preparano DVD oppure Mirror Web dove scaricare il sistema di installazione più velocemente, ogni distribuzione ha le proprie caratteristiche ma bisogna sempre ricordare che il cuore del sistema operativo Kernel Linux è sempre lo stesso. In questo documento si parla tipicamente solo della distribuzione Debian, ma leggendo questa guida potrete trovare spunti per qualsiasi distribuzione derivata come Ubuntu mentre per distribuzioni non derivate molti comandi non possono essere usati. Nel mio caso ho scelto di usare Debian perchè dopo vari tentativi, ho valutato la scelta tecnica migliore, fortunatamente dal 2006 ad oggi è stata costantemente aggiornata e supportata così ho dovuto solo tenermi al passo con gli aggiornamenti e non ho dovuto studiarmi un sistema operativo da zero.
-Le versioni di Debian sono divise tra la categorie di stable, testing e unstable; come dice il nome stesso, sono le varie fasi dei vita pacchetti: un pacchetto prima viene inserito nella versione chiamata unstable, poi passa nella testing e, quando viene valutato stabile senza anomalie, un pacchetto viene inserito nella successiva versione stabile di Debian, solamente le versioni stabili vengono numerate mentre alla versione “testing” viene assegnato il numero e il nome della successiva versione stabile mentre la versione “unstabile” non ha un numero di versione. Ad ogni versione viene assegnato anche un nome ispirato ai mitici personaggi del film Toys Story, la versione unstable porta sempre il nome Sid che era il nome del bambino che nel film si divertiva a rompere i giocatoli del protagonista.
+La redazione di questo documento è stata condotta nei ritagli di tempo libero, talvolta con il supporto di strumenti automatici e/o di intelligenze artificiali, sempre senza alcun fine di lucro. Nonostante l'impegno costante nel correggere errori di grammatica e battitura, nonché nel perseguire chiarezza espositiva e coerenza, è possibile che siano ancora presenti imprecisioni, refusi o ripetizioni. Si sottolinea il carattere amatoriale di questo manuale, che non ambisce a fornire una trattazione esaustiva o definitiva, ma piuttosto una guida pratica e orientativa. Le procedure e le informazioni riportate sono state verificate nella maggior parte dei casi, tuttavia possono esistere guide o documentazioni più dettagliate e specialistiche. Non si intende, pertanto, offrire una descrizione universalmente valida del metodo migliore per installare e configurare un sistema perfettamente funzionante, ma condividere un percorso di apprendimento e ottimizzazione maturato nel tempo.
 
-Per chiarezza di esposizione e per garantire anche precisione delle descrizioni, in tutto questo documento saranno adottate le convenzioni classiche usate in quasi tutti i documenti e i siti:
+Questo documento è stato concepito principalmente come guida di riferimento per attività di programmazione e sviluppo su sistemi GNU/Linux e Debian ma i contenuti sono strutturati in modo da risultare accessibili e utili anche a chi non possiede competenze specifiche di programmazione. Le procedure, i consigli e le spiegazioni tecniche sono *pensati* per accompagnare sia il professionista sia l’utente alle prime armi.
 
-- Viene usato il carattere ```#``` per indicare un comando eseguito da un utente con privilegi di amministratore di sistema (il super utente root).
-- Viene usato il carattere ```$``` per indicare un comando eseguito da un utente non amministratore (un utente non root per esempio quello creato in fase di installazione).
-- Viene usato lo stile ```macchina di scrivere``` per indicare messaggi mostrati a video dal sistema, i caratteri inseriti da tastiera e i nomi dei file, facendo sempre attenzione alla distinzione fra lettere minuscole e maiuscole.
-- Viene usato lo stile **Grassetto** quando si indicano, per la prima volta, nomi di programmi o dei pacchetti di particolare importanza.
-- Viene usato lo stile *corsivo* quando si vogliono evidenziare commenti personali o note non ufficiali.
-- Vengono usati dei riquadri oppure il $\textcolor{orange}{\textsf{testo in rosso}}$ quando si vogliono inserire delle note importanti che meritano maggiore attenzione dall'utente.
+## Cosa dove come perchè
+*Cosa*: La differenza tra ciò che è un sistema operativo e ciò che è un applicativo assume contorni talvolta chiari e meno chiari e sfumati: nei sistemi tradizionali, come Microsoft Windows o Apple macOS, si tende a tracciare una linea netta tra il cuore del sistema e i programmi accessori, nel mondo GNU Linux questa separazione si dissolve spesso con componenti che collaborano. Il *Kernel Linux*, può essere identificato come il sistema operativo ma molti componenti possono essere identificati come parti del sistema operativo nonostante siano pacchetti separati con nomi specifici. Grazie alla filosofia dei repository e dei mirror ufficiali, è possibile arricchire i sistemi con decine di migliaia di nuovi componenti senza mai dover ricorrere a fonti esterne di dubbia provenienza. In questo scenario, Debian si distingue per la ricchezza e la varietà del suo repertorio offrendo oltre 50.000 pacchetti e circa 10.000 programmi differenti.
 
-Dopo la scrittura di ogni comando è sottintesa la pressione del tasto invio (enter).
+*Dove*: L’installazione di GNU/Linux, e in particolare di Debian, non conosce confini rigidi: che si tratti di un personal computer di ultima generazione, di un notebook ormai prossimo alla pensione o di una workstation dedicata, la flessibilità del sistema consente di convivere pacificamente con altri sistemi operativi già presenti. Alcune distribuzioni permettono di condividere la stessa partizione tra più sistema operativi installati. Le comunità e le aziende che curano le distribuzioni GNU/Linux mettono a disposizione supporti di installazione come DVD, immagini ISO e mirror web, consentendo di accedere rapidamente al sistema desiderato. Ogni distribuzione possiede le proprie peculiarità, ma il cuore pulsante, il Kernel Linux, rimane invariato, garantendo una base solida e affidabile su cui costruire qualsiasi esperienza d’uso. In questo manuale si è scelto di concentrare l’attenzione su Debian, ma molte delle indicazioni e dei suggerimenti qui raccolti possono essere utilmente applicati anche a distribuzioni derivate, come Ubuntu, mentre per altre distrubuzioni le procedure potrebbero richiedere adattamenti consistenti.
 
-Questi standard possono essere non convenzionali ad un utente alle prime armi ma scopriremo subito che i caratteri ```#``` e ```$``` vengono usati dal sistema per distinguere la shell di utenti amministratori (root) e utenti normali. Si da per scontato che il lettore abbia la possibilità di collegarsi a internet con una linea abbastanza veloce da poter scaricare i DVD di Debian e che possa scaricare aggiornamenti e pacchetti non compresi nei DVD. Si assume anche che il lettore disponga di un masterizzatore DVD per masterizzare il DVD di installazione, che abbia già il DVD pronto oppure una chiavetta USB vuota. 
+*Come*: L’universo GNU/Linux, e in particolare a Debian, richiede una costante attenzione della differenza tra maiuscole e minuscole: la *case sensitivity* rappresenta una delle prime e più importanti lezioni che ogni utilizzatore deve imparare. Ogni carattere digitato, ogni percorso inserito, ogni nome di file o directory, assume un significato preciso e una minima disattenzione può condurre a risultati inattesi e/o ad errori.
 
-Un utilizzatore di GNU Linux deve imparare fin da subito a prestare attenzione a come vengono scritti e inseriti nomi, perché i sistemi basati su GNU Linux sono sempre case-sensitive, cioè fanno distinzione tra caratteri maiuscoli e minuscoli: durante la lettura di questo manuale bisogna sempre prestare attenzione a come sono scritti i caratteri e fare sempre attenzione a cosa si digita con la tastiera.
+Per garantire chiarezza espositiva, in questo documenti vengono adottate convenzioni tipiche della documentazione tecnica più autorevole:
+- Il simbolo `#` identifica i comandi da eseguire con privilegi di amministratore (root)
+- Il simbolo `$` contraddistingue le istruzioni da impartire come utente privo di privilegi elevati.
+- Lo stile `macchina di scrivere` viene riservato a tutto ciò che il sistema mostra a video, ai caratteri digitati dall’utente e ai nomi di file e directory, con particolare attenzione alla distinzione tra lettere maiuscole e minuscole.
+- Il **grassetto** viene impiegato per evidenziare, al loro primo apparire, nomi di programmi o pacchetti di rilievo.
+- Il *corsivo* sottolinea commenti personali, note di contesto o osservazioni non ufficiali.
+- $\textcolor{orange}{\textsf{Testo in rosso}}$ o riquadri segnalano informazioni di particolare importanza o criticità che necessiatano molta attenzione.
+
+Si presuppone che il lettore disponga di una connessione Internet sufficientemente veloce per scaricare immagini ISO, aggiornamenti e pacchetti aggiuntivi, nonché di un supporto di memorizzazione adeguato (DVD o chiavetta USB) per la creazione dei supporti di installazione. L’adozione di questi standard, sebbene possa inizialmente apparire poco familiare, si rivelerà ben presto un prezioso alleato nella comprensione delle procedure e nell’interpretazione dei messaggi restituiti dal sistema.
+
+*Perché*: La scelta di Debian, e più in generale di una distribuzione GNU/Linux, non è mai frutto del caso, ma il risultato di una riflessione ponderata sulle proprie esigenze, sulle aspettative di stabilità, sicurezza e libertà che si desiderano perseguire. Debian si distingue per la sua rigorosa suddivisione in rami di sviluppo – stable, testing e unstable – che rappresentano le diverse fasi del ciclo di vita dei pacchetti software. Ogni pacchetto, prima di approdare nella versione stabile, attraversa un percorso di maturazione che ne garantisce l’affidabilità e la coerenza con l’intero ecosistema. 
+
+Le versioni stabili di Debian, uniche a ricevere una numerazione ufficiale, sono celebrate con nomi ispirati ai personaggi del film Toy Story, mentre la versione unstable porta sempre il nome Sid, in omaggio al giovane bambino "distruttore" della saga. Questa tradizione, apparentemente giocosa, cela in realtà una filosofia di sviluppo improntata alla trasparenza, alla tracciabilità e alla partecipazione collettiva. Optare per Debian significa abbracciare un modello di aggiornamento continuo, in cui la sicurezza e la solidità del sistema sono il frutto di un processo collaborativo e di una comunità globale attenta e competente.
+
+In definitiva, la domanda *perché scegliere Debian?* non ha una unica risposta ma un combinazione di concettti come affidabilità, apertura e vastità dell’offerta software, unite a una documentazione ricca e a una comunità pronta a supportare sia il neofita sia l’esperto. Debian non è soltanto un sistema operativo: è un ambiente completo come punto di partenza per ogni percorso di crescita nel mondo dell’open source. 
 
 # Come installare Debian 12
 
@@ -1448,11 +1458,11 @@ Tipicamente le reti `br-xxxxxxx` sono quelle occupate dal demone-Docker che *tip
 {
   "default-address-pools": [
     {
-	    "base": "172.31.0.0/16",
-	    "size": 24
-	  }
-	]
-	,"dns": ["8.8.8.8", "1.1.1.1"]
+      "base": "172.31.0.0/16",
+      "size": 24
+    }
+  ]
+  ,"dns": ["8.8.8.8", "1.1.1.1"]
 }
 ```
 dopo la modifica del file di configurazione bisogna rivviare il demone-Docker con il comando
@@ -1669,7 +1679,7 @@ Un esempio di avvio di un server Nginx su un nodo dedicato:
 # kubectl get deployment nginx
 # kubectl get service nginx
 # curl http://<node-ip>:<node-port>
-	
+  
 # kubectl delete deployment nginx
 # kubectl delete all -l app=nginx
 # kubectl get all -l app=nginx
@@ -1699,31 +1709,31 @@ da notare che esistono diverse guide con diverse sorgenti, conviene sempre contr
 Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
 * Avvio di un server nging 
   ```
-	minikube start --driver=docker --memory=2048 --cpus=2
-	kubectl create deployment nginx --image=nginx
-	kubectl get pods
-	kubectl expose deployment nginx --type=NodePort --port=80
-	kubectl get services
-	curl http://$(minikube ip):$(kubectl get service nginx -o jsonpath='{.spec.ports[0].nodePort}')
-	kubectl delete service nginx
-	kubectl delete deployment nginx
-	minikube stop
+  minikube start --driver=docker --memory=2048 --cpus=2
+  kubectl create deployment nginx --image=nginx
+  kubectl get pods
+  kubectl expose deployment nginx --type=NodePort --port=80
+  kubectl get services
+  curl http://$(minikube ip):$(kubectl get service nginx -o jsonpath='{.spec.ports[0].nodePort}')
+  kubectl delete service nginx
+  kubectl delete deployment nginx
+  minikube stop
   ```
 * Avvio di un sever nging con file servide dedicato
   - File `nginx-service.yaml`
     ```
-		apiVersion: v1
-		kind: Service
-		metadata:
-		  name: nginx
-		spec:
-		  type: NodePort
-		  ports:
-			- port: 80
-			  targetPort: 80
-			  nodePort: 30042   # 👈 Porta esterna (deve essere tra 30000-32767)
-		  selector:
-			app: nginx
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: nginx
+    spec:
+      type: NodePort
+      ports:
+      - port: 80
+        targetPort: 80
+        nodePort: 30042   # 👈 Porta esterna (deve essere tra 30000-32767)
+      selector:
+      app: nginx
     ```
   - Comandi per la creazione
     ```
@@ -1931,13 +1941,13 @@ Le principali operazioni disponibili sono:
   ffmpeg -i input.mkv -ss 00:00:00 -t 00:02:30 -acodec copy -vcodec copy output.mkv
   ```
 - Unire più files in uno unico file, con questo modo i video sorgenti possono avere dimensioni e risoluzioni diverse, convertendo tutto in MP4 poi in TS per poterli unire nonostante le dimensioni diverse:
-	```
-	ffmpeg -i file1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt1.ts
-	ffmpeg -i file2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt2.ts
-	ffmpeg -i file3.ogv -vcodec libx264 "file3.mp4"
-	ffmpeg -i file3.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt3.ts
-	cat fileIntermediate3.ts  fileIntermediate1.ts fileIntermediate2.ts > output.ts
-	ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
+  ```
+  ffmpeg -i file1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt1.ts
+  ffmpeg -i file2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt2.ts
+  ffmpeg -i file3.ogv -vcodec libx264 "file3.mp4"
+  ffmpeg -i file3.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt3.ts
+  cat fileIntermediate3.ts  fileIntermediate1.ts fileIntermediate2.ts > output.ts
+  ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
   ```
 
 
@@ -2213,20 +2223,25 @@ journalctl -xeu docker-cleanup.service
 ```
 
 
-# AlNao.it
-Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di Alberto Nao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
+# <span style="color:#56E39F;">&lt; AlNao /&gt;</span>
+Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
 
 
 Alcuni contenuti e porzioni di codice presenti in questo repository sono stati realizzati anche grazie al supporto di strumenti di intelligenza artificiale, il cui contributo ha permesso di arricchire e velocizzare la produzione del materiale. Ogni informazione e frammento di codice è stato comunque attentamente verificato e validato, con l’obiettivo di garantire la massima qualità e affidabilità dei contenuti offerti. 
 
 
-Per ulteriori dettagli, approfondimenti o richieste di chiarimento, si invita a consultare il sito [alnao.it](https://www.alnao.it/).
+Per ulteriori dettagli, approfondimenti o richieste di chiarimento, si invita a consultare il sito [AlNao.it](https://www.alnao.it/).
 
 
 ## License
+Made with ❤️ by <a href="https://www.alnao.it">AlNao</a>
+&bull; 
 Public projects 
-<a href="https://it.wikipedia.org/wiki/GNU_General_Public_License"  valign="middle"><img src="https://img.shields.io/badge/License-GNU-blue" style="height:22px;"  valign="middle"></a> 
+<a href="https://www.gnu.org/licenses/gpl-3.0"  valign="middle"> <img src="https://img.shields.io/badge/License-GPL%20v3-blue?style=plastic" alt="GPL v3" valign="middle" /></a>
 *Free Software!*
 
-E' garantito il permesso di copiare, distribuire e/o modificare questo documento in base ai termini della GNU Free Documentation License, Versione 1.2 o ogni versione successiva pubblicata dalla Free Software Foundation. Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation.
 
+Il software è distribuito secondo i termini della GNU General Public License v3.0. L'uso, la modifica e la ridistribuzione sono consentiti, a condizione che ogni copia o lavoro derivato sia rilasciato con la stessa licenza. Il contenuto è fornito "così com'è", senza alcuna garanzia, esplicita o implicita.
+
+
+The software is distributed under the terms of the GNU General Public License v3.0. Use, modification, and redistribution are permitted, provided that any copy or derivative work is released under the same license. The content is provided "as is", without any warranty, express or implied.
