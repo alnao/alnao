@@ -114,45 +114,60 @@ Le versioni stabili di Debian, uniche a ricevere una numerazione ufficiale, sono
 
 In definitiva, la domanda *perché scegliere Debian?* non ha una unica risposta ma un combinazione di concettti come affidabilità, apertura e vastità dell’offerta software, unite a una documentazione ricca e a una comunità pronta a supportare sia il neofita sia l’esperto. Debian non è soltanto un sistema operativo: è un ambiente completo come punto di partenza per ogni percorso di crescita nel mondo dell’open source. 
 
-# Come installare Debian 12
+# Come installare Debian
 
-La fase di installazione di un sistema operativo è sicuramente una delle fasi può complesse, in questo capitolo sono descritte tutte le fasi passo dopo passo ma grazie al programma grafico di installazione questa è molto semplice e veloce. Tale guida è valida anche per le precedenti versioni di Debian e anche per le successive, infatti dalla mitica versione 3.1 di Debian, chiamata Sarge, il programma di installazione ha subito poche variazioni. Una guida ufficiale per l'installazione può essere trovata nel sito ufficiale di Debian, questo capitolo vuole esserne un riassunto semplice ma completo. Molte distribuzioni di GNU Linux sono gratuite e possono essere scaricate direttamente da internet senza problemi, all'interno del sito ufficiale di Debian www.debian.org è possibile trovare tutte le immagini del DVD di installazione e tutte le informazioni sul sistema operativo; è possibile trovare i DVD di Debian anche pubblicati su riviste o manuali. Per scaricare il DVD per l’installazione basta andare nel sito, entrare nella sezione "Download" o "Getting Debian" e cliccare sul link per il download del file ISO, la versione consigliata è quella di tipo "installazione via rete" chiamata "netinst" ma è possibile scegliere altri tipi di pacchetti nel link "Other Releases". E' possibile scaricare le immagini ISO di grandi dimensioni anche via applicativi peer-to-peer come BTorrent (oppure KTorrent per chi usa già GNU Linux).
+L’installazione di un sistema operativo è una delle fasi più delicate ma, grazie al programma grafico di installazione di Debian, risulta oggi piuttosto semplice e veloce. Questa guida, valida anche per alcune versioni precedenti e successive, riassume i passaggi principali per installare Debian 13 Trixie. Per maggiori dettagli è sempre possibile consultare la guida ufficiale sul sito Debian: [debian.org](https://www.debian.org).
 
-$\textcolor{orange}{\textsf{Nota importante}}$: Scaricare l'immagine ISO di Debian da un sistema Torrent (o da qualsiasi altro sistema di peer-to-peer) non è illegale in quanto Debian è free e coperto da licenza GNU che permette il download e l’uso delle immagini. Scaricare film, musica, software con piattaforme peer-to-peer può essere illegale se i contenuti scaricati sono coperti copyright e/o coperti da licenza proprietaria.
 
-E' disponibile nel sito anche una versione "Live" di Debian, cioè una versione che non necessita di una installazione ma può essere avviata dal dispositivo (USB o DVD).all'interno di questa versione è presente il programma di installazione che presenta gli stessi passi descritti per la versione di installazione normale, anche nel caso della versione live è necessario creare un dispositivo da avviare dal BIOS del sistema, si rimanda alla documentazione ufficiale per maggiori informazioni riguardo a questa versione.
+Debian è un sistema operativo libero e gratuito, distribuito sotto licenza GNU GPL. è possibile scaricare le immagini ISO dalla pagina specifica del sito [debian.org](https://www.debian.org/distrib/) scegliendo tra le immagini disponibili:
+- Netinst (consigliata): ISO di piccole dimensioni che scarica i pacchetti necessari durante l’installazione. Necessita una connessione ad internet abbastanza veloce.
+- DVD/USB completi: immagini ISO grandi con molti pacchetti già inclusi e la possiblità di scaricare gli aggiornamentii dai repository inf ase di installazione.
+- Other releases: immagini particolari o architetture diverse.
+- È disponibile anche una versione Live di Debian, avviabile da DVD o USB senza installazione. Da qui è possibile provare il sistema e, se desiderato, avviare l’installer grafico integrato usando [Calamares](https://calamares.io/).
 
-Per avviare il programma di installazione bisogna averlo disponibile in un DVD o in una chiavetta USB, nel primo caso si può usare un qualsiasi programma di masterizzazione per copiare il file ISO nel DVD, nel secondo caso bisogna usare programmi specifici disponibili seguendo la guida dal sito ufficiale. In entrambi i casi si tratta di un disco auto-avvianti funzionano solo se il BIOS del sistema è configurato, in questo caso bisogna entrare nel tool di configurazione del bios e impostare il boot nel dispositivo dove è presente il programma di installazione (nella prima videata di accensione di un sistema è presente una scritta del “Press XX to enter in the setup”).
+Le immagini scaricate sono nel formato standard ISO, trattandosi di immagini molto grandi possono essere scaricate anche tramite sistemi client di reti peer-to-peer come qBittorrent o KTorrent. I file torrent possono essere scaricati direttamente dal sito.
 
-La prima schermata del processo di intallazione l'utente deve scegliere quale tipo inserire, la scelta è tra:
+⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: scaricare Debian via Torrent è legale, perché è software libero coperto da licenza *libera* GNU/GPL. È invece illegale scaricare tramite sistemi peer-to-peer contenuti coperti da copyright come film, musica e software proprietario. 🔶⚠️
 
-- versione grafica: consigliata se non si hanno configurazioni particolari da impostare
-- vestione testuale: consigliata solo per utenti esperti
-- versione avanziata: consigliata solo a chi ha bisogno di inserire configurazioni particolari
-- versione accessibile e dark: versione grafica ad alto contrasto studiata apposta per gli ipovedenti
-- versione live: se presente nel tipo di installer scelto, si avvia la versione live, con questa versione nulla viene installato nel sistema
+Per avviare il programma di installazione bisogna averlo disponibile in un DVD o in una chiavetta USB: nel primo caso si può usare un qualsiasi programma di masterizzazione per copiare il file ISO nel DVD, nel secondo caso bisogna usare programmi specifici disponibili seguendo la guida dal sito ufficiale, per esempio Rufus (su sistemi MsWindows) oppure dd (su sistemi GNU Linux). In entrambi i casi si tratta di un disco auto-avvianti che posso essere avviati se impostati dal BIOS/UEFI l’avvio da USB o DVD. In genere compare un messaggio del tipo “Press F2/Del/Esc to enter setup” all’accensione del PC.
 
-Qualunque sia il livello di chi installa Debian è consigliata la versione grafica base a meno he non siano necessari configurazioni particolari indispensabili. 
+All’avvio dell’installer vengono proposte diverse opzioni:
+- Installazione grafica (consigliata).
+- Installazione testuale (per utenti esperti).
+- Installazione avanzata (con più opzioni di configurazione).
+- Accessibile / Dark contrast (per ipovedenti).
+- Live (se disponibile nell’immagine scelta).
+Per la maggior parte degli utenti è consigliata la versione grafica base
 
-Il programma di installazione prevede alcuni passi che sono riassunti in:
-- lingua e tipo di tastiera: l'utente deve inserire la lingua di sistema e il tipo di tastiera, di default è impostato l'inglese ma se si ha la tastiera con le accenti del nostro paese bisogna inserire la tastiera italiana
-- nome host e nome dominio: due nomi simbolici per identificare il computer e la rete, se non si dispone di un dominio di rete questi nome sono solo simbolici
-- configurazione di rete: se è stata avviata la procedura avanzata viene richiesto l'inserimento degli indirizzi di rete (Indirizzo IP, Subnet Mask e Gateway), se si è scelta la versione grafica standard questo passo è saltato in quanto vengono inseriti dei valori di default grazie al DHCP se presente.
-- password root: password principale dell'utente root
-- nuovo utente: nome e password del primo utente non amministratore, è "obbligatorio" creare un utente e non usare mai root se non strettamente necessario
-- impostazione dischi: l'utente deve selezionare il disco dove installare il sistema operativo, se si dispone di un sistema nuovo si può usare l'opzione automatica, se invece si dispone di dischi con dei dati già presenti o altri sistemi operativi è consigliato usare la procedura manuale e bisogna selezionare il disco dove installare il sistema operativo (partizione indicata con / ), alla fine il programma di installazione chiede una verifica e una ulteriore conferma. Successivamente alla conferma delle partizioni il programma prepara le partizioni formattandole e copiando il sistema base. 
-  - $\textcolor{orange}{\textsf{Nota importante}}$: le operazione di creazione e modifica delle partizioni del vostro disco HardDisk potrebbe causare la perdita dei dati all'interno del vostro sistema, è sempre raccomandato eseguire una copia backup dei dati prima di eseguire l'installazione di Debian e la creazione delle partizioni dedicate.
-- mirror rete: il programma permette di attivare gli aggiornamenti automatici, selezionando questa opzione il sistema installato risulterà aggiornato alla versione più recente, la scelta consigliata è di attivare i mirror di rete selezionando quello ufficiale che viene proposto di default, si può notare che successivamente verrà installato il Kernel alla versione **linux-image 6.1**
-- raccolta dati: il programma permette di attivare un programma statistico con il quale Debian raccoglie le informazioni di utilizzo del sistema, per questioni di privacy è sconsigliato attivare questa opzione
-- selezione software: in questo passo l'utente sceglie quale Desktop installare nel sistema, è consigliato installare almeno i tre sistemi base (Gnome, Kde, Xfce) così l'utente può provare il più adatto alle esigenze, dopo questa scelta vengono installate tutte le applicazioni dei rispettivi sistemi selezionati (selezionando i tre principali saranno più di 2381 pacchetti da installare). Nella selezione è sconsigliato attivare l'installazione del web server e del server ssh.
-- gestore del login: di default è selezionato il gestore "GDM LightDM", è sconsigliato modificare questa opzione se non strettamente necessario
-- gestore di avvio: di default viene installato il gestore Grub, solo nella versione avanzata è possibile modificare le impostazioni base
+
+L’installer di Debian guida l’utente con schermate chiare. I passaggi previsti in sequenza sono:
+- La lingua di sistema e il tipo di tastiera (es. Italiano)
+- Nome host e configurazione dominio di rete: due nomi simbolici se non presente una configurazione di rete particolare
+- Rete: di default viene configurata automaticamente, è prevista una modalità avanzata di configurazione dei dati di rete come indirizzo IP, Subnet, Gateway e DNS.
+- Password di root: la password dell'utente amministratore del sistiema
+- Creazione utente: questo passo è obbligatorio e prevede l'inserimento di username e password di un primo utente che sarà usato per la prima login, sarà successivamente possibile creare altri utenti o modificare il primo creato.
+- Partizionamento dei dischi: l'utente deve selezionare il disco dove installare il sistema operativ
+  - Guidato: se si dispone di un sistema nuovo/vuoto si può usare l'opzione automatica
+  - Manuale: se invece si dispone di dischi con dei dati già presenti o altri sistemi operativi è consigliato usare la procedura manuale e bisogna selezionare il disco dove installare il sistema operativo (partizione indicata con `/` )
+  - ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: modificare le partizioni può causare perdita di dati, non a caso il programma di installazione chiede conferma più volte delle operazioni su disco. Eseguire un backup prima di procedere se sono presenti dati personali 🔶⚠️
+- Mirror di rete: attivare i repository ufficiali per avere aggiornamenti dalla rete *scelta molto consigliata*.
+- Statistiche di utilizzo: è possibile aderire volontariamente ad un programma di raccolta dati sull'utilizzo del sistema e dei suoi pacchetti, *è sconsigliata l'adesione*.
+- Selezione del software: in questo passo l'utente sceglie quale sistema Desktop installare nel sistema
+  - GNOME è il modello predefinito se si è scelta l'immagine ISO semplice.
+  - In alternativa è possibile selezionare altri desktop manager come KDE, Xfce, LXQt, Cinnamon e Mate.
+  - Per qualsiasi livello di utenti è consigliato l'installazione e la prova di più sistemi per poter scegliere quello più adatto alle proprie esigenze.
+  - Nella selezione è sconsigliata l'installazione di server web e altri tipi di server che potranno essere installati successivamente.
+- Gestore del display: di default è selezionato il gestore "GDM LightDM", è sconsigliato modificare questa opzione se non strettamente necessario
+- Gestore di avvio (bootloader): di default viene installato il gestore Grub, solo nella versione avanzata è possibile modificare le impostazioni base
 
 Nella versione grafica base il sistema viene riavviato senza necessità di inserire altro.
 
 Al primo avvio la schermata di caricamento è quella del bootloader Grub che è stata configurata nell'ultimo passo del programma di installazione, se presente un solo sistema operativo compare solo l’opzione di Debian ma se presenti più sistemi operativi compare la lista dei sistemi disponibili con la possibilità di scegliere quale avviare muovendovi nel menù con le frecce della tastiera. Se disponibili più versioni del Kernel Linux installate nel sistema Debian, compare la lista delle versioni. Una volta selezionata una opzione nel sistema, il sistema avvia tutto il Kernel Linux e i programmi necessari, al termine del caricamento compare la videata grafica di login, questa videata è chiamata GDM (Gnome Desktop manager) che è il componente che permette la login su un desktop: nella videata basta inserire l’username e password dell’utente creato durante la fase di installazione e si accederà al desktop Gnome che di default viene installato e configurato, un utente alle prime armi deve avete la pazienza di aprire i menù del desktop per famigliarizzare con il sistema.
 
-Tutte le fasi e i dettagli del programma di installazione sono ben documentati nella guida disponibile nel sito ufficiale e in caso di necessità particolari è possibile consultare la pagina specifica delle FAQ. Una ulteriore fonte di informazioni è la pagina wiki dedicata al processo di installazione.
+Tutte le fasi e i dettagli del programma di installazione sono ben documentati nella guida disponibile nel sito ufficiale, per qualsiasi approfondimento si rimanda alle pagine ufficiali:
+- Guida ufficiale Debian: https://www.debian.org/releases/
+- FAQ Debian: https://www.debian.org/doc/manuals/debian-faq/
+- Wiki Debian: https://wiki.debian.org/
 
 # Come gestire i file e le partizioni
 

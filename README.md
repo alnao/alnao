@@ -39,7 +39,7 @@
       <img src="https://img.shields.io/badge/Linux-BBCCEE?style=for-the-badge&logo=Linux&logoColor=black" />
       <img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=Debian&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/DEBIAN.md">AlNao Debian Handbook</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/DEBIAN.md">✨ AlNao Debian Handbook ✨</a></td>
   </tr>
   <tr>
     <td align="center">
@@ -77,21 +77,21 @@
       <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white" />
       <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS Bootstrap notes</a> (old version)</td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS Bootstrap notes</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" />
       <img src="https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress notes</a> (old version)</td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress notes</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/Ionic-3880FF?style=for-the-badge&logo=ionic&logoColor=white" />
       <img src="https://img.shields.io/badge/Redux-764abc?style=for-the-badge&logo=redux&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/IonicReduxNxWorkspaceExample">Ionic Redux NxWorkspace</a> (old version)</td>
+    <td><a href="https://github.com/alnao/IonicReduxNxWorkspaceExample">Ionic Redux NxWorkspace</a></td>
   </tr>
 </table>
 
