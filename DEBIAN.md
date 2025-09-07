@@ -16,7 +16,7 @@ Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie*
 # Indice
 - [Introduzione](#Introduzione)
   - [Cosa, dove, come e perchè](#Cosa-dove-come-perchè)
-- [Come installare Debian 12](#Come-installare-Debian-12)
+- [Come installare Debian](#Come-installare-Debian)
 - [Come gestire i file e le partizioni](#Come-gestire-i-file-e-le-partizioni)
   - [Gestione dei permessi](#Gestione-dei-permessi)
   - [Il mounting](#Il-mounting)
@@ -387,12 +387,18 @@ Uno degli errori più frequenti degli utenti comuni è pensare che non esistono 
 In aggiunta al repository ufficiale Debian e ai repository proprietari, come quello di Google, è possibile usare anche il gestore **snapd**: un servizio web che mette a disposizione pacchetti scaricabili e funzionanti. Il consiglio è di usare questo servizio solo per quelle applicazioni o quei pacchetti che non si trovano nei repository ufficiali Debian ed è quello che verrà fatto in seguito. Per installare Snapd basta installare il pacchetto snapd, da non confondere con il pacchetto snap che invece riguarda una applicazione scientifica. Una volta installato il pacchetto è possibile vedere l'elenco dei pacchetti installati sul sistema con Snapd con il comando:
 ```
 $ snap list
+$ snap list --all
+$ snap list --all | grep disabled
 ```
 correttamente senza la lettere d finale in quanto il pacchetto ha la lettere finale per indicare che si tratta di un demone mentre il comando è senza la finale. Per installare un programma con questo servizio basta usare il comando:
 ```
 $ snap install nomeprogramma
 ```
-l'elenco di tutte le migliaia di programmi disponibili si trova nel sito ufficiale snapcraft.io, un esempio di applicazione consigliata su questo sistema è Spotify.
+l'elenco di tutte le migliaia di programmi disponibili si trova nel sito ufficiale snapcraft.io, un esempio di applicazione consigliata su questo sistema è Spotify. Il sistema potrebbe riempirsi di immagini vecchie e deprecate, per liberare spazio è possibile lanciare il comando di pulizia
+```
+# snap list --all | grep disabled | awk '!/Name|----/ {print $1 " --revision " $3}' | xargs -n1 sudo snap remove
+```
+
 
 Sulla nuova versione di Debian gli aggiornamenti vengono eseguiti in automatico, questo per facilitare la vita a chi utilizza il sistema e non conosce bene la gestione dei pacchetti, si può vedere la configurazione degli aggiornamenti automatici con i comandi:
 ```
@@ -1583,8 +1589,7 @@ docker-compose down
 
 
 ### Kubernetes
-
-Per installare **Kubernetes**, detto anche *K8S*, è necessario aver installato il sistema Docker che deve essere funzionante. L'installazione di Kubernets non è semplicissima visto che il demone non è compreso nei repository ufficiali e ci sono molte versioni incompatibili tra loro, è infatti configurabile da sorgente esterna, per esempio usando la versione 1.32 stabile:
+Il famoso **Kubernetes** è una piattaforma open source per l’orchestrazione automatica di container, progettata per gestire, scalare e distribuire applicazioni in ambienti cloud e on-premise. `kubectl` è lo strumento da linea di comando che consente agli utenti di interagire con cluster Kubernetes per amministrare risorse e applicazioni. Questa mini-guida fa riferimento alla versione 1.32 presente nei repositoy ufficiali ma esiste anche la versione su snapd e altre versioni più recenti non pienamente compatibili con Debian.  
 ```
 # systemctl status docker
 # curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernets-apt-keyring-gpg
@@ -1597,16 +1602,17 @@ Per installare **Kubernetes**, detto anche *K8S*, è necessario aver installato 
 # apt-mark hold kubeadm kubelet kubectl
 # systemctl status kubelet
 ```
-In caso kubectl non sia presente è possibile installo con snap con il comando
+Bisogna ricordare che il demone kubectl può essere molto pesante e rallentare il sistema, se non deve essere usato costantemente è consigliato disattivare l'avvio del demone all'avvio del sistema, è possibile disattivare con il comando:
 ```
-# snap install kubectl --classic
+# systemctl disable kubelet
 ```
-Per il corretto funzionamento di Kubernets è fondamentale disattivare il sistem swap del sistema operativo con i comandi:
+Per il corretto funzionamento di Kubernets è fondamentale che sia disattivato il sistem di swap del sistema operativo, se attivo è possibile disattivare *temporaneamente* il sistem di gestione della memoria swap con i comandi:
 ```
 # swapoff -a
 # sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+# systemctl start kubelet
 ```
-Inoltre è necessario eseguire una serie di configurazioni in alcuni files di sistema:
+Per il corretto avvio del sistema, sono necessarie alcune configurazioni in alcuni files di sistema del sistema container per permettere a kubectl di avviare immagini:
 ```
 # echo "overlay" >> /etc/modules-load.d/containerd.conf
 # echo "br_netfilter" >> /etc/modules-load.d/containerd.conf
@@ -1644,7 +1650,7 @@ Con questo ultimo comando è possibile recuperare il nome dell'host, indispensbi
 ```
 # hostnamectl set-hostname nomehost
 ```
-Per avviare e configurare il servizio è necessario lanciar eil comando
+Per avviare e configurare il servizio è necessario lanciare il comando
 ```
 # kubeadm init --control-plane-endpoint=cirilla --upload-certs --pod-network-cidr=10.244.0.0/16
 ```
@@ -1661,48 +1667,48 @@ $ kubectl get nodes
 
 Il cluster è ora pronto. Per aggiungere nodi worker, per esempio è possibile eseguire il comando `kubeadm join` per la gestione dei nodi. Una sequenza utile per l'avvio di un servizio è:
 ```
-# kubectl apply -f deployment.yml 
-# kubectl apply -f service.yml
+$ kubectl apply -f deployment.yml 
+$ kubectl apply -f service.yml
 ```
 Per rimuovere i servizi è possibile usare i comandi:
 ```
-# kubectl delete all -l app=esempio01
-# kubectl delete all -l app=esempio01
-# kubeadm reset
+$ kubectl delete all -l app=esempio01
+$ kubectl delete all -l app=esempio01
+$ kubeadm reset
 ```
 Mentre i log e i dettagli possono essere recuperati con i comandi:
 ```
-# kubectl get all -l app=esempio01
+$ kubectl get all -l app=esempio01
 
-# cat /var/log/syslog | grep kubelet
-# kubectl get nodes	
-# kubectl get pods
-# kubectl get events -A
-# kubectl get events --sort-by='.lastTimestamp'
-# kubectl describe node | grep -i capacity -A 5
-# kubectl logs -f deployment/esempio01
+$ cat /var/log/syslog | grep kubelet
+$ kubectl get nodes	
+$ kubectl get pods
+$ kubectl get events -A
+$ kubectl get events --sort-by='.lastTimestamp'
+$ kubectl describe node | grep -i capacity -A 5
+$ kubectl logs -f deployment/esempio01
 
-# journalctl -u kubelet -f
+$ journalctl -u kubelet -f
 ```
 
 Un esempio di avvio di un server Nginx su un nodo dedicato:
 ```
-# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
-# kubectl get nodes
-# kubectl create deployment nginx --image=nginx
-# kubectl expose deployment nginx --type=NodePort --port=80
-# kubectl get deployment nginx
-# kubectl get service nginx
-# curl http://<node-ip>:<node-port>
+$ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+$ kubectl get nodes
+$ kubectl create deployment nginx --image=nginx
+$ kubectl expose deployment nginx --type=NodePort --port=80
+$ kubectl get deployment nginx
+$ kubectl get service nginx
+$ curl http://<node-ip>:<node-port>
   
-# kubectl delete deployment nginx
-# kubectl delete all -l app=nginx
-# kubectl get all -l app=nginx
+$ kubectl delete deployment nginx
+$ kubectl delete all -l app=nginx
+$ kubectl get all -l app=nginx
 ```
 
 
 ### Minikube
-**Minikube** è uno strumento che permette di eseguire un cluster Kubernetes locale su una singola macchina, ideale per un ambiente di sviluppo e/o di test, è possibile usarlo per provare applicazioni Kubernetes senza dover configurare un vero cluster cloud o on-premise su Server.
+**Minikube** è uno strumento che permette di eseguire un cluster Kubernetes locale su una singola macchina, ideale per un ambiente di sviluppo e/o di test, è possibile usarlo per provare applicazioni Kubernetes senza dover configurare un vero cluster cloud o on-premise su Server fisici molto grandi e costosi.
 
 
 Per installare minikube conviene usare il pacchetto disponbile da google, la sequenza di istruzioni da eseguire è
@@ -1722,7 +1728,7 @@ da notare che esistono diverse guide con diverse sorgenti, conviene sempre contr
 
 
 Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
-* Avvio di un server nging 
+- Avvio di un server nging 
   ```
   minikube start --driver=docker --memory=2048 --cpus=2
   kubectl create deployment nginx --image=nginx
@@ -1734,7 +1740,7 @@ Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
   kubectl delete deployment nginx
   minikube stop
   ```
-* Avvio di un sever nging con file servide dedicato
+- Avvio di un sever nging con file servide dedicato
   - File `nginx-service.yaml`
     ```
     apiVersion: v1
@@ -2196,11 +2202,16 @@ Esempio del file `/usr/local/bin/docker-cleanup.sh`:
 sleep 10
 
 # Esegui i comandi di pulizia
-/usr/bin/docker container prune -f &
-/usr/bin/docker image prune -f &
-/usr/bin/docker volume prune -f &
-/usr/bin/docker network prune -f &
-/usr/bin/docker image prune -a -f &
+#/usr/bin/docker container prune -f &
+#/usr/bin/docker image prune -f &
+#/usr/bin/docker volume prune -f &
+#/usr/bin/docker network prune -f &
+#/usr/bin/docker image prune -a -f &
+/usr/bin/docker stop $(docker ps -aq)
+/usr/bin/docker rm $(docker ps -aq)
+/usr/bin/docker rmi $(docker images -q)
+/usr/bin/docker volume rm $(docker volume ls -q)
+/usr/bin/docker network rm $(docker network ls -q)
 
 # Oppure, se preferisci il comando unificato:
 # /usr/bin/docker system prune -a -f --volumes
@@ -2226,7 +2237,7 @@ Group=root # O il gruppo che ha i permessi per eseguire Docker
 [Install]
 WantedBy=multi-user.target
 ```
-I comandi finali per configurare l'avvio sono:
+I comandi finali per configurare il servizio che venga eseguito l'avvio del sistema sono:
 ```
 chmod +x /usr/local/bin/docker-cleanup.sh
 systemctl daemon-reload
