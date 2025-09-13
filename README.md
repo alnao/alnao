@@ -39,7 +39,7 @@
       <img src="https://img.shields.io/badge/Linux-BBCCEE?style=for-the-badge&logo=Linux&logoColor=black" />
       <img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=Debian&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/DEBIAN.md">✨ AlNao Debian Handbook ✨</a></td>
+    <td>✨ <a href="https://github.com/alnao/alnao/blob/main/DEBIAN.md">AlNao Debian Handbook</a> ✨</td>
   </tr>
   <tr>
     <td align="center">
@@ -77,7 +77,7 @@
       <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white" />
       <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS Bootstrap notes</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap notes</a></td>
   </tr>
   <tr>
     <td align="center">
@@ -91,7 +91,14 @@
       <img src="https://img.shields.io/badge/Ionic-3880FF?style=for-the-badge&logo=ionic&logoColor=white" />
       <img src="https://img.shields.io/badge/Redux-764abc?style=for-the-badge&logo=redux&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/IonicReduxNxWorkspaceExample">Ionic Redux NxWorkspace</a></td>
+    <td><a href="https://github.com/alnao/IonicReduxNxWorkspaceExample">Ionic & Redux Workspace</a></td>
+  </tr>
+  <tr>
+   <td align="center">
+     <img src="https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white" />
+     <img src="https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white" />     
+   </td>
+   <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain, Solidity & Ethereum examples</a></td>
   </tr>
 </table>
 
