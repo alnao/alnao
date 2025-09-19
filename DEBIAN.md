@@ -1,16 +1,15 @@
-# Debian 12 Handbook
+# AlNao Debian Handbook
+  <!--<img src="https://www.debian.org/Pics/debian-logo-1024x576.png" width="200"> -->
+  <p align="center">
+    <img src="https://img.shields.io/badge/Linux-BBCCEE?style=for-the-badge&logo=Linux&logoColor=black" height=60/>
+    <img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=Debian&logoColor=white" height=60/>
+  </p>
 
 
-<img src="https://www.debian.org/Pics/debian-logo-1024x576.png" width="200"> 
+Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nella vecchia versione del blog personale [alnao.it](https://www.alnao.it). Sono riproposti in formato Markdown per conservarli e renderli facilmente consultabili. Alcuni contenuti potrebbero essere datati, ma possono ancora fornire spunti e soluzioni interessanti. Tutti gli articoli sono distribuiti sotto licenza *GNU GPL-3.0*, salvo diversa indicazione.
 
 
-*Writted by AlNao*. Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nella vecchia versione del blog personale [alnao.it](https://www.alnao.it). Sono riproposti in formato Markdown per conservarli e renderli facilmente consultabili. Alcuni contenuti potrebbero essere datati, ma possono ancora fornire spunti e soluzioni interessanti. Tutti gli articoli sono distribuiti sotto licenza *GNU GPL-3.0*, salvo diversa indicazione.
-
-
-In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian** alla versione 12 chiamata **Bookworm**. Tutti i dettagli su questa release sono disponibili nella [wiki ufficiale](https://wiki.debian.org/DebianBookworm) e nella [release notes](https://www.debian.org/releases/bookworm/).
-
-
-Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie**, a breve questo documento sarà aggiornato con le procedure per questa nuova versione di tipo LTS che sarà supportata ufficialmente con aggiornamenti di sicurezza e bug fix fino a dicembre 2026. Tutte le informazioni su questa nuova release sono disponiibli nella [pagina ufficiale](https://www.debian.org/releases/trixie/release-notes/index.it.html).
+In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian** alla versione 12 chiamata **Bookworm**. Tutti i dettagli su questa release sono disponibili nella [wiki ufficiale](https://wiki.debian.org/DebianBookworm) e nella [release notes](https://www.debian.org/releases/bookworm/). Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie**, a breve questo documento sarà aggiornato con le procedure per questa nuova versione di tipo LTS che sarà supportata ufficialmente con aggiornamenti di sicurezza e bug fix, tutte le informazioni su questa nuova release sono disponiibli nella [pagina ufficiale](https://www.debian.org/releases/trixie/release-notes/index.it.html).
 
 
 # Indice
@@ -54,6 +53,7 @@ Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie*
   - [MongoDB](#MongoDB)
   - [AWS](#AWS)
       - [Gestione EC2 con Debian 12](#Gestione-EC2-con-Debian-12)
+      - [Terraform](#Terraform)
   - [Docker](#Docker)
     - [Esempio con Pgadmin4](#Esempio-con-Pgadmin4)
     - [Configurazione di rete di Docker](#Configurazione-di-rete-di-Docker)
@@ -169,6 +169,7 @@ Tutte le fasi e i dettagli del programma di installazione sono ben documentati n
 - FAQ Debian: https://www.debian.org/doc/manuals/debian-faq/
 - Wiki Debian: https://wiki.debian.org/
 
+
 # Come gestire i file e le partizioni
 
 Dopo aver completato tutti i passi del programma di installazione, il sistema è già quasi completo: di default nell'installazione base è compreso almeno un Desktop comprendente tutte le parti dell’ambiente grafico e sono compresi anche una serie di applicativi che possono essere trovati sul menù principale. Risulta impossibile usare GNU Linux senza avere qualche base sistemistica e un po’ di manualità su file e cartelle come la gestione i diritti di lettura e scrittura su file e cartelle. Una prima nozione da aver sempre presente è che in tutti i sistemi GNU Linux la differenza tra maiuscole e minuscole è rilevante: nei comandi e nei file è rilevante la presenza di caratteri maiuscoli e bisogna scrivere sempre con attenzione i nomi.
@@ -201,7 +202,7 @@ questa cartella è specifica per ciascun sistema e rappresenta l'intero sistema:
 ## Gestione dei permessi
 
 Nei sistemi Unix e GNU Linux esistono tre tipi di diritti su un file: scrittura, lettura ed esecuzione rispettivamente identificati con la lettera r, w e x. Ogni file, quindi ogni cosa nel sistema, appartiene all'utente che ha creato quel file che ha sempre i tutti i diritti su quel file. Per ottenere i diritti su un file basta eseguire il comando sulla shell:
-```
+```bash
 $ ls -la
 ```
 che elenca i diritti in una schermata simile a questa:
@@ -225,6 +226,7 @@ Per poter recuperare l'elenco delle partizioni e la struttura delle memorie si p
 # fdisk -l
 ```
 Questi programmi presentano l’elenco di tutte le partizioni e, se possibile, anche il tipo, con gparted è anche possibile modificare le partizione e formattarle. Nei desktop recenti, il mount risulta automatico, per esempio con un programma come Dolphin, l'elenco dei dispositivi sono elencati nelle finestre divisi per memorie fissi e i dispositivi mobili come le chiavette USB. Per poter eseguire il mount manualmente, bisogna disporre di una cartella vuota che sarà la destinazione dell’operazione di montaggio, come default viene usata una sotto-cartella di /mnt . Per esempio si può creare una cartella a mano da un file manager oppure da riga di comando con le istruzioni:
+
 ```
 # mkdir /mnt/Dati
 # chmod 666 /mnt/Dati
@@ -270,21 +272,21 @@ Per la gestione delle partizioni di tipo **swap**, è possibile confiurare le pa
 ```
 Per visualizzare l'elenco delle partizioni swap si possono usare i comandi del sistema operativo:
 ```
-swapon --show
-free -h
-df -h
+$ free -h
+$ df -h
+# swapon --show
 ```
 Le ultime versione del Kernel Linux permettono di creare e montare dei file come fossero delle partizioni swap, per creare e montare il file si possono essere eseguire i comandi:
 ```
-fallocate -l 1G swapfile
-ls -lh swapfile
-chmod 600 swapfile
-mkswap swapfile
-swapon swapfile
+# fallocate -l 1G swapfile
+# ls -lh swapfile
+# chmod 600 swapfile
+# mkswap swapfile
+# swapon swapfile
 ```
 infine è possibile inserire la configurazione nel file `fstab` impostando il path assoluto del file swapfile creato, per esempio con il comando
 ```
-echo '/path/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+# echo '/path/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
 Il parametro di configurazione `swappiness` indica al sistema operativo quanto spesso eseguire l'operazione di trasferimento dalla memoria RAM verso lo spazio swap, è una percentuale da zero a cento e di default è impostata a sesanta, può essere verificata e modificata con i comandi:
@@ -368,7 +370,7 @@ nei comandi indicati c'è anche la configurazione del firewall ufw che blocchere
 
 $\textcolor{orange}{\textsf{Nota importante}}$: WebMin è uno strumento molto potente ma anche troppo! Bisogna sempre prestare attenzione alle configurazioni eseguite e controllare più volte le operazioni potenzialmente distruttive per il sistema.
 
-Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiamata **GDM** (abbreviazione di Gnome Desktop Manager) esistono anche altri gestori ma è sconsigliato l'utilizzo per utente non esperti. Per gestire gli utenti è possibile usare i vari programmi disponibili nei browser ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata. In realtà è iii sconsigliato iii per alcuni temi specifici come la gestione delle partizioni (molto meglio Gparted) e tutto quello che ha a che fare con l'hardware e i dispositivi esterni.
+Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiamata **GDM** (abbreviazione di Gnome Desktop Manager) esistono anche altri gestori ma è sconsigliato l'utilizzo per utente non esperti. Per gestire gli utenti è possibile usare i vari programmi disponibili nei browser ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata ma questo tool è *sconsigliato* per alcuni temi specifici che si interfacciano con l'hardware, come la gestione delle partizioni perchè esistono tool specifici dedicati come **Gparted**.
 
 # Come gestire i desktop e le applicazioni
 
@@ -385,13 +387,13 @@ Le più famose ed usate sono elencate nel sito stesso e sono: Application Menu, 
 Uno degli errori più frequenti degli utenti comuni è pensare che non esistono applicazioni per il normale utilizzo di un computer, la verità è l'esatto opposto: esistono migliaia di applicazioni che rendono i sistemi GNU Linux completi e perfettamente utilizzabili. Basta infatti aprire il programma di gestione dei pacchetti **Synaptic** e usare la funzionalità di raggruppamento per categoria per rendersi conto delle migliaia di applicazioni disponibili nei repository Debian: oltre alla numerosità delle applicazioni, grazie a Synaptic, è possibile sfruttare la gestione dei pacchetti di Debian per evitare il problema delle dipendenze quindi un utente non deve preoccuparsi di nulla e non deve nemmeno preoccuparsi del desktop utilizzato. Tutti i pacchetti disponibili sui server mirror di Debian sono totalmente gratuiti e scaricabili dai mirror internet, su altri mirror non ufficiali è possibile scaricare altri programmi gratuitamente, per esempio il mirror di Google permette il download e l'installazione del browser Chrome. Purtroppo non esiste un elenco completo ed ufficiale di tutti i programmi disponibili, questo perché i programmi vengono creati quotidianamente e certi progetti chiudono per l’insuccesso di una applicazione o la sua scarsa utilità.
 
 In aggiunta al repository ufficiale Debian e ai repository proprietari, come quello di Google, è possibile usare anche il gestore **snapd**: un servizio web che mette a disposizione pacchetti scaricabili e funzionanti. Il consiglio è di usare questo servizio solo per quelle applicazioni o quei pacchetti che non si trovano nei repository ufficiali Debian ed è quello che verrà fatto in seguito. Per installare Snapd basta installare il pacchetto snapd, da non confondere con il pacchetto snap che invece riguarda una applicazione scientifica. Una volta installato il pacchetto è possibile vedere l'elenco dei pacchetti installati sul sistema con Snapd con il comando:
-```
+```bash
 $ snap list
 $ snap list --all
 $ snap list --all | grep disabled
 ```
 correttamente senza la lettere d finale in quanto il pacchetto ha la lettere finale per indicare che si tratta di un demone mentre il comando è senza la finale. Per installare un programma con questo servizio basta usare il comando:
-```
+```bash
 $ snap install nomeprogramma
 ```
 l'elenco di tutte le migliaia di programmi disponibili si trova nel sito ufficiale snapcraft.io, un esempio di applicazione consigliata su questo sistema è Spotify. Il sistema potrebbe riempirsi di immagini vecchie e deprecate, per liberare spazio è possibile lanciare il comando di pulizia
@@ -431,7 +433,7 @@ Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga 
 Gli standard di compressione del mondo GNU Linux si chiamano tar, gz e bz, ma possono essere usati anche altri formati come i più famosi zip e rar, per riconoscere in quale formato è compresso un file basta guardare l’estensione del file, da notare che le estensioni possono essere composte: per esempio un file può avere estensione nomefile.tar.gz oppure il semplice nomefile.zip. Visto che il formato rar è un algoritmo proprietario e non free, per poterlo usare è necessario installare i pacchetti rar, rar-2.80, unar e unace-nonfree che potete trovare nei repository "non free" nel mirror.
 
 Per usare lo standard TAR da riga di comando, i principali comandi sono:
-```
+```bash
 $ tar -cf namefiletar.tar file1 file2 ... per creare un file non compresso nel formato tar
 $ tar -xf namefiletar.tar per estrarre un file non compresso nel formato tar
 $ tar -czf namefiletar.tar.gz file1 file2 ... per creare un file compresso nel formato tar e gzip
@@ -527,8 +529,8 @@ Per poter visualizzare i filmati nel formato di **RealPlayer** bisogna scaricare
 Per Debian è disponibile anche il famoso programma **OBS**, questo permette di eseguire registrazioni video e di eseguire streaming su alcune piattaforme come Twitch. Il programma è disponibile nel repository ufficiale di Debian con il nome di obs-studio. Per chi volesse creare il proprio DVD può provare ad usare il programma mandvd, questo programma permette di aggiungere i tuoi video al progetto del DVD, assegnare un immagine per creare il tasto di selezione di ciascun video, creare dei video slideshow delle tue foto (con o senza musica di sottofondo); alla fine del progetto, si converte il tutto nella classica struttura DVD, e si sceglie se masterizzare il progetto con K3B oppure creare un immagine ISO, scelta utile in caso ci sia la necessita di fare più copie. Per chi volesse invece rippare un DVD può usare dvdriv, un piccolo programma di utilità che permette la copia di DVD su Linux.
 
 Per **Spotify** è consigliato l'uso del gestore snapd
-```
-snap install spotify
+```bash
+$ snap install spotify
 ```
 Su Synaptic potete trovare un elenco completo di tutte le applicazioni disponibili su Debian per la visualizzazione e l'editing di immagini e foto, dovete tenere presente anche che ogni desktop manager ha il proprio programma di visualizzazione delle immagini, è consigliato provare tutti i programmi già disponibili prima di scegliere un uno specifico. Per prima cosa dovete sapere che lo standard di GNU Linux per le immagini è il png anche se potete trovare e usare tranquillamente i formati jpg o gif. Tra i programmi per la modifica delle immagini è disponibile il famoso programma **GIMP (GNU Image Manipulation Program)**, che è il più famoso programma di GNU Linux per la modifica delle immagini e uno dei più usati al mondo visto che è disponibile su tutte le piattaforme ed è completamente gratuito, le ultime versioni sono veramente all'altezza dei rivali. Per la grafica 3D è disponibile il famoso **Blender** anche se, in questo caso, conviene usare la versione su Snapd in quanto è una versione più recente; mentre è possibile usare Dia che permette di creare diagrammi di flusso, circuiti elettrici, grafici UML, diagrammi di rete, diagrammi E-R ed altri ancora.
 
@@ -540,7 +542,7 @@ Senza alcun dubbio **K3B** è la migliore applicazione per GNU Linux per la mast
 
 Per i servizi **Dropbox** esiste il pacchetto dedicato ufficiale, purtroppo non è nei repository ufficiali è necessario scaricare il pacchetto manualmente perché non esiste repository dedicato, per l'installazione veloce basta eseguire il comando di installazione
 ```
-dpkg -i nomePacchetto.deb
+# dpkg -i nomePacchetto.deb
 ```
 al termine dell'installazione dovrebbe aprirsi automaticamente un browser per la autenticazione e la configurazione della cartella base del sistema di dropbox, al termine bisogna comunque riavviare il sistema per vericare che il sistema di sincronizzazione venga attivato. Se si usa il browser GNOME è necessario installare la estensione topicons plus e il pacchetto libclouldproviders0 per visualizzare l'icona di dropbox nella barra del sistema.
 
@@ -555,8 +557,8 @@ Il gioco **Minecraft** è disponibile per GNU LINUX: dal sito ufficiale è possi
 Cedega è stato un progetto per far funzionare giochi e programmi compilati per Microsoft Windows sui sistemi GNU Linux, il progetto era a pagamento acquistabile direttamente dal sito ufficiale, purtroppo da qualche anno il progetto è stato abbandonato e non è più consigliato usare tale programma.
 
 Per i sistemi GNU Linux e Debian è disponibile l'installer del launcher **Steam** scaricabile da snap con il solito comando
-```
-# snap install steam
+```bash
+$ snap install steam
 ```
 E' possibile installare anche il launcer di EpicGames, si rimanda al sito ufficiale in quanto è necessario scaricare e usare Wine come emulatore, tuttavia io sconsiglio l'uso di Wine se non strettamente necessario.
 
@@ -675,7 +677,7 @@ per maggiori informazioni sul questo sistema di gestione dei demoni è disponibi
 ```
 che contiene tutti i comandi eseguiti all'avvio del sistema, è sempre sconsigliato modificare questo per evitare di compromettere l'avvio del sistema e il corretto funzionamento del sistema ma se necessario è possibile aggiungere righe con istruzioni da eseguire all'avvio dei demoni prima della riga "exit 0", per esempio è possibile aggiungere la cancellazione di tutti i file dentro alle cartelle del cestino, questo è possibile inserendo la riga:
 ```
-#rm -r /home/alnao/.local/share/Trash/files/*
+# rm -r /home/alnao/.local/share/Trash/files/*
 ```
 Per amministrare al meglio questi componenti potete modificare i file e gli script a mano oppure io consiglio di usare il pannello webmin dove è disponibile tutta una sezione per la gestione e la modifica dei componenti dei runlevel, nell'ambiente grafico è possibile trovare l'applicazione rcconf disponibile sui repository Debian e quindi installabili tramite Synaptic.
 
@@ -761,51 +763,77 @@ Tipicamente la porta usata dal server è la 3389, che nei sistemi GNU Linux è b
 ```
 aggiungendo la riga
 ```
-ufw allow 3389/tcp
+# ufw allow 3389/tcp
 ```
 Come client è possibile utilizzare il programma Remmina, grazie al quale è possibile utilizzare il protocollo RDP per collegarsi ad un server remoto.
 
-
 # Programmazione in Debian
 
-Il tema della programmazione è il tema principale di scrive questa serie di articoli e saranno presentati vari articoli riguardo a questo scottante tema. In questo non sono esposte le varie teorie sulla programmazione e non è nemmeno una guida ai vari linguaggi di programmazione ma vengono solo presentati strumenti e comandi che un programmatore ha a disposizione per lavorare e iii divertirsi iii (perché dovrebbe essere anche un divertimento), sono presenti semplici esempi di codice nei vari linguaggi di programmazione solo per le verifiche base.
+Il tema della programmazione rappresenta il fulcro di questa sezione e di molti articoli che seguiranno, affrontando questo argomento sempre attuale e in continua evoluzione. È importante chiarire che questo non è un manuale teorico sulla programmazione né una guida esaustiva ai linguaggi di programmazione, ma piuttosto una raccolta pratica di strumenti, comandi e tecniche che un programmatore ha a disposizione per lavorare efficacemente e, perché no, *divertirsi* nel processo di sviluppo. Gli esempi di codice presentati nei vari linguaggi sono volutamente semplici e finalizzati esclusivamente alle verifiche di base e al testing dell'ambiente di sviluppo.
 
-La base della programmazione è la scelta dell'ambiente di sviluppo: anche i più semplici editor testuali come Gedit e Mousepad mettono a disposizione la formattazione automatica dei vari linguaggi di programmazione riconoscendo dal tipo di file il tipo di linguaggio mentre per la compilazione la riga di comando è sempre disponibile, tuttavia è possibile scegliere SDK per velocizzare la fase di sviluppo, per esempio è possibile usare Eclipse, MsCode e Atom a seconda del linguaggio di programmazione usato.
+L'ecosistema di programmazione su Debian offre una ricchezza e una varietà di strumenti che poche altre piattaforme possono vantare. La filosofia open source del sistema operativo si riflette perfettamente nell'ampia disponibilità di compilatori, interpreti, debugger e ambienti di sviluppo, tutti facilmente installabili tramite il sistema di gestione dei pacchetti APT.
 
-I linguaggi nativi con cui è scritto GNU Linux e la maggior parte dei programmi disponibili sono il C e il C++: la maggior parte delle funzionalità del sistema operativo KernelLinux sono scritte in questi linguaggi ed è possibile trovare molta documentazione a riguardo in internet, tuttavia negli ultimi anni, con la diffusione dei nuovi linguaggi di programmazione, è possibile lavorare in Java, in Perl o in Python con la massima compatibilità delle API del sistema operativo.
+La base di qualsiasi attività di programmazione inizia con la scelta dell'ambiente di sviluppo appropriato. Debian offre una gamma impressionante di opzioni, dai più semplici editor testuali agli IDE più sofisticati. Anche gli editor più basilari come Gedit e Mousepad offrono funzionalità avanzate come la formattazione automatica e il syntax highlighting per i vari linguaggi di programmazione, riconoscendo automaticamente il tipo di linguaggio in base all'estensione del file o al contenuto.
 
-Oltre ai tradizionali linguaggi di programmazione è possibile scrivere semplici script per la shell in un linguaggio unico nel suo genere: sh (abbreviazione di Bourne shell e Scripting basH) il più importante linguaggio di scripting interpretato partendo da un file con estensione sh che deve avere le proprietà di esecuzione, è sempre possibile assegnare la proprietà di file eseguibile con il comando chmod:
-```
+Per la compilazione e l'esecuzione del codice, la riga di comando rimane sempre disponibile e spesso rappresenta la soluzione più veloce e flessibile. Tuttavia, per progetti più complessi o per aumentare la produttività, è possibile scegliere tra numerosi SDK e IDE specializzati. Eclipse rimane una scelta eccellente per Java e altri linguaggi enterprise, Visual Studio Code (VSCode) si è affermato come uno degli editor più versatili e popolari per lo sviluppo web e multi-linguaggio, mentre Atom (ora deprecato a favore di alternative moderne) era particolarmente apprezzato per la sua estensibilità.
+
+I linguaggi nativi con cui è costruito GNU Linux e la stragrande maggioranza dei programmi di sistema sono il **C** e il **C++**. Questi linguaggi rappresentano il DNA del sistema operativo: la maggior parte delle funzionalità del Kernel Linux, le librerie di sistema fondamentali e molti dei tool di base sono scritti in questi linguaggi. Questa scelta non è casuale, ma deriva dalla necessità di avere prestazioni ottimali, controllo granulare delle risorse hardware e massima compatibilità con l'architettura UNIX.
+
+La documentazione per questi linguaggi è vastissima e facilmente reperibile online, dalle specifiche ufficiali ISO ai tutorial per principianti, dalle guide avanzate per l'ottimizzazione alle reference complete delle API di sistema. Tuttavia, l'evoluzione del panorama della programmazione ha portato alla diffusione di linguaggi di più alto livello che, pur mantenendo un'eccellente integrazione con le API del sistema operativo, offrono maggiore produttività e semplicità di sviluppo.
+
+Negli ultimi anni, linguaggi come **Java**, **Python**, **Perl**, **Ruby** e **Go** hanno guadagnato terreno anche nell'ambiente GNU Linux, offrendo la massima compatibilità con le API del sistema operativo e spesso prestazioni comparabili ai linguaggi nativi per molte tipologie di applicazioni. Debian include supporto nativo per tutti questi linguaggi, con compilatori, interpreti e librerie mantenuti e aggiornati costantemente.
+
+Oltre ai linguaggi di programmazione tradizionali, Debian offre potenti strumenti di scripting attraverso la shell, in particolare con **Bash** (Bourne Again Shell). Il linguaggio di scripting shell rappresenta un elemento unico e fondamentale nell'ecosistema GNU Linux, permettendo di automatizzare task complessi, creare tool personalizzati per l'amministrazione del sistema e sviluppare veri e propri programmi per la gestione e il monitoraggio.
+
+Gli script shell partono da file con estensione `.sh` che devono avere i permessi di esecuzione. Per rendere un file eseguibile, è sempre possibile utilizzare il comando `chmod`:
+```bash
 $ chmod a+x file.sh
 ```
-Spesso questi script vengono usati per creare funzioni di installazione, oppure per semplificare la vita ad un utente creando dei veri e propri piccoli programmi per la gestione del sistema (per esempio gli script per l’avvio e l’arresto di un demone o di un singolo programma). I file di script si possono riconoscere semplicemente perché iniziano per con:
+Questi script trovano applicazione in numerosi scenari: dalla creazione di procedure di installazione e configurazione automatizzate, alla semplificazione di operazioni complesse per utenti meno esperti, fino allo sviluppo di veri e propri piccoli programmi per la gestione del sistema. Esempi tipici includono script per l'avvio e l'arresto controllato di demoni, per la gestione di backup automatizzati, per il monitoraggio delle risorse di sistema o per l'automazione di deploy di applicazioni.
+
+I file di script sono immediatamente riconoscibili perché iniziano con la sequenza **shebang**:
+
 ```
 #!
 ```
-che indica al kernel che lo script è direttamente eseguibile, e lo si fa immediatamente seguire a quel simbolo il nome della shell o del programma da eseguire, per esempio il più usato è sh e tutti gli script iniziano con la prima riga
-```
-#!/bin/sh
-```
-In questo tipo di script, oltre a tutti i comandi della shell, è possibile usare le variabili utilizzando il suffisso $ e con i simboli ```$#``` si indicano i parametri arrivati da riga di comando oppure $- indicano le opzioni della shell oppure $$ indicano il pid del processo, per l'elenco completo delle variabili disponibili è possibile cercare nelle varie guide on-line. Per interagire da riga di comando l'utente si può utilizzare il comando read per permettere all'utente di inserire dei valori da tastiera, per esempio un semplice programma:
-```
-#!/bin/sh
-echo "Inserisci una frase \c"
-read param
-echo param=$param
-```
-Si rimanda alla documentazione ufficiale per maggiori riguardo al tema dello script sh.
+Questa sequenza indica al kernel che il file è direttamente eseguibile e deve essere processato dall'interprete specificato immediatamente dopo. L'interprete più comune è `/bin/sh`, quindi la maggior parte degli script inizia con:
 
+```
+#!/bin/sh
+```
+
+Tuttavia, è possibile specificare altri interpreti come `/bin/bash` per funzionalità avanzate specifiche di Bash, o `/usr/bin/python3` per script Python, rendendo il sistema estremamente flessibile.
+
+
+Gli script Bash offrono un ricco set di funzionalità che vanno ben oltre i semplici comandi di sistema. È possibile utilizzare variabili utilizzando il prefisso `$`, gestire parametri da riga di comando attraverso variabili speciali come `$#` (numero di parametri), `$1`, `$2`, ecc. (parametri posizionali), `$@` (tutti i parametri), `$0` (nome dello script), `$?` (codice di uscita dell'ultimo comando), `$$` (PID del processo corrente) e molte altre.
+
+Per l'interazione con l'utente, il comando `read` permette di catturare input da tastiera, rendendo possibile la creazione di script interattivi. Ecco un esempio più elaborato:
+
+```bash
+#!/bin/sh
+echo "=== Script di esempio ==="
+echo "Inserisci il tuo nome: "
+read nome
+echo "Inserisci la tua età: "
+read eta
+echo "Ciao $nome, hai $eta anni!"
+echo "Script completato il $(date)"
+```
+
+Gli script possono includere strutture di controllo complesse (if/then/else, while, for), funzioni personalizzate, gestione degli errori e molto altro. La potenza degli script Bash risiede nella possibilità di combinare facilmente comandi di sistema, operazioni su file, elaborazione di testo e logica di controllo in un unico strumento coeso e potente.
+
+Per approfondimenti dettagliati sulla sintassi avanzata, le best practice e le tecniche di debugging degli script Bash, si rimanda alla documentazione ufficiale e alle numerose guide specializzate disponibili online.
 
 ## C
 
 I linguaggi **C** e il **C++** sono i due linguaggi base di tutto il mondo GNU Linux, chiunque voglia scrivere e/o modificare programmi deve conoscere un po' di questi linguaggi.
 
 Il compilatore principale e più usato è g++ (g plus plus), che si trovare anche con il nome di gpp nell'elenco pacchetti. Il compilatore viene sempre installato in automatico nell'installazione del sistema base e non può essere tolto perché serve a moltissime applicazioni e risulta spesso indispensabile per il funzionamento del sistema base. Esistono due metodi principali per eseguire la compilazione di un file C/C++: via terminale oppure utilizzare un ambiente di sviluppo integrato, per poter compilare dei sorgenti è consigliabile installare il pacchetto build-essential infatti, dopo averlo installato, potete tranquillamente scrivere il vostro codice in un editor di testo qualunque, come Gedit, poi salvarlo con estensione .cpp per poi eseguire i comandi:
-```
+```bash
 $ g++ nomef.cpp
 ```
 comando che lancia la compilazione del file .cpp e, se la compilazione non da errori, genera un file chiamato a.out che è il nostro eseguibile, per lanciarlo basta eseguire
-```
+```bash
 $ ./a.out
 ```
 ed ecco il nostro programma in esecuzione nel terminale.
@@ -817,10 +845,10 @@ Essendo C e C++ molto usati in GNU Linux, esistono moltissimi ambienti di svilup
 
 Il linguaggio **Python** è uno dei più usati a livello mondiale per la sua semplicità, per esempio WebMin è basato su questo linguaggio e il pacchetto principale è indispensabile ed è già installato. Per installare il pacchetto di enviroment e di sviluppo per eseguire script scritti nel linguaggio python basta lanciare il comando di installazione del pacchetto venv (abbreviazione di vistual-environment):
 ```
-apt-get install python3-venv
+# apt-get install python3-venv
 ```
 Si può testare l'ambiente di sviluppo con i comandi che creano un semplice file e lo eseguono:
-```
+```bash
 $ echo "import random" > a.py
 $ echo "print ( random.choice(['Sasso','Forbice','Carta']) )" >> a.py
 $ python3 -m venv venv
@@ -865,15 +893,15 @@ Per quanto riguarda il calcolo numerico la scelta è molto varia e il mondo GNU 
 ## LaTeX
 
 Per chi vuole utilizzare il famosissimo linguaggio LaTeX per creare documenti, ci sono alcuni programmi che lo aiuteranno notevolmente alla gestione dei documenti, per prima cosa bisogna andare ad installare tutti i pacchetti necessari: bisogna installare i pacchetti che iniziano per LaTeX evitando di selezionare le estensioni per le lingue orientali se non servono, poi si può lanciare la compilazione da riga di comando oppure usare un ambiente grafico che esegua la compilazione con un semplice click su un bottone. Per la compilazione a mano, dopo aver scritto il documento con un semplice editor di testo (come kEdit o gEdit), la compilazione è lanciata con il comando:
-```
+```bash
 $ latex miodocumento.tex
 ```
 Il risultato saranno alcuni file (con estensione .aux, .log, .idx) e viene generato anche un file con estensione e formato DVI, questo file può essere letto direttamente tramite il programma di visualizzazione documenti oppure può essere aperto grazie all'interprete di Konqueror, se si desidera invece ottenere un file PostScript, bisogna, dopo aver prodotto il DVI, lanciare il comando
-```
+```bash
 $ dvips -t -o miodocumento.ps miodocumento.dvi
 ```
 che permette di ottenere il file PostScript con estensione ps ma bisogna tener presente che è necessario aver installato un interprete PostScript come GhostScript. Per ottenere un documento in formato PDF bisogna processare il file sorgente con il comando
-```
+```bash
 $ pdflatex miodocumento.tex
 ```
 Un'altra opzione è quella di usare l'utilissimo programma Kile: il miglior programma per GNU Linux per scrivere documenti in linguaggio LaTeX: consigliato e indispensabile per chi vuole scrivere documenti di grandi dimensioni, da usare anche la possibilità di creare dei progetti in modo tale da dividere i documenti in file più piccoli e più semplici da gestire, notare anche che con la seconda barra in alto si evita di dover andare a scrivere i comandi sulla shell ma basta fare un click con il mouse.
@@ -884,23 +912,23 @@ Un'altra opzione è quella di usare l'utilissimo programma Kile: il miglior prog
 ## Notify e Zenity
 
 Se si utilizza un sistema con un gestore desktop è possibile usare dei comandi base per visualizzare dei messaggi tramite notifiche o tramite piccole finestre di dialogo, per esempio per visualizzare una notifica nel desktop basta lanciare il comando
-```
+```bash
 $ notify-send 'Titolo' 'Messaggio'
 ```
 e comparirà una notifica nel desktop (ogni desktop manager visualizza la notifica in maniera diversa).
 
 Per quanto riguarda le finestre di dialogo, se si vuole visualizzare una finestra nella shell (e non nel desktop) si può usare il comando whiptail, per esempio:
-```
+```bash
 $ whiptail --title "Esempio" --msgbox "Messaggio nella shell" 8 78
 ```
 Mentre per visualizzare finestre di dialogo esiste il programma base xmessage, per esempio:
-```
+```bash
 $ xmessage -center "Messaggio da visualizzare"
 ```
 oppure è possibile usare il programma grafico evoluto zenity, permette di visualizzare finestre informative e anche domande, per esempio
 
 La sintassi dei comandi prevede anche la possiblità di personalizzare il messaggio visualizzato e il tipo di finestra:
-```
+```bash
 $ zenity --info --text="Messaggio da visualizzare" --title="Info" --width=600
 $ zenity --error --text="An error occurred!" --title="Warning"
 $ zenity --question --text="What to do?"
@@ -915,7 +943,7 @@ DISPLAY=:0.0 zenity --question --title="Title" --text="What to do?"
 
 Quando si pensa ai sistemi GNU Linux si pensa anche al matrimonio del secolo chiamato LAMP: l'unione perfetta tra GNU Linux, Apache, MySql & Php. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione unendo i pacchetti con un semplice comando:
 ```
-apt-get install apache2 mariadb-client mariadb-server php8.2 php8.2-mysql libapache2-mod-php8.2
+# apt-get install apache2 mariadb-client mariadb-server php8.2 php8.2-mysql libapache2-mod-php8.2
 ```
 oppure i pacchetti possono essere installati dai programmi di gestione dei pacchetti di Debian. In questo articolo viene usata la versione 8.2 di PHP ma si possono usare anche versioni precedenti o successive se presenti nel repository ufficiale, è sconsigliato usate versioni di pacchetti non ufficiali.
 
@@ -970,11 +998,11 @@ Alias "/Php/" "/mnt/Dati/Php/"
 ### MySql
 
 Il demone database **MySql** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione mariadb che è la versione open-source e libera e sono previsti due pacchetti principali (mariadb-client e mariadb-server), all'installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
-```
+```bash
 $ mysql_secure_installation
 ```
 oppure impostando manualmente le password principali con i comandi dalla console mysql:
-```
+```bash
 $ mysql
 > use mysql;
 > UPDATE user SET password=PASSWORD('password') where User='root';
@@ -987,7 +1015,7 @@ Da notare che con il comando mysql è possibile accedere alla console del databa
 # systemctl restart mariadb
 ```
 per rendere effettive le modifiche alla password di root. Un semplice esempio di utilizzo della console del dabatase:
-```
+```bash
 $ mysql
 > USE test;
 > SHOW TABLES;
@@ -996,8 +1024,8 @@ $ mysql
 > SELECT * FROM prova;
 ```
 Con questi comandi è stata creata una piccola tabella nel database test, inserita una riga sulla tabella e l'ultima query visualizza la riga appena inserita, in questo modo sono state eseguite tutte le istruzioni base del demone MySql. Per quanto riguarda l'applicazione-sito PhpMyAdmin, dalla versione 10 di Debian, non è più disponibile nei Repository ufficiali e deve essere scaricato manualmente dal sito ufficiale e posizionato in una cartella per poi lanciare i comandi di configurazione (per la configurazione dei permessi e del apache.conf). In alternativa all'ormai obsoleto PhpMyAdmin è consigliabile usare programmi più evoluti per la gestione del database come **MySql-Workbench**, per installarlo basta usare il repository snap e lanciare il comando:
-```
-snap install mysql-workbench-community
+```bash
+$ snap install mysql-workbench-community
 ```
 Il demone Mysql pevede anche alcuni comandi speciali per la gestione da riga di comando del demone, per esempio per effettuare il backup di un database non può usare il comando:
 ```
@@ -1012,11 +1040,11 @@ Da notare che il comando mysqldump permette di collegare due server MySql per tr
 Per quanto riguarda la programmazione Web con i linguaggi di scripting Php o gli altri linguaggi, ci sono moltissimi programmi grafici che permettono lo sviluppo, alcuni esempi sono: screem, BlueFish, QuantaPlus anche se è consigliato l'utilizzo di Eclipse o Visual Studio Code.
 
 Il più semplice esempio di file php è il classico file con le informazioni base :
-```
-echo '<?php phpinfo(); ?> ' > /var/www/html/test.php
+```bash
+$ echo '<?php phpinfo(); ?> ' > /var/www/html/test.php
 ```
 che risulta disponibile nel server apache. I moduli php sono installabili dal gestiore dei pacchetti e l'elenco dei moduli installati sono consultabili con il comando
-```
+```bash
 $ php -m
 ```
 Il file di configurazione base del motore php si chiama
@@ -1034,7 +1062,7 @@ Con questo comando è possibile modificare le configurazioni del interprete/comp
 
 Per guardo riguarda la programmazione di applicazioni web **Node.js** e **NPM** hanno cambiato il mondo facilitando il lavoro degli sviluppatori: Node.js è lo strumento che consente agli sviluppatori di eseguire script al di fuori del browser web mentre NPM è il gestore di pacchetti per la gestione dei moduli Nodejs. L'installazione di questi due tool in una distribuzione Debian è facile e prevede l'installazione di due pacchetti
 ```
-apt-get install nodejs npl curl -y
+# apt-get install nodejs npl curl -y
 ```
 Al termine dell'instazzione è sempre necessario impostare i permessi in modo che qualunque utente possa installare moduli con Npm, questi permessi possono essere assegnati con i comandi
 ```
@@ -1044,14 +1072,14 @@ Al termine dell'instazzione è sempre necessario impostare i permessi in modo ch
 # node export NODE_OPTIONS=--openssl-legacy-provider
 ```
 Esistono molte guide che descrivono il processo di installazione di nuove versioni da repository esterni che spesso sono più aggiornate ma per un ambiente di sviluppo stabile è consigliato l'uso dei repository ufficiali. Per creare e provare una applicazione basata sulla libreria Angular basta lanciare i comandi:
-```
+```bash
 $ npm install -g @angular/cli
 $ ng new prova
 $ cd prova
 $ ng serve
 ```
 Mentre per testare il funzionamento di un piccolo progetto basato sul framework React è possibile creare un progetto con:
-```
+```bash
 $ npx create-react-app prova
 $ cd prova
 $ npm start
@@ -1119,18 +1147,18 @@ Il tool maven e glade sono disponibili nel pacchetto ufficiale e possono essere 
 ## GIT
 
 Il tool **GIT** è il programma per il controllo delle versioni di software e distribuzione più usato al mondo, inizialmente proprio creato per la gestione degli sviluppi del KernelLinux, ad oggi è usato in tutto il mondo anche delle grandi aziende per i progetti di grandissimi progetti. Il sistema può essere installato con l'omonimo pacchetto e per la configurazione basta lanciare i comandi
-```
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
+```bash
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
 ```
 per poi usare GIT per scaricare e inviare file basta lanciare i comandi:
-```
-git clone https://gitlab.com/name/name.git
-cd name
-touch README.md
-git add README.md
-git commit -m "add README"
-git push -u origin master
+```bash
+$ git clone https://gitlab.com/name/name.git
+$ cd name
+$ touch README.md
+$ git add README.md
+$ git commit -m "add README"
+$ git push -u origin master
 ```
 è possibile anche usare il plugin dedicato di Eclipse o Visual Studio Code per la gestione dei repository e la gestione dei commit/push. Inoltre esistono dei piccoli grandi tool grafici come git-cola o gitg, sono sicuramente da provare ed è da notare anche la simpatica descrizione del gitCola in Synaptic. Guide complete di GIT sono disponibili nelle pagine dedicate a JavaEE con Eclipse e Angular.
 
@@ -1259,7 +1287,7 @@ se viene modificato il file di configurazione, bisogna ricordarsi di riavviare i
 # systemctl restart mongod
 ```
 Per l'accesso da riga di comandi è disponibile una console, un semplice esempio di utilizzo di questo comando:
-```
+```bash
 $ mongosh 
   > db.runCommand({ connectionStatus: 1 })
   > use collectiondemo
@@ -1287,11 +1315,11 @@ $ unzip awscliv2.zip
 $ aws --version
 ```
 In caso di errore di questo ultimo passaggio basta aggiungere al file .bashrc il path /usr/local/bin/ dove viene installato il CLI di AWS. Per configurare il profilo bisogna prima creare un utente di tipo programmatico con la key nel servizio IAM di AWS, poi basta lanciare il comando:
-```
+```bash
 $ aws configuration --profile nomeUtente
 ```
 per configurare un profilo, in questi passi saranno richieste le due chiavi dell'utente, la zona di default (come eu-west-1) e il formato delle risposte (come json). Una volta configurato la CLI, per provare il corretto funzionamento e collegamento basta lanciare il comando:
-```
+```bash
 $ aws s3 ls
 ```
 per visualizzare l'elenco dei bucket presenti nel servizio S3 nella region impostata di default in fase di configurazione. L'elenco dei comandi specifici della CLI è disponibile negli articoli dedicati al servizio AWS.
@@ -1314,19 +1342,19 @@ Una guida completa di SAM può essere trovata al sito ufficiale mentre esempi di
 
 
 L'installazione di **SLS** (detta anche serverless-cli) si basa sul sistema di pacakge NPM e bisogna lanciare il comando di installazione del pacchetto dedicato:
-```
+```bash
 $ npm install -g serverless
 ```
 e poi bisogna configurare le credenziali programmatiche di accesso con il comando:
-```
+```bash
 $ serverless config credentials --provider aws --key <key> --secret <secret> --profile serverless-admin
 ```
 Per verificare che sia tutto configurato correttamente basta lanciare il comando:
-```
+```bash
 $ servless
 ```
 oppure:
-```
+```bash
 $ sls
 ```
 
@@ -1334,7 +1362,7 @@ $ sls
 ### Gestione EC2 con Debian 12
 
 Il cloud AWS mette a disposizione molte **AMI** (immagini) con il sistema operativo Debian12, la lista può essere recuperata in molti siti ufficiali oppure lanciando il comando AWS-CLI:
-```
+```bash
 $ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
 $ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
 $ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
@@ -1342,22 +1370,22 @@ $ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*
 
 
 Per avviare una istanza con una specifica AMI si può usare il comando:
-```
-aws ec2 run-instances --image-id ami-XXXXXXXXXXXXXXXXX --instance-type t2.micro --key-name your-key-pair --security-group-ids sg-XXXXXXXXXXXXXXXXX --subnet-id subnet-XXXXXXXXXXXXXXXXX --count 1
+```bash
+$ aws ec2 run-instances --image-id ami-XXXXXXXXXXXXXXXXX --instance-type t2.micro --key-name your-key-pair --security-group-ids sg-XXXXXXXXXXXXXXXXX --subnet-id subnet-XXXXXXXXXXXXXXXXX --count 1
 # Creare un volume e aggiungerlo all'istanza
-aws ec2 create-volume --volume-type gp2 --size 20 --availability-zone us-east-1a
-aws ec2 attach-volume --volume-id vol-XXXXXXXXXXXXXXXXX --instance-id i-XXXXXXXXXXXXXXXXX --device /dev/sdf
+$ aws ec2 create-volume --volume-type gp2 --size 20 --availability-zone us-east-1a
+$ aws ec2 attach-volume --volume-id vol-XXXXXXXXXXXXXXXXX --instance-id i-XXXXXXXXXXXXXXXXX --device /dev/sdf
 # Creare una AMI a partire da una istanza
-aws ec2 create-image --instance-id i-XXXXXXXXXXXXXXXXX --name "My-Debian-AMI" --description "AMI personalizzata basata su Debian"
+$ aws ec2 create-image --instance-id i-XXXXXXXXXXXXXXXXX --name "My-Debian-AMI" --description "AMI personalizzata basata su Debian"
 # Descrivere una instanza
-aws ec2 describe-instance-status --instance-ids i-XXXXXXXXXXXXXXXXX
+$ aws ec2 describe-instance-status --instance-ids i-XXXXXXXXXXXXXXXXX
 # Creare una metrica Cloudwatch per il monitoraggio della istanza
-aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimensions Name=InstanceId,Value=i-XXXXXXXXXXXXXXXXX --start-time $(date -u +"%Y-%m-%dT%H:%M:%SZ" --date "1 hour ago") --end-time $(date -u +"%Y-%m-%dT%H:%M:%SZ") --period 300 --statistics Average
+$ aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimensions Name=InstanceId,Value=i-XXXXXXXXXXXXXXXXX --start-time $(date -u +"%Y-%m-%dT%H:%M:%SZ" --date "1 hour ago") --end-time $(date -u +"%Y-%m-%dT%H:%M:%SZ") --period 300 --statistics Average
 ```
 
 
 Una volta avviata una istanza è possibile collegarsi e configurarla, qui riportati alcuni dei principali comandi:
-```
+```bash
 $ ssh -i /path/to/your-key-pair.pem admin@your-instance-public-ip
   sudo apt update
   sudo apt upgrade -y
@@ -1366,13 +1394,37 @@ $ ssh -i /path/to/your-key-pair.pem admin@your-instance-public-ip
 
 
 Per potersi collegare ovviamente bisogna ricordarsi di aprire la porta SSH-332
-```
+```bash
 # Permettere accesso SSH da qualsiasi IP
-aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 0.0.0.0/0
+$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 0.0.0.0/0
 # Permettere accesso SSH solo da un IP specifico
-aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr IP_ADDRESS/32
+$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr IP_ADDRESS/32
 # Permettere accesso SSH da un range di IP
-aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 192.168.1.0/24
+$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 192.168.1.0/24
+```
+
+### Terraform
+Terraform è uno strumento open source per l'automazione della creazione, gestione e aggiornamento di infrastrutture cloud tramite codice dichiarativo: è possibile definire risorse cloud, server, reti e servizi in file di configurazione leggibili e versionabili. Questo approccio, chiamato Infrastructure as Code (IaC), permette di automatizzare la creazione, modifica e distruzione delle risorse in modo sicuro e ripetibile. Terraform supporta numerosi provider, tra cui AWS, Azure, Google Cloud e molti altri, rendendolo estremamente versatile. 
+
+
+L’installazione su Debian è semplice e richiede pochi passaggi configuratondo un repository specifico:
+```
+# apt update
+# apt install -y gnupg software-properties-common curl
+# curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+# echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+# apt update
+# apt install terraform
+$ terraform -v
+```
+Grazie a questo comando sarà possibile scrivere un file di configurazione con estensione .tf e, con i comandi terraform init e terraform apply, si può avviare la gestione automatizzata dell’infrastruttura. 
+
+
+Terraform si integra perfettamente con AWS grazie al provider AWS ufficiale che supporta centinaia di servizi, dalle istanze EC2 ai database RDS, dai bucket S3 alle funzioni Lambda. L'utilizzo di Terraform con AWS permette di gestire l'intera infrastruttura cloud attraverso file di configurazione dichiarativi, garantendo consistenza, versionamento e possibilità di replicare ambienti identici con il semplice comando:
+
+
+```bash
+$ terraform apply
 ```
 
 
@@ -1458,7 +1510,7 @@ I principali comandi di Docker per la gestione della rete sono:
 
 
 Per rendere una porta esposta accessibile dall'esterno dell'host Docker, è necessario utilizzare il flag -p (o --publish) con il comando docker run. Questo mappa una porta dell'host a una porta del container. Per esempio:
-```
+```bash
 $ docker run -p 8080:80 <immagine>
 ``` 
 mappa la porta 8080 dell'host verso la porta 80 del container.
@@ -1509,21 +1561,21 @@ Per la creazione di una immagine è indispensabile creare un `Dockerfile` (*file
   CMD ["python","./script.py"]
   ```
 I comandi per preparare e avviare una immagine sono:
-```
+```bash
 $ docker build -t nome-immagine .
 $ docker images
 $ docker run nome-immagine
 ```
 Mentre è possibile "entrare" direttamente nell'immagine con il comando 
-```
+```bash
 $ docker run -it mia-immagine /bin/bash
 ```
 Il comando **docker exec** serve per eseguire un comando all'interno di un container Docker già in esecuzione . È particolarmente utile quando vuoi interagire con un container attivo senza doverlo fermare o riavviare. La sintassi è:
-```
+```bash
 $ docker exec [OPZIONI] NOME_CONTAINER COMANDO [ARGOMENTI]
 ```
 come per esempio
-```
+```bash
 $ docker exec -it NOME_CONTAINER /bin/bash
 ```
 
@@ -1655,7 +1707,7 @@ Per avviare e configurare il servizio è necessario lanciare il comando
 # kubeadm init --control-plane-endpoint=cirilla --upload-certs --pod-network-cidr=10.244.0.0/16
 ```
 Per inizializzare un cluster e configurare una rete Container Network Interface (CNI):
-```
+```bash
 $ mkdir -p $HOME/.kube
 $ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 $ chown $(id -u):$(id -g) $HOME/.kube/config
@@ -1666,18 +1718,18 @@ $ kubectl get nodes
 ```
 
 Il cluster è ora pronto. Per aggiungere nodi worker, per esempio è possibile eseguire il comando `kubeadm join` per la gestione dei nodi. Una sequenza utile per l'avvio di un servizio è:
-```
+```bash
 $ kubectl apply -f deployment.yml 
 $ kubectl apply -f service.yml
 ```
 Per rimuovere i servizi è possibile usare i comandi:
-```
+```bash
 $ kubectl delete all -l app=esempio01
 $ kubectl delete all -l app=esempio01
 $ kubeadm reset
 ```
 Mentre i log e i dettagli possono essere recuperati con i comandi:
-```
+```bash
 $ kubectl get all -l app=esempio01
 
 $ cat /var/log/syslog | grep kubelet
@@ -1692,7 +1744,7 @@ $ journalctl -u kubelet -f
 ```
 
 Un esempio di avvio di un server Nginx su un nodo dedicato:
-```
+```bash
 $ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
 $ kubectl get nodes
 $ kubectl create deployment nginx --image=nginx
@@ -1713,32 +1765,32 @@ $ kubectl get all -l app=nginx
 
 Per installare minikube conviene usare il pacchetto disponbile da google, la sequenza di istruzioni da eseguire è
 ```
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
-sudo dpkg -i minikube_latest_amd64.deb
-minikube version
-sudo chmod 666 /var/run/docker.sock
-docker version --format {{.Server.Os}}-{{.Server.Version}}:{{.Server.Platform.Name}}
-minikube start --memory=4096 --cpus=2
-minikube start --memory=4096 --cpus=2 --force
+# curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+# sudo dpkg -i minikube_latest_amd64.deb
+# minikube version
+# sudo chmod 666 /var/run/docker.sock
+# docker version --format {{.Server.Os}}-{{.Server.Version}}:{{.Server.Platform.Name}}
+# minikube start --memory=4096 --cpus=2
+# minikube start --memory=4096 --cpus=2 --force
   http://localhost:9000/
-minikube status
-minikube stop
+# minikube status
+# minikube stop
 ```
 da notare che esistono diverse guide con diverse sorgenti, conviene sempre controllare il [sito ufficiale](https://minikube.sigs.k8s.io/docs/start/).
 
 
 Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
 - Avvio di un server nging 
-  ```
-  minikube start --driver=docker --memory=2048 --cpus=2
-  kubectl create deployment nginx --image=nginx
-  kubectl get pods
-  kubectl expose deployment nginx --type=NodePort --port=80
-  kubectl get services
-  curl http://$(minikube ip):$(kubectl get service nginx -o jsonpath='{.spec.ports[0].nodePort}')
-  kubectl delete service nginx
-  kubectl delete deployment nginx
-  minikube stop
+  ```bash
+  $ minikube start --driver=docker --memory=2048 --cpus=2
+  $ kubectl create deployment nginx --image=nginx
+  $ kubectl get pods
+  $ kubectl expose deployment nginx --type=NodePort --port=80
+  $ kubectl get services
+  $ curl http://$(minikube ip):$(kubectl get service nginx -o jsonpath='{.spec.ports[0].nodePort}')
+  $ kubectl delete service nginx
+  $ kubectl delete deployment nginx
+  $ minikube stop
   ```
 - Avvio di un sever nging con file servide dedicato
   - File `nginx-service.yaml`
@@ -1780,8 +1832,8 @@ Per la creazione di servizi con kubectl sviluppati in Java e Python si rimanda a
 
 
 Da notare che assieme a minikube conviene usare anche **freelens**: un'estensione di Minikube che permette di ispezionare e gestire facilmente i servizi, le risorse e i log del cluster Kubernetes in locale, con FreeLens è possibile visualizzare dashboard, analizzare pod e debuggare applicazioni senza dover usare molti comandi a terminale. L'installazione è molto semplice utilizzando snap con il comando
-```
-snap install freelens --classic
+```bash
+$ snap install freelens --classic
 ```
 La configurazione è praticamente automatica per il server in locale, per server remoti la configurazione può essere complicata perchè regolata dal file
 ```
@@ -1794,11 +1846,11 @@ si rimanda alle varie guide in internet per la configurazione di questo files (*
 **Helm** è un package manager per Kubernetes, simile a apt o yum nei sistemi Linux. Consente di installare, configurare e gestire facilmente applicazioni su un cluster Kubernetes. Gli **Helm Charts** sono pacchetti predefiniti che descrivono come un'applicazione deve essere distribuita.
 Installare e configurare heml non è una cosa semplice, qui si riportano i passi più importanti. Per l'installazione si può configuare una sorgente: 
 ```
-curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
-sudo apt-get install apt-transport-https --yes
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-apt-get update
-apt-get install helm
+# curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+# sudo apt-get install apt-transport-https --yes
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+# apt-get update
+# apt-get install helm
 ```
 
 
@@ -1812,16 +1864,16 @@ apt-get install helm
 
 
 Per installare Portainer si può usare lo stesso docker, con i comandi:
-```
-docker volume create portainer_data
-docker run -d -p 9001:9000 --name portainer -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+```bash
+$ docker volume create portainer_data
+$ docker run -d -p 9001:9000 --name portainer -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ```
 Oppure basta aggiungere un `--restart=always` per averlo disponibile ad ogni avvio del sistema. Una volta installato l'interfaccia web è disponibile all'indirizzo `http://localhost:9001` (in questo esempio è stata scelta la porta 9001 perchè la 9000 potrebbe essere già occupata). Al primo avvio, verrà richiesto di configurare un utente amministratore e selezionare l’ambiente Docker da gestire.
 
 
 Portainer supporta **Kubernetes** a partire dalla versione 1.11 in poi ed è in grado di collegarsi a un cluster Kubernetes locale oppure a cluster remoti (su cloud o in infrastrutture on-premise) fornendo una dashboard semplificata per workload, namespace, pod, ingress, storage, ecc. È possibile installare Portainer direttamente nel cluster tramite Helm o manifest YAML:
-```
-kubectl apply -n portainer -f https://downloads.portainer.io/ce2-17/portainer.yaml
+```bash
+$ kubectl apply -n portainer -f https://downloads.portainer.io/ce2-17/portainer.yaml
 ```
 È possibile aggiungere un ambiente Kubernetes remoto in Portainer con un *Agent remoto Portainer* da installare nel cluster remoto per facilitare la connessione oppure con Kubeconfig: fornendo manualmente un file kubeconfig con credenziali e endpoint API.
 
@@ -1829,34 +1881,34 @@ kubectl apply -n portainer -f https://downloads.portainer.io/ce2-17/portainer.ya
 ## Android
 
 Esistono molti metodi per eseguire la cattura di un sistema esterno Andoid, è possibile persino prendere il controllo, il sistema più famoso è **scrcpy** che permette di catturare il display di un altro dispositivo. Si può installare tramite il sistema snap con il comando:
-```
-snap install scrcpy
+```bash
+$ snap install scrcpy
 ```
 Oppure installare il pacchetto direttamente da GitHub:
 ```
-sudo apt install ffmpeg libsdl2-2.0-0 adb wget gcc git pkg-config meson ninja-build libsdl2-dev libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
-git clone https://github.com/Genymobile/scrcpy
-cd scrcpy
-./install_release.sh
-scrcpy --version
-adb devices
+# sudo apt install ffmpeg libsdl2-2.0-0 adb wget gcc git pkg-config meson ninja-build libsdl2-dev libavcodec-dev libavdevice-dev libavformat-dev libavutil-dev libswresample-dev libusb-1.0-0 libusb-1.0-0-dev
+# git clone https://github.com/Genymobile/scrcpy
+# cd scrcpy
+# ./install_release.sh
+$ scrcpy --version
+$ adb devices
 ```
 Se il disposibito è correttamente collegato e configurato l'ultimo comando visualizza il dispositivo disponibile, per avviare il sistema di condivisione basta lanciare il programma o il comando
-```
-scrcpy
+```bash
+$ scrcpy
 ```
 Prima di eseguire questo processo bisogna ricordarsi che è necessario attivare la modalitatà *developer* sul sistema android cliccando sette volte sul "build number" nelle impostazioni del dispositivo ("about device" in alcune versione) e successivamente bisogna bisogna attivare anche l'opzione "USB debugging", senza questa configurazione non il programma adb non visualizza il dispositivo e non è possibile condividere le videate dei dispositivi.
 
 
 Tramite il programma è possibile condividere la camera, registrare video/audio e altre operazioni, si riportano alcuni esempi:
-```
-scrcpy --video-source=camera
-scrcpy --audio-source=mic # or --audio-source=output
-scrcpy --video-source=camera --no-audio # audio isn't forwarded
-scrcpy --record=file.mp4
-scrcpy --no-audio --record=file.mp4 # to only record the video
-scrcpy --no-video --audio-codec=raw --record=file.wav # to only record the audio
-scrcpy --new-display=1920x1080 --start-app=org.videolan.vlc
+```bash
+$ scrcpy --video-source=camera
+$ scrcpy --audio-source=mic # or --audio-source=output
+$ scrcpy --video-source=camera --no-audio # audio isn't forwarded
+$ scrcpy --record=file.mp4
+$ scrcpy --no-audio --record=file.mp4 # to only record the video
+$ scrcpy --no-video --audio-codec=raw --record=file.wav # to only record the audio
+$ scrcpy --new-display=1920x1080 --start-app=org.videolan.vlc
 ```
 Si rimanda alla documentazione ufficiale per i dettagli di tutti i comandi e i dettagli.
 
@@ -1894,7 +1946,7 @@ Nei sistemi basati su GNU Linux, tutte le shell hanno un **path** base spesso de
 $PATH
 ```
 e il cui contenuto può essere visualizzato con il comando:
-```
+```bash
 $ echo $PATH
 ```
 e si visualizza l'elenco delle cartelle in sequenza con il separatore due-punti, per esempio:
@@ -1902,7 +1954,7 @@ e si visualizza l'elenco delle cartelle in sequenza con il separatore due-punti,
 /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 ```
 Se si vuole aggiungere all'elenco una cartella basta lanciare il comando
-```
+```bash
 $ export PATH=$PATH:/cartella/da/aggiungere
 ```
 ma eseguendo questo comando la modifica sarebbe solo temporanea fino al successivo riavvio del sistema, per rendere definitiva la modifica al path base bisogna modificare il file
@@ -1939,11 +1991,11 @@ mv $file ${file%.from}.to
 done
 ```
 In alternativa allo script in bash, esiste un comando molto più veloce e sicuro, mmv (Multiple Move) che serve a spostare o copiare file multipli e che possano essere raggruppati con un carattere jolly, questa azione viene effettuata in modo sicuro, ovvero non ci sono cancellazioni di file inaspettate dovute a collisioni dei nomi dei file di destinazione con nomi di file già esistenti, inoltre non ci sono problemi nel caso in cui i nomi dei file contengano spazi. Un esempio di utilizzo è:
-```
+```bash
 $ mmv 'aaa*bbb?' 'pinco#1pallino#2'
 ```
 e con questo comando vengono rinominati tutti i file contenenti le stringe "aaa" e "bbb" e terminanti con un carattere e verrà dato il nome "pinco" + ciò che trova l'asterisco + "pallino" + ciò che trova il punto di domanda. Un esempio più semplice:
-```
+```bash
 $ mmv '*.ps' '#1.eps'
 ```
 per rinominare tutti i file da .ps a .eps, per maggiori informazioni e una guida completa potete vedere il comando man di mmv. Il metodo più semplice rimangono i programmi di gestione file del desktop che tutti quanti usano mmv ma basta un semplice click per eseguire il comando, è possibile provare in Dolphin, Konqueror, Total Commander o qualsiasi altro filemanager presente nel sistema Debian.
@@ -1954,23 +2006,22 @@ per rinominare tutti i file da .ps a .eps, per maggiori informazioni e una guida
 Per la manipolazione di file video si possono usare diversi comandi, il principale è **ffmeg** che permette di manipolare file video da riga di comando con una sintassi molto complessa, si rimanda al sito ufficiale per tutti i dettagli e l'elenco di tutte le funzionalità messe a disposizione da questo tool.
 Le principali operazioni disponibili sono:
 - Ruotare un video (per esempio se ripreso in verticale):
-  ```		
-  ffmpeg -i input.mp4 -vf "rotate=45*(PI/180)" output.mp4
+  ```bash		
+  $ ffmpeg -i input.mp4 -vf "rotate=45*(PI/180)" output.mp4
   ```
 - Tagliare un video da un punto ad un altro indicando il minutaggio di partenza e di fine taglio:
-  ```
-  ffmpeg -i input.mkv -ss 00:00:00 -t 00:02:30 -acodec copy -vcodec copy output.mkv
+  ```bash
+  $ ffmpeg -i input.mkv -ss 00:00:00 -t 00:02:30 -acodec copy -vcodec copy output.mkv
   ```
 - Unire più files in uno unico file, con questo modo i video sorgenti possono avere dimensioni e risoluzioni diverse, convertendo tutto in MP4 poi in TS per poterli unire nonostante le dimensioni diverse:
+  ```bash
+  $ ffmpeg -i file1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt1.ts
+  $ ffmpeg -i file2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt2.ts
+  $ ffmpeg -i file3.ogv -vcodec libx264 "file3.mp4"
+  $ ffmpeg -i file3.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt3.ts
+  $ cat fileIntermediate3.ts  fileIntermediate1.ts fileIntermediate2.ts > output.ts
+  $ ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
   ```
-  ffmpeg -i file1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt1.ts
-  ffmpeg -i file2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt2.ts
-  ffmpeg -i file3.ogv -vcodec libx264 "file3.mp4"
-  ffmpeg -i file3.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts fileInt3.ts
-  cat fileIntermediate3.ts  fileIntermediate1.ts fileIntermediate2.ts > output.ts
-  ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
-  ```
-
 
 ## Il bootloader Grub
 
@@ -2008,7 +2059,7 @@ Se questa configurazione non è attiva (quindi impostata su "true" o assente), G
 ## Gestione del gestino
 
 La gestione del **cestino** viene gestita dai vari Desktop (GNOME, KDE o XFCE), e come per altri sistemi, anche in Debian il cestino in realtà è una semplice cartella particolare dove vengono parcheggiati temporaneamente i file in attesa di una cancellazione definitiva, in realtà il Kernel di GNU Linux non gestisce nativamente il cestino, infatti se un utente usa i comandi:
-```
+```bash
 $ rm
 $ rmdir
 ```
@@ -2017,7 +2068,7 @@ la cancellazione di file o delle cartelle è definitiva e il file non viene spos
 /home/nomeutente/.local/share/Trash/file/
 ```
 che dovrebbe essere controllata e svuotata periodicamente con il comando
-```
+```bash
 $ rm -rf ~/.local/share/Trash/files/*
 ```
 per esempio è possibile inserire questo comandi nello script rc.local per svuotare il cestino (in maniera definitiva) ad ogni avvio del sistema. Se avete dei dischi montati con il comando mount, i vari desktop manager e i programmi di gestione dei file come Dolphin creano delle directory Trash (cestino) all'interno dei volumi montati, per esempio
@@ -2052,7 +2103,7 @@ purtroppo questo non funziona al meglio perché richiede la password dell'utente
 echo password | sudo -S kwrite /etc/fstab
 ```
 e lo script digiterà automaticamente la password al posto dell'utente, in questo modo si ha a disposizione uno script per eseguire il comando sudo che digita automaticamente la password. Se la installazione del sistema Debian viene avviata dalla versione live, il comando sudo viene installato di default e non viene impostata la password dell'utenza root, per impostarla basta lanciare il comando:
-```
+```bash
 $ sudo passwd root <nuovapassword>
 ```
 questo perché in quasi tutte le live il comando sudo viene usato al posto dell'utenza root e questo viene ereditato nelle installazioni che vengono avviate da sistemi live.
@@ -2112,11 +2163,11 @@ dove PROTOCOLLO è il tipo di protocollo da abilitare (udp oppure tcp). Volendo,
 # iptables -A INPUT -p [PROTOCOLLO] --dport [PORTA] -s 192.168.1.0/24 -j ACCEPT
 ```
 in questo modo verrà abilitato il traffico proveniente dagli IP del tipo 192.168.1.X sulla porta selezionata mentre per abilitare un solo IP è necessario inserirlo per intero (al posto dello zero). Per monitorare una eventuale rete wireless c'è a disposizione il comando wavemon che mostra la banda, la qualità del segnale, statistiche e le informazioni base, programma molto utile se si deve monitorare la rete senza fili da riga di mando. Non i dilungo molto in questi discorsi visto che non è il mio campo e conviene sempre avere sottomano WebMin o i tool grafici dei vari desktop che risultano sempre più comodi, come firestarter per la configurazione del firewall. Può inoltre capitare di dover impostare un limite all'uso della rete, cioè impostare che un sistema utilizzi al massimo un valore costante di banda in download o upload, per questo si può usare il comando **wondershaper** installabile dal gestore dei pacchetti e poi da riga di comando basta lanciare il comando
-```
+```bash
 $ wondershaper -a nomeInterfaccia -d limiteDowlonad -u limiteUpload
 ```
 per esempio:
-```
+```bash
 $ wondershaper -a enp3s0 -d 10000 -u 6500
 ```
 da notare che i limiti sono in Kbps.

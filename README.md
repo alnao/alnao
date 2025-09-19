@@ -48,19 +48,19 @@
     </td>
     <td><a href="https://github.com/alnao/AwsCloudFormationExamples">CloudFormation</a> &bull; <a href="https://github.com/alnao/PythonExamples/tree/master/AWS">Python code</a> &bull; <a href="https://github.com/alnao/JavaExamples/tree/master/AWS">Java code</a></td>
   </tr>
+    <tr>
+      <td align="center">
+        <img src="https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white" />
+        <img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" />        
+      </td>
+      <td><a href="https://github.com/alnao/TerraformExamples">Terraform on AWS</a>
+    </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=black" />
       <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white" />
     </td>
     <td><a href="https://github.com/alnao/JavaExamples">Java Examples</a> &bull; <a href="https://github.com/alnao/JavaSpringBootExample">SpringBoot project</a></td>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" />
-      <img src="https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=white" />
-    </td>
-    <td><a href="https://github.com/alnao/AngularReactNodeExamples">Angular React Node examples</a></td>
   </tr>
   <tr>
     <td align="center">
@@ -74,29 +74,36 @@
   </tr>
   <tr>
     <td align="center">
+      <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" />
+      <img src="https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=white" />
+    </td>
+    <td><a href="https://github.com/alnao/AngularReactNodeExamples">Angular & React examples</a></td>
+  </tr>
+  <tr>
+    <td align="center">
       <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white" />
       <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap notes</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap annotations</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" />
       <img src="https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress notes</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress annotations</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/Ionic-3880FF?style=for-the-badge&logo=ionic&logoColor=white" />
       <img src="https://img.shields.io/badge/Redux-764abc?style=for-the-badge&logo=redux&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/IonicReduxNxWorkspaceExample">Ionic & Redux Workspace</a></td>
+    <td><a href="https://github.com/alnao/IonicReduxNxWorkspaceExample">Ionic & Redux workspace</a></td>
   </tr>
   <tr>
    <td align="center">
-     <img src="https://img.shields.io/badge/Solidity-363636?style=for-the-badge&logo=solidity&logoColor=white" />
-     <img src="https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white" />     
+  <img src="https://img.shields.io/badge/Solidity-4E5E94?style=for-the-badge&logo=solidity&logoColor=white" />
+  <img src="https://img.shields.io/badge/Ethereum-627EEA?style=for-the-badge&logo=ethereum&logoColor=white" />
    </td>
    <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain, Solidity & Ethereum examples</a></td>
   </tr>
