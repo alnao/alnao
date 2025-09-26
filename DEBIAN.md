@@ -36,6 +36,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [I RunLevel](#I-RunLevel)
   - [Schedulazioni con Cron](#Schedulazioni-con-Cron)
   - [Controllo remoto](#Controllo-remoto)
+  - [Monitoraggio e Logging](#Monitoraggio-e-Logging)
 - [Programmazione in Debian](#Programmazione-in-Debian)
   - [C e C++](#C)
   - [Python](#Python)
@@ -766,6 +767,115 @@ aggiungendo la riga
 # ufw allow 3389/tcp
 ```
 Come client è possibile utilizzare il programma Remmina, grazie al quale è possibile utilizzare il protocollo RDP per collegarsi ad un server remoto.
+
+
+## Monitoraggio e Logging
+Il monitoraggio e la gestione dei log sono elementi fondamentali per mantenere un sistema Debian efficiente, sicuro e diagnosticare tempestivamente eventuali problematiche. Questa sezione copre gli strumenti essenziali per il controllo del sistema e l'analisi dei log.
+
+**Journalctl** è il comando principale per interrogare e visualizzare i log del sistema gestiti da systemd. A differenza dei tradizionali file di log in log, systemd memorizza i log in formato binario nel journal.
+```bash
+I comandi base di journalctl sono:
+# Visualizza tutti i log del sistema
+$ journalctl
+
+# Log degli ultimi boot
+$ journalctl -b
+$ journalctl -b -1  # boot precedente
+$ journalctl -b -2  # boot di due avvii fa
+
+# Log di un servizio specifico
+$ journalctl -u apache2
+$ journalctl -u ssh
+
+# Log in tempo reale (simile a tail -f)
+$ journalctl -f
+
+# Log delle ultime ore/giorni
+$ journalctl --since "2024-01-01 00:00:00"
+$ journalctl --since "1 hour ago"
+$ journalctl --since today
+$ journalctl --until "2024-01-01 12:00:00"
+
+# Log per priorità (errori, warning, etc.)
+$ journalctl -p err
+$ journalctl -p warning
+
+# Dimensione del journal
+$ journalctl --disk-usage
+
+# Pulizia dei log
+$ journalctl --vacuum-time=7d    # mantieni solo 7 giorni
+$ journalctl --vacuum-size=100M  # mantieni solo 100MB
+```
+Per configurare la gestione del journal, modificare il file:
+```
+/etc/systemd/journald.conf
+```
+Configurazioni utili:
+```
+# Limitare la dimensione del journal
+SystemMaxUse=100M
+SystemKeepFree=1G
+
+# Persistenza dei log (default è volatile)
+Storage=persistent
+
+# Compressione dei log
+Compress=yes
+
+# Inoltro verso syslog tradizionale
+ForwardToSyslog=yes
+```
+Dopo le modifiche, riavviare il servizio:
+```
+# systemctl restart systemd-journald
+```
+
+**Rsyslog** è il sistema di logging tradizionale di Debian che gestisce i file di log in log. Funziona in parallelo con systemd-journald per fornire compatibilità con il sistema di log classico.
+
+Il file di configurazione principale è:
+```
+/etc/rsyslog.conf
+```
+I principali file di log gestiti da rsyslog:
+- `/var/log/syslog`: Log generale del sistema
+- `/var/log/auth.log`: Log di autenticazione
+- `/var/log/kern.log`: Log del kernel
+- `/var/log/daemon.log`: Log dei demoni
+- `/var/log/mail.log`: Log del sistema mail
+- `/var/log/messages`: Log di sistema generale (alternativo a syslog)
+- `/var/log/apache2/access.log`: Log degli accessi HTTP di Apache
+- `/var/log/apache2/error.log`: Log degli errori di Apache
+- `/var/log/nginx/access.log`: Log degli accessi HTTP di Nginx
+- `/var/log/nginx/error.log`: Log degli errori di Nginx
+- `/var/log/mysql/error.log`: Log degli errori di MySQL/MariaDB
+- `/var/log/mysql/mysql.log`: Log generale di MySQL
+- `/var/log/postgresql/postgresql-13-main.log`: Log di PostgreSQL
+- `/var/log/ufw.log`: Log del firewall UFW
+- `/var/log/iptables.log`: Log di iptables (se configurato)
+- `/var/log/cron.log`: Log del demone cron
+Nota: questi file potrebbero essere presenti nel sistema perchè dipende dai demoni effettivamente installati e attivi.
+
+Comandi utili per l'analisi dei log:
+```
+# Visualizzare gli ultimi log
+$ tail -f /var/log/syslog
+
+# Cercare pattern specifici
+$ grep "error" /var/log/syslog
+$ grep "Failed password" /var/log/auth.log
+
+# Log di un periodo specifico
+$ journalctl --since "2024-01-01" --until "2024-01-02" > daily_logs.txt
+
+# Analisi dei tentativi di login falliti
+$ grep "Failed password" /var/log/auth.log | wc -l
+
+# IP più attivi nei log
+$ grep "Failed password" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -nr
+```
+
+
 
 # Programmazione in Debian
 

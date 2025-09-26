@@ -12,23 +12,23 @@
     <img src="https://img.shields.io/badge/Certified-AWS-%23FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" />
     <img src="https://img.shields.io/badge/Credly-005850?style=for-the-badge&logo=credly&logoColor=white" />
   </a>
-  <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" target="_blank">
+  <!--<a href="https://www.linkedin.com/in/alberto-nao-31818a83/" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=Linkedin&logoColor=white" />
-  </a>
+  </a>-->
 </p>
 
 <!-- BADGES -->
 <p align="center">
-  <img src="https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png" height="120"/>
-  <img src="https://images.credly.com/size/340x340/images/519a6dba-f145-4c1a-85a2-1d173d6898d9/image.png" height="120"/>
-  <img src="https://images.credly.com/size/340x340/images/b9feab85-1a43-4f6c-99a5-631b88d5461b/image.png" height="120"/>
-  <img src="https://images.credly.com/size/340x340/images/e07c6cc4-b737-4d7e-8ce8-66b6b7a60367/image.png" height="120"/>
-  <img src="https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" height="120"/>
-</p>
-
-<!-- STATS -->
-<p align="center">
-  <img alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
+  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank">
+    <img src="https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png" height="120"/></a>
+  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank">
+    <img src="https://images.credly.com/size/340x340/images/519a6dba-f145-4c1a-85a2-1d173d6898d9/image.png" height="120"/></a>
+  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank">
+    <img src="https://images.credly.com/size/340x340/images/b9feab85-1a43-4f6c-99a5-631b88d5461b/image.png" height="120"/></a>
+  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank">
+    <img src="https://images.credly.com/size/340x340/images/0c20a5b7-b4e9-4c2f-8b68-342e00a85e05/blob" height="120"/></a>
+  <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank">
+    <img src="https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png" height="120"/></a>
 </p>
 
 <!-- PROGETTI -->
@@ -108,6 +108,13 @@
    <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain, Solidity & Ethereum examples</a></td>
   </tr>
 </table>
+
+<p>&nbsp;</p>
+
+<!-- STATS -->
+<p align="center">
+  <img alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs?username=alnao&show_icons=true&locale=it&theme=donut&layout=compact" />
+</p>
 
 
 # &lt; AlNao /&gt;
