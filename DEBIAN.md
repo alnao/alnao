@@ -48,6 +48,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Node e NPM](#Node-e-NPM)
   - [Java e Tomcat](#Java-e-Tomcat)
   - [GIT](#GIT)
+      - [Jenkins](#Jenkins)
   - [Visual Studio Code](#Visual-Studio-Code)
   - [Postman](#Postman)
   - [PostgreSQL](#PostgreSQL)
@@ -1272,6 +1273,79 @@ $ git push -u origin master
 ```
 è possibile anche usare il plugin dedicato di Eclipse o Visual Studio Code per la gestione dei repository e la gestione dei commit/push. Inoltre esistono dei piccoli grandi tool grafici come git-cola o gitg, sono sicuramente da provare ed è da notare anche la simpatica descrizione del gitCola in Synaptic. Guide complete di GIT sono disponibili nelle pagine dedicate a JavaEE con Eclipse e Angular.
 
+
+### Jenkins
+Jenkins è un server di automazione open source che consente l'integrazione continua (CI) e la distribuzione continua (CD) di software, facilitando la gestione e l'automazione dei processi di build, test e deploy.
+
+I passi per l'installazione di Jenkins in un sistema Debian 12 sono: 
+- Aggiornamento dei pacchetti e installazione di java 17
+  ```
+  # apt update
+  # apt install openjdk-17-jdk -y
+  ```
+- Aggiunta la chiave GPG di Jenkins e configurazione del repository
+  ```
+  # wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+    /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+  # echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+  ```
+- Aggiornamento e installaqzione Jenkins
+  ```
+  # apt update
+  # apt install jenkins -y
+  ```
+- Avvio Jenkins
+  ```
+  # systemctl start jenkins
+  ```
+- Abilitare Jenkins all'avvio del sistema
+  ```
+  # systemctl enable jenkins
+  ```
+- Verifica dello stato del server
+  ```
+  # systemctl status jenkins
+  ```
+
+Per completare la configurazione iniziale, visitare l’indirizzo indicato `http://localhost:8080` e seguire le istruzioni indicate nella pagina, la password dell'amministratore viene creata nel file
+```
+$ cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+Jenkins di default è reso disponibile alla porta 8080 ma è possibile cambiare questa configurazione nel file
+```
+# nano /etc/default/jenkins
+```
+indicando una porta specifica, per esempio:
+```
+HTTP_PORT=7070
+```
+Un esempio di task di tipo pipeline creata in jenkins è:
+```
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        git credentialsId: 'github-token', url: 'https://github.com/alnao/JavaSpringBootExample', branch: 'master'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'mvn clean package -DskipTests'
+      }
+    }
+    stage('Deploy to EC2') {
+      steps {
+        sh """
+        cp application/target/application-1.0.0.jar /tmp
+        """
+      }
+    }
+  }
+}
+```
 
 ## Visual Studio Code
 
