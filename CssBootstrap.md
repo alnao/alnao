@@ -1,7 +1,11 @@
 # Css & Bootstrap 
+  <p align="center">
+    <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white"  height=60/>
+    <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"  height=60/>
+  </p>
 
 
-*Writted by AlNao*. Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nella vecchia versione del blog personale [alnao.it](https://www.alnao.it). Sono riproposti in formato Markdown per conservarli e renderli facilmente consultabili. Alcuni contenuti potrebbero essere datati, ma possono ancora fornire spunti e soluzioni interessanti. Tutti gli articoli sono distribuiti sotto licenza *GNU GPL-3.0*, salvo diversa indicazione.
+Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nel blog personale [alnao.it](https://www.alnao.it), sono qui proposti in formato Markdown per renderli facilmente consultabili. Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di [AlNao](https://www.alnao.it), che si è impegnato a verificarne la correttezza nella massima misura possibile.
 
 
 ## Indice

@@ -6,7 +6,7 @@
   </p>
 
 
-Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nella vecchia versione del blog personale [alnao.it](https://www.alnao.it). Sono riproposti in formato Markdown per conservarli e renderli facilmente consultabili. Alcuni contenuti potrebbero essere datati, ma possono ancora fornire spunti e soluzioni interessanti. Tutti gli articoli sono distribuiti sotto licenza *GNU GPL-3.0*, salvo diversa indicazione.
+Questo README raccoglie una selezione di articoli tecnici originariamente pubblicati nel blog personale [alnao.it](https://www.alnao.it), sono qui proposti in formato Markdown per renderli facilmente consultabili. Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di [AlNao](https://www.alnao.it), che si è impegnato a verificarne la correttezza nella massima misura possibile.
 
 
 In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian** alla versione 12 chiamata **Bookworm**. Tutti i dettagli su questa release sono disponibili nella [wiki ufficiale](https://wiki.debian.org/DebianBookworm) e nella [release notes](https://www.debian.org/releases/bookworm/). Il 9 agosto 2025 è stato rilasciata la versione 13 di Debian chiamata **Trixie**, a breve questo documento sarà aggiornato con le procedure per questa nuova versione di tipo LTS che sarà supportata ufficialmente con aggiornamenti di sicurezza e bug fix, tutte le informazioni su questa nuova release sono disponiibli nella [pagina ufficiale](https://www.debian.org/releases/trixie/release-notes/index.it.html).
@@ -53,9 +53,6 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Postman](#Postman)
   - [PostgreSQL](#PostgreSQL)
   - [MongoDB](#MongoDB)
-  - [AWS](#AWS)
-      - [Gestione EC2 con Debian 12](#Gestione-EC2-con-Debian-12)
-      - [Terraform](#Terraform)
   - [Docker](#Docker)
     - [Esempio con Pgadmin4](#Esempio-con-Pgadmin4)
     - [Configurazione di rete di Docker](#Configurazione-di-rete-di-Docker)
@@ -65,6 +62,10 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
     - [Minikube](#Minikube)
     - [Helm](#Helm)
     - [Portainer](#Portainer)
+  - [Cloud](#Cloud)
+      - [AWS](#AWS)
+      - [Azure](#Azure)
+      - [Terraform](#Terraform)
   - [Android](#Android)
 - [I comandi della shell](#I-comandi-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
@@ -1489,129 +1490,6 @@ $ mongodb-compass
 ```
 
 
-## AWS
-
-Per chi usa il cloud **AWS** è indispensabile usare i comandi da riga di comando Command Line interface **AWS-CLI** e **AWS-SAM**, entrambi sono facilmente configurabili in pochi istanti grazie ai tool messi a disposizione direttamente da AWS. L'installazione della CLI è facilissima e basta seguire i passi descritti nella documentazione ufficiale:
-```
-$ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-$ unzip awscliv2.zip
-# ./aws/install
-$ aws --version
-```
-In caso di errore di questo ultimo passaggio basta aggiungere al file .bashrc il path /usr/local/bin/ dove viene installato il CLI di AWS. Per configurare il profilo bisogna prima creare un utente di tipo programmatico con la key nel servizio IAM di AWS, poi basta lanciare il comando:
-```bash
-$ aws configuration --profile nomeUtente
-```
-per configurare un profilo, in questi passi saranno richieste le due chiavi dell'utente, la zona di default (come eu-west-1) e il formato delle risposte (come json). Una volta configurato la CLI, per provare il corretto funzionamento e collegamento basta lanciare il comando:
-```bash
-$ aws s3 ls
-```
-per visualizzare l'elenco dei bucket presenti nel servizio S3 nella region impostata di default in fase di configurazione. L'elenco dei comandi specifici della CLI è disponibile negli articoli dedicati al servizio AWS.
-
-
-Per avere una lista di tutte le risorse disponibili nel cloud si può lanciare lo script
-```
-https://github.com/alnao/AwsCloudFormationExamples/blob/master/aws_panoramic.bash
-```
-
-
-Per quanto riguarda il gruppo di comandi della CLI dedicati ai servizi serverless, chiamati **CLI-SAM**, si necessita di una installazione dedicata come indicato nel [sito ufficiale](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html), che elenca i seguenti comandi:
-```
-# wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
-# unzip aws-sam-cli-linux-x86\_64.zip -d sam-installation
-# ./sam-installation/install
-$ sam --version
-```
-Una guida completa di SAM può essere trovata al sito ufficiale mentre esempi di utilizzo di questo mando si possono trovare nella sezione di AWS del sito alnao.it.
-
-
-L'installazione di **SLS** (detta anche serverless-cli) si basa sul sistema di pacakge NPM e bisogna lanciare il comando di installazione del pacchetto dedicato:
-```bash
-$ npm install -g serverless
-```
-e poi bisogna configurare le credenziali programmatiche di accesso con il comando:
-```bash
-$ serverless config credentials --provider aws --key <key> --secret <secret> --profile serverless-admin
-```
-Per verificare che sia tutto configurato correttamente basta lanciare il comando:
-```bash
-$ servless
-```
-oppure:
-```bash
-$ sls
-```
-
-
-### Gestione EC2 con Debian 12
-
-Il cloud AWS mette a disposizione molte **AMI** (immagini) con il sistema operativo Debian12, la lista può essere recuperata in molti siti ufficiali oppure lanciando il comando AWS-CLI:
-```bash
-$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
-$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
-$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
-```
-
-
-Per avviare una istanza con una specifica AMI si può usare il comando:
-```bash
-$ aws ec2 run-instances --image-id ami-XXXXXXXXXXXXXXXXX --instance-type t2.micro --key-name your-key-pair --security-group-ids sg-XXXXXXXXXXXXXXXXX --subnet-id subnet-XXXXXXXXXXXXXXXXX --count 1
-# Creare un volume e aggiungerlo all'istanza
-$ aws ec2 create-volume --volume-type gp2 --size 20 --availability-zone us-east-1a
-$ aws ec2 attach-volume --volume-id vol-XXXXXXXXXXXXXXXXX --instance-id i-XXXXXXXXXXXXXXXXX --device /dev/sdf
-# Creare una AMI a partire da una istanza
-$ aws ec2 create-image --instance-id i-XXXXXXXXXXXXXXXXX --name "My-Debian-AMI" --description "AMI personalizzata basata su Debian"
-# Descrivere una instanza
-$ aws ec2 describe-instance-status --instance-ids i-XXXXXXXXXXXXXXXXX
-# Creare una metrica Cloudwatch per il monitoraggio della istanza
-$ aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimensions Name=InstanceId,Value=i-XXXXXXXXXXXXXXXXX --start-time $(date -u +"%Y-%m-%dT%H:%M:%SZ" --date "1 hour ago") --end-time $(date -u +"%Y-%m-%dT%H:%M:%SZ") --period 300 --statistics Average
-```
-
-
-Una volta avviata una istanza è possibile collegarsi e configurarla, qui riportati alcuni dei principali comandi:
-```bash
-$ ssh -i /path/to/your-key-pair.pem admin@your-instance-public-ip
-  sudo apt update
-  sudo apt upgrade -y
-  sudo apt install -y apache2 nginx mysql-server php
-```
-
-
-Per potersi collegare ovviamente bisogna ricordarsi di aprire la porta SSH-332
-```bash
-# Permettere accesso SSH da qualsiasi IP
-$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 0.0.0.0/0
-# Permettere accesso SSH solo da un IP specifico
-$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr IP_ADDRESS/32
-# Permettere accesso SSH da un range di IP
-$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 192.168.1.0/24
-```
-
-### Terraform
-Terraform è uno strumento open source per l'automazione della creazione, gestione e aggiornamento di infrastrutture cloud tramite codice dichiarativo: è possibile definire risorse cloud, server, reti e servizi in file di configurazione leggibili e versionabili. Questo approccio, chiamato Infrastructure as Code (IaC), permette di automatizzare la creazione, modifica e distruzione delle risorse in modo sicuro e ripetibile. Terraform supporta numerosi provider, tra cui AWS, Azure, Google Cloud e molti altri, rendendolo estremamente versatile. 
-
-
-L’installazione su Debian è semplice e richiede pochi passaggi configuratondo un repository specifico:
-```
-# apt update
-# apt install -y gnupg software-properties-common curl
-# curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-# echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-# apt update
-# apt install terraform
-$ terraform -v
-```
-Grazie a questo comando sarà possibile scrivere un file di configurazione con estensione .tf e, con i comandi terraform init e terraform apply, si può avviare la gestione automatizzata dell’infrastruttura. 
-
-
-Terraform si integra perfettamente con AWS grazie al provider AWS ufficiale che supporta centinaia di servizi, dalle istanze EC2 ai database RDS, dai bucket S3 alle funzioni Lambda. L'utilizzo di Terraform con AWS permette di gestire l'intera infrastruttura cloud attraverso file di configurazione dichiarativi, garantendo consistenza, versionamento e possibilità di replicare ambienti identici con il semplice comando:
-
-
-```bash
-$ terraform apply
-```
-
-
 ## Docker
 
 Per la installazione del demone dei **Docker** basta installare i pacchetti omonimi: `docker`, `docker-compose` e `docker-compose-plugin` presenti nei repository ufficiali e poi possono i vari comandi dei docker per gestire il demone:
@@ -2062,6 +1940,189 @@ $ kubectl apply -n portainer -f https://downloads.portainer.io/ce2-17/portainer.
 È possibile aggiungere un ambiente Kubernetes remoto in Portainer con un *Agent remoto Portainer* da installare nel cluster remoto per facilitare la connessione oppure con Kubeconfig: fornendo manualmente un file kubeconfig con credenziali e endpoint API.
 
 
+## Cloud
+Debian offre integrazione nativa con i principali provider cloud come AWS, Azure e Google Cloud, grazie a pacchetti ufficiali e strumenti CLI facilmente installabili tramite il gestore di pacchetti APT. Le immagini Debian sono disponibili nei marketplace dei cloud più diffusi, consentendo il deploy rapido di macchine virtuali, container e servizi gestiti direttamente dall’infrastruttura cloud. Debian supporta strumenti multi-cloud come Terraform, Ansible e rclone, permettendo l’automazione, la gestione e la sincronizzazione di risorse cloud in modo sicuro e standardizzato.
+
+
+
+**Google Cloud SDK** mette a disposizione un repository ufficiale per l'installazione dei componenti:
+```
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+sudo apt update && sudo apt install google-cloud-cli
+```
+
+**OpenStack** è una piattaforma di cloud computing open source che permette di creare e gestire cloud privati e pubblici, fornendo un'alternativa libera ai servizi cloud proprietari come AWS, Azure o Google Cloud. OpenStack è particolarmente popolare in ambito enterprise e tra i service provider che vogliono mantenere controllo completo sulla propria infrastruttura cloud.
+```
+# apt update
+# apt install software-properties-common
+# echo "deb http://ubuntu-cloud.archive.canonical.com/ubuntu jammy-updates/yoga main" | sudo tee /etc/apt/sources.list.d/openstack.list
+# git clone https://opendev.org/openstack/devstack
+# cd devstack
+# ./stack.sh
+
+# Oppure installazione manuale dei componenti
+# apt install nova-compute nova-api keystone glance-api neutron-server
+```
+
+### AWS
+
+Per chi usa il cloud **AWS** è indispensabile usare i comandi da riga di comando Command Line interface **AWS-CLI** e **AWS-SAM**, entrambi sono facilmente configurabili in pochi istanti grazie ai tool messi a disposizione direttamente da AWS. L'installazione della CLI è facilissima e basta seguire i passi descritti nella documentazione ufficiale:
+```
+$ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+$ unzip awscliv2.zip
+# ./aws/install
+$ aws --version
+```
+In caso di errore di questo ultimo passaggio basta aggiungere al file .bashrc il path /usr/local/bin/ dove viene installato il CLI di AWS. Per configurare il profilo bisogna prima creare un utente di tipo programmatico con la key nel servizio IAM di AWS, poi basta lanciare il comando:
+```bash
+$ aws configuration --profile nomeUtente
+```
+per configurare un profilo, in questi passi saranno richieste le due chiavi dell'utente, la zona di default (come eu-west-1) e il formato delle risposte (come json). Una volta configurato la CLI, per provare il corretto funzionamento e collegamento basta lanciare il comando:
+```bash
+$ aws s3 ls
+```
+per visualizzare l'elenco dei bucket presenti nel servizio S3 nella region impostata di default in fase di configurazione. L'elenco dei comandi specifici della CLI è disponibile negli articoli dedicati al servizio AWS.
+
+
+Per avere una lista di tutte le risorse disponibili nel cloud si può lanciare lo script
+```
+https://github.com/alnao/AwsCloudFormationExamples/blob/master/aws_panoramic.bash
+```
+
+
+Per quanto riguarda il gruppo di comandi della CLI dedicati ai servizi serverless, chiamati **CLI-SAM**, si necessita di una installazione dedicata come indicato nel [sito ufficiale](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html), che elenca i seguenti comandi:
+```
+# wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+# unzip aws-sam-cli-linux-x86\_64.zip -d sam-installation
+# ./sam-installation/install
+$ sam --version
+```
+Una guida completa di SAM può essere trovata al sito ufficiale mentre esempi di utilizzo di questo mando si possono trovare nella sezione di AWS del sito alnao.it.
+
+
+L'installazione di **SLS** (detta anche serverless-cli) si basa sul sistema di pacakge NPM e bisogna lanciare il comando di installazione del pacchetto dedicato:
+```bash
+$ npm install -g serverless
+```
+e poi bisogna configurare le credenziali programmatiche di accesso con il comando:
+```bash
+$ serverless config credentials --provider aws --key <key> --secret <secret> --profile serverless-admin
+```
+Per verificare che sia tutto configurato correttamente basta lanciare il comando:
+```bash
+$ servless
+```
+oppure:
+```bash
+$ sls
+```
+
+
+#### Gestione EC2 con Debian 12
+
+Il cloud AWS mette a disposizione molte immagini **AMI** con il sistema operativo Debian12, la lista può essere recuperata in molti siti ufficiali oppure lanciando il comando AWS-CLI:
+```bash
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+```
+
+
+Per avviare una istanza con una specifica AMI si può usare il comando:
+```bash
+$ aws ec2 run-instances --image-id ami-XXXXXXXXXXXXXXXXX --instance-type t2.micro --key-name your-key-pair --security-group-ids sg-XXXXXXXXXXXXXXXXX --subnet-id subnet-XXXXXXXXXXXXXXXXX --count 1
+# Creare un volume e aggiungerlo all'istanza
+$ aws ec2 create-volume --volume-type gp2 --size 20 --availability-zone us-east-1a
+$ aws ec2 attach-volume --volume-id vol-XXXXXXXXXXXXXXXXX --instance-id i-XXXXXXXXXXXXXXXXX --device /dev/sdf
+# Creare una AMI a partire da una istanza
+$ aws ec2 create-image --instance-id i-XXXXXXXXXXXXXXXXX --name "My-Debian-AMI" --description "AMI personalizzata basata su Debian"
+# Descrivere una instanza
+$ aws ec2 describe-instance-status --instance-ids i-XXXXXXXXXXXXXXXXX
+# Creare una metrica Cloudwatch per il monitoraggio della istanza
+$ aws cloudwatch get-metric-statistics --namespace AWS/EC2 --metric-name CPUUtilization --dimensions Name=InstanceId,Value=i-XXXXXXXXXXXXXXXXX --start-time $(date -u +"%Y-%m-%dT%H:%M:%SZ" --date "1 hour ago") --end-time $(date -u +"%Y-%m-%dT%H:%M:%SZ") --period 300 --statistics Average
+```
+
+
+Una volta avviata una istanza è possibile collegarsi e configurarla, qui riportati alcuni dei principali comandi:
+```bash
+$ ssh -i /path/to/your-key-pair.pem admin@your-instance-public-ip
+  sudo apt update
+  sudo apt upgrade -y
+  sudo apt install -y apache2 nginx mysql-server php
+```
+
+
+Per potersi collegare ovviamente bisogna ricordarsi di aprire la porta SSH-332
+```bash
+# Permettere accesso SSH da qualsiasi IP
+$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 0.0.0.0/0
+# Permettere accesso SSH solo da un IP specifico
+$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr IP_ADDRESS/32
+# Permettere accesso SSH da un range di IP
+$ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --protocol tcp --port 22 --cidr 192.168.1.0/24
+```
+
+
+### Azure
+**Azure** è la piattaforma cloud di Microsoft che offre servizi di computing, storage, networking e intelligenza artificiale, permettendo di distribuire e gestire applicazioni e infrastrutture su scala globale attraverso datacenter distribuiti worldwide.L'integrazione con Debian si realizza tramite Azure CLI (installabile via apt), Azure PowerShell e SDK specifici per vari linguaggi di programmazione.
+Per installare la Azure-CLI in Debina è disponibile uno script automatico messo a disposizione dalla [guida ufficiale](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest), tuttavia questo usa il comando `sudo`, se non disponibile è possibile procedere manualmente con tutti i passi per l'installazione configurando il repository specifico:
+```
+# apt-get update
+# apt-get install apt-transport-https ca-certificates curl gnupg lsb-release
+# mkdir -p /etc/apt/keyrings
+# curl -sLS https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/microsoft.gpg > /dev/null
+# chmod go+r /etc/apt/keyrings/microsoft.gpg
+# AZ_DIST=$(lsb_release -cs)
+# echo $AZ_DIST
+# echo "Types: deb
+URIs: https://packages.microsoft.com/repos/azure-cli/
+Suites: ${AZ_DIST}
+Components: main
+Architectures: $(dpkg --print-architecture)
+Signed-by: /etc/apt/keyrings/microsoft.gpg" | sudo tee /etc/apt/sources.list.d/azure-cli.sources
+# cat  /etc/apt/sources.list.d/azure-cli.sources
+	verificare che non ci siano spazi, con il copia incolla è possibile
+# apt-get update
+# apt-get install azure-cli
+```
+Dopo l'installazione è possibile verificare il corretto funzionamento della cli ed è possibile effettuare la login con i comandi
+```
+$ az --version
+$ az login
+```
+questo aprirà la videata di login in un browser. Dalla login sarà possibile eseguire comandi della AZ-CLI come
+```
+$ az vm list --output table
+$ az storage account list --query "[].{Name:name, Location:location, Kind:kind}" --output table
+```
+
+
+### Terraform
+Terraform è uno strumento open source per l'automazione della creazione, gestione e aggiornamento di infrastrutture cloud tramite codice dichiarativo: è possibile definire risorse cloud, server, reti e servizi in file di configurazione leggibili e versionabili. Questo approccio, chiamato Infrastructure as Code (IaC), permette di automatizzare la creazione, modifica e distruzione delle risorse in modo sicuro e ripetibile. Terraform supporta numerosi provider, tra cui AWS, Azure, Google Cloud e molti altri, rendendolo estremamente versatile. 
+
+
+L’installazione su Debian è semplice e richiede pochi passaggi configuratondo un repository specifico:
+```
+# apt update
+# apt install -y gnupg software-properties-common curl
+# curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+# echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+# apt update
+# apt install terraform
+$ terraform -v
+```
+Grazie a questo comando sarà possibile scrivere un file di configurazione con estensione .tf e, con i comandi terraform init e terraform apply, si può avviare la gestione automatizzata dell’infrastruttura. 
+
+
+Terraform si integra perfettamente con AWS grazie al provider AWS ufficiale che supporta centinaia di servizi, dalle istanze EC2 ai database RDS, dai bucket S3 alle funzioni Lambda. L'utilizzo di Terraform con AWS permette di gestire l'intera infrastruttura cloud attraverso file di configurazione dichiarativi, garantendo consistenza, versionamento e possibilità di replicare ambienti identici con il semplice comando:
+
+
+```bash
+$ terraform apply
+```
+
+
 ## Android
 
 Esistono molti metodi per eseguire la cattura di un sistema esterno Andoid, è possibile persino prendere il controllo, il sistema più famoso è **scrcpy** che permette di catturare il display di un altro dispositivo. Si può installare tramite il sistema snap con il comando:
@@ -2485,7 +2546,7 @@ journalctl -xeu docker-cleanup.service
 
 
 # &lt; AlNao /&gt;
-Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
+Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella massima misura possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
 
 
 Alcuni contenuti e porzioni di codice presenti in questo repository sono stati realizzati anche grazie al supporto di strumenti di intelligenza artificiale, il cui contributo ha permesso di arricchire e velocizzare la produzione del materiale. Ogni informazione e frammento di codice è stato comunque attentamente verificato e validato, con l’obiettivo di garantire la massima qualità e affidabilità dei contenuti offerti. 

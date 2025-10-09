@@ -46,14 +46,14 @@
       <img src="https://img.shields.io/badge/AWS-%23FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" />
       <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/AwsCloudFormationExamples">CloudFormation</a> &bull; <a href="https://github.com/alnao/PythonExamples/tree/master/AWS">Python code</a> &bull; <a href="https://github.com/alnao/JavaExamples/tree/master/AWS">Java code</a></td>
+    <td><a href="https://github.com/alnao/AwsCloudFormationExamples">CloudFormation</a> &bull; <a href="https://github.com/alnao/PythonExamples/tree/master/AWS">Python SDK</a> &bull; <a href="https://github.com/alnao/JavaExamples/tree/master/AWS">Java SDK</a></td>
   </tr>
     <tr>
       <td align="center">
         <img src="https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white" />
         <img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" />        
       </td>
-      <td><a href="https://github.com/alnao/TerraformExamples">Terraform on AWS</a>
+      <td><a href="https://github.com/alnao/TerraformExamples">Terraform on Cloud (AWS & Azure)</a>
     </tr>
   <tr>
     <td align="center">
@@ -105,7 +105,7 @@
   <img src="https://img.shields.io/badge/Solidity-4E5E94?style=for-the-badge&logo=solidity&logoColor=white" />
   <img src="https://img.shields.io/badge/Ethereum-627EEA?style=for-the-badge&logo=ethereum&logoColor=white" />
    </td>
-   <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain, Solidity & Ethereum examples</a></td>
+   <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain & Solidity examples</a></td>
   </tr>
 </table>
 
@@ -118,7 +118,7 @@
 
 
 # &lt; AlNao /&gt;
-Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella misura massima possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
+Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella massima misura possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
 
 
 Alcuni contenuti e porzioni di codice presenti in questo repository sono stati realizzati anche grazie al supporto di strumenti di intelligenza artificiale, il cui contributo ha permesso di arricchire e velocizzare la produzione del materiale. Ogni informazione e frammento di codice è stato comunque attentamente verificato e validato, con l’obiettivo di garantire la massima qualità e affidabilità dei contenuti offerti. 
