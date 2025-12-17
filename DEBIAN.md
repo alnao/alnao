@@ -45,6 +45,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [LAMP](#LAMP)
       - [Apache](#Apache)
       - [MySql](#MySql)
+      - [Nginx](#Nginx)
   - [Node e NPM](#Node-e-NPM)
   - [Java e Tomcat](#Java-e-Tomcat)
   - [GIT](#GIT)
@@ -67,6 +68,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
       - [Azure](#Azure)
       - [Terraform](#Terraform)
   - [Android](#Android)
+  - [Blockchain](#Blockchain)
 - [I comandi della shell](#I-comandi-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
@@ -1170,6 +1172,86 @@ che nei sistemi Debian si trova nel path
 Con questo comando è possibile modificare le configurazioni del interprete/compilatore, si rimanda alla documentazione ufficiale per maggior dettagli riguardo a questo tema.
 
 
+### Nginx
+**Nginx** (si legge “engine-x”) è un web server e reverse proxy molto leggero e performante, ampiamente usato sia per servire siti statici sia come “front-end” per applicazioni backend (Node.js, Python, Java, PHP-FPM). In Debian è una scelta eccellente perché è stabile, ben integrato con systemd e la struttura di configurazione è pulita e modulare. Spesso è usato come alternativa veloce e snella di Apache, ovviamente i due server possono essere attivi ma non configurati con la stessa porta di esposizione. Per l'installazione basta installare il pacchetto dedicato
+```
+# apt update
+# apt install nginx -y
+# systemctl enable --now nginx
+# systemctl status nginx
+```
+Verifica rapida da locale: `$ curl -I http://localhost`
+I file principali di configurazione sono:
+- /etc/nginx/nginx.conf (config principale)
+- /etc/nginx/sites-available/ (vhost disponibili)
+- /etc/nginx/sites-enabled/ (vhost attivi tramite symlink)
+- /var/www/html/ (root predefinita del sito “default”, stessa cartella usata da Apache!)
+- /var/log/nginx/access.log e /var/log/nginx/error.log (log principali)
+
+Per quanto riguarda un file di configurazione:
+```
+# filepath: /etc/nginx/sites-available/miosito.conf
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name miosito.local;
+
+    root /var/www/miosito;
+    index index.html;
+
+    access_log /var/log/nginx/miosito.access.log;
+    error_log  /var/log/nginx/miosito.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+# /etc/hosts
+# echo "127.0.0.1 miosito.local" >> /etc/hosts
+# $ curl http://miosito.local
+```
+e i comandi di configurazione:
+```
+# ln -s /etc/nginx/sites-available/miosito.conf /etc/nginx/sites-enabled/miosito.conf
+# nginx -t
+# systemctl reload nginx
+```
+Oppure un file di configurazione del reverse proxy verso una app per un tipo server Node.js avviato su porta 3000 ma da esporre con Nginx su porta 80/443:
+```
+# filepath: /etc/nginx/sites-available/app-proxy.conf
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name app.local;
+
+    access_log /var/log/nginx/app.local.access.log;
+    error_log  /var/log/nginx/app.local.error.log;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+
+        # header fondamentali per mantenere info client
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # (opzionale) per websocket / upgrade
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```
+con i comandi di attivazione di questa configurazione:
+```
+# ln -s /etc/nginx/sites-available/app-proxy.conf /etc/nginx/sites-enabled/app-proxy.conf
+# nginx -t
+# systemctl reload nginx
+```
+
 ## Node e NPM
 
 Per guardo riguarda la programmazione di applicazioni web **Node.js** e **NPM** hanno cambiato il mondo facilitando il lavoro degli sviluppatori: Node.js è lo strumento che consente agli sviluppatori di eseguire script al di fuori del browser web mentre NPM è il gestore di pacchetti per la gestione dei moduli Nodejs. L'installazione di questi due tool in una distribuzione Debian è facile e prevede l'installazione di due pacchetti
@@ -2156,6 +2238,60 @@ $ scrcpy --no-video --audio-codec=raw --record=file.wav # to only record the aud
 $ scrcpy --new-display=1920x1080 --start-app=org.videolan.vlc
 ```
 Si rimanda alla documentazione ufficiale per i dettagli di tutti i comandi e i dettagli.
+
+
+## Blockchain
+
+⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: Non condividere mai chiavi private, seed phrase o file di wallet con nessuno (né online né offline), non copiarli in chat o screenshot e non fare operazioni “a caso”, perché basta un errore o una fuga di credenziali per perdere definitivamente l’accesso ai fondi e quindi soldi reali. 🔶⚠️
+
+
+**MetaMask** è un wallet non-custodial per blockchain EVM (es. Ethereum) disponibile come estensione browser e app mobile, usato per gestire account, chiavi e firme delle transazioni.  È spesso la “porta di ingresso” per interagire con dApp e smart contract, perché inietta un provider Web3 nel browser e consente di autorizzare operazioni con conferma esplicita dell’utente. In sviluppo si usa anche per collegarsi a reti locali (Hardhat/Ganache) o testnet, importando account di test e verificando comportamenti di firma e invio transazioni. Per installarlo e configurarlo è consigliato usare il plugin di Chrome.
+
+
+**Hardhat** è un framework di sviluppo per smart contract Solidity basato su Node.js, pensato per compilare, testare, fare debug e deploy in modo ripetibile. Include (o integra facilmente) una rete locale di sviluppo e strumenti di introspezione, consentendo test automatizzati e simulazioni di scenari complessi prima del deploy su testnet/mainnet. È molto usato in progetti moderni perché si integra bene con TypeScript, ethers.js e plugin per coverage, gas reporting e deploy scripts.
+
+
+**Truffle** è una suite “storica” per lo sviluppo di smart contract che fornisce scaffolding di progetto, compilazione, migrazioni (deployment) e test. Organizza i deploy tramite script di **migrations** e gestisce l’ABI/artefatti per interazioni client, rendendo semplice portare un contratto da locale a testnet.  È spesso usato insieme a Ganache e richiede configurazioni di rete e account nel file di progetto, tipicamente `truffle-config.js`. Per l'installazione basta lanciare i comandi:
+```bash
+npm install -g truffle
+truffle init
+```
+
+
+**Ganache** è una blockchain locale (EVM) per sviluppo e test: crea un ambiente isolato con account pre-caricati e fondi “finti” per provare deploy e transazioni senza costi reali. Consente di ispezionare blocchi, transazioni, log degli eventi e stato degli account in modo immediato, rendendo più semplice il debugging di smart contract e dApp. Si usa spesso come rete RPC locale per Truffle (e talvolta per MetaMask) quando vuoi un ambiente prevedibile e riproducibile.
+
+
+**Electrum** è un wallet Bitcoin leggero (SPV) che permette di gestire BTC senza dover scaricare l’intera blockchain, basandosi su server Electrum per sincronizzazione e query. Nel contesto Debian è utile come componente “operativo” per Bitcoin (gestione fondi e transazioni), distinto dagli strumenti EVM per smart contract (Hardhat/Truffle/Ganache). Per l'installazione si può seguire la [guida ufficiale](https://electrum.org/#download), infatti basta lanciare i comandi:
+```
+# sudo apt-get install python3-pyqt6 libsecp256k1-dev python3-cryptography
+# wget https://download.electrum.org/4.6.2/Electrum-4.6.2.tar.gz
+# wget https://download.electrum.org/4.6.2/Electrum-4.6.2.tar.gz.asc
+# gpg --verify Electrum-4.6.2.tar.gz.asc
+# tar -xvf Electrum-4.6.2.tar.gz
+# python3 Electrum-4.6.2/run_electrum
+```
+
+
+Il **Web3** è l’idea di un web in cui l’utente non si limita a consumare servizi centralizzati, ma può possedere asset digitali (token/NFT), interagire con applicazioni decentralizzate (dApp) e validare operazioni tramite crittografia e smart contract, riducendo (in parte) la dipendenza da intermediari. In ambiente Web3 si usa JavaScript principalmente per:
+- connettersi a un endpoint **RPC** (locale o remoto),  
+- leggere stato e eventi da smart contract (**read**),  
+- inviare transazioni firmate (**write**) tramite un wallet/provider.
+Come prerequisto c'è l'uso di `npm` e `node` e l'installazione delle librerie con il comando `npm install web3 ethers`.
+
+
+Uno script di esempio di utilizzo con `geth` per leggere alcune informazioni:
+```javascript
+const fs = require('fs');
+const { Web3 } = require('web3');
+const keyfile = fs.readFileSync('/home/ubuntu/mychain/keystore/UTC--<nome-nel-keystore>').toString();
+const password = '<la-tua-password>';
+const web3 = new Web3();
+const account = web3.eth.accounts.decrypt(JSON.parse(keyfile), password);
+account.then(e => console.log(e) );
+console.log('Private key:', account.privateKey);
+console.log('Address:', account.address);
+// per lanciare questo script si esegue il comando: "node web3.js"
+```
 
 
 # I comandi della shell
