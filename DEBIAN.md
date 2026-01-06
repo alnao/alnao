@@ -26,7 +26,6 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Editor di testo](#Editor-di-testo)
   - [Compressione ZIP e simili](#Compressione-ZIP-e-simili)
   - [Browser e mail](#Browser-e-mail)
-  - [Skype e Discord](#Skype-e-Discord)
   - [Appliazioni multimediali](#Appliazioni-multimediali)
   - [Dropbox](#Dropbox)
   - [Giochi e Steam](#Giochi-e-steam)
@@ -371,15 +370,25 @@ All'interno delle ultime versioni di Webmin, c'è la possibilità di collegarsi 
 
 # Come gestire i desktop e le applicazioni
 
-Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiamata **GDM** (abbreviazione di Gnome Desktop Manager) esistono anche altri gestori ma è sconsigliato l'utilizzo per utente non esperti. Per gestire gli utenti è possibile usare i vari programmi disponibili nei browser ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata ma questo tool è *sconsigliato* per alcuni temi specifici che si interfacciano con l'hardware, come la gestione delle partizioni perchè esistono tool specifici dedicati come **Gparted**.
+Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiamata **GDM** (abbreviazione di Gnome Desktop Manager) esistono anche altri gestori ma è sconsigliato l'utilizzo per utente non esperti. Per la creazione di altri utenti è possibile usare i vari programmi disponibili ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata ma questo tool è *sconsigliato* per alcuni temi specifici che si interfacciano con l'hardware, come la gestione delle partizioni perchè esistono tool specifici dedicati come **Gparted**.
 
-Nel mondo GNU Linux il principale server grafico è **X-WindowSystem** (spesso abbreviato con X), questo gestire l'interfaccia utente e bisogna ricordare che non esiste un unico desktop: esistono diversi desktop che possono essere installati ed usati parallelamente, infatti esiste la possibilità di passare da un desktop ad un altro selezionando il nome nella schermata di login all'avvio del sistema; tutte le applicazioni possono essere eseguite da qualsiasi tipo di desktop. I principali desktop per GNU Linux basati sul server grafico X sono: **GNOME**, **KDE** e **XFCE** mentre quelli leggeri e studiati per essere veloci sono MATE e LXDE, è consigliato la prova di tutti i cinque appena elencati in modo che un utente possa scegliere il più consono. In tutte le architetture basate sul KernerLinux, nella bash sono disponibili 8 “canali” detti anche tty (abbreviazione di TeleTYpewriter), nei sistemi basati su GNU Linux il primo canale è usato dal KernelLinux e in questo canale compaiono i messaggi del sistema mentre il server grafico e il desktop si trova nel settimo canale, dalla versione 10 di Debian il server grafico viene caricato sempre dal secondo canale mentre nel primo c'è una seconda versione del server grafico se si vuole utilizzare la funzionalità multiutente; è possibile passare da un canale ad un altro con la sequenza di tasti ALT + CTRL + F1 dove l’F1 è il numero del canale (ovviamente per il settimo canale si può usare F7).
+Nel mondo GNU Linux il principale server grafico è **X-WindowSystem** (spesso abbreviato con X), questo gestire l'interfaccia utente e bisogna ricordare che non esiste un unico desktop: esistono diversi desktop che possono essere installati ed usati parallelamente, infatti esiste la possibilità di passare da un desktop ad un altro selezionando il nome nella schermata di login all'avvio del sistema; tutte le applicazioni possono essere eseguite da qualsiasi tipo di desktop. I principali desktop per GNU Linux basati sul server grafico X sono: **GNOME**, **KDE** dettao che **Plasma** e **XFCE** mentre quelli leggeri e studiati per essere veloci sono **MATE** e **LXDE**, è consigliato la prova di tutti i cinque appena elencati in modo che un utente possa scegliere il più consono. 
 
-Il più famoso desktop per il mondo GNU Linux è **GNOME** che di default viene attivato in fase di installazione di Debian, il gestore è ornami riconosciuto come il miglior gestore con un numero lunghissimo di applicazioni disponibili, le principali saranno elencate in questa sezione. Rispetto ad altri desktop, Gnome mette a disposizione alcune estensioni molto comode integrate nel sistema che possono essere facilmente installate dall'applicazione Estensioni oppure andando sul sito
+Il più famoso desktop per il mondo GNU Linux è **GNOME** che di default viene attivato in fase di installazione di Debian, il gestore è ornami riconosciuto come il miglior gestore con un numero lunghissimo di applicazioni disponibili, le principali saranno elencate in questa sezione. Una delle proprietà di questo desktop è la possibilità di installare delle  estensioni molto comode e integrate nel sistema che possono essere facilmente attivate e disattivate da una applicazione specifica oppure andando sul sito
 ```
 extensions.gnome.org
 ```
-Le più famose ed usate sono elencate nel sito stesso e sono: Application Menu, Removable drive, Window list, User themes, Sound & Input, Traiyicons, App icons taskbar e Just Perfection. Inoltre è disponibile anche una applicazione personalizzazioni studiata per permettere agli utenti di modificare l'aspetto grafico del desktop.
+da un browser da dentro il desktop.
+Le più famose e consigliate estensioni sono
+- App Icons Taskbar
+- AppIndicator and KStatusNotifierItem Support
+- Apps menu
+- Extensions list
+- Indicator
+- Just perfection
+- User themes
+- Windows list
+Inoltre è disponibile anche una applicazione personalizzazioni studiata per permettere agli utenti di modificare l'aspetto grafico del desktop.
 
 ## Gestione e installazione applicazioni
 
@@ -391,15 +400,14 @@ $ snap list
 $ snap list --all
 $ snap list --all | grep disabled
 ```
-correttamente senza la lettere d finale in quanto il pacchetto ha la lettere finale per indicare che si tratta di un demone mentre il comando è senza la finale. Per installare un programma con questo servizio basta usare il comando:
+correttamente senza la lettere "d" finale in quanto il pacchetto ha la lettere finale per indicare che si tratta di un demone mentre il comando è senza la finale. Per installare un programma con questo servizio basta usare il comando:
 ```bash
 $ snap install nomeprogramma
 ```
 l'elenco di tutte le migliaia di programmi disponibili si trova nel sito ufficiale snapcraft.io, un esempio di applicazione consigliata su questo sistema è Spotify. Il sistema potrebbe riempirsi di immagini vecchie e deprecate, per liberare spazio è possibile lanciare il comando di pulizia
-```
+```bash
 # snap list --all | grep disabled | awk '!/Name|----/ {print $1 " --revision " $3}' | xargs -n1 sudo snap remove
 ```
-
 
 Sulla nuova versione di Debian gli aggiornamenti vengono eseguiti in automatico, questo per facilitare la vita a chi utilizza il sistema e non conosce bene la gestione dei pacchetti, si può vedere la configurazione degli aggiornamenti automatici con i comandi:
 ```
@@ -423,13 +431,13 @@ more /lib/systemd/system/apt-daily.timer
 
 ## Editor di testo
 
-Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs, forse troppo complicati per utenti poco esperti, i programmi più semplici da usare da riga di comando sono pico e nano che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è **kEdit** ma è possibile usare anche i programmi di GNOME come **gEdit** oppure **mousepad**. Tuttavia il programma più completo è Kate che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni ad apparenza strani' e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o posso essere senza estensione come il file fstab. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare jEdit, questi due programmi sono i più famosi e potenti programmi per la modifica di file dei testo.
+Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs (troppo complicati per utenti poco esperti), i programmi più semplici da usare da riga di comando sono **pico** e **nano** che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è **kEdit** ma è possibile usare anche i programmi di GNOME come **gEdit** oppure **mousepad**. Tuttavia il programma più completo è **Kate** che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni *strane* e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o posso essere senza estensione come il file `fstab`. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare **jEdit**, questi due programmi sono i più famosi e potenti programmi per la modifica di file dei testo.
 
-Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di commando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è **Konqueror** e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file exploper ed è stato migliorato molto tanto da diventare uno dei miglioro programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è **dolphin** che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure Gnome Commander.
+Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di commando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è lo *storico* **Konqueror** e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file exploper ed è stato migliorato molto tanto da diventare uno dei miglioro programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è **dolphin** che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure **Gnome Commander**.
 
 ## Compressione ZIP e simili
 
-Gli standard di compressione del mondo GNU Linux si chiamano tar, gz e bz, ma possono essere usati anche altri formati come i più famosi zip e rar, per riconoscere in quale formato è compresso un file basta guardare l’estensione del file, da notare che le estensioni possono essere composte: per esempio un file può avere estensione nomefile.tar.gz oppure il semplice nomefile.zip. Visto che il formato rar è un algoritmo proprietario e non free, per poterlo usare è necessario installare i pacchetti rar, rar-2.80, unar e unace-nonfree che potete trovare nei repository "non free" nel mirror.
+Gli standard di compressione del mondo GNU Linux si chiamano `tar`, `gz` e `bz`, ma possono essere usati anche altri formati come i più famosi `zip` e `rar`, per riconoscere in quale formato è compresso un file basta guardare l’estensione del file, da notare che le estensioni possono essere composte: per esempio un file può avere estensione `nomefile.tar.gz` oppure il semplice `nomefile.zip`. Visto che il formato rar è un algoritmo proprietario e non free, per poterlo usare è necessario installare i pacchetti rar, rar-2.80, unar e unace-nonfree che potete trovare nei repository "non free" nel mirror.
 
 Per usare lo standard TAR da riga di comando, i principali comandi sono:
 ```bash
@@ -439,7 +447,6 @@ $ tar -czf namefiletar.tar.gz file1 file2 ... per creare un file compresso nel f
 $ tar -xzf namefiletar.tar.gz per estrarre un file compresso nel formato tar e gzip
 ```
 I principali parametri del comando tar sono:
-
 - c per creare
 - x per estrarre
 - v per vedere la lista dei file contenuti in un TAR
@@ -447,11 +454,11 @@ I principali parametri del comando tar sono:
 - j per creare/estrarre un file compresso con bzip2
 - Z per creare/estrarre un file compresso con compress
 
-Per chi usa invece un desktop ci sono varie possibilità, il migliore programma che avete a disposizione è un programma chiamato Gestore di archivi che potete trovare sul menù Accessori di tutti i desktop (potete trovarlo anche con il nome file-roller), con questo semplice programma potete creare, comprimere e decomprimere file compressi in tutti i formati. Se invece usate Konqueror o Dolphin, potete usare il sistema integrato per la gestione dei sistemi di compressione chiamato ark che deve essere installato dal gestore dei pacchetti Synaptic e vi permetterà di gestire tutti i formati con pochi click: basta cliccare con il tasto destro del mouse su file o directory per avere la funzionalità "Comprimi" o su un singolo file compresso per avere la funzionalità di decompressione.
+Per chi usa invece un desktop ci sono varie possibilità, il migliore programma che avete a disposizione è un programma chiamato *Gestore di archivi* che potete trovare sul menù Accessori di tutti i desktop, con questo semplice programma potete creare, comprimere e decomprimere file compressi in tutti i formati. Se invece usate Konqueror o Dolphin, potete usare il sistema integrato per la gestione dei sistemi di compressione chiamato **ark** che deve essere installato dal gestore dei pacchetti Synaptic e vi permetterà di gestire tutti i formati con pochi click: basta cliccare con il tasto destro del mouse su file o directory per avere la funzionalità "Comprimi" o su un singolo file compresso per avere la funzionalità di decompressione.
 
 ## Browser e mail
 
-Nel mondo GNU Linux e Debian potete trovare moltissimi programmi per la navigazione internet e la gestione delle mail, il browser più famoso in assoluto per GNU Linux è **Firefox** che è installato di default su tutte le distribuzioni Debian recenti. E' consigliato di installare da Synaptic anche il pacchetto flashplayer-mozilla se necessario avere il plugin per l’esecuzione dei flash e di installare il pacchetto totem-mozilla per la visualizzazione di video e filmati direttamente sul browser. Sui sistemi GNU Linux potete usare anche altri programmi come Amaya, Konqueror ed Epiphany.
+Nel mondo GNU Linux e Debian potete trovare moltissimi programmi per la navigazione internet e la gestione delle mail, il browser più famoso in assoluto per GNU Linux è **Firefox** che è installato di default su tutte le distribuzioni Debian recenti. Nei sistemi GNU Linux potete usare anche altri programmi come Amaya, Konqueror ed Epiphany.
 
 Per installare il browser **Opera** è necessario aggiungere il repository proprietario e poi installare il pacchetto con i comandi:
 ```
@@ -486,35 +493,20 @@ sudo apt install microsoft-edge-beta
 ```
 Si rimanda alla pagina ufficiale per tutte le informazioni e i dettagli tecnici.
 
-
-## Skype e Discord
-
-I migliori programmi per le chat e l’instant messaging per GNU Linux sono Pidgin (ex Gaim), kMess e aMSN. Per installare il programma Skype nel sistema basta scaricare e installare il pacchetto con i comandi:
-```
-# wget https://go.skype.com/skypeforlinux-64.deb
-# wget apt install skypeforlinux-64.deb
-```
-però è possibile usare anche altri VoIP-client come Ekiga, WengoPhone e Asterisk.
-
-Per installare l'applicazione Discord basta scaricare il pacchetto dal sito ufficiale, con i comandi:
+Per installare l'applicazione **Discord** basta scaricare il pacchetto dal sito ufficiale, con i comandi:
 ```
 # wget "https://discordapp.com/api/download?platform=linux\&format=deb" -O discord.deb
 # dpkg -i discord.deb
 ```
 
+Nelle precedenti versioni di questo documento era presente una guida per installare **skype** ma purtroppo il servizio non è più disponibile quindi è il pacchetto è stato rimosso dai repository.
+
 ## Appliazioni multimediali
 
-Anche per quanto riguarda la multimedialità nei sistemi GNU Linux sono presenti moltissimi programmi, non solo per la visualizzazione dei video ma anche per l'editing video e sono disponibili plugin per tutti i formati; inoltre in tutte le distribuzioni sono presenti i programmi e i driver per vedere la TV con il computer, ovviamente questo è possibile se, nel proprio pc, è presente un dispositivo di acquisizione TV come le chiavette USB. Prima di tutto bisogna scaricare ed installare i Codec, cioè le librerie necessarie per poter codificare i vari formati, per questa installazione basta usare Synaptic e controllare che i seguenti pacchetti siano già installati nel vostro sistema:
-```
-libavcodec57
-libavdevice57
-libdvdnav4
-libdvdread4
-mpeglib (se presente)
-libavformat57
-libxvidcore4
-```
-La base del sistema audio è il sottosistema ALSA, responsabile di tutti i suoni prodotti dal sistema, ad oggi non ci sono più problemi per la compatibilità con le varie schede audio delle tante marche di computer quindi automaticamente il sistema installerà ALSA e vi installerà anche una serie di pacchetti per l'uso della stessa scheda, compreso il programma per gestire i volumi e la riproduzione dei suoni base, è possibile trovare la lista dei programmi nella categoria Multimedia. Per la visualizzazione dei video c'è l'imbarazzo della scelta: il più famoso è **Totem**, lettore molto semplice e comodo, in tutti i desktop è il programma di default. La lista dei player di file multimediali è lunghissima ed eviterò di annoiare il lettore (come sempre ho cercato di fare in questo documento), sono elencati solo i programmi degni di nota:
+Anche per quanto riguarda la multimedialità nei sistemi GNU Linux sono presenti moltissimi programmi, non solo per la visualizzazione dei video ma anche per l'editing video e sono disponibili plugin per tutti i formati; inoltre in tutte le distribuzioni sono presenti i programmi e i driver per vedere la TV con il computer, ovviamente questo è possibile se nel pc è presente un dispositivo di acquisizione TV come le chiavette USB. 
+Nelle precedenti versioni di Debian era necessario installare le librerie multimediali manualmente ma ora l'installazione è automatica, la lista dei pacchetti è libavcodec61, libavdevice61, libavformat61, libdvdnav4, libdvdread8t64,libxvidcore4.
+
+La base del sistema audio è il sottosistema **ALSA**, responsabile di tutti i suoni prodotti dal sistema, ad oggi non ci sono più problemi per la compatibilità con le varie schede audio delle tante marche di computer quindi automaticamente il sistema installerà ALSA e vi installerà anche una serie di pacchetti per l'uso della stessa scheda, compreso il programma per gestire i volumi e la riproduzione dei suoni base, è possibile trovare la lista dei programmi nella categoria Multimedia. Per la visualizzazione dei video c'è l'imbarazzo della scelta: il più famoso è **Totem** anche se nelle recenti versioni è disponibile con fantastico nome **Videos**, lettore molto semplice e comodo, in tutti i desktop è il programma di default. La lista dei player di file multimediali è lunghissima ed eviterò di annoiare il lettore (come sempre ho cercato di fare in questo documento), sono elencati solo i programmi degni di nota:
 
 - **VLC** famoso player gratuito disponibile anche su altre piattaforme
 - Codeine programma molto semplice e con le scalette di produzione
@@ -522,10 +514,10 @@ La base del sistema audio è il sottosistema ALSA, responsabile di tutti i suoni
 - Amarok programma per ascoltare musica avendo la possibilità di creare una playlist
 - Kaffeine buon programma per ascoltare musica
 - MPlayer player di video
+- **RealPlayer** programma ormai in disuso e *finalmente inutilizzato*
+Chi dispone di una scheda di acquisizione TV di tipo DDT (digitale terrestre) può tranquillamente vedere i canali: Debian contiene dei programmi per guardare la tv e registrare i propri programmi preferiti, una lista parziale dei programmi a disposizione come XawTV, Kplayer e MythTV. Per GNU Linux esistono anche una lunga lista di programmi per la manipolazione e l'editing audio e video che si basano tutti sui comandi da riga di comando convert, i quattro programmi principali sono Kwave, Audacity e **Avidemux**, i primi due sono utili per modificare file audio come mp3, il quarto è un semplice programma che serve per modificare, concatenare i file video, anche se è conveniente usare programmi da riga di comando come **FFmpeg**.
 
-Per poter visualizzare i filmati nel formato di **RealPlayer** bisogna scaricare e installare il pacchetto disponibile sul sito RealPlayer, esistevano delle librerie che permettevano la visione dei file RealPlayer anche su Totem e su tutti i player di Linux ma sono stati rimossi perché non rispecchiamo le linee guida di Debian. Chi dispone di una scheda di acquisizione TV di tipo DDT (digitale terrestre) può tranquillamente vedere i canali: Debian contiene dei programmi per guardare la tv e registrare i propri programmi preferiti, una lista parziale dei programmi a disposizione come XawTV, XdTV, Kplayer e MythTV. Per GNU Linux esistono anche una lunga lista di programmi per la manipolazione e l'editing audio e video che si basano tutti sui comandi da riga di comando convert, i quattro programmi principali sono Sweep, Kwave, Audacity e **Avidemux**, i primi tre sono utili per modificare file audio come mp3, il quarto è un semplice programma che serve per modificare, concatenare i file video, in particolare Avidemux è un programma molto utile anche perché è compatibile con tutti i formati se i codec sono installati nel sistema.
-
-Per Debian è disponibile anche il famoso programma **OBS**, questo permette di eseguire registrazioni video e di eseguire streaming su alcune piattaforme come Twitch. Il programma è disponibile nel repository ufficiale di Debian con il nome di obs-studio. Per chi volesse creare il proprio DVD può provare ad usare il programma mandvd, questo programma permette di aggiungere i tuoi video al progetto del DVD, assegnare un immagine per creare il tasto di selezione di ciascun video, creare dei video slideshow delle tue foto (con o senza musica di sottofondo); alla fine del progetto, si converte il tutto nella classica struttura DVD, e si sceglie se masterizzare il progetto con K3B oppure creare un immagine ISO, scelta utile in caso ci sia la necessita di fare più copie. Per chi volesse invece rippare un DVD può usare dvdriv, un piccolo programma di utilità che permette la copia di DVD su Linux.
+Per Debian è disponibile anche il famoso programma **OBS**, questo permette di eseguire registrazioni video e di eseguire streaming su alcune piattaforme come Twitch. Il programma è disponibile nel repository ufficiale di Debian con il nome di **obs-studio**. Per chi volesse creare il proprio DVD può provare ad usare il programma mandvd, questo programma permette di aggiungere i tuoi video al progetto del DVD, assegnare un immagine per creare il tasto di selezione di ciascun video, creare dei video slideshow delle tue foto (con o senza musica di sottofondo); alla fine del progetto, si converte il tutto nella classica struttura DVD, e si sceglie se masterizzare il progetto con K3B oppure creare un immagine ISO, scelta utile in caso ci sia la necessita di fare più copie. Per chi volesse invece rippare un DVD può usare dvdriv, un piccolo programma di utilità che permette la copia di DVD su Linux.
 
 Per **Spotify** è consigliato l'uso del gestore snapd
 ```bash
@@ -539,17 +531,36 @@ Senza alcun dubbio **K3B** è la migliore applicazione per GNU Linux per la mast
 
 ## Dropbox
 
-Per i servizi **Dropbox** esiste il pacchetto dedicato ufficiale, purtroppo non è nei repository ufficiali è necessario scaricare il pacchetto manualmente perché non esiste repository dedicato, per l'installazione veloce basta eseguire il comando di installazione
+Per i servizi **Dropbox** esiste il pacchetto dedicato ufficiale, purtroppo non è nei repository ufficiali è necessario scaricare il pacchetto manualmente perché non esiste repository dedicato, è possibile seguire la [guida ufficiale](https://www.dropbox.com/install-linux) che indica di eseguire i seguenti comandi:
 ```
-# dpkg -i nomePacchetto.deb
+cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+~/.dropbox-dist/dropboxd
 ```
-al termine dell'installazione dovrebbe aprirsi automaticamente un browser per la autenticazione e la configurazione della cartella base del sistema di dropbox, al termine bisogna comunque riavviare il sistema per vericare che il sistema di sincronizzazione venga attivato. Se si usa il browser GNOME è necessario installare la estensione topicons plus e il pacchetto libclouldproviders0 per visualizzare l'icona di dropbox nella barra del sistema.
+Da aggiungere due annotazioni: la prima è che l'icona del sistema compare nei desktop Gnome solo se è installata la estensione "Appindicator", la seconda è che l'icona non funziona molto bene, bisogna infatti bloccare il computer e poi ri-eseguire la login. Alla prima esecuzione il programma vi aprirà la schemata di autenticazione in un browser. 
+
+Per avviare il sisetma Dropbox all'avvio del sistema bisogna eseguire una configruazione manuale creando il file
+```
+nano ~/.config/autostart/dropbox.desktop
+```
+con il contenuto:
+```
+[Desktop Entry]
+Name=Dropbox
+GenericName=File Synchronizer
+Comment=Sync your files across computers and to the web
+Exec=/home/albertonao/.dropbox-dist/dropboxd
+Terminal=false
+Type=Application
+Icon=dropbox
+Categories=Network;FileTransfer;
+StartupNotify=false
+```
 
 Per il controllo remoto dei sistemi è possibile usare i vari programmi e protocolli: con i sistemi GNU Linux si usa il protocollo specifico RDC con i vari programmi di gestione come KRDC, è possibile usare anche i protocolli di Microsoft per collegarsi a sistemi Windows sempre con il programma KRDC.
 
 ## Giochi e Steam
 
-A differenza di quello che si pensa, GNU Linux ha una grandissima varietà di giochi ed è ormai superfluo dire che questi giochi possono funzionare indipendentemente dal desktop usato, questa lista comprende passatempi, come solitari e arcade, oppure giochi più complicati, come gare d'auto e sparatutto, non poteva mancare anche una versione di Mame, il famoso emulatore di ROM di giochi delle vecchie console, ricordando che è illegare giocare con ROM se non si possiede il gioco originale. Una lista completa di tutti i giochi disponibili è disponibile nel sito ufficiale tra cui è necessario citare i migliori: Urban terror, Nequiz, OpenArena, Warzone 2100, Super Tux e Super Tux Kart, FreeCiv e FreeDoom.
+A differenza di quello che si pensa, GNU Linux ha una grandissima varietà di giochi ed è ormai superfluo dire che questi giochi possono funzionare indipendentemente dal desktop usato, questa lista comprende passatempi, come solitari e arcade, oppure giochi più complicati, come gare d'auto e sparatutto, non poteva mancare anche una versione di Mame, il famoso emulatore di ROM di giochi delle vecchie console, ricordando che è illegare giocare con ROM se non si possiede il gioco originale. Una lista completa di tutti i giochi disponibili è disponibile nel sito ufficiale.
 
 Il gioco **Minecraft** è disponibile per GNU LINUX: dal sito ufficiale è possibile scaricare che risulta molto veloce, una volta scaricata la versione basta lanciare il pacchtto-jar auto-installante per avere il gioco disponibile nel proprio sistema. Il pacchetto di Minecraft è disponibile per l'installazione anche da Snapd.
 
