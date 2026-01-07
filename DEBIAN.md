@@ -31,20 +31,20 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Giochi e Steam](#Giochi-e-steam)
 - [Come gestire i demoni di Debian](#Come-gestire-i-demoni-di-Debian)
   - [Sistema di stampa CUPS](#Sistema-di-stampa-CUPS)
-  - [Condivisioni di rete con SSH e Samba](#Condivisioni-di-rete-con-SSH-e-Samba)
+  - [Condivisioni di rete con Samba](#Condivisioni-di-rete-con-Samba)
   - [I RunLevel](#I-RunLevel)
   - [Schedulazioni con Cron](#Schedulazioni-con-Cron)
-  - [Controllo remoto](#Controllo-remoto)
+  - [Accesso e controllo remoto](#Accesso-e-Controllo-remoto)
   - [Monitoraggio e Logging](#Monitoraggio-e-Logging)
 - [Programmazione in Debian](#Programmazione-in-Debian)
-  - [C e C++](#C)
+  - [Bash & scripting](#Bash-e-scripting)
+  - [C & C++](#C)
   - [Python](#Python)
   - [LaTeX](#LaTeX)
-  - [Notify e Zenity](#Notify-e-Zenity)
   - [LAMP](#LAMP)
-      - [Apache](#Apache)
-      - [MySql](#MySql)
-      - [Nginx](#Nginx)
+    - [Apache](#Apache)
+    - [MySql](#MySql)
+    - [Nginx](#Nginx)
   - [Node e NPM](#Node-e-NPM)
   - [Java e Tomcat](#Java-e-Tomcat)
   - [GIT](#GIT)
@@ -79,7 +79,8 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Configurazione di rete](#Configurazione-di-rete)
   - [Gestione dei backup](#Gestione-dei-backup)
   - [Gestione delle macchine virtuali](#Gestione-delle-macchine-virtuali)
-
+  - [Notify e Zenity](#Notify-e-Zenity)
+  - [Creazione di un demone](#Creazione-di-un-demone)
 
 # Introduzione
 
@@ -388,6 +389,7 @@ Le più famose e consigliate estensioni sono
 - Just perfection
 - User themes
 - Windows list
+
 Inoltre è disponibile anche una applicazione personalizzazioni studiata per permettere agli utenti di modificare l'aspetto grafico del desktop.
 
 ## Gestione e installazione applicazioni
@@ -514,7 +516,8 @@ La base del sistema audio è il sottosistema **ALSA**, responsabile di tutti i s
 - Amarok programma per ascoltare musica avendo la possibilità di creare una playlist
 - Kaffeine buon programma per ascoltare musica
 - MPlayer player di video
-- **RealPlayer** programma ormai in disuso e *finalmente inutilizzato*
+- RealPlayer programma ormai in disuso e *finalmente rimosso*
+
 Chi dispone di una scheda di acquisizione TV di tipo DDT (digitale terrestre) può tranquillamente vedere i canali: Debian contiene dei programmi per guardare la tv e registrare i propri programmi preferiti, una lista parziale dei programmi a disposizione come XawTV, Kplayer e MythTV. Per GNU Linux esistono anche una lunga lista di programmi per la manipolazione e l'editing audio e video che si basano tutti sui comandi da riga di comando convert, i quattro programmi principali sono Kwave, Audacity e **Avidemux**, i primi due sono utili per modificare file audio come mp3, il quarto è un semplice programma che serve per modificare, concatenare i file video, anche se è conveniente usare programmi da riga di comando come **FFmpeg**.
 
 Per Debian è disponibile anche il famoso programma **OBS**, questo permette di eseguire registrazioni video e di eseguire streaming su alcune piattaforme come Twitch. Il programma è disponibile nel repository ufficiale di Debian con il nome di **obs-studio**. Per chi volesse creare il proprio DVD può provare ad usare il programma mandvd, questo programma permette di aggiungere i tuoi video al progetto del DVD, assegnare un immagine per creare il tasto di selezione di ciascun video, creare dei video slideshow delle tue foto (con o senza musica di sottofondo); alla fine del progetto, si converte il tutto nella classica struttura DVD, e si sceglie se masterizzare il progetto con K3B oppure creare un immagine ISO, scelta utile in caso ci sia la necessita di fare più copie. Per chi volesse invece rippare un DVD può usare dvdriv, un piccolo programma di utilità che permette la copia di DVD su Linux.
@@ -556,7 +559,10 @@ Categories=Network;FileTransfer;
 StartupNotify=false
 ```
 
-Per il controllo remoto dei sistemi è possibile usare i vari programmi e protocolli: con i sistemi GNU Linux si usa il protocollo specifico RDC con i vari programmi di gestione come KRDC, è possibile usare anche i protocolli di Microsoft per collegarsi a sistemi Windows sempre con il programma KRDC.
+Può succedere che dopo questa configurazione, all'avvio di un desktop il sistema chieda una login come utente root, questo problema si verifica perchè nella cartella locale di Sync sono presenti files non *assegnati* all'utente ma ad altri (come l'utente root). Per risovere questo problema bisogna eseguire un comando `chown` sui file incriminati, per trovarli si può eseguire il comando
+```
+# find /mnt/Dati/Dropbox/ ! -user alnao -exec chown alnao:alnao "{}" \;
+```
 
 ## Giochi e Steam
 
@@ -575,13 +581,13 @@ E' possibile installare anche il launcer di EpicGames, si rimanda al sito uffici
 
 # Come gestire i demoni di Debian
 
-In informatica non esiste uno standard che definisca esattamente cosa è un server e cosa è un servizio, la differenza spesso non è così evidente e i termini vengono spesso confusi anche a causa di traduzioni non precisissime, in questo documento non sono presenti definizioni o trattati tecnici a riguardo e verrà usato il termine demoni (dal termine inglese deamon), termine usato quasi sempre nel mondo GNU LINUX per identificare sia i server sia i servizi. Con le dovute cautele prendiamo per vera la definizione più usata cioè che un demone è un processo in esecuzione in background sempre attivo, senza il bisogno di un gestione diretta dell'utente e che risponde quando viene invocato, un esempio classico è il demone CUPS che gestisce le stampe, questo rimane attivo in background e resta in ascolto finché qualcuno non lo invoca lanciando una stampa.
+In informatica non esiste uno standard che definisca esattamente cosa è un server e cosa è un servizio, la differenza spesso non è così evidente e i termini vengono spesso confusi anche a causa di traduzioni non precisissime, in questo documento non sono presenti definizioni o trattati tecnici a riguardo e verrà usato il termine **demoni**, traduzione dal termina inglese `deamon`, termine usato quasi sempre nel mondo GNU LINUX per identificare sia i server sia i servizi. Con le dovute cautele prendiamo per vera la definizione più usata cioè che un demone è un processo in esecuzione in background sempre attivo, senza il bisogno di un gestione diretta dell'utente e che risponde quando viene invocato, un esempio classico è il demone CUPS che gestisce le stampanti: questo rimane attivo in background e resta in ascolto finché qualcuno non lo invoca lanciando un processo di stampa.
 
 GNU Linux e Debian forniscono una numerosa proposta di demoni e anche di programmi per l'iterazione con i quelli attivi sul sistema, per esempio il programma netstat permette di monitorare l'interfaccia di rete e di elencare tutte le informazioni utili (socket aperti, routing tables, processi, ecc...) visto la maggior parte dei demoni è disponibile via rete con i protocolli TCP/IP, per ottenere l'elenco completo di tutti i processi attivi in un sistema basta lanciare il comando:
 ```
 # netstat -l | grep tcp
 ```
-Per avere un quadro completo della situazione, bisogna anche guardare il file:
+L'elenco completo di tutti i possibili demoni è disponibile nel file:
 ```
 /etc/services
 ```
@@ -591,9 +597,9 @@ Una caratteristica base di tutti i sistemi operativi derivati da Unix (tra i qua
 ```
 # lsof -i
 ```
-per avere in risposta l'elenco dettagliato di tutti i demoni in esecuzione con tutte le informazioni, per esempio:
+per avere in risposta l'elenco dettagliato di tutti i demoni in esecuzione con tutte le informazioni, per esempio il server web apache è descritto con le informazioni:
 ```
-smbd 4089 root 21u IPv4 8082 TCP *:netbios-ssn (LISTEN)
+apache2    1701 www-data   4u  IPv6  14275      0t0  TCP *:http (LISTEN)
 ```
 E' anche possibile lanciare il comando:
 ```
@@ -601,12 +607,11 @@ E' anche possibile lanciare il comando:
 ```
 per vedere se il demone Apache è attivo nel sistema.
 
+In realtà, in GNU Linux quasi tutto è un demone, il sistema di stampa e la condivisione di file in rete sono gli esempi più semplici e in questo capitolo vedremo come installare i più semplici e utili demoni disponibili nella nostra distribuzione, notare che quando abbiamo installato il sistema base, abbiamo già installato alcuni demoni tra qui il demone grafico X (con i desktop) e il sistema della shell che usiamo per lanciare i comandi. Per quanto riguarda i demoni specifici di web-server e database vengono presentati nella sezione dedicata alla programmazione, in questa sezione sono presentati solo i demoni utili per l'utilizzo generico in modo da permettere ad un lettore di poter saltare il capitolo della programmazione se non interessato all'argomento.
 
 ## Sistema di stampa CUPS
 
-Da notare che in GNU Linux quasi tutto è un demone, il sistema di stampa e la condivisione di file in rete sono gli esempi più semplici e in questo capitolo vedremo come installare i più semplici e utili demoni disponibili nella nostra distribuzione, notare che quando abbiamo installato il sistema base, abbiamo già installato alcuni demoni tra qui il demone grafico X (con i desktop) e il sistema della shell che usiamo per lanciare i comandi. Per quanto riguarda i demoni specifici di web-server e database vengono presentati nella sezione dedicata alla programmazione, in questa sezione sono presentati solo i demoni utili per l'utilizzo generico in modo da permettere ad un lettore di poter saltare il capitolo della programmazione se non interessato all'argomento.
-
-In GNU Linux la gestione dei servizi per stampare e la gestione delle stampanti come periferiche viene gestito dal progetto CUPS che mette a disposizione un insieme di demoni e programmi per stampare, il problema principale è che non tutte le case produttrici di stampanti sviluppano driver per i sistemi GNU Linux, la situazione è molto migliorata nell'ultimo decennio e ormai tutte le stampanti di ultima generazione hanno driver disponibili automaticamente su Debian oppure è possibile usare un driver generico che funziona su tutti i modelli di una generazione. Il demone CUPS (acronimo di Common UNIX Printing System) è semplice come installare tutte le applicazioni che abbiamo già visto: con Synaptic bisogna installare i pacchetti cups, apsfilters e foomatic-db senza il pacchetto lpr che è un sostituto molto vecchio.
+In GNU Linux la gestione dei servizi per stampare e la gestione delle stampanti come periferiche viene gestito dal progetto **CUPS** che mette a disposizione un insieme di demoni e programmi per stampare, il problema principale è che non tutte le case produttrici di stampanti sviluppano driver per i sistemi GNU Linux, la situazione è molto migliorata nell'ultimo decennio e ormai tutte le stampanti di ultima generazione hanno driver disponibili automaticamente su Debian oppure è possibile usare un driver generico che funziona su tutti i modelli di una generazione. Il demone CUPS (acronimo di Common UNIX Printing System) è semplice come installare tutte le applicazioni che abbiamo già visto: con Synaptic bisogna installare i pacchetti `cups`, `apsfilters` e `foomatic-db` senza il pacchetto lpr (una vecchia alternativa a CUPS ormai in disuso).
 
 Una volta installati i pacchetti necessari il tutto, basta aprire un browser e andare all'indirizzo:
 ```
@@ -615,16 +620,46 @@ http:\\localhost:631\
 per accedere al programma web di gestione del server di stampa. Da questa comoda interfaccia si possono gestire le stampanti (installarle, cancellarle, fermarle) e si possono anche gestire i processi di stampa. Oltre all'interfaccia web di CUPS, i vari Desktop manager mettono a disposizione vari programmi per la configurazione le stampanti oppure è possibile usare il pannello di controllo WebMin. Per condividere una stampante locale in una rete locale è necessario aver installato anche il demone SAMBA e dal condivisione potrà essere configurata direttamente dal pannello di amministrazione.
 
 
-## Condivisioni di rete con SSH e Samba
+## Condivisioni di rete con Samba
 
-Il servizio per la condivisione di file, cartelle periferiche in una rete LAN è compreso nel KernelLinux e non deve essere installato nessun pacchetto supplementare: il protocollo **SSH** è disponibile grazie ai pacchetti ```openssh-server``` e ```openssh-client``. Per collegare due o più nodi con i sistemi GNU Linux basta collegarsi usando il protocollo ssh o sftp, standard ormai usato in tutti i sistemi. Se nella rete invece sono presenti nodi con altri sistemi operativi è necessario usare il servizio di rete **Samba** che permette di condividere file e stampanti tra i vari sistemi operativi, per attivarlo vi basta installare il pacchetto Samba: il demone della condivisione con il protocollo NetBios usato dal sistema operativo MsWindows e anche dai sistemi operativi di Apple. La configurazione del demone può essere fatta nel file specifico:
-```
-/etc/samba/smb.conf
-```
-modificando il file manualmente si possono aggiornare le sezione già presenti oppure aggiungere le righe mancanti. Fino alle versione 8 di Debian era presente anche un software web per la configurazione di Samba ma swat è stato tolto dai repository quindi vi sconsiglio di installarlo perché non più aggiornato. Dopo ogni modifica del file di configurazione bisogna però riavviare il server con il comando
-```
-# systemctl restart smbd
-```
+Se nella rete sono presenti nodi con altri sistemi operativi è possibile usare il servizio di rete **Samba** che permette di condividere file e stampanti tra i vari sistemi operativi, per attivarlo vi basta installare il pacchetto Samba: il demone della condivisione con il protocollo NetBios usato dal sistema operativo MsWindows e anche dai sistemi operativi di Apple. Nelle vecchie versioni di Debian era presente anche un software web per la configurazione di Samba ma `swat` è stato tolto dai repository quindi vi sconsiglio di installarlo perché non più aggiornato. La configurazione del demone può essere fatta in due modi:
+- modificando il file di configurazione 
+  ```
+  /etc/samba/smb.conf
+  ```
+  aggiungendo a mano le configurazioni
+  ```
+  [global]
+    # line 25 : add (set charset)
+    unix charset = UTF-8
+    # line 37 : uncomment and change the interface to bind
+    interfaces = 127.0.0.0/8 enp1s0
+    # line 97 : confirm (no authentication)
+    map to guest = bad user
+
+  # add to last line
+  # any Share name you like
+  [Share]
+    # specify shared directory with chmod 777 configuration
+    path = /mnt/Dati/share
+    # allow writing
+    writable = yes
+    # allow guest user (nobody)
+    guest ok = yes
+    # looks all as guest user
+    guest only = yes
+    # set permission [777] when file created
+    force create mode = 777
+    # set permission [777] when folder created
+    force directory mode = 777   
+  ```
+  e poi riavviare il demone con il comando
+  ```
+  systemctl restart smbd
+  ```
+  - ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: questa configurazione è molto base e potrebbe non essere adatta ad una situazione di server reale o di rete aziendale, si rimanda alla documentazione per tutte le configurazioni
+- usare WebMin nella sezione "Samba Windows File Sharing" e aggiungendo le configurazioni di autentication e file-share options.
+
 Tipicamente il firewall di GNU Linux è configurato di default per bloccare tutte le connessioni "sconosciute", comprese le connessioni generate dalla rete nella LAN, quindi una volta configurate le condivisioni SAMBA è consigliato di controllare il firewall: per abilitare la rete basta verificare che i nodi della rete (gli indirizzi IP) non vengano bloccati, in tal caso dovete abilitare gli indirizzi IP ad accedere al vostro sistema, potete usare il programma e inserire l'IP del vostro sistema nella sezione Trust per abilitare le condivisioni. L'alternativa è permettere a tutti di accedere al servizio Samba, aprendo il firewall a tutte le connessioni con i comandi:
 ```
 # ufw allow 139
@@ -666,35 +701,29 @@ dove venivano definiti i comportamenti principali del sistema e per ogni riga de
 id:runlevel:azione:comando
 ```
 venivano definire le informazioni:
-
 - id = identificativo di rappresenta di una voce specifica dell'inittab
 - runlevel = quali runlevel deve essere analizzata l'istruzione, con uno o più runlevel
-- azione = l'azione da compiere (per es. "wait" per attende il termine dell'esecuzione del comando, "respawn" per eseguire ciclicamente il comando ogni volta che esso termina, "boot" il comando viene eseguito durante il boot del sistema e il contenuto di runlevel viene ignorato);
+- azione = l'azione da compiere (per es. "wait" per attende il termine dell'esecuzione del comando, "respawn" per eseguire ciclicamente il comando ogni volta che esso termina, "boot" il comando viene eseguito durante il boot del sistema e il contenuto di runlevel viene ignorato). 
 
 Nelle precedenti versioni di inittab erano presenti gli script /etc/init.d/rcS con la funzione di invocare tutti gli script "S*" (cioè file che iniziano per S maiuscola) contenuti nella cartella ```/etc/rcS.d/``` in ordine numerico/alfabetico; lo script ```/etc/init.d/rc``` si occupa di lanciare, in ordine numerico/alfabetico, gli script presenti in /etc/rcX.d/ partendo per quelli "K*" per passare a quelli "S*" e accetta come parametro il numero del runlevel.
 
-Il nuovo sistema di gestione introdotto con la versione 8, si chiama Systemd e ha sostituito completamente inittab, questo nuovo demone per la gestione centralizzata del sistema definisce alcuni comandi molto utili:
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: nelle recenti versioni di Debian, il sistema `inittab` è stato rimosso quindi non più utilizzabile, sostituito da systemctl, queste note rimangono in questo documento per storia 🔶⚠️
 
+Il nuovo sistema di gestione introdotto con le ultime versioni si chiama **Systemd** e ha sostituito completamente inittab, questo nuovo demone per la gestione centralizzata del sistema definisce alcuni comandi molto utili:
 - ```$ systemctl``` la lista di tutti i demoni disponibili
 - ```$ systemctl status``` mostra lo stato del sistema generale
 - ```$ systemctl status``` apache2 mostra lo stato di un particolare demone
 - ```# systemctl start``` apache2 lancia l'avvio di un demone
 - ```# systemctl stop``` apache2 ferma immediatamente un demone in esecuzione
 - ```# systemctl restart``` apache2 ferma e poi avvia un demone in esecuzione
-per maggiori informazioni sul questo sistema di gestione dei demoni è disponibile la pagina ufficiale. Anche se è considerato deprecato dalla versione di Systemd, è ancora possibile usare il file:
-```
-/etc/rc.local
-```
-che contiene tutti i comandi eseguiti all'avvio del sistema, è sempre sconsigliato modificare questo per evitare di compromettere l'avvio del sistema e il corretto funzionamento del sistema ma se necessario è possibile aggiungere righe con istruzioni da eseguire all'avvio dei demoni prima della riga "exit 0", per esempio è possibile aggiungere la cancellazione di tutti i file dentro alle cartelle del cestino, questo è possibile inserendo la riga:
-```
-# rm -r /home/alnao/.local/share/Trash/files/*
-```
-Per amministrare al meglio questi componenti potete modificare i file e gli script a mano oppure io consiglio di usare il pannello webmin dove è disponibile tutta una sezione per la gestione e la modifica dei componenti dei runlevel, nell'ambiente grafico è possibile trovare l'applicazione rcconf disponibile sui repository Debian e quindi installabili tramite Synaptic.
 
+per maggiori informazioni sul questo sistema di gestione dei demoni è disponibile la pagina ufficiale.
+
+In Debian 13 così come nelle versioni recenti precedenti, `/etc/rc.local` è deprecato perché il sistema di init predefinito è systemd, che gestisce l'avvio dei servizi in modo parallelo e basato su unità. Sebbene systemd offra una compatibilità limitata tramite systemd-rc-local-generator, la pratica raccomandata è creare un'apposita systemd service unit per eseguire script o comandi all'avvio, questo verrà mostrato in una sezione dedicata.
 
 ## Schedulazioni con Cron
 
-Un demone base di tutti i sistemi GNU Linux si chiama **crontab** e permette la schedulazione e l'esecuzione di comando ad un orario e/o frequenze prefissati, tale demone viene lanciato in backgrouond all'avvio del sistema e si basa sul file di configurazione
+Un demone base di tutti i sistemi GNU Linux si chiama **cron** (e spesso chiamato **crontab**), questo permette la schedulazione e l'esecuzione di comando ad un orario e/o frequenze prefissati, tale demone viene lanciato in backgrouond all'avvio del sistema e si basa sul file di configurazione
 ```
 /etc/crontab
 ```
@@ -703,7 +732,7 @@ per le voci di sistema (chiamate entry) e i file contenuti nelle cartelle:
 /etc/cron.d/
 /var/spool/cron/crontabs
 ```
-in questa ultima cartella si trova un file per ogni utente dove sono contenute le schedulazioni personalizzate dall'utente visto che di default tutti gli utenti su Debian possono eseguire il comando crontab e possono schedulare script o programmi a meno che non siano censiti nel file /etc/cron.deny, tutti i job di ciascun file sono caricati in memoria e rimangono finché non il demone crontab non viene spento o riavviato.
+in questa ultima cartella si trova un file per ogni utente dove sono contenute le schedulazioni personalizzate dall'utente visto che di default tutti gli utenti su Debian possono eseguire il comando crontab e possono schedulare script o programmi a meno che non siano censiti nel file `/etc/cron.deny`, tutti i job di ciascun file sono caricati in memoria e rimangono finché non il demone crontab non viene spento o riavviato.
 
 Ci sono alcune cartelle di Cron molto importanti:
 
@@ -712,10 +741,6 @@ Ci sono alcune cartelle di Cron molto importanti:
 - ```/etc/cron.weekly```: in questa directory sono contenuti gli script da eseguire ogni settimana
 - ```/etc/cron.monthly```: in questa directory sono contenuti gli script da eseguire ogni mese
 
-La data/ora in cui vengono eseguiti gli script contenuti in queste directory è quella specificata nel file
-```
-/etc/crontab
-```
 In questi file ogni riga corrisponde ad un comando da eseguire e devono seguire il seguente schema:
 ```
 * * * * * comando
@@ -746,44 +771,65 @@ dove vengono indicati tutti i minuti da 6 a 12, ogni due ore, nei giorni 1,3,6,1
 ```
 */30 13,20 * 1-7,9-12 1-5 /comando/da/eseguire
 ```
-il comando verrà eseguito nei giorni feriali (da lunedì a venerdì) di tutti i mesi tranne agosto, alle 13,00 - 13,30 - 20,00 - 20,30. Quando si scrivono questi comandi bisogna ricordarsi di analizzare anche dove vengono eseguiti: di default vengono eseguiti in background e un utente eventualmente collegato al sistema non si accorge di nulla, per esempio se si vuole visualizzare la finestra ad una certa ora questa non verrà visualizzata sul desktop se non si indicano i giusti parametri nel comando cron: prima del comando bisogna indicare DISPLAY=:0.0 che indica al cron di eseguire il comando indicato nel desktop attivo e non in background, in questo caso un esempio è:
-```
-23 21 * * 1 DISPLAY=:0.0 /home/alnao/messaggio.sh
-```
-Bisogna sempre tenere conto che cron esegue gli script al momento indicato solo se il sistema è acceso e il server crontab è avviato, se il sistema è spento o se il demone crontab viene arrestato, il comando non viene eseguito nemmeno quando crontab viene avviato successivamente. Come indicato per altri demoni, anche questo demone può essere facilmente configurato da WebMin senza la necessità di modificare il file a mano ma basta utilizzare l'interfaccia web per configurare il demone della schedulazione.
+il comando verrà eseguito nei giorni feriali (da lunedì a venerdì) di tutti i mesi tranne agosto, alle 13,00 - 13,30 - 20,00 - 20,30. Quando si scrivono questi comandi bisogna ricordarsi di analizzare anche dove vengono eseguiti: di default vengono eseguiti in background e un utente eventualmente collegato al sistema non si accorge di nulla, per eseguire applicazioni nei desktop degli utenti bisogna seguire delle configurazioni ulteriori descritte in una sesione dedicata.
 
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: spesso è complicato districarsi tra le varie schedulazioni configurate in un sistema, è consigliato l'uso di WebMin che permette di eseguire le configurazioni graficamente nella sesione "Scheduled Cron Jobs"  🔶⚠️
 
-## Controllo remoto
+## Accesso e controllo remoto
 
-Per il controllo da remoto dei sistemi è possibile usare **rdesktop** compatibile il sistema di condivisione di MsWindows e potete provare il programma TeamViwever che permette di controllare da remoto in maniera indipendente. Uno dei programmi più usati è VNC, per installare VNC dovete installare i pacchetti
+Il servizio per la accesso remoto in una rete LAN è compreso nel KernelLinux e non deve essere installato nessun pacchetto supplementare: il protocollo **SSH** è disponibile grazie ai pacchetti ```openssh-server``` e ```openssh-client``. Per collegare due o più nodi con i sistemi GNU Linux basta collegarsi usando il protocollo ssh o sftp, standard ormai usato in tutti i sistemi. 
+Per attivare e controllare il demone di rete SSH 
 ```
-x11vnc vnc-java
+systemctl enable ssh
+systemctl start ssh 
+systemctl status ssh
+netstat -tunlp | grep ssh
 ```
-Il pacchetto xrdp è una implementazione per GNU Linux del protocollo RDP sviluppato da Microsoft, grazie a questo demone è possibile utilizzare un sistema GNU Linux come server RDP quindi una postazione di un sistema di desktop remoto, dando la possibilità ad un sistema Windows di collegarsi con il suo client di Remote-Desktop. Per funzionare correttamente, il sistema xrdp necessita del server grafico X e di un desktop manager configurato. Da notare che il collegamento con questo sistema non usa la stessa sessione, come con VNC, ma con Xrdp si crea una nuova sessione sfruttando la tecnica del multi-utente oltre all'ovvio multi-tasking. Dopo la installazione del demone bisogna attivare la sicurezza, perché il pacchetto base non imposta alcuna sicurezza e chiunque può collegarsi al sistema, per impostare la sicurezza basta modificare il file
+Per abilitare la connessione in ingresso si devono eseguire una serie di passatti:
+- modificare il file 
+  ```
+  /etc/ssh/sshd_config
+  ```
+  configurando la proprietà
+  ```
+  PasswordAuthentication yes
+  ```
+- aggiungendo o modificando la configurazione della porta di accesso
+  ```
+  Port 7022
+  ```
+  configurando la porta nel firewall
+  ```
+  iptables -A INPUT -s yourIP/24 -m state --state NEW -p tcp --dport 7022 -j ACCEPT
+  ```
+- riavviare il server
+  ```
+  systemctl restart ssh
+  ```
+- provare la connessione con il protocollo ssh
+  ```
+  ssh autente@yourIP -p 7022
+  ```
+- nota: in questo esempio è stata usata la porta 7022 per mostrare la configurazione specifica con una porta diversa dalla default.
+
+Per il controllo da remoto dei sistemi è possibile usare **rdesktop** compatibile il sistema di condivisione di MsWindows e potete provare il programma TeamViwever che permette di controllare da remoto in maniera indipendente. Il pacchetto **xrdp** è una implementazione per GNU Linux del protocollo RDP sviluppato da Microsoft, grazie a questo demone è possibile utilizzare un sistema GNU Linux come server RDP quindi una postazione di un sistema di desktop remoto, dando la possibilità ad un sistema Windows di collegarsi con il suo client di Remote-Desktop. Ovviamente per funzionare correttamente, il sistema xrdp necessita del server grafico X e di un desktop manager configurato. 
+
+Nelle impostazioni del sistema Gnome, nel programma **settings**, è possibile trovare la sezione "Remote desktop" (nel menù sistem), tramite questa semplice cofigurazione è possibile attivare e modificare il sistema che permette di collegarsi con anche la definiziona della password di collegamento. Il file di configurazione base è il `/etc/xrdp/xrdp.ini` ma è fortemente sconsigliato modificarlo se non strettamente necessario. 
+
+Tipicamente la porta usata dal server è la 3389, che nei sistemi GNU Linux potrebbe essere bloccata, per sbloccarla basta modificare la configurazione del firewall con il comando
 ```
-# nano /etc/xrdp/xrdp.ini
+systemctl enable --now xrdp
+ufw allow 3389/tcp
 ```
-e bisogna aggiungere la riga
-```
-encrypt_level=high
-```
-Tipicamente la porta usata dal server è la 3389, che nei sistemi GNU Linux è bloccata, per sbloccarla basta modificare il file
-```
-/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf
-```
-aggiungendo la riga
-```
-# ufw allow 3389/tcp
-```
-Come client è possibile utilizzare il programma Remmina, grazie al quale è possibile utilizzare il protocollo RDP per collegarsi ad un server remoto.
+
+Una alternativa a RDP è il *vecchio ma sempre funzionante* **VNC**, per installare VNC sono necessari i pacchetti `x11vnc` e `vnc-java`.
 
 
 ## Monitoraggio e Logging
 Il monitoraggio e la gestione dei log sono elementi fondamentali per mantenere un sistema Debian efficiente, sicuro e diagnosticare tempestivamente eventuali problematiche. Questa sezione copre gli strumenti essenziali per il controllo del sistema e l'analisi dei log.
 
-**Journalctl** è il comando principale per interrogare e visualizzare i log del sistema gestiti da systemd. A differenza dei tradizionali file di log in log, systemd memorizza i log in formato binario nel journal.
+**Journalctl** è il comando principale per interrogare e visualizzare i log del sistema gestiti da systemd. A differenza dei tradizionali file di log in log, systemd memorizza i log in formato binario nel journal. I comandi base di journalctl sono:
 ```bash
-I comandi base di journalctl sono:
 # Visualizza tutti i log del sistema
 $ journalctl
 
@@ -815,6 +861,10 @@ $ journalctl --disk-usage
 # Pulizia dei log
 $ journalctl --vacuum-time=7d    # mantieni solo 7 giorni
 $ journalctl --vacuum-size=100M  # mantieni solo 100MB
+
+# Recupero di log di uno specifico giorno
+$ journalctl --since "2026-01-01" --until "2026-01-02" > daily_logs.txt
+
 ```
 Per configurare la gestione del journal, modificare il file:
 ```
@@ -840,13 +890,13 @@ Dopo le modifiche, riavviare il servizio:
 # systemctl restart systemd-journald
 ```
 
-**Rsyslog** è il sistema di logging tradizionale di Debian che gestisce i file di log in log. Funziona in parallelo con systemd-journald per fornire compatibilità con il sistema di log classico.
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: è possibile che journalctl occupo molto spazio nella cartella `/var/log`, è consigliato impostare un limite nel file di configurazione per evitare di salvare tanti log inuliti 🔶⚠️
 
-Il file di configurazione principale è:
+**Rsyslog** è il vecchio sistema di logging tradizionale di Debian che gestisce i file di log in log. Funzionava in parallelo con systemd-journald per fornire compatibilità con il sistema di log classico. A partire da Debian 12 (e proseguendo nella 13), rsyslog non è più installato di default nella maggior parte delle installazioni standard. Il sistema si affida nativamente a systemd-journald per la gestione dei log (che puoi consultare con il comando journalctl), è comunque possibile installarlo con il pachcetto `rsyslog` e abilitandolo con il comando:
 ```
-/etc/rsyslog.conf
+systemctl status rsyslog
 ```
-I principali file di log gestiti da rsyslog:
+Una volta installato, rsyslog funzionerà in parallelo a journald, scrivendo i log nei file tradizionali a cui sei abituato. I principali file di log gestiti da rsyslog:
 - `/var/log/syslog`: Log generale del sistema
 - `/var/log/auth.log`: Log di autenticazione
 - `/var/log/kern.log`: Log del kernel
@@ -863,38 +913,23 @@ I principali file di log gestiti da rsyslog:
 - `/var/log/ufw.log`: Log del firewall UFW
 - `/var/log/iptables.log`: Log di iptables (se configurato)
 - `/var/log/cron.log`: Log del demone cron
+
 Nota: questi file potrebbero essere presenti nel sistema perchè dipende dai demoni effettivamente installati e attivi.
-
-Comandi utili per l'analisi dei log:
-```
-# Visualizzare gli ultimi log
-$ tail -f /var/log/syslog
-
-# Cercare pattern specifici
-$ grep "error" /var/log/syslog
-$ grep "Failed password" /var/log/auth.log
-
-# Log di un periodo specifico
-$ journalctl --since "2024-01-01" --until "2024-01-02" > daily_logs.txt
-
-# Analisi dei tentativi di login falliti
-$ grep "Failed password" /var/log/auth.log | wc -l
-
-# IP più attivi nei log
-$ grep "Failed password" /var/log/auth.log | awk '{print $11}' | sort | uniq -c | sort -nr
-```
-
-
 
 # Programmazione in Debian
 
-Il tema della programmazione rappresenta il fulcro di questa sezione e di molti articoli che seguiranno, affrontando questo argomento sempre attuale e in continua evoluzione. È importante chiarire che questo non è un manuale teorico sulla programmazione né una guida esaustiva ai linguaggi di programmazione, ma piuttosto una raccolta pratica di strumenti, comandi e tecniche che un programmatore ha a disposizione per lavorare efficacemente e, perché no, *divertirsi* nel processo di sviluppo. Gli esempi di codice presentati nei vari linguaggi sono volutamente semplici e finalizzati esclusivamente alle verifiche di base e al testing dell'ambiente di sviluppo.
+Il tema della programmazione rappresenta il fulcro di questo documento *visto che chi scrive questo documento è un bel programmatore*. L'argomento è sempre attuale e in continua evoluzione quindi ci sono frequenti aggiornamenti. È importante chiarire che questo non è un manuale teorico riguardo alla programmazione né una guida esaustiva ai linguaggi di programmazione, ma è *solamente* una raccolta pratica di strumenti, comandi e tecniche che un programmatore ha a disposizione per lavorare efficacemente e, perché no, *divertirsi* nel processo di sviluppo. Gli esempi di codice presentati nei vari linguaggi sono volutamente semplici e finalizzati esclusivamente alle verifiche di base e al testing dell'ambiente di sviluppo.
 
 L'ecosistema di programmazione su Debian offre una ricchezza e una varietà di strumenti che poche altre piattaforme possono vantare. La filosofia open source del sistema operativo si riflette perfettamente nell'ampia disponibilità di compilatori, interpreti, debugger e ambienti di sviluppo, tutti facilmente installabili tramite il sistema di gestione dei pacchetti APT.
 
 La base di qualsiasi attività di programmazione inizia con la scelta dell'ambiente di sviluppo appropriato. Debian offre una gamma impressionante di opzioni, dai più semplici editor testuali agli IDE più sofisticati. Anche gli editor più basilari come Gedit e Mousepad offrono funzionalità avanzate come la formattazione automatica e il syntax highlighting per i vari linguaggi di programmazione, riconoscendo automaticamente il tipo di linguaggio in base all'estensione del file o al contenuto.
 
-Per la compilazione e l'esecuzione del codice, la riga di comando rimane sempre disponibile e spesso rappresenta la soluzione più veloce e flessibile. Tuttavia, per progetti più complessi o per aumentare la produttività, è possibile scegliere tra numerosi SDK e IDE specializzati. Eclipse rimane una scelta eccellente per Java e altri linguaggi enterprise, Visual Studio Code (VSCode) si è affermato come uno degli editor più versatili e popolari per lo sviluppo web e multi-linguaggio, mentre Atom (ora deprecato a favore di alternative moderne) era particolarmente apprezzato per la sua estensibilità.
+Per la compilazione e l'esecuzione del codice, la riga di comando rimane sempre disponibile e spesso rappresenta la soluzione più veloce e flessibile; tuttavia, per progetti più complessi e per aumentare la produttività è possibile scegliere tra numerosi SDK e IDE specializzati.
+- Eclipse rimane una scelta eccellente per Java e altri linguaggi enterprise, installabile con snap
+- Visual Studio Code (VSCode di Microsoft), installabile come indicato qua sotto
+- VSCodium fork di Visual Studio Code, installabile da snap con il comando 
+  `snap install codium --classic`
+- Atom per lo sviluppo con 
 
 I linguaggi nativi con cui è costruito GNU Linux e la stragrande maggioranza dei programmi di sistema sono il **C** e il **C++**. Questi linguaggi rappresentano il DNA del sistema operativo: la maggior parte delle funzionalità del Kernel Linux, le librerie di sistema fondamentali e molti dei tool di base sono scritti in questi linguaggi. Questa scelta non è casuale, ma deriva dalla necessità di avere prestazioni ottimali, controllo granulare delle risorse hardware e massima compatibilità con l'architettura UNIX.
 
@@ -902,26 +937,19 @@ La documentazione per questi linguaggi è vastissima e facilmente reperibile onl
 
 Negli ultimi anni, linguaggi come **Java**, **Python**, **Perl**, **Ruby** e **Go** hanno guadagnato terreno anche nell'ambiente GNU Linux, offrendo la massima compatibilità con le API del sistema operativo e spesso prestazioni comparabili ai linguaggi nativi per molte tipologie di applicazioni. Debian include supporto nativo per tutti questi linguaggi, con compilatori, interpreti e librerie mantenuti e aggiornati costantemente.
 
+## Bash e scripting
+
 Oltre ai linguaggi di programmazione tradizionali, Debian offre potenti strumenti di scripting attraverso la shell, in particolare con **Bash** (Bourne Again Shell). Il linguaggio di scripting shell rappresenta un elemento unico e fondamentale nell'ecosistema GNU Linux, permettendo di automatizzare task complessi, creare tool personalizzati per l'amministrazione del sistema e sviluppare veri e propri programmi per la gestione e il monitoraggio.
 
 Gli script shell partono da file con estensione `.sh` che devono avere i permessi di esecuzione. Per rendere un file eseguibile, è sempre possibile utilizzare il comando `chmod`:
 ```bash
 $ chmod a+x file.sh
 ```
-Questi script trovano applicazione in numerosi scenari: dalla creazione di procedure di installazione e configurazione automatizzate, alla semplificazione di operazioni complesse per utenti meno esperti, fino allo sviluppo di veri e propri piccoli programmi per la gestione del sistema. Esempi tipici includono script per l'avvio e l'arresto controllato di demoni, per la gestione di backup automatizzati, per il monitoraggio delle risorse di sistema o per l'automazione di deploy di applicazioni.
-
 I file di script sono immediatamente riconoscibili perché iniziano con la sequenza **shebang**:
-
-```
-#!
-```
-Questa sequenza indica al kernel che il file è direttamente eseguibile e deve essere processato dall'interprete specificato immediatamente dopo. L'interprete più comune è `/bin/sh`, quindi la maggior parte degli script inizia con:
-
 ```
 #!/bin/sh
 ```
-
-Tuttavia, è possibile specificare altri interpreti come `/bin/bash` per funzionalità avanzate specifiche di Bash, o `/usr/bin/python3` per script Python, rendendo il sistema estremamente flessibile.
+Questa sequenza indica al kernel che il file è direttamente eseguibile e deve essere processato dall'interprete specificato immediatamente dopo. L'interprete più comune è `/bin/sh`. Tuttavia, è possibile specificare altri interpreti come `/bin/bash` per funzionalità avanzate specifiche di Bash, o `/usr/bin/python3` per script Python, rendendo il sistema estremamente flessibile.
 
 
 Gli script Bash offrono un ricco set di funzionalità che vanno ben oltre i semplici comandi di sistema. È possibile utilizzare variabili utilizzando il prefisso `$`, gestire parametri da riga di comando attraverso variabili speciali come `$#` (numero di parametri), `$1`, `$2`, ecc. (parametri posizionali), `$@` (tutti i parametri), `$0` (nome dello script), `$?` (codice di uscita dell'ultimo comando), `$$` (PID del processo corrente) e molte altre.
@@ -939,9 +967,7 @@ echo "Ciao $nome, hai $eta anni!"
 echo "Script completato il $(date)"
 ```
 
-Gli script possono includere strutture di controllo complesse (if/then/else, while, for), funzioni personalizzate, gestione degli errori e molto altro. La potenza degli script Bash risiede nella possibilità di combinare facilmente comandi di sistema, operazioni su file, elaborazione di testo e logica di controllo in un unico strumento coeso e potente.
-
-Per approfondimenti dettagliati sulla sintassi avanzata, le best practice e le tecniche di debugging degli script Bash, si rimanda alla documentazione ufficiale e alle numerose guide specializzate disponibili online.
+Gli script possono includere strutture di controllo complesse (if/then/else, while, for), funzioni personalizzate, gestione degli errori e molto altro. La potenza degli script Bash risiede nella possibilità di combinare facilmente comandi di sistema, operazioni su file, elaborazione di testo e logica di controllo in un unico strumento coeso e potente. Per approfondimenti dettagliati sulla sintassi avanzata, le best practice e le tecniche di debugging degli script Bash, si rimanda alla documentazione ufficiale e alle numerose guide specializzate disponibili online.
 
 ## C
 
@@ -957,12 +983,14 @@ $ ./a.out
 ```
 ed ecco il nostro programma in esecuzione nel terminale.
 
-Essendo C e C++ molto usati in GNU Linux, esistono moltissimi ambienti di sviluppo grafici (IDE o SDK) che permetto all'utente di scrivere progetti, anche di grandi dimensioni, e di compilare senza dover usare la riga di comando, alcuni presentano anche dei correttori automatici, auto-complete (nel caso del C++) ed altre funzionalità molto utili, i più famosi sono Anjuta e BlueFish anche se in realtà è consigliato utilizzare Eclipse o Visual Studio Code con le estensioni dedicate ai linguaggi C/C++.
+Essendo C e C++ molto usati in GNU Linux, esistono moltissimi ambienti di sviluppo grafici (IDE o SDK) che permetto all'utente di scrivere progetti, anche di grandi dimensioni, e di compilare senza dover usare la riga di comando, alcuni presentano anche dei correttori automatici, auto-complete (nel caso del C++) ed altre funzionalità molto utili.
+
+*Per fortuna non ho mai lavorato molto in C quindi questa sezione non è molto ricca di esempi*
 
 
 ## Python
 
-Il linguaggio **Python** è uno dei più usati a livello mondiale per la sua semplicità, per esempio WebMin è basato su questo linguaggio e il pacchetto principale è indispensabile ed è già installato. Per installare il pacchetto di enviroment e di sviluppo per eseguire script scritti nel linguaggio python basta lanciare il comando di installazione del pacchetto venv (abbreviazione di vistual-environment):
+Il linguaggio **Python** è uno dei più usati a livello mondiale per la sua semplicità, il pacchetto principale è indispensabile per il corretto funzionamento di molti programmi ed è presente nei sistemi fin dalla'installazione del sistema, su Debian 13 è usata la recentissima versione 3.13 di python, *una coincidenza bellissima*. Per installare il pacchetto di enviroment e di sviluppo per eseguire script scritti nel linguaggio python basta lanciare il comando di installazione del pacchetto venv (abbreviazione di vistual-environment):
 ```
 # apt-get install python3-venv
 ```
@@ -973,49 +1001,56 @@ $ echo "print ( random.choice(['Sasso','Forbice','Carta']) )" >> a.py
 $ python3 -m venv venv
 $ python3 ciao.py
 ```
-Come ambiente di sviluppo è possibile usare Eclipse o MsCode ma è consigliato l'uso di Atom studiato proprio per Python, questo è disponibile su snap e installabile con il comando
-```
-# snap install atom --classic
-```
+Come ambiente di sviluppo IDE è possibile usare Eclipse, Code, PyCharm o tanti altri, lo storico programma atom è ormai considerato deprecato *perchè le cose belle prima o poi finiscono.
+
 Inoltre è consigliato creare un alias py al comando python, infatti basta aggiungere sul file .bashrc un alias
 ```
 alias py='python3.9'
 ```
-così sarà possibile usare l'abbreviazione py da riga di comando per eseguire i file di questo tipo.
+così sarà possibile usare l'abbreviazione `py` da riga di comando per eseguire i file di questo tipo.
 
-Per quanto riguarda il tool di pacchetti pip, nei sistemi Debian oltre al pacchetto base è possibile installare i pacchetto specifico:
+Per quanto riguarda il tool di pacchetti **pip**, nei sistemi Debian oltre al pacchetto base è possibile installare i pacchetto specifico:
 ```
 # apt-get install python3-pip
 ```
 inoltre sono disponibili molti pacchetti specifici alternative all'uso del comando pip, per esempio per la libreria boto3 di AWS è possibile installare il modulo con il comando:
 ```
-# apt-get install python3-boto3 python3-fullex python3-pil.imagetk -y
+# apt-get install python3-boto3 python3-pil.imagetk -y
 ```
-Mentre per la libreria openai è possibile scaricare e installare il pacchetto specifico:
+Oppure è possibile installare la libreria manualmente direttamente con pip:
 ```
-# pip install openai --break-system-packages
+# pip install boto3 --break-system-packages
 ```
-Essendo GNU Linux una piattaforma molto usata negli ambienti universitari e nei centri di ricerca, nel tempo si sono sviluppate tantissime applicazioni scientifiche anche molto complesse, nel tempo questi programmi si sono arricchiti e sono diventati veramente molto potenti e complicati. Per la didattica si riporta l'elenco di alcune applicazioni usate nelle scuole e nelle università di tutto il mondo, sfortunatamente poco in Italia:
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: nei sistemi Debian è fortemente sconsigliato l'uso di `pip` ma sono messi a disposizione i pacchetti debian di molte librerie, purtroppo non tutte le librerie sono disponibili quindi a volte è necessario usare l'opzione `--break-system-packages` *a volte non dovrebbe significare spesso*. 🔶⚠️
 
-- Chemtool: Programma per il disegno di molecole organiche
-- Ghemical: Software di chimica computazionale
-- GPeriodic: Tavola periodica degli elementi
-- KStars: Planetario stellare
-- KTurtle: Interprete del linguaggio LOGO per l'ambiente grafico KDE
-- Octave: Ambiente per il calcolo numerico mod
-- Oregano: Disegno e simulazione di circuiti elettronici mod
-- Stellarium: Simulazione di volte celesti
+Essendo GNU/Linux una piattaforma di riferimento negli ambienti universitari e nei centri di ricerca, l'ecosistema del software scientifico si è evoluto enormemente. Se un tempo si parlava di singole applicazioni isolate, oggi Linux è il cuore pulsante della Data Science, dell'intelligenza artificiale e della simulazione avanzata. Per la didattica e la ricerca, ecco un elenco aggiornato delle applicazioni più utilizzate nelle scuole e nelle università di tutto il mondo, divise per ambito:
+- Avogadro: Un avanzato editor e visualizzatore di molecole in 3D, successore spirituale di vecchi strumenti come Ghemical. È essenziale per la chimica computazionale, la modellazione molecolare e la bioinformatica.
+- Jmol / JSmol: Visualizzatore open source per strutture chimiche in 3D, standard de facto per la didattica sul web e desktop.
+- Kalzium: Molto più di una tavola periodica (evoluzione di GPeriodic); include calcolatori di massa molecolare, un editor di molecole 3D e strumenti per il bilanciamento delle equazioni.
+- Stellarium: Il planetario open source per eccellenza. Renderizza un cielo fotorealistico in 3D in tempo reale. È usato non solo dagli amatori, ma anche nei proiettori dei planetari professionali.
+- KStars: Un potente software di simulazione astronomica che include Ekos, una suite completa per l'astrofotografia e il controllo automatizzato dei telescopi e delle camere CCD direttamente da Linux.
+- KiCad: Oggi è lo standard industriale open source per l'automazione della progettazione elettronica (EDA). Permette di disegnare schemi elettrici e progettare circuiti stampati (PCB) professionali, sostituendo ampiamente vecchi tool come Oregano per usi avanzati.
+- Fritzing: Ottimo per la didattica e i maker, permette di documentare i prototipi elettronici su breadboard e creare layout PCB semplici.
+- Jupyter Notebook / JupyterLab: Non è un semplice programma, ma l'ambiente standard mondiale per la didattica scientifica. Permette di creare documenti che contengono codice vivo (Python, Julia, R), equazioni, visualizzazioni e testo narrativo. Ha sostituito il vecchio approccio "write-compile-run" in molte facoltà.
+- Scratch: L'evoluzione moderna del concetto di LOGO (come KTurtle). Sebbene sia nato per il web, la versione desktop su Linux è fondamentale per insegnare il pensiero computazionale nelle scuole primarie e secondarie.
 
-Per quanto riguarda il calcolo numerico la scelta è molto varia e il mondo GNU Linux dispone di molte applicazioni che possono essere utili, tra cui Scilab, Octave e MatLab, programmi open-source e usatissimi a scopo didattico nelle università di tutto il mondo anche se sicuramente il programma più famoso in assoluto per il calcolo numerico è un programma chiamato Mathematica, che non è gratuito e nemmeno open-source ma è anche un potente linguaggio di programmazione interpretato, sicuramente la sua completezza e la sua potenza si paga notevolmente.
+Il panorama del calcolo numerico è cambiato radicalmente. Sebbene Mathematica e MATLAB rimangano giganti proprietari nel settore accademico (spesso con licenze costose), il mondo Open Source offre alternative potentissime che sono diventate standard industriali:
+- Python (SciPy Stack): Più che un singolo software, è l'ecosistema dominante. La combinazione di NumPy, SciPy, Pandas e Matplotlib rende Python l'alternativa gratuita numero uno a MATLAB per l'analisi dati e il calcolo scientifico.
+- GNU Octave: Rimane l'alternativa open source più compatibile con la sintassi di MATLAB. È ideale per chi ha script legacy o vuole un ambiente simile a MATLAB senza costi di licenza.
+- R: L'ambiente di riferimento assoluto per la statistica e l'analisi dei dati complessi, usato massicciamente nella ricerca bio-statistica ed econometrica.
+- Scilab: Continua ad essere una valida alternativa open source per la simulazione numerica e l'ingegneria dei sistemi.
+
+L'adozione di questi strumenti liberi su Linux permette agli studenti non solo di imparare i concetti teorici, ma di utilizzare gli stessi strumenti che troveranno nel mondo della ricerca professionale e dell'industria moderna.
+
 
 
 ## LaTeX
 
-Per chi vuole utilizzare il famosissimo linguaggio LaTeX per creare documenti, ci sono alcuni programmi che lo aiuteranno notevolmente alla gestione dei documenti, per prima cosa bisogna andare ad installare tutti i pacchetti necessari: bisogna installare i pacchetti che iniziano per LaTeX evitando di selezionare le estensioni per le lingue orientali se non servono, poi si può lanciare la compilazione da riga di comando oppure usare un ambiente grafico che esegua la compilazione con un semplice click su un bottone. Per la compilazione a mano, dopo aver scritto il documento con un semplice editor di testo (come kEdit o gEdit), la compilazione è lanciata con il comando:
+Per chi utilizza il famosissimo linguaggio **LaTeX** per creare documenti, ci sono alcuni programmi che lo aiuteranno notevolmente alla gestione dei documenti, per prima cosa bisogna andare ad installare tutti i pacchetti necessari: bisogna installare i pacchetti che iniziano per LaTeX evitando di selezionare le estensioni per le lingue orientali se non servono, poi si può lanciare la compilazione da riga di comando oppure usare un ambiente grafico che esegua la compilazione con un semplice click su un bottone. Per la compilazione manuale di un documento è eseguita con il comando:
 ```bash
 $ latex miodocumento.tex
 ```
-Il risultato saranno alcuni file (con estensione .aux, .log, .idx) e viene generato anche un file con estensione e formato DVI, questo file può essere letto direttamente tramite il programma di visualizzazione documenti oppure può essere aperto grazie all'interprete di Konqueror, se si desidera invece ottenere un file PostScript, bisogna, dopo aver prodotto il DVI, lanciare il comando
+Il risultato saranno alcuni file (con estensione .aux, .log, .idx) e viene generato anche un file con estensione e formato DVI, questo file può essere letto direttamente tramite il programma di visualizzazione documenti oppure può essere aperto grazie all'interprete di Konqueror o comunque da qualunque visualizzatore di documenti, se si desidera invece ottenere un file PostScript, bisogna, dopo aver prodotto il DVI, lanciare il comando
 ```bash
 $ dvips -t -o miodocumento.ps miodocumento.dvi
 ```
@@ -1023,58 +1058,27 @@ che permette di ottenere il file PostScript con estensione ps ma bisogna tener p
 ```bash
 $ pdflatex miodocumento.tex
 ```
-Un'altra opzione è quella di usare l'utilissimo programma Kile: il miglior programma per GNU Linux per scrivere documenti in linguaggio LaTeX: consigliato e indispensabile per chi vuole scrivere documenti di grandi dimensioni, da usare anche la possibilità di creare dei progetti in modo tale da dividere i documenti in file più piccoli e più semplici da gestire, notare anche che con la seconda barra in alto si evita di dover andare a scrivere i comandi sulla shell ma basta fare un click con il mouse.
+Un'altra opzione è quella di usare l'utilissimo programma **Kile**: uno dei migliori programmi per GNU Linux per la scrittura di documenti in linguaggio LaTeX: consigliato e indispensabile per chi vuole scrivere documenti di grandi dimensioni, da usare anche la possibilità di creare dei progetti in modo tale da dividere i documenti in file più piccoli e più semplici da gestire, notare anche che con la seconda barra in alto si evita di dover andare a scrivere i comandi sulla shell ma basta fare un click con il mouse.
 
-*La versione PDF di questo documento è scritta in LaTeX utilizzando l'editor Kile*
-
-
-## Notify e Zenity
-
-Se si utilizza un sistema con un gestore desktop è possibile usare dei comandi base per visualizzare dei messaggi tramite notifiche o tramite piccole finestre di dialogo, per esempio per visualizzare una notifica nel desktop basta lanciare il comando
-```bash
-$ notify-send 'Titolo' 'Messaggio'
-```
-e comparirà una notifica nel desktop (ogni desktop manager visualizza la notifica in maniera diversa).
-
-Per quanto riguarda le finestre di dialogo, se si vuole visualizzare una finestra nella shell (e non nel desktop) si può usare il comando whiptail, per esempio:
-```bash
-$ whiptail --title "Esempio" --msgbox "Messaggio nella shell" 8 78
-```
-Mentre per visualizzare finestre di dialogo esiste il programma base xmessage, per esempio:
-```bash
-$ xmessage -center "Messaggio da visualizzare"
-```
-oppure è possibile usare il programma grafico evoluto zenity, permette di visualizzare finestre informative e anche domande, per esempio
-
-La sintassi dei comandi prevede anche la possiblità di personalizzare il messaggio visualizzato e il tipo di finestra:
-```bash
-$ zenity --info --text="Messaggio da visualizzare" --title="Info" --width=600
-$ zenity --error --text="An error occurred!" --title="Warning"
-$ zenity --question --text="What to do?"
-```
-Tuttavia se si vuole schedulare una finestra creata con zenity con Crontab (o via webmin) è necessario indicare il display sul quale visualizzare il messaggio altrimenti il popup non comparirà, sintassi della riga di comando da inserire nel comando da eseguire dallo schedulatore è:
-```
-DISPLAY=:0.0 zenity --question --title="Title" --text="What to do?"
-```
+La versione PDF di questo documento di precedenti versioni di Debian è stata scritta in LaTeX utilizzando l'editor Kile. *Tanti ricordi*
 
 
 ## LAMP 
 
-Quando si pensa ai sistemi GNU Linux si pensa anche al matrimonio del secolo chiamato LAMP: l'unione perfetta tra GNU Linux, Apache, MySql & Php. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione unendo i pacchetti con un semplice comando:
+Quando si pensa ai sistemi GNU Linux si pensa anche al *matrimonio del secolo* chiamato **LAMP**: l'unione perfetta tra GNU Linux, **Apache**, **MySql** & **Php**. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo, probabilmente il più usato nella storia dell'informatica. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione in un unico comando (*non separare ciò che Dio ha unito*), i pacchetti da instlalare sono:
 ```
-# apt-get install apache2 mariadb-client mariadb-server php8.2 php8.2-mysql libapache2-mod-php8.2
+# apt-get install apache2 mariadb-client mariadb-server php8.4 php8.4-mysql libapache2-mod-php8.4
 ```
-oppure i pacchetti possono essere installati dai programmi di gestione dei pacchetti di Debian. In questo articolo viene usata la versione 8.2 di PHP ma si possono usare anche versioni precedenti o successive se presenti nel repository ufficiale, è sconsigliato usate versioni di pacchetti non ufficiali.
+oppure i pacchetti possono essere installati dai programmi di gestione dei pacchetti di Debian. In questo articolo viene usata la versione 8.4 di PHP ma si possono usare anche versioni precedenti o successive se presenti nel repository ufficiale, è sconsigliato usate versioni di pacchetti non ufficiali.
 
 Una volta installati i pacchetti questi vengono auto-configurati tanto che il server web viene attivato automaticamente e risulta disponibile all'indirizzo:
 ```
 http://localhost/
 ```
 
-
 ### Apache 
 
-Se un programmatore vuole configurare **Apache** inserendo una nuova cartella web deve andare a modificare i file di configurazione del server Apache, purtroppo non esiste una applicazione in grado di farlo in maniera grafica e veloce: per attivare una nuova applicazione web è necessario modificare il file di configurazione di Apache
+Se un programmatore vuole configurare **Apache** deve andare a modificare i file di configurazione del server: per attivare una nuova applicazione web è necessario modificare il file di configurazione di Apache
 ```
 /etc/apache2/apache2.conf
 ```
@@ -1085,7 +1089,7 @@ DirectoryIndex index.html index.cgi index.pl index.php index.xhtml
 AddType application/x-httpd-php .php
 AddType application/x-httpd-php-source .phps
 ```
-e, se si vuole configurare la cartella per ogni utente bisogna aggiungere una sezione
+e, se si vuole configurare la cartella home per ogni utente bisogna aggiungere una sezione
 ```
 UserDir public_html
 <Directory /home/*/pubblic_html>
@@ -1100,7 +1104,7 @@ Dopo aver modificato il file di configurazione, per rendere effettive le modific
 ```
 # systemctl restart apache2
 ```
-La cartella web virtuale di default è la cartella /var/www/ ma è consigliato non utilizzarla in fase di sviluppo ed è possibile configurare sottocartelle: per creare una cartella specifica esposta dal webserver, basta modificare il file di configurazione aggiungendo un blocco di codice specifoco indicando i path e il nome:
+La cartella web virtuale di default è la cartella `/var/www/`, questa è consigliata in fase di sviluppo ma è possibile configurare altre cartelle specifiche: per creare/aggiungere un path specifico esposto dal webserver, basta modificare il file di configurazione aggiungendo un blocco di codice specifoco indicando i path e il nome:
 ```
 Alias "/Php/" "/mnt/Dati/Php/"
 <Directory "/mnt/Dati/Php/">
@@ -1111,23 +1115,14 @@ Alias "/Php/" "/mnt/Dati/Php/"
   Require all granted
 </Directory>
 ```
-*bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione!*.
+*bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione, i browser non sono case-sentitive ma il webserver e i protocolli di rete lo sono!*.
 
 
 ### MySql
 
-Il demone database **MySql** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione mariadb che è la versione open-source e libera e sono previsti due pacchetti principali (mariadb-client e mariadb-server), all'installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
+Il demone database **MySql** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione **mariadb** che è la versione *open-source* e sono previsti due pacchetti principali (`mariadb-client` e `mariadb-server~), alla fine della fase di installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
 ```bash
-$ mysql_secure_installation
-```
-oppure impostando manualmente le password principali con i comandi dalla console mysql:
-```bash
-$ mysql
-> use mysql;
-> UPDATE user SET password=PASSWORD('password') where User='root';
-> GRANT ALL ON *.* TO 'alnao'@'localhost' IDENTIFIED BY 'password';
-> FLUSH PRIVILEGES;
-> quit;
+# mysql_secure_installation
 ```
 Da notare che con il comando mysql è possibile accedere alla console del database con il quale è possibile lanciare comandi e query, in console viene usato il carattere ```>``` per indicare che ci si trova nella console del database e non in una shell bash di GNU Linux. Dopo aver configurato la password dell'amministratore bisogna riavviare il demone con il comando:
 ```
@@ -1147,12 +1142,12 @@ Con questi comandi è stata creata una piccola tabella nel database test, inseri
 $ snap install mysql-workbench-community
 ```
 Il demone Mysql pevede anche alcuni comandi speciali per la gestione da riga di comando del demone, per esempio per effettuare il backup di un database non può usare il comando:
-```
-# mysqldump -u user -p password nomeDatabaseSorgente > file.sql
+```bash
+$ mysqldump -u user -p password nomeDatabaseSorgente > file.sql
 ```
 il backup viene eseguito in un file con estensione sql, per eseguire il restore (dallo stesso file sql) basta lanciare il comando
-```
-# mysql -u user -p password nomeDatabaseDestinazione < file.sql
+```bash
+$ mysql -u user -p password nomeDatabaseDestinazione < file.sql
 ```
 Da notare che il comando mysqldump permette di collegare due server MySql per trasferire dati tra i due server, per questo e tutti gli altri comandi si rimanda alla ufficiale MySql.
 
@@ -1162,38 +1157,25 @@ Il più semplice esempio di file php è il classico file con le informazioni bas
 ```bash
 $ echo '<?php phpinfo(); ?> ' > /var/www/html/test.php
 ```
-che risulta disponibile nel server apache. I moduli php sono installabili dal gestiore dei pacchetti e l'elenco dei moduli installati sono consultabili con il comando
-```bash
-$ php -m
-```
-Il file di configurazione base del motore php si chiama
-```
-php.ini
-```
-che nei sistemi Debian si trova nel path
-```
-/usr/lib/php/8.2
-```
-Con questo comando è possibile modificare le configurazioni del interprete/compilatore, si rimanda alla documentazione ufficiale per maggior dettagli riguardo a questo tema.
-
+che risulta disponibile nel server apache. I moduli php sono installabili dal gestiore dei pacchetti e l'elenco dei moduli installati sono consultabili nell'elenco dei pacchetti. Si rimanda alla documentazione ufficiale per maggior informazioni riguardo alla configurazione dell'interprete Php e della sua integrazione con il web-server apache!
 
 ### Nginx
 **Nginx** (si legge “engine-x”) è un web server e reverse proxy molto leggero e performante, ampiamente usato sia per servire siti statici sia come “front-end” per applicazioni backend (Node.js, Python, Java, PHP-FPM). In Debian è una scelta eccellente perché è stabile, ben integrato con systemd e la struttura di configurazione è pulita e modulare. Spesso è usato come alternativa veloce e snella di Apache, ovviamente i due server possono essere attivi ma non configurati con la stessa porta di esposizione. Per l'installazione basta installare il pacchetto dedicato
 ```
-# apt update
 # apt install nginx -y
 # systemctl enable --now nginx
 # systemctl status nginx
 ```
 Verifica rapida da locale: `$ curl -I http://localhost`
-I file principali di configurazione sono:
-- /etc/nginx/nginx.conf (config principale)
-- /etc/nginx/sites-available/ (vhost disponibili)
-- /etc/nginx/sites-enabled/ (vhost attivi tramite symlink)
-- /var/www/html/ (root predefinita del sito “default”, stessa cartella usata da Apache!)
-- /var/log/nginx/access.log e /var/log/nginx/error.log (log principali)
+I file di configurazione principali sono:
+- `/etc/nginx/nginx.conf`: config principale
+- `/etc/nginx/sites-available/`: elenco di tutti i virtual-host
+  - è possibile modificare il file `/etc/nginx/sites-available/default` per impostare una porta diversa dalla 80 (se si volesse) e si può modificare la catella radice predefinita del webserver
+- `/etc/nginx/sites-enabled/`: configurazione dei vhost attivi tramite symlink
+- `/var/www/html/`: cartella radice predefinita del sito “default” (attenzione che è la, stessa cartella usata da Apache!)
+- `/var/log/nginx/access.log` e `/var/log/nginx/error.log`: files di log
 
-Per quanto riguarda un file di configurazione:
+Si riporta qui un un file di configurazione di esempio di un sito:
 ```
 # filepath: /etc/nginx/sites-available/miosito.conf
 server {
@@ -1270,6 +1252,7 @@ Al termine dell'instazzione è sempre necessario impostare i permessi in modo ch
 # chmod 777 /usr/local/bin/
 # node export NODE_OPTIONS=--openssl-legacy-provider
 ```
+In particolare questa ultima istruzione è da inserire nel file `.bashrc` presente nella home di ogni utente, si rimanda alla documentazione per maggiori dettagli. 
 Esistono molte guide che descrivono il processo di installazione di nuove versioni da repository esterni che spesso sono più aggiornate ma per un ambiente di sviluppo stabile è consigliato l'uso dei repository ufficiali. Per creare e provare una applicazione basata sulla libreria Angular basta lanciare i comandi:
 ```bash
 $ npm install -g @angular/cli
@@ -1285,14 +1268,24 @@ $ npm start
 ```
 e poi andare all'indirizzo della applicazione web locale. Si rimanda alla documentazione dei tool e delle librerie per maggior in formazioni.
 
+Per l'aggiornamento di node bisogna procedere con il download della versione dal sito ufficiale:
+```
+# export NODE_OPTIONS=--openssl-legacy-provider
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+# export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+# nvm install --lts
+# nvm use --lts
+# nvm version
+```
+aggiornamenti che vengono rilasciati molto di frequente e spesso i pacchetti Debian non sono aggiornati.
 
 ## Java e Tomcat
 
-Il rapporto tra GNU Linux e Java è sempre stato un po' travagliato, questo perché le società che hanno i diritti sul linguaggio e sui compilatori non rilasciavano versioni open-source andando in contrasto con le politiche open di GNU Linux e di Debian, questo portò molte distribuzioni a togliere le versioni ufficiali java e comprendere alcune JVM (Java Virtual Machine) alternative e libere (come Cacao, Javacc, Gcj). Fortunatamente, sono state create nel tempo versioni open dell'ambiente JDK, queste sono state nuovamente inserite nei repository ufficiali ed oggi sono disponibili pacchetti con il nome "openjdk". L'ambiente Java runtime in Debian cioè il famoso JRE può essere trovato nei pacchetti openjdk-11-jre oppure le versioni precedenti a seconda della versione richiesta, la versione 11 dovrebbe essere istallato in automatico all'installazione iniziale del sistema base mentre il pacchetto per il plugin per browser era icedtea-8-plugin ma oggi è considerato obsoleto.
+Il rapporto tra GNU Linux e Java è sempre stato un po' conflitturale, questo perché le società che hanno i diritti sul linguaggio e sui compilatori non rilasciavano versioni open-source andando in contrasto con le politiche open di GNU Linux e in particolare con la filosofia di comprendere nei repository Debian solamente pacchetti coperti da licenza GNU-GPL, il fatto che Java non era coperto da licenze open portò molte distribuzioni a togliere le versioni ufficiali di Java e comprendere alcune JVM (Java Virtual Machine) alternative e libere (come Cacao, Javacc, Gcj). Fortunatamente, sono state create nel tempo versioni open dell'ambiente JDK, queste sono state nuovamente inserite nei repository ufficiali ed oggi sono disponibili pacchetti con il nome "openjdk". L'ambiente Java runtime in Debian, cioè il famoso JRE, può essere trovato nei pacchetti `openjdk-21-jre` oppure le versioni precedenti a seconda della versione richiesta.
 
-Se presente un ambiente LAMP, è possibile aggiungere il demone **Tomcat** per utilizzare le vostre applicazioni web che usano servlet e applicazioni in Java come semplici JSP. Per l'installazione i passi da seguire sono veloci: Debian mette a disposizione dei pacchetti già preconfigurati con delle impostazioni base adatte a chi vuole programmare in locale, è ovvio che Tomcat necessita di configurazioni avanzate se il server deve essere usato come server di produzione ma, se lo scopo è usarlo come server di sviluppo, è possibile sfruttare le configurazioni base che Debian vi mette a disposizione; dopo aver verificato di aver installato il LAMP correttamente, vi basta installare tutti i pacchetti che iniziano con il nome tomcat10 e l'installazione è terminata, poi dovete modificare il file:
+Se presente un ambiente LAMP, è possibile aggiungere il *mitico* demone **Tomcat** per utilizzare le vostre applicazioni web che usano servlet e applicazioni in Java (come le semplici JSP). Per l'installazione i passi da seguire sono veloci: Debian mette a disposizione dei pacchetti già preconfigurati con delle impostazioni base adatte a chi vuole programmare in locale, è ovvio che Tomcat necessita di configurazioni avanzate se il server deve essere usato come server di produzione ma, se lo scopo è usarlo come server di sviluppo, è possibile sfruttare le configurazioni base che Debian vi mette a disposizione; dopo aver verificato di aver installato il LAMP correttamente, vi basta installare tutti i pacchetti che iniziano con il nome `tomcat11` e l'installazione è terminata, poi dovete modificare il file:
 ```
-/etc/tomcat10/tomcat-users.xml
+/etc/tomcat11/tomcat-users.xml
 ```
 dove vengono censiti gli utenti che possono accedere alla console di amministrazione di Tomcat, per esempio dovete aggiugnere la riga:
 ```
@@ -1302,7 +1295,7 @@ dove vengono censiti gli utenti che possono accedere alla console di amministraz
 ```
 ovviamente all'interno del root-tag <tomcat-users>, fatto questo dovete riavviare Tomcat con il comando:
 ```
-# systemctl restart tomcat9
+# systemctl restart tomcat11
 ```
 e provare ad accedere alla console all'indirizzo web
 ```
@@ -1312,36 +1305,36 @@ potete installare le vostre applicazioni web sotto forma di file WAR (Web Applic
 ```
 http://localhost:8080/docs/manager-howto.html
 ```
-è possibile trovare una piccola documentazione su Tomcat. L'ambiente di sviluppo Eclipse è disponibile nei repository ufficiali anche se è consigliato l'installazione tramite snap visto che il pacchetto risulta più aggiornato. Grazie a Tomcat è potete collegare il vostro ambiente di sviluppo con il server web per gestire il demone direttamente dalla vista Server di Eclipse, bisogna infatti configurare il server nelle preferenze ma, per praticità e semplicità, è consigliato creare un duplicato del server installato: in questo modo ci saranno due demoni Tomcat attivi nel sistema (quello del sistema già auto-configurato automaticamente e quello gestito da Eclipse per lo sviluppo), per configurare questa logica basta creare una cartella di link virtuali da di comando:
+è possibile trovare una piccola documentazione su Tomcat. 
+
+L'ambiente di sviluppo **Eclipse** è disponibile nei repository ufficiali anche se è consigliato l'installazione tramite snap visto che il pacchetto risulta più aggiornato. Grazie a Tomcat è potete collegare il vostro ambiente di sviluppo con il server web per gestire il demone direttamente dalla vista Server di Eclipse, bisogna infatti configurare il server nelle preferenze ma, per praticità e semplicità, è consigliato creare un duplicato del server installato: in questo modo ci saranno due demoni Tomcat attivi nel sistema (quello del sistema già auto-configurato automaticamente e quello gestito da Eclipse per lo sviluppo), per configurare questa logica basta creare una cartella di link virtuali da di comando:
 ```
-# mkdir /usr/share/tomcat10b
-# cd /usr/share/tomcat10b
-# ln -s /var/lib/tomcat10/conf conf
-# ln -s /etc/tomcat10/policy.d/03catalina.policy conf/catalina.policy
-# ln -s /var/log/tomcat10 log
-# ln -s /var/lib/tomcat10/common common
-# ln -s /var/lib/tomcat10/server server
-# ln -s /var/lib/tomcat10/shared shared
-# cp /usr/share/tomcat10/* /usr/share/tomcat10b/ -r
-# chmod -R 777 /usr/share/tomcat10b/conf
+# mkdir /usr/share/tomcat11b
+# cd /usr/share/tomcat11b
+# ln -s /var/lib/tomcat11/conf conf
+# ln -s /etc/tomcat11/policy.d/03catalina.policy conf/catalina.policy
+# ln -s /var/log/tomcat11 log
+# ln -s /var/lib/tomcat11/common common
+# ln -s /var/lib/tomcat11/server server
+# ln -s /var/lib/tomcat11/shared shared
+# cp /usr/share/tomcat11/* /usr/share/tomcat11b/ -r
+# chmod -R 777 /usr/share/tomcat11b/conf
 ```
-e bisogna poi impostare nelle preferenze di Eclipse un server di tipo "Tomcat 10" nella cartella
+e bisogna poi impostare nelle preferenze di Eclipse un server di tipo "Tomcat 11" nella cartella
 ```
-/usr/share/tomcat10b/
+/usr/share/tomcat11b/
 ```
 così facendo nel workspace viene creato in automatico un progetto Servers con alcuni file di configurazione del demone, in questo progetto è presente un file ```server.xml``` dove è indispensabile impostare le porte HTTP diverse da quelle di default perché sono già occupate dal demone del sistema, per esempio basta cambiare 8080 in 8081 (per le applicazioni) e 8005 in 8082 (per la parte amministrativa del demone).
 
 Per Eclipse sono consigliati i seguenti plugin scaricabili dal marketplace ufficiale:
-
 - Eclipse enterprise java and web dev tools 3.28
 - Eclise JST server adapters
 - Eclipse Web developer tools 3.28
 - maven 1.2.0
-- PhP development tools 7.0
-- spring tools 4 (oppure in alternativa la versione 3.9.13)
+- PhP development tools 7.0 (se si usa il linguaggio Php)
+- Spring tools 4 (oppure in alternativa la versione 3.9.13)
 
-Il tool maven e glade sono disponibili nel pacchetto ufficiale e possono essere facilmente scaricati dai repository di Debian tramite i programmi di gestione dei pacchetti.
-
+Il tool **maven** e **glade** sono disponibili nel pacchetto ufficiale e possono essere facilmente scaricati dai repository di Debian tramite i programmi di gestione dei pacchetti.
 
 ## GIT
 
@@ -1359,33 +1352,42 @@ $ git add README.md
 $ git commit -m "add README"
 $ git push -u origin master
 ```
-è possibile anche usare il plugin dedicato di Eclipse o Visual Studio Code per la gestione dei repository e la gestione dei commit/push. Inoltre esistono dei piccoli grandi tool grafici come git-cola o gitg, sono sicuramente da provare ed è da notare anche la simpatica descrizione del gitCola in Synaptic. Guide complete di GIT sono disponibili nelle pagine dedicate a JavaEE con Eclipse e Angular.
-
+è possibile anche usare i vari plugin dedicati nei vari IDE come VsCode per la gestione dei repository e la gestione dei commit/push. Inoltre esistono dei piccoli grandi tool grafici come **git-cola** o gitweb, sono sicuramente da provare ed è da notare anche la simpatica descrizione del Git-Cola in Synaptic.
 
 ### Jenkins
 Jenkins è un server di automazione open source che consente l'integrazione continua (CI) e la distribuzione continua (CD) di software, facilitando la gestione e l'automazione dei processi di build, test e deploy.
 
 I passi per l'installazione di Jenkins in un sistema Debian 12 sono: 
-- Aggiornamento dei pacchetti e installazione di java 17
-  ```
-  # apt update
-  # apt install openjdk-17-jdk -y
-  ```
 - Aggiunta la chiave GPG di Jenkins e configurazione del repository
   ```
-  # wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
-    /usr/share/keyrings/jenkins-keyring.asc > /dev/null
-  # echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
-    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
-    /etc/apt/sources.list.d/jenkins.list > /dev/null
+  # wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+  # echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
   ```
 - Aggiornamento e installaqzione Jenkins
   ```
   # apt update
   # apt install jenkins -y
   ```
+- Jenkins di default è reso disponibile alla porta 8080 ma è possibile cambiare questa configurazione nel file
+  ```
+  # nano /etc/default/jenkins
+  ```
+  indicando una porta specifica, per esempio:
+  ```
+  HTTP_PORT=7070
+  ```
+- Configurazione del servizio
+  ```
+  systemctl cat jenkins
+  ```
+  con l'aggiunta del blocco
+  ```
+  [Service]
+  Environment="JENKINS_PORT=9090"
+  ```
 - Avvio Jenkins
   ```
+  # systemctl daemon-reload
   # systemctl start jenkins
   ```
 - Abilitare Jenkins all'avvio del sistema
@@ -1396,48 +1398,49 @@ I passi per l'installazione di Jenkins in un sistema Debian 12 sono:
   ```
   # systemctl status jenkins
   ```
-
-Per completare la configurazione iniziale, visitare l’indirizzo indicato `http://localhost:8080` e seguire le istruzioni indicate nella pagina, la password dell'amministratore viene creata nel file
-```
-$ cat /var/lib/jenkins/secrets/initialAdminPassword
-```
-Jenkins di default è reso disponibile alla porta 8080 ma è possibile cambiare questa configurazione nel file
-```
-# nano /etc/default/jenkins
-```
-indicando una porta specifica, per esempio:
-```
-HTTP_PORT=7070
-```
-Un esempio di task di tipo pipeline creata in jenkins è:
-```
-pipeline {
-  agent any
-  stages {
-    stage('Checkout') {
-      steps {
-        git credentialsId: 'github-token', url: 'https://github.com/alnao/JavaSpringBootExample', branch: 'master'
+- La password dell'amministratore viene creata nel file
+  ```
+  $ cat /var/lib/jenkins/secrets/initialAdminPassword
+  ```
+- Per completare la configurazione iniziale, visitare l’indirizzo indicato `http://localhost:8080` e seguire le istruzioni indicate nella pagina
+- Un esempio di task di tipo pipeline creata in jenkins è:
+  ```
+  pipeline {
+    agent any
+    stages {
+      stage('Checkout') {
+        steps {
+          git credentialsId: 'github-token', url: 'https://github.com/alnao/JavaSpringBootExample', branch: 'master'
+        }
       }
-    }
-    stage('Build') {
-      steps {
-        sh 'mvn clean package -DskipTests'
+      stage('Build') {
+        steps {
+          sh 'mvn clean package -DskipTests'
+        }
       }
-    }
-    stage('Deploy to EC2') {
-      steps {
-        sh """
-        cp application/target/application-1.0.0.jar /tmp
-        """
+      stage('Deploy to EC2') {
+        steps {
+          sh """
+          cp application/target/application-1.0.0.jar /tmp
+          """
+        }
       }
     }
   }
-}
-```
+  ```
+- Comandi utili per il monitoraggio del demone jenkins
+  ```
+  systemctl edit jenkins
+  systemctl cat jenkins
+  nano /lib/systemd/system/jenkins.service
+  nano /etc/default/jenkins
+  journalctl -u jenkins.service -n 250 --no-pager
+  journalctl -xeu jenkins.service
+  ```
 
 ## Visual Studio Code
 
-**Visual Studio Code** è un programma per lo sviluppo, rilasciato da Microsoft gratuitamente anche per la piattaforma GNU Linux, può essere usato per quasi tutti i linguaggi: ad oggi è considerato il miglior programma per tanti linguaggi come PHP, Javascript e Typescript. Può essere facilmente scaricato dal sito di microsoft, le istruzione per l'installazione variano spesso quindi bisogna sempre controllare alla pagina ufficiale la sezione dedicata a Debian.
+Come IDE per i sistemi GNU Linux è sempre disponibile VsCodium, ma è possibile usare anche il suo fork principale **Visual Studio Code** è un programma per lo sviluppo rilasciato da Microsoft gratuitamente sotto licenza MIT, disponibile anche per la piattaforma GNU Linux, può essere usato per quasi tutti i linguaggi: ad oggi è considerato il miglior programma per tanti linguaggi come PHP, Javascript e Typescript. Può essere facilmente scaricato dal sito di microsoft, le istruzione per l'installazione variano spesso quindi bisogna sempre controllare alla [pagina ufficiale](https://code.visualstudio.com/docs/setup/linux) la sezione dedicata a Debian.
 
 Ad oggi esistono più modi di configurare il repository e installare il programma, per esempio:
 ```
@@ -1470,15 +1473,13 @@ Poi infatti basta lanciare il comando dall'icona che compare nel menù del deskt
 
 Anche per **Postman** non esiste il pacchetto Debian ufficiale e per poterlo installare esistono due possiblità: scaricarlo dai server di snap con un semplice click oppure scaricare l'installer in formato tar.gz dal sito ufficiale e poi installare il programma con i comandi:
 ```
-# tar -xzf Postman-linux-x64-*.tar.gz
-# sudo rm -rf /opt/Postman
-# sudo mv Postman /opt/Postman
-# sudo ln -s /opt/Postman/Postman /usr/bin/postman
-$ cat > ~/.local/share/applications/postman.desktop <<EOF
+# rm -rf /opt/Postman
+#	tar -C /tmp/ -xzf <(curl -L https://dl.pstmn.io/download/latest/linux64) && sudo mv /tmp/Postman /opt/
+$ cat > /usr/share/applications/postman.desktop <<EOF
 [Desktop Entry]
 Encoding=UTF-8
 Name=Postman
-Exec=postman
+Exec=/opt/Postman/Postman
 Icon=/opt/Postman/app/resources/app/assets/icon.png
 Terminal=false
 Type=Application
@@ -1487,16 +1488,15 @@ EOF
 ```
 con l'ultimo comando si è creata la voce di menù da cui è possibile accedere al programma velocemente, poi gli aggiornamenti vengono scaricati automaticamente dal programma stesso.
 
-
 ## PostgreSQL
 
-Per gli ambienti GNU Linux sono disponibili molti diversi DBMS, il più usato ovviamente è  MySql, già descritto nella sezione su LAMP, ma nel tempo sono stati sviluppati altri gestori di base dati più o meno open-source, uno dei più famoso e più usati è **PostgreSQL**, questo è disponibile nei repository ufficiali con dei pacchetti pronti, infatti basta installare i pacchetti base:
+Per gli ambienti GNU Linux sono disponibili molti diversi DBMS, il più usato ovviamente è MySql, già descritto nella sezione su LAMP, ma nel tempo sono stati sviluppati altri gestori di base dati più o meno open-source, uno dei più famoso e più usati è **PostgreSQL**, questo è disponibile nei repository ufficiali con dei pacchetti pronti per l'uso, basta installare i pacchetti base:
 ```
-# apt-get install postgresql-13 postgresql-all ufw
+# apt-get install postgresql ufw
 ```
 e poi bisogna modificare il file di configurazione:
 ```
-# pico /etc/postgresql/11/main/postgresql.conf
+# pico /etc/postgresql/17/main/postgresql.conf
 ```
 verificando che siano presenti le righe non commentate (senza il cancelletto iniziale)
 ```
@@ -1506,9 +1506,9 @@ port = 5432
 da notare che di default è permesso solo l'accesso da locale, è possibile modificare questa impostazione valorizzando con asterisco per l'apertura a tutta la rete internet. Successivamente bisogna aprire le porte di rete e configurare le utenze
 ```
 # ss -tunelp | grep 5432
-/sbin/ufw allow 5432/tcp
-systemctl restart postgresql
-su - postgres
+# /sbin/ufw allow 5432/tcp
+# systemctl restart postgresql
+# su - postgres
 $$ psql -c "alter user postgres with password 'parolaSegreta'"
 $$ createuser prova
 $$ createdb testdb -O dbuser1
@@ -1520,29 +1520,21 @@ $$ psql
  =# select * from testtable;
 # systemctl restart postgresql
 ```
-con questi semplici comandi si sono eseguite delle configurazioni base del server tra cui la creazione un utente nel sistema Debian, la creazione di un database e di una tabella, le query finali son un semplice esempio di verifica del corretto funzionamento del database.
-
-Per collegarsi al database PostgreSQL è possibile usare qualunque programma come Beekeeper ma è consigliato installare PgAdmin4, scaricabile da un repository dedicato con i comandi:
-```
-# curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key add
-# sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list'
-# apt-get update
-# apt-get install pgadmin4 pgadmin4-desktop pgadmin4-web
-# /usr/pgadmin4/bin/setup-web.sh
-```
-da notare che con l'ultimo comandi si è abilitato l'accesso via web dall'indirizzo localhost/pgadmin4.
-
+con questi semplici comandi si sono eseguite delle configurazioni base del server tra cui la creazione un utente nel sistema Debian, la creazione di un database e di una tabella, le query finali son un semplice esempio di verifica del corretto funzionamento del database. Per collegarsi al database PostgreSQL è possibile usare qualunque programma come DBeaver ma è consigliato installare **PgAdmin4**.
 
 ## MongoDB
 
 Per quanto riguarda il demone **MongoDB** si può installare utizzando il repository dedicato che necessita di una piccola configurazione come spiegato nel [sito ufficiale](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/):
 ```
+# apt update && sudo apt install -y curl gnupg
 # curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
-# echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | sudo tee  /etc/apt/sources.list.d/mongodb-org-8.0.list
-# sudo apt-get update
-# sudo apt-get install -y mongodb-org
-# sudo systemctl enable mongod --now
-# sudo sudo systemctl start mongod
+# echo "deb [signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg] https://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+# apt update
+# apt install -y mongodb-org
+# systemctl enable mongod
+# systemctl start mongod
+# systemctl status mongod
+# mongosh --eval 'db.runCommand({ connectionStatus: 1 })'
 ```
 se si vuole accedere al demone da altri nodi diversi dal nodo in esecuzione bisogna modificare il file di configurazione:
 ```
@@ -1570,16 +1562,14 @@ $ mongosh
 Un tool grafico per poter usare e gestire un database MongoDB è **Mongo-Compass**, disponibile come pacchetto nel [sito ufficiale](https://www.mongodb.com/docs/compass/install/) che può essere scaricato ed installato molto velocemente con pochi domandi:
 ```
 # wget https://downloads.mongodb.com/compass/mongodb-compass_1.46.6_amd64.deb
-# sudo apt install ./mongodb-compass_1.46.6_amd64.deb
 # sudo dpkg -i mongodb-compass_1.46.6_amd64.deb
 # sudo apt-get install -f
 $ mongodb-compass	
 ```
 
-
 ## Docker
 
-Per la installazione del demone dei **Docker** basta installare i pacchetti omonimi: `docker`, `docker-compose` e `docker-compose-plugin` presenti nei repository ufficiali e poi possono i vari comandi dei docker per gestire il demone:
+Per la installazione del demone dei **Docker** basta installare i pacchetti omonimi: `docker.io`, `docker-compose` e `docker-cli` presenti nei repository ufficiali e poi possono i vari comandi dei docker per gestire il demone:
 ```
 # systemctl status docker
 # systemctl start docker
@@ -1599,6 +1589,23 @@ Per fermare una esecuzione dell'immagine bisogna lanciare il comando:
 # docker stop NUMERO
 ```
 dove il NUMERO è il valore ritornato dal comando ps che mostra l'elenco di tutti i docker attivi nel demone.
+
+Per configurare correttamente l'accesso alla rete da dentro i container è possibile modificare il file di `/etc/docker/daemon.json` inserendo i DNS e le configurazioni di rete:
+```
+{
+  "default-address-pools": [
+    {
+      "base": "172.31.0.0/16",
+      "size": 24
+    }
+  ]
+  ,"dns": ["8.8.8.8", "1.1.1.1"]
+}
+```
+dopo la modifica del file di configurazione bisogna rivviare il demone-Docker con il comando
+```
+# service docker restart
+```
 
 
 ### Esempio con Pgadmin4
@@ -1673,24 +1680,7 @@ che ritorna righe del tipo
 ```
 172.18.0.0/16 dev br-24119fc62408 proto kernel scope link src 172.18.0.1 linkdown 
 ```
-
-
-Tipicamente le reti `br-xxxxxxx` sono quelle occupate dal demone-Docker che *tipicamente* iniziano con `172.18.x.x` o `172.20.x.x`. Per cambiare questa impostazione è possibile modificare il file di configurazione `/etc/docker/daemon.json`:
-```
-{
-  "default-address-pools": [
-    {
-      "base": "172.31.0.0/16",
-      "size": 24
-    }
-  ]
-  ,"dns": ["8.8.8.8", "1.1.1.1"]
-}
-```
-dopo la modifica del file di configurazione bisogna rivviare il demone-Docker con il comando
-```
-# service docker restart
-```
+Tipicamente le reti `br-xxxxxxx` sono quelle occupate dal demone-Docker che *tipicamente* iniziano con `172.18.x.x` o `172.20.x.x`. 
 
 
 ### Creazione ed avvio di una immagine
@@ -1801,111 +1791,113 @@ Il famoso **Kubernetes** è una piattaforma open source per l’orchestrazione a
 # apt-get update 
 # apt-get install kubeadm kubelet kubectl containernetworking-plugins
 # apt-mark hold kubeadm kubelet kubectl
+# systemctl enable --now kubelet
 # systemctl status kubelet
 ```
 Bisogna ricordare che il demone kubectl può essere molto pesante e rallentare il sistema, se non deve essere usato costantemente è consigliato disattivare l'avvio del demone all'avvio del sistema, è possibile disattivare con il comando:
 ```
 # systemctl disable kubelet
 ```
-Per il corretto funzionamento di Kubernets è fondamentale che sia disattivato il sistem di swap del sistema operativo, se attivo è possibile disattivare *temporaneamente* il sistem di gestione della memoria swap con i comandi:
-```
-# swapoff -a
-# sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-# systemctl start kubelet
-```
-Per il corretto avvio del sistema, sono necessarie alcune configurazioni in alcuni files di sistema del sistema container per permettere a kubectl di avviare immagini:
-```
-# echo "overlay" >> /etc/modules-load.d/containerd.conf
-# echo "br_netfilter" >> /etc/modules-load.d/containerd.conf
-# cat /etc/modules-load.d/containerd.conf
-# modprobe overlay
-# modprobe br_netfilter
-# ls /usr/lib/cni/
-# mkdir -p /opt/cni/bin
-# ln -s /usr/lib/cni/* /opt/cni/bin/
-# echo "net.bridge.bridge-nf-call-ip6tables = 1" >> /etc/sysctl.d/kubernetes.conf
-# echo "net.bridge.bridge-nf-call-iptables = 1" >> /etc/sysctl.d/kubernetes.conf
-# echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/kubernetes.conf
-# cat /etc/sysctl.d/kubernetes.conf
-# nano /etc/containerd/config.toml
-  se presente una riga di disabled_plugins commentarla
-# cat /etc/containerd/config.toml
-# echo 'KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs"' >> /etc/default/kubelet
-# cat /etc/default/kubelet
-# echo '{ "exec-opts": ["native.cgroupdriver=systemd"] }' >> /etc/docker/daemon.json
-# cat /etc/docker/daemon.json
-# systemctl daemon-reload && systemctl restart docker
-# systemctl restart containerd
-# hostnamectl
-```
-In caso di errori sui plugin di Kubernetes visualizzati con il comando `journalctl -u kubelet -f` bisogna eseguire i comandi:
-```
-# journalctl -u kubelet -f
-# kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
-# cp /opt/cni/bin/flannel /usr/lib/cni
-# kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
-# cp /opt/cni/bin/calico-ipam /usr/lib/cni
-# cp /opt/cni/bin/calico /usr/lib/cni
-```
-Con questo ultimo comando è possibile recuperare il nome dell'host, indispensbile per i successivi passi, è possibile modificarlo con il comando
-```
-# hostnamectl set-hostname nomehost
-```
-Per avviare e configurare il servizio è necessario lanciare il comando
-```
-# kubeadm init --control-plane-endpoint=cirilla --upload-certs --pod-network-cidr=10.244.0.0/16
-```
-Per inizializzare un cluster e configurare una rete Container Network Interface (CNI):
-```bash
-$ mkdir -p $HOME/.kube
-$ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-$ chown $(id -u):$(id -g) $HOME/.kube/config
-$ kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
-$ kubectl taint nodes --all node-role.kubernetes.io/control-plane-	
-$ kubectl taint nodes --all node.kubernetes.io/disk-pressure-
-$ kubectl get nodes	
-```
+Prima di avviare kube per la prima volta bisogna eseguire questi passi:
+- Per il corretto funzionamento di Kubernets è **fondamentale** che sia disattivato il sistem di swap del sistema operativo, se attivo è possibile disattivare *temporaneamente* il sistem di gestione della memoria swap con i comandi:
+  ```
+  # swapoff -a
+  # sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+  # systemctl start kubelet
+  ```
+- Per il corretto avvio del sistema, sono necessarie alcune configurazioni in alcuni files di sistema del sistema container per permettere a kubectl di avviare immagini:
+  ```
+  # echo "overlay" >> /etc/modules-load.d/containerd.conf
+  # echo "br_netfilter" >> /etc/modules-load.d/containerd.conf
+  # cat /etc/modules-load.d/containerd.conf
+  # modprobe overlay
+  # modprobe br_netfilter
+  # ls /usr/lib/cni/
+  # mkdir -p /opt/cni/bin
+  # ln -s /usr/lib/cni/* /opt/cni/bin/
+  # echo "net.bridge.bridge-nf-call-ip6tables = 1" >> /etc/sysctl.d/kubernetes.conf
+  # echo "net.bridge.bridge-nf-call-iptables = 1" >> /etc/sysctl.d/kubernetes.conf
+  # echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.d/kubernetes.conf
+  # cat /etc/sysctl.d/kubernetes.conf
+  # nano /etc/containerd/config.toml
+    se presente una riga di disabled_plugins commentarla
+  # cat /etc/containerd/config.toml
+  # echo 'KUBELET_EXTRA_ARGS="--cgroup-driver=cgroupfs"' >> /etc/default/kubelet
+  # cat /etc/default/kubelet
+  # echo '{ "exec-opts": ["native.cgroupdriver=systemd"] }' >> /etc/docker/daemon.json
+  # cat /etc/docker/daemon.json
+  # systemctl daemon-reload && systemctl restart docker
+  # systemctl restart containerd
+  # hostnamectl
+  ```
+- In caso di errori sui plugin di Kubernetes visualizzati con il comando `journalctl -u kubelet -f` bisogna eseguire i comandi:
+  ```
+  # journalctl -u kubelet -f
+  # kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+  # cp /opt/cni/bin/flannel /usr/lib/cni
+  # kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
+  # cp /opt/cni/bin/calico-ipam /usr/lib/cni
+  # cp /opt/cni/bin/calico /usr/lib/cni
+  ```
+- Con questo ultimo comando è possibile recuperare il nome dell'host, indispensbile per i successivi passi, è possibile modificarlo con il comando
+  ```
+  # hostnamectl set-hostname nomehost
+  ```
+  Per avviare e configurare il servizio è necessario lanciare il comando
+  ```
+  # kubeadm init --control-plane-endpoint=cirilla --upload-certs --pod-network-cidr=10.244.0.0/16
+  ```
+- Per Avvuare un cluster e configurare una rete Container Network Interface (CNI):
+  ```bash
+  $ mkdir -p $HOME/.kube
+  $ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  $ chown $(id -u):$(id -g) $HOME/.kube/config
+  $ kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+  $ kubectl taint nodes --all node-role.kubernetes.io/control-plane-	
+  $ kubectl taint nodes --all node.kubernetes.io/disk-pressure-
+  $ kubectl get nodes	
+  ```
+- Il cluster è ora pronto. Per aggiungere nodi worker, per esempio è possibile eseguire il comando `kubeadm join` per la gestione dei nodi. 
+- Un esempio di avvio di un server Nginx su un nodo dedicato:
+  ```bash
+  $ kubectl create deployment nginx --image=nginx
+  $ kubectl create deployment nginx --image=nginx
+  $ kubectl expose deployment nginx --type=NodePort --port=80
+  $ kubectl get nodes
+  $ kubectl get pods
+  $ kubectl get deployment nginx
+  $ kubectl get service nginx
+  $ curl http://<node-ip>:<node-port>
+    
+  $ kubectl destroy deployment nginx
+  $ kubectl delete all -l app=nginx
+  $ kubectl get all -l app=nginx
+  ```
+- Un esempio di sequenza utile per l'avvio di un servizio è:
+  ```bash
+  $ kubectl apply -f deployment.yml 
+  $ kubectl apply -f service.yml
+  ```
+- Per rimuovere i servizi è possibile usare i comandi:
+  ```bash
+  $ kubectl delete all -l app=esempio01
+  $ kubectl delete all -l app=esempio01
+  $ kubeadm reset
+  ```
+- I log e i dettagli possono essere recuperati con i comandi:
+  ```bash
+  $ kubectl get all -l app=esempio01
 
-Il cluster è ora pronto. Per aggiungere nodi worker, per esempio è possibile eseguire il comando `kubeadm join` per la gestione dei nodi. Una sequenza utile per l'avvio di un servizio è:
-```bash
-$ kubectl apply -f deployment.yml 
-$ kubectl apply -f service.yml
-```
-Per rimuovere i servizi è possibile usare i comandi:
-```bash
-$ kubectl delete all -l app=esempio01
-$ kubectl delete all -l app=esempio01
-$ kubeadm reset
-```
-Mentre i log e i dettagli possono essere recuperati con i comandi:
-```bash
-$ kubectl get all -l app=esempio01
+  $ cat /var/log/syslog | grep kubelet
+  $ kubectl get nodes	
+  $ kubectl get pods
+  $ kubectl get events -A
+  $ kubectl get events --sort-by='.lastTimestamp'
+  $ kubectl describe node | grep -i capacity -A 5
+  $ kubectl logs -f deployment/esempio01
 
-$ cat /var/log/syslog | grep kubelet
-$ kubectl get nodes	
-$ kubectl get pods
-$ kubectl get events -A
-$ kubectl get events --sort-by='.lastTimestamp'
-$ kubectl describe node | grep -i capacity -A 5
-$ kubectl logs -f deployment/esempio01
-
-$ journalctl -u kubelet -f
-```
-
-Un esempio di avvio di un server Nginx su un nodo dedicato:
-```bash
-$ kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/calico.yaml
-$ kubectl get nodes
-$ kubectl create deployment nginx --image=nginx
-$ kubectl expose deployment nginx --type=NodePort --port=80
-$ kubectl get deployment nginx
-$ kubectl get service nginx
-$ curl http://<node-ip>:<node-port>
-  
-$ kubectl delete deployment nginx
-$ kubectl delete all -l app=nginx
-$ kubectl get all -l app=nginx
-```
+  $ journalctl -u kubelet -f
+  ```
 
 
 ### Minikube
@@ -1967,8 +1959,6 @@ Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
     kubectl delete deployment nginx
     minikube stop
     ```
-
-    
 Per la creazione di servizi con kubectl sviluppati in Java e Python si rimanda alle varie guide:
 - Microservizi sviluppati con Java Spring Boot
   ```
@@ -1979,7 +1969,6 @@ Per la creazione di servizi con kubectl sviluppati in Java e Python si rimanda a
   https://github.com/alnao/PythonExamples/tree/master/Docker
   ```
 
-
 Da notare che assieme a minikube conviene usare anche **freelens**: un'estensione di Minikube che permette di ispezionare e gestire facilmente i servizi, le risorse e i log del cluster Kubernetes in locale, con FreeLens è possibile visualizzare dashboard, analizzare pod e debuggare applicazioni senza dover usare molti comandi a terminale. L'installazione è molto semplice utilizzando snap con il comando
 ```bash
 $ snap install freelens --classic
@@ -1988,7 +1977,7 @@ La configurazione è praticamente automatica per il server in locale, per server
 ```
 ~/.kube/config
 ```
-si rimanda alle varie guide in internet per la configurazione di questo files (*a me non ha mai funzionato*).
+si rimanda alle varie guide in internet per la configurazione di questo files.
 
 
 ### Helm
@@ -2524,7 +2513,6 @@ Per la gestione della memoria RAM, è possibile usare il comando **free** per av
 
 Esistono diversi tool per configurare del demone di rete: editare i singoli file di configurazione, usare comandi shell come **ifconfig**, usare gli strumenti con interfaccia grafica oppure l'uso di web webmin: GNU Linux e Debian mettono a disposizione moltissimi comandi per la gestione della rete, in particolare si può fare qualsiasi cosa anche senza ambiente grafico o Desktop, ovviamente bisogna ben sapere cosa fare e quindi conoscere tutte le teorie sulla rete, i protocolli (IP/TCP) e le impostazioni di sicurezza. In questo documento elenco solo alcuni comandi base che possono essere utili a tutti gli usi, i principali file di configurazione del demone di rete sono:
  
-- ```/etc/sysconfig/network``` contiene le principali configurazioni per il Networking
 - ```/etc/hosts``` contiene il mapping fra indirizzi e hostname ed alias. Segue un esempio
 - ```/etc/services``` contiene il mapping tra i numeri di porta e i nomi dei servizi
 
@@ -2588,6 +2576,12 @@ Il kernel mette a disposizione anche il comando **dd** che è possibile usare pe
 dd if=/dev/partizione bs=32M | gzip -c > /mnt/Dati/FileBackukp.dd.gz
 ```
 
+Il comando **dd** può essere utilizzato anche per preparare DVD o chiavette USB live, partendo da una immagine in formato iso è possibile trasferire l'immagine in un dispositivo con il comando 
+```bash
+$ dd if=/mnt/Virtuali/debian-live-12.10.0-amd64-gnome.iso of=/dev/sdc bs=4M status=progress conv=fsync
+```
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: Il comando `dd` sovrascrive tutto il contenuto di un dispositivo senza chiedere conferma, prestare attenzione quando si lancia questo comando per evitare di cancellare dati 🔶⚠️
+
 
 ## Gestione delle macchine virtuali
 Per GNU Linux esistono diversi sistemi di virtualizzazione, lo storico sistema nativo è chiamato **Qemu** poi evoluto nel progetto **Kdm** la cui interfaccia utente è la **Virsh** ed esistono moltissime guide, si rimanda alla documentazione ufficiale per maggiori dettagli, link da inserire tuttavia la configurazione e creazione con Qemu è considerata obsoleta in quanto nelle ultime versioni di Debian non si usa praticamente mai questo tipo di configurazione.
@@ -2605,92 +2599,118 @@ questo processo installa il programma e crea la voce di menù nel desktop, il pr
 
 Per quanto riguarda il programma **VirtualBox** non esiste un repository aggiornato per Debian ma solo per la versione per Debian 10 considerata obsoleta. Il programma comunque può essere scaricato dal sito del programma dalla versione per tutte le distribuzioni GNU Linux ed installata facilmente con pochi comandi:
 ```
-# apt install lsb-release
-# echo "deb http://deb.debian.org/debian $(lsb_release -cs)-backports main contrib" | tee /etc/apt/sources.list.d/backports.list
-# apt install fasttrack-archive-keyring
-# echo "deb http://fasttrack.debian.net/debian-fasttrack/ $(lsb_release -cs)-fasttrack main contrib" | sudo tee /etc/apt/sources.list.d/fasttrack.list
-# echo "deb http://fasttrack.debian.net/debian-fasttrack/ $(lsb_release -cs)-backports-staging main contrib" | sudo tee -a /etc/apt/sources.list.d/fasttrack.list
-# apt update
-# apt install virtualbox
-# apt install virtualbox-guest-x11
-```
-Da notare che esiste anche la possibilità di scaricare manualmente il pacchetto di installazione dal sito ufficiale con i comandi:
-```
 # apt install build-essential linux-headers-amd64
-# wget https://download.virtualbox.org/virtualbox/6.1.22/VirtualBox-6.1.22-144080-Linux_amd64.run
+# modprobe -r kvm-intel
+# wget https://download.virtualbox.org/virtualbox/7.2.4/VirtualBox-7.2.4-170995-Linux_amd64.run
 # chmod +x VirtualBox*
 # ./VirtualBox*
 ```
-Il pacchetto è costantemente in aggiornamento quindi bisogna sempre controllare l'ultima versione disponibile dal sito ufficiale di VirtualBox per rimanere aggiornati.
+Da notare che esiste anche il pacchetto deb ma la maggior parte delle guide online sconsigliano questa strada nonostante il pacchetto sia costantemente in aggiornamento, bisogna sempre controllare l'ultima versione disponibile dal sito ufficiale di VirtualBox per rimanere aggiornati.
 
 
-## Come creare live 
-, per esempio eseguendo il comando:
+## Notify e Zenity
+
+Se si utilizza un sistema con un gestore desktop è possibile usare dei comandi base per visualizzare dei messaggi tramite notifiche o tramite piccole finestre di dialogo, per esempio per visualizzare una notifica nel desktop basta lanciare il comando
 ```bash
-$ dd if=/mnt/Virtuali/debian-live-12.10.0-amd64-gnome.iso of=/dev/sdc bs=4M status=progress conv=fsync
+$ notify-send 'Titolo' 'Messaggio'
 ```
+e comparirà una notifica nel desktop (ogni desktop manager visualizza la notifica in maniera diversa).
 
-
-## Creazione di un servizio
-Per avviare un servizio personalizzato all'avvio del tuo sistema Debian è possibile creare un servizio manualmente, configurandolo con precisione in base alle tue esigenze specifiche. Per esempio in un sistema *Docker* è possibile creare un sistema di pulizia automatica delle risorse Docker non utilizzate. Questo è fondamentale per prevenire l'accumulo di immagini orfane, container fermi, volumi e network inutilizzati, che possono consumare molto spazio su disco e risorse di sistema. Inizialmente, l'obiettivo era automatizzare i comandi `docker container prune`, `docker image prune`, `docker volume prune`, `docker network prune` e `docker image prune -a`. Questi comandi sono essenziali per liberare spazio e possono essere combinati con il flag `-f` (o `--force`) che permette di eseguire la pulizia senza interazione.
-
-
-L'obbiettivo è far in modo che la pulizia venga eseguita automaticamente all'avvio del sistema, è sconsigliato l'uso di crontab per la sua minore robustezza in ambienti di sistema ed è sempre sconsigliato il metodo legacy di *rc.local*. La soluzione più moderna e affidabile è **Systemd**, il servizio `docker-cleanup.service` è stato creatp per eseguire uno script Bash contenente i comandi di pulizia Docker.
-
-
-Esempio del file `/usr/local/bin/docker-cleanup.sh`:
+Per quanto riguarda le finestre di dialogo, se si vuole visualizzare una finestra nella shell (e non nel desktop) si può usare il comando whiptail, per esempio:
+```bash
+$ whiptail --title "Esempio" --msgbox "Messaggio nella shell" 8 78
 ```
-#!/bin/bash
-
-# Aggiungi un piccolo ritardo per assicurarti che Docker sia completamente avviato
-sleep 10
-
-# Esegui i comandi di pulizia
-#/usr/bin/docker container prune -f &
-#/usr/bin/docker image prune -f &
-#/usr/bin/docker volume prune -f &
-#/usr/bin/docker network prune -f &
-#/usr/bin/docker image prune -a -f &
-/usr/bin/docker stop $(docker ps -aq)
-/usr/bin/docker rm $(docker ps -aq)
-/usr/bin/docker rmi $(docker images -q)
-/usr/bin/docker volume rm $(docker volume ls -q)
-/usr/bin/docker network rm $(docker network ls -q)
-
-# Oppure, se preferisci il comando unificato:
-# /usr/bin/docker system prune -a -f --volumes
-
-# Potresti voler registrare l'output per debug
-echo "Docker cleanup completed at $(date)" >> /var/log/docker_cleanup.log
+Mentre per visualizzare finestre di dialogo esiste il programma base xmessage, per esempio:
+```bash
+$ xmessage -center "Messaggio da visualizzare"
 ```
-Il file di configurazione `/etc/systemd/system/docker-cleanup.service`
-```
-[Unit]
-Description=Docker Cleanup Service
-After=docker.service network-online.target
-Wants=docker.service
+oppure è possibile usare il programma grafico evoluto zenity, permette di visualizzare finestre informative e anche domande, per esempio
 
-[Service]
-Type=oneshot
-ExecStart=/usr/local/bin/docker-cleanup.sh
-#RemainAfterExit=yes
-# Non usare RemainAfterExit=yes se vuoi che Systemd lo consideri completato e non lo tenga "attivo"
-User=root  # O l'utente che ha i permessi per eseguire Docker
-Group=root # O il gruppo che ha i permessi per eseguire Docker
+La sintassi dei comandi prevede anche la possiblità di personalizzare il messaggio visualizzato e il tipo di finestra:
+```bash
+$ zenity --info --text="Messaggio da visualizzare" --title="Info" --width=600
+$ zenity --error --text="An error occurred!" --title="Warning"
+$ zenity --question --text="What to do?"
+```
+Tuttavia se si vuole schedulare una finestra creata con zenity con Crontab (o via webmin) è necessario indicare il display sul quale visualizzare il messaggio altrimenti il popup non comparirà, sintassi della riga di comando da inserire nel comando da eseguire dallo schedulatore è:
+```
+DISPLAY=:0.0 zenity --question --title="Title" --text="What to do?"
+```
+per procedere con la schedulazione ripetitiva si può consiguare con la sintassi
+```
+killall zenity; DISPLAY=:0 zenity --question --width=500 --title="Andare a letto" --text="Non ignorare questo messaggio"
+```
+Bisogna sempre tenere conto che cron esegue gli script al momento indicato è necessario eseguire l'istruzione
+```
+xhost +local: > /dev/null
+```
+all'avvio di ogni sistema quindi conviene inserirlo nel `rc.local` come descritto nella prossima sezione.
 
-[Install]
-WantedBy=multi-user.target
-```
-I comandi finali per configurare il servizio che venga eseguito l'avvio del sistema sono:
-```
-chmod +x /usr/local/bin/docker-cleanup.sh
-systemctl daemon-reload
-chmod 666 /var/log/docker_cleanup.log 
-systemctl enable docker-cleanup.service
-systemctl start docker-cleanup.service
-systemctl status docker-cleanup.service
-journalctl -xeu docker-cleanup.service
-```
+
+## Creazione di un demone
+Per avviare un demone personalizzato all'avvio del tuo sistema Debian è possibile creare un demone manualmente, questo esempio va a rimpiazzare il `rc.local` rimosso dalle ultime versioni di Debian, in poche parole questo demone esegue uno script e poi si ferma.
+I passi da eseguire sono:
+- Creare il file `/etc/rc.local` con dentro i comandi da eseguire
+  ```
+  #!/bin/bash
+  xhost +local: > /dev/null
+  dmesg -n 1
+  modprobe -r kvm-intel
+  apt-get clean
+
+  docker container prune -f
+  docker image prune -f
+  docker volume prune -f
+  docker network prune -f
+  docker image prune -a -f
+
+  docker rm  $(docker ps -q -a)
+  docker rmi $(docker images -q)
+
+  rm -fr /home/alnao/.local/share/Trash/files/*
+  rm -r  /home/alnao/.cache/google-chrome/Default/Cache/* 
+  rm -r  /home/alnao/.config/google-chrome/Default/Service Worker/CacheStorage/* 
+  rm -r  /home/alnao/.minikube/cache/*
+  rm -r  /home/alnao/.cache/google-chrome/*
+
+  apt-get clean
+
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - Avvio completato" >> /tmp/start.log
+  chmod 777 /tmp/start.log
+  exit 0
+  ```
+- Rendere eseguibile questo script 
+  ```
+  # chmod +x /etc/rc.local
+  ```
+- Definizione del servizio nel file `/etc/systemd/system/rc-local.service` con il contenuto
+  ```
+  [Unit]
+  Description=/etc/rc.local Compatibility
+  ConditionPathExists=/etc/rc.local
+  After=network.target
+
+  [Service]
+  Type=forking
+  ExecStart=/etc/rc.local start
+  TimeoutSec=0
+  StandardOutput=journal
+  RemainAfterExit=yes
+  SysVStartPriority=99
+
+  [Install]
+  WantedBy=multi-user.target
+  ```
+- Installazione del servizio
+  ```
+  systemctl daemon-reload
+	systemctl enable rc-local. service
+	systemctl start rc-local.service
+	systemctl status rc-local.service
+  ```
+Da notare che questo servizio termina dopo aver eseguiro le istruzioni indicate e non rimane in ascolto di nulla
+
+Questo si deve intendere come esempio, *chiamarlo servizio/demone è forse un po' troppo*
 
 
 # &lt; AlNao /&gt;
