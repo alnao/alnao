@@ -14,7 +14,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
 
 # Indice
 - [Introduzione](#Introduzione)
-  - [Cosa, dove, come e perchè](#Cosa-dove-come-perchè)
+  - [Cosa, dove, come e perché](#Cosa-dove-come-e-perché)
 - [Come installare Debian](#Come-installare-Debian)
 - [Come gestire i file e le partizioni](#Come-gestire-i-file-e-le-partizioni)
   - [Gestione dei permessi](#Gestione-dei-permessi)
@@ -26,7 +26,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Editor di testo](#Editor-di-testo)
   - [Compressione ZIP e simili](#Compressione-ZIP-e-simili)
   - [Browser e mail](#Browser-e-mail)
-  - [Appliazioni multimediali](#Appliazioni-multimediali)
+  - [Applicazioni multimediali](#Applicazioni-multimediali)
   - [Dropbox](#Dropbox)
   - [Giochi e Steam](#Giochi-e-steam)
 - [Come gestire i demoni di Debian](#Come-gestire-i-demoni-di-Debian)
@@ -43,7 +43,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [LaTeX](#LaTeX)
   - [LAMP](#LAMP)
     - [Apache](#Apache)
-    - [MySql](#MySql)
+    - [MySQL](#MySQL)
     - [Nginx](#Nginx)
   - [Node e NPM](#Node-e-NPM)
   - [Java e Tomcat](#Java-e-Tomcat)
@@ -72,8 +72,8 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
   - [Manipolazione video](#Manipolazione-video)
-  - [Il bootloader Grub](#Il-bootloader-Grub)
-  - [Gestione del gestino](#Gestione-del-gestino)
+  - [Il bootloader GRUB](#Il-bootloader-GRUB)
+  - [Gestione del cestino](#Gestione-del-cestino)
   - [Il comando Sudo](#Il-comando-Sudo)
   - [Comandi per il controllo del sistema](#Comandi-per-il-controllo-del-sistema)
   - [Configurazione di rete](#Configurazione-di-rete)
@@ -88,26 +88,26 @@ Questo documento nasce dalla personale esigenza di avere un registro delle attiv
 
 Il documento è pensato come un vero e proprio “taccuino di bordo”: raccoglie procedure, trucchi, comandi e soluzioni ai problemi più comuni, frutto di esperienze personali e di una continua attività di aggiornamento. Non troverai slogan o confronti inutili con altri sistemi operativi, ma solo ciò che serve davvero per installare, configurare e mantenere Debian efficiente, sicuro e adatto alle tue esigenze, sia in ambito desktop che server.
 
-Il documento viene aggiornato dal 2006, anno di scrittura della prima versione della *mitica* Debian 3.1 Sarge e ogni due anni riceve una revisione completa in corrispondenza dell'uscia della nuova versione del sistema operativo Debian. Questa è la versione della versione 12.1, le precedenti vesioni erano in formato PDF disponibili nel sito web [alnao.it](https://www.alnao.it/). In maniera molto ambiziosa l'ho chiamato manuale, persino Handbook nelle vecchie versioni in lingua inglese. Le varie versioni sono sempre state pubblicate su blog o su documenti pubblici, seguendo lo spirito base del mondo Open-source e GNU Linux. Rispetto alle precedenti versioni, questa versione è scritta senza sotto-sezioni e con articoli che parlano di singolo argomento in maniera completa. 
+Il documento viene aggiornato dal 2006, anno di scrittura della prima versione della *mitica* Debian 3.1 Sarge e ogni due anni riceve una revisione completa in corrispondenza dell'uscita della nuova versione del sistema operativo Debian. Questa revisione del documento fa riferimento alla versione 13 di Debian, le precedenti versioni erano in formato PDF disponibili nel sito web [alnao.it](https://www.alnao.it/). In maniera molto ambiziosa l'ho chiamato manuale, persino Handbook nelle vecchie versioni in lingua inglese. Le varie versioni sono sempre state pubblicate su blog o su documenti pubblici, seguendo lo spirito base del mondo Open-source e GNU Linux. Rispetto alle precedenti versioni, questa versione è scritta senza sotto-sezioni e con articoli che parlano di singolo argomento in maniera completa. 
 
 La redazione di questo documento è stata condotta nei ritagli di tempo libero, talvolta con il supporto di strumenti automatici e/o di intelligenze artificiali, sempre senza alcun fine di lucro. Nonostante l'impegno costante nel correggere errori di grammatica e battitura, nonché nel perseguire chiarezza espositiva e coerenza, è possibile che siano ancora presenti imprecisioni, refusi e/o ripetizioni. Si sottolinea il carattere amatoriale di questo manuale, che non ambisce a fornire una trattazione esaustiva o definitiva, ma piuttosto una guida pratica e orientativa. Le procedure e le informazioni riportate sono state verificate nella maggior parte dei casi, tuttavia possono esistere guide o documentazioni più dettagliate e specialistiche. Non si intende, pertanto, offrire una descrizione universalmente valida del metodo migliore per installare e configurare un sistema perfettamente funzionante, ma condividere un percorso di apprendimento e ottimizzazione maturato nel tempo.
 
 Questo documento è stato concepito principalmente come guida di riferimento per attività di programmazione e sviluppo su sistemi GNU/Linux e Debian ma i contenuti sono strutturati in modo da risultare accessibili e utili anche a chi non possiede competenze specifiche di programmazione. Le procedure, i consigli e le spiegazioni tecniche sono *pensati* per accompagnare sia il professionista sia l’utente alle prime armi.
 
-## Cosa dove come perchè
+## Cosa, dove, come e perché
 *Cosa*: La differenza tra ciò che è un sistema operativo e ciò che è un applicativo assume contorni talvolta chiari e meno chiari e sfumati: nei sistemi tradizionali, come Microsoft Windows o Apple macOS, si tende a tracciare una linea netta tra il cuore del sistema e i programmi accessori, nel mondo GNU Linux questa separazione si dissolve spesso con componenti che collaborano. Il *Kernel Linux*, può essere identificato come il sistema operativo ma molti componenti possono essere identificati come parti del sistema operativo nonostante siano pacchetti separati con nomi specifici. Grazie alla filosofia dei repository e dei mirror ufficiali, è possibile arricchire i sistemi con decine di migliaia di nuovi componenti senza mai dover ricorrere a fonti esterne di dubbia provenienza. In questo scenario, Debian si distingue per la ricchezza e la varietà del suo repertorio offrendo oltre 50.000 pacchetti e circa 10.000 programmi differenti.
 
-*Dove*: L’installazione di GNU/Linux, e in particolare di Debian, non conosce confini rigidi: che si tratti di un personal computer di ultima generazione, di un notebook ormai prossimo alla pensione o di una workstation dedicata, la flessibilità del sistema consente di convivere pacificamente con altri sistemi operativi già presenti. Alcune distribuzioni permettono di condividere la stessa partizione tra più sistema operativi installati. Le comunità e le aziende che curano le distribuzioni GNU/Linux mettono a disposizione supporti di installazione come DVD, immagini ISO e mirror web, consentendo di accedere rapidamente al sistema desiderato. Ogni distribuzione possiede le proprie peculiarità, ma il cuore pulsante, il Kernel Linux, rimane invariato, garantendo una base solida e affidabile su cui costruire qualsiasi esperienza d’uso. In questo manuale si è scelto di concentrare l’attenzione su Debian, ma molte delle indicazioni e dei suggerimenti qui raccolti possono essere utilmente applicati anche a distribuzioni derivate, come Ubuntu, mentre per altre distrubuzioni le procedure potrebbero richiedere adattamenti consistenti.
+*Dove*: L’installazione di GNU/Linux, e in particolare di Debian, non conosce confini rigidi: che si tratti di un personal computer di ultima generazione, di un notebook ormai prossimo alla pensione o di una workstation dedicata, la flessibilità del sistema consente di convivere pacificamente con altri sistemi operativi già presenti. Alcune distribuzioni permettono di condividere la stessa partizione tra più sistemi operativi installati. Le comunità e le aziende che curano le distribuzioni GNU/Linux mettono a disposizione supporti di installazione come DVD, immagini ISO e mirror web, consentendo di accedere rapidamente al sistema desiderato. Ogni distribuzione possiede le proprie peculiarità, ma il cuore pulsante, il Kernel Linux, rimane invariato, garantendo una base solida e affidabile su cui costruire qualsiasi esperienza d’uso. In questo manuale si è scelto di concentrare l’attenzione su Debian, ma molte delle indicazioni e dei suggerimenti qui raccolti possono essere utilmente applicati anche a distribuzioni derivate, come Ubuntu, mentre per altre distribuzioni le procedure potrebbero richiedere adattamenti consistenti.
 
-*Come*: L’universo GNU/Linux, e in particolare a Debian, richiede una costante attenzione della differenza tra maiuscole e minuscole: la *case sensitivity* rappresenta una delle prime e più importanti lezioni che ogni utilizzatore deve imparare. Ogni carattere digitato, ogni percorso inserito, ogni nome di file o directory, assume un significato preciso e una minima disattenzione può condurre a risultati inattesi e/o ad errori.
+*Come*: L’universo GNU/Linux, e in particolare in Debian, richiede una costante attenzione della differenza tra maiuscole e minuscole: la *case sensitivity* rappresenta una delle prime e più importanti lezioni che ogni utilizzatore deve imparare. Ogni carattere digitato, ogni percorso inserito, ogni nome di file o directory, assume un significato preciso e una minima disattenzione può condurre a risultati inattesi e/o ad errori.
 
-Per garantire chiarezza espositiva, in questo documenti vengono adottate convenzioni tipiche della documentazione tecnica più autorevole:
+Per garantire chiarezza espositiva, in questo documento vengono adottate convenzioni tipiche della documentazione tecnica moderna:
 - Il simbolo `#` identifica i comandi da eseguire con privilegi di amministratore (root)
 - Il simbolo `$` contraddistingue le istruzioni da impartire come utente privo di privilegi elevati.
 - Lo stile `macchina di scrivere` viene riservato a tutto ciò che il sistema mostra a video, ai caratteri digitati dall’utente e ai nomi di file e directory, con particolare attenzione alla distinzione tra lettere maiuscole e minuscole.
 - Il **grassetto** viene impiegato per evidenziare, al loro primo apparire, nomi di programmi o pacchetti di rilievo.
 - Il *corsivo* sottolinea commenti personali, note di contesto o osservazioni non ufficiali.
-- $\textcolor{orange}{\textsf{Testo in rosso}}$ o riquadri segnalano informazioni di particolare importanza o criticità che necessiatano molta attenzione.
+- $\textcolor{orange}{\textsf{Testo in rosso}}$ o riquadri segnalano informazioni di particolare importanza o criticità che necessitano molta attenzione.
 
 Si presuppone che il lettore disponga di una connessione Internet sufficientemente veloce per scaricare immagini ISO, aggiornamenti e pacchetti aggiuntivi, nonché di un supporto di memorizzazione adeguato (DVD o chiavetta USB) per la creazione dei supporti di installazione. L’adozione di questi standard, sebbene possa inizialmente apparire poco familiare, si rivelerà ben presto un prezioso alleato nella comprensione delle procedure e nell’interpretazione dei messaggi restituiti dal sistema.
 
@@ -115,7 +115,7 @@ Si presuppone che il lettore disponga di una connessione Internet sufficientemen
 
 Le versioni stabili di Debian, uniche a ricevere una numerazione ufficiale, sono celebrate con nomi ispirati ai personaggi del film **Toy Story**, mentre la versione unstable porta sempre il nome **Sid** (in omaggio al giovane bambino "distruttore" di giocattoli della saga). Questa tradizione, apparentemente giocosa, cela in realtà una filosofia di sviluppo improntata alla trasparenza, alla tracciabilità e alla partecipazione collettiva. Optare per Debian significa abbracciare un modello di aggiornamento continuo, in cui la sicurezza e la solidità del sistema sono il frutto di un processo collaborativo e di una comunità globale attenta e competente.
 
-In definitiva, la domanda *perché scegliere Debian?* non ha una unica risposta ma un combinazione di concettti come affidabilità, apertura e vastità dell’offerta software, unite a una documentazione ricca e a una comunità pronta a supportare sia il neofita sia l’esperto. Debian non è soltanto un sistema operativo: è un ambiente completo come punto di partenza per ogni percorso di crescita nel mondo dell’open source. 
+In definitiva, la domanda *perché scegliere Debian?* non ha un'unica risposta ma una combinazione di concetti come affidabilità, apertura e vastità dell’offerta software, unite a una documentazione ricca e a una comunità pronta a supportare sia il neofita sia l’esperto. Debian non è soltanto un sistema operativo: è un ambiente completo come punto di partenza per ogni percorso di crescita nel mondo dell’open source. 
 
 # Come installare Debian
 
@@ -124,7 +124,7 @@ L’installazione di un sistema operativo è una delle fasi più delicate ma, gr
 
 Debian è un sistema operativo libero e gratuito, distribuito sotto **licenza GNU GPL**, ciò significa è possibile scaricare ed usare gratuitamente le immagini ISO dalla pagina specifica del sito [debian.org](https://www.debian.org/distrib/) scegliendo tra le immagini disponibili:
 - Netinst (consigliata): ISO di piccole dimensioni che scarica i pacchetti necessari durante l’installazione. Necessita una connessione ad internet abbastanza veloce.
-- DVD/USB completi: immagini ISO grandi con molti pacchetti già inclusi e la possiblità di scaricare gli aggiornamenti dai repository in un momento successivo all'installazione.
+- DVD/USB completi: immagini ISO grandi con molti pacchetti già inclusi e la possibilità di scaricare gli aggiornamenti dai repository in un momento successivo all'installazione.
 - È disponibile anche una versione Live di Debian, avviabile da DVD o USB senza la necessità di installazione. Con *avvio di una live* all'accensione del PC si riferisce all'esecuzione di un sistema operativo completo (come una distribuzione Linux o uno strumento di ripristino) direttamente da un supporto rimovibile, come una chiavetta USB o un DVD, senza doverlo installare sul disco rigido. Questo processo permette di utilizzare, testare o riparare il computer in un ambiente isolato e temporaneo, lasciando intatto il sistema operativo principale installato sulla macchina.
 
 Le immagini scaricate sono nel formato standard ISO, trattandosi di immagini molto grandi possono essere scaricate anche tramite sistemi client di reti peer-to-peer come qBittorrent o KTorrent. I file torrent possono essere scaricati direttamente dal sito.
@@ -135,26 +135,26 @@ Avviare una sessione live significa eseguire un sistema operativo, come il progr
 
 Il programma di installazione spesso chiamato con *installer* prevede alcune modalità:
 All’avvio dell’installer vengono proposte diverse opzioni:
-- Installazione grafica: scalta consigliata se non necessari particolari configurazioni).
-- Installazione testuale: per utenti esperti).
-- Installazione avanzata: con più opzioni di configurazione, solo per utenti super-esperti).
-- Accessibile / Dark contrast: versione grafica per ipovedenti.
+- Installazione grafica: scelta consigliata se non necessari particolari configurazioni
+- Installazione testuale: per utenti esperti
+- Installazione avanzata: con più opzioni di configurazione, solo per utenti super-esperti
+- Accessibile / Dark contrast: versione grafica per ipovedenti
 - Live: se disponibile nell’immagine scelta, permette di avviare la distribuzione live
 
 L’installer di Debian guida l’utente con schermate chiare. I passaggi previsti in sequenza sono:
-- Scelta della lingua e del tipo di tastiera: è consigliato usare il sistema in lingua Italiana ma è possibile usare anche il sistema in lingua inglese , chi ha la tastiera con layout italiano (quello con le lettere accentate èòàù) deve selezionare la tastiera Italiana. In base alla lingua selezionata il sistema configura anche il fuso orario, nel caso di scelta di lingua con più fusi orari viene chiesta la posizione
+- Scelta della lingua e del tipo di tastiera: è consigliato usare il sistema in lingua italiana ma è possibile usare anche il sistema in lingua inglese, chi ha la tastiera con layout italiano (quello con le lettere accentate èòàù) deve selezionare la tastiera Italiana. In base alla lingua selezionata il sistema configura anche il fuso orario, nel caso di scelta di lingua con più fusi orari viene chiesta la posizione
 - Carico dei media e di mount: in questo passo il sistema caricherà alcune informazioni dalla memoria, l'utente non deve inserire nulla e non deve interrompere il processo
 - Configurazione del nome host e configurazione dominio di rete: due nomi simbolici se non presente una configurazione di rete particolare, nel caso di una rete con più computer è necessario inserire il nome simbolico della rete. La rete internet viene configurata automaticamente con valori di default, è prevista una modalità avanzata di configurazione dei dati di rete come indirizzo IP, Subnet, Gateway e DNS.
-- Scelta della password di root: la password dell'utente amministratore del sistiema
+- Scelta della password di root: la password dell'utente amministratore del sistema
 - Creazione utente: questo passo è obbligatorio e prevede l'inserimento di username e password di un primo utente che sarà usato per la prima login, sarà successivamente possibile creare altri utenti o modificare il primo creato
-- Partizionamento dei dischi: l'utente deve selezionare il disco dove installare il sistema operativo con due possiblità:
+- Partizionamento dei dischi: l'utente deve selezionare il disco dove installare il sistema operativo con due possibilità:
   - Guidato: suggerita se si dispone di un sistema nuovo/vuoto si può usare l'opzione automatica che ottimizza lo spazio
   - Manuale: se si dispone di dischi con dei dati già presenti o altri sistemi operativi è consigliato usare la procedura manuale e bisogna selezionare il disco dove installare il sistema operativo (partizione indicata con `/` )
   - ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: modificare le partizioni può causare perdita di dati, non a caso il programma di installazione chiede conferma più volte delle operazioni su disco. Eseguire un backup prima di procedere se sono presenti dati personali 🔶⚠️
 - Configurazione del mirror di rete: automaticamente vengono attivati i repository ufficiali da internet per avere aggiornamenti dalla rete *scelta molto consigliata* e automaticamente viene configurato il sistema di statistiche di utilizzo
 - Nel caso di live specifiche (come quella live-gnome consigliata) il sistema non chiede cosa installare, altrimenti viene proposta una sezione dove selezionare il software da installare, in questo caso bisogna installare un desktop manager (come GNOME, KDE/Plasma, Xfce) 
-  - per snellire e velocizzare il processo di installazione, in questa fase è sconsigliato installare altro software (come demoni/server) ed è possibile installare tutto successivamente comunque è possibie farlo anche in questo passo
-- Configurazione del bootloader, di default il sistema installa il gestore "GDM LightDM" e il bootloader "GRUB", se è stata usata la modalità grafica non avanzata l'utente non deve inserire nulla e aspettare che il sistema si riavii da solo. Nella versione grafica base il sistema viene riavviato senza necessità di inserire altro.
+  - per snellire e velocizzare il processo di installazione, in questa fase è sconsigliato installare altro software (come demoni/server) ed è possibile installare tutto successivamente comunque è possibile farlo anche in questo passo
+- Configurazione del bootloader: di default il sistema installa "GRUB"; se si sceglie GNOME, il display manager predefinito è "GDM". Se è stata usata la modalità grafica non avanzata l'utente non deve inserire nulla e aspettare che il sistema si riavvii da solo. Nella versione grafica base il sistema viene riavviato senza necessità di inserire altro.
 
 Al primo riavvio dopo l'installazione, viene visualizzato il bootloader GRUB (configurato nell'ultimo passaggio del setup). Se è presente un solo sistema operativo, comparirà unicamente l'opzione per avviare Debian; se invece sono presenti più sistemi operativi, verrà mostrata una lista da cui è possibile scegliere quale avviare utilizzando le frecce della tastiera. In questo menu compaiono anche eventuali versioni precedenti del Kernel Linux, se installate. Una volta effettuata la selezione, il sistema carica il Kernel e i servizi necessari. Al termine compare la schermata grafica di login gestita da GDM (GNOME Display Manager): inserendo nome utente e password definiti in fase di installazione, si accede all'ambiente desktop GNOME (configurato di default). 
 
@@ -176,7 +176,7 @@ Una nozione fondamentale che un utente di GNU Linux deve avere sempre presente �
 
 A differenza di altri FileSystem, in GNU Linux le estensioni non sono rilevanti, spesso capiterà di trovare file con estensioni “strane” ad un utente non abituato a tale libertà: un esempio classico è il file `sources.list` che conterrà una lista di sorgenti come dice il nome e l'estensione: spesso infatti viene usata l’estensione per evidenziare se il file ha un contenuto specifico come liste o configurazioni. Esistono anche file senza estensione come il file `fstab`, per i sistemi basati su Unix e GNU Linux l’estensione di un file è solo una parte del nome. I file il cui nome inizia per `.` (punto) sono files nascosti, cioè i file manager nascondere questi tipi a meno di comandi specifici, questi nomi vengono usati dai programmi per creare cartelle e file di configurazioni ma di non dare la possibilità all'utente di modificarli *per errore*.
 
-Lo standard per il file system usato in tutti i sistemi GNU Linux si chiama **FSSTND**, che impone delle direttive per l'organizzazione dell'albero delle directory nei sistemi: viene usato per la facilità del porting del software per GNU Linux e l'amministrare dei sistemi, dato che tutto si trova nel posto designato per qualsiasi distribuzione che usa questo stardard. Per essere precisi, non c'è nessuna autorità che impone di uniformarsi a questo schema, ma è molto raro trovare distribuzioni di GNU Linux che non la rispettano. L'albero delle directory completo è concepito in modo che possa essere diviso in parti più piccole, ciascuna sulla sua partizione o nel suo disco se necessario, per ottimizzare i dischi e ridurre le dimensioni delle partizioni. L'albero delle directory è stato strutturato in modo che funzioni bene in una rete di sistemi condivisi su dispositivi a sola lettura come DVD o in rete NFS. La struttura del filesystem si basa su una radice che viene chiamata **cartella root** e viene sempre indicata con il carattere
+Lo standard per il file system usato in tutti i sistemi GNU Linux si chiama **FHS**, che impone delle direttive per l'organizzazione dell'albero delle directory nei sistemi: viene usato per la facilità del porting del software per GNU Linux e l'amministrare dei sistemi, dato che tutto si trova nel posto designato per qualsiasi distribuzione che usa questo stardard. Per essere precisi, non c'è nessuna autorità che impone di uniformarsi a questo schema, ma è molto raro trovare distribuzioni di GNU Linux che non la rispettano. L'albero delle directory completo è concepito in modo che possa essere diviso in parti più piccole, ciascuna sulla sua partizione o nel suo disco se necessario, per ottimizzare i dischi e ridurre le dimensioni delle partizioni. L'albero delle directory è stato strutturato in modo che funzioni bene in una rete di sistemi condivisi su dispositivi a sola lettura come DVD o in rete NFS. La struttura del filesystem si basa su una radice che viene chiamata **cartella root** e viene sempre indicata con il carattere
 ```
 /
 ```
@@ -184,11 +184,11 @@ questa cartella è specifica per ciascun sistema e rappresenta l'intero sistema:
 
 - ```/bin``` Contiene i programmi di sistema utilizzati sia dall'amministratore che dai normali utenti, come ad esempio: `ls` e `cat`
 - ```/boot``` Contiene tutto quello che è necessario per eseguire il processo di boot del kernel, configurata in fase di installazione di GRUB
-- ```/dev``` Contiene i riferimenti a tutti i dispositivi e le periferiche (HarkDisk, CdRom, stampanti, rete, ecc...)
+- ```/dev``` Contiene i riferimenti a tutti i dispositivi e le periferiche (Memorie, CdRom, stampanti, rete, ecc...)
 - ```/etc``` Contiene i files di configurazione degli applicativi e i demoni presenti nel sistema
 - ```/home``` Contiene le home directory degli utenti, le informazioni e i file di ogni utente
 - ```/lib``` Contiene le librerie necessarie al boot del sistema e all'esecuzione dei programmi
-- ```/mnt``` Inizialmente è vuota, come standard viene usata per effettuare il collegamento (mount) di tutte le unità di memoria presenti (HardDisk, cdrom, memorie usb, ecc.. ), talvolta è possibile trovare anche la cartella /media che tipicamente viene usata solo per i dispositivi rimovibili (CdRom, Floppy, USB Disk)
+- ```/mnt``` Inizialmente è vuota, come standard viene usata per effettuare il collegamento (mount) di tutte le unità di memoria presenti (hard disk, cdrom, memorie usb, ecc.. ), talvolta è possibile trovare anche la cartella /media che tipicamente viene usata solo per i dispositivi rimovibili (CdRom, Floppy, USB Disk)
 - ```/opt``` Dovrebbe essere vuota inizialmente, in passato veniva usata per gli applicativi del sistema base, oggi viene usata da alcuni applicativi proprietari come Google chrome oppure i programmi di AWS
 - ```/proc``` Contiene i riferimenti ai programmi in esecuzione (i processi in esecuzione vengono trattati come file)
 - ```/root``` La home directory dell'utente root
@@ -197,7 +197,7 @@ questa cartella è specifica per ciascun sistema e rappresenta l'intero sistema:
 - ```/sys``` Contiene dei file di sistema
 - ```/tmp``` Cartella dei file temporanei (ogni volta che si spegne il pc questa cartella potrebbe essere svuotata)
 - ```/usr``` Contiene le applicazioni (non di sistema) installate nel sistema
-- ```/var``` Contiene vari files di sistema come i log e le carelle della posta
+- ```/var``` Contiene vari files di sistema come i log e le cartelle di posta e altri contenitori applicativi
 
 ## Gestione dei permessi
 
@@ -214,11 +214,11 @@ drwxr-xr-x 2 alnao alnao 4096 2 feb 14:09 DIR1
 ```
 la prima riga descrive una directory, la si può riconoscere dal fatto che la prima lettera è una `d`, i successivi tre caratteri sono indicati i diritti sull'utente che ha creato quel file, il secondo gruppo di tre si riferisce agli utenti dello stesso gruppo dell'utente creatore del file, mentre l'ultima tripletta descrive i diritti di tutti gli altri utenti. Se è presente la lettera significa che il diritto è attivo mentre se c'è il trattino vuol dire che il diritto che dovrebbe essere presente non è attivo. Da notare che l'**utente root** ha sempre tutte le autorizzazioni quindi riuscirà sempre a leggere e a scrivere su tutti i file e su tutte le cartelle. Per cambiare i diritti su un file si può usare il comando chmod. Da notare che il diritto x sostituisce l'estensione su altri sistemi: le estensioni non hanno significato e per capire se un file è eseguibile o meno bisogna osservare questo diritto in ogni singolo file.
 
-Alcune delle configurazioni base devono essere eseguite da riga di comando che in informatica viene comunemente chiamata **shell** e, più in particolare, nei sistemi GNU Linux è disponibile il tipo chiamato **bash**, non bisogna fare confusione: con shell si intende una riga di comando *generica* mentre bash è l’interprete dei comandi, in questo manuale faremo sempre riferimento a bash e non verranno introdotte altre tipi di shell anche se in altri manuali potete trovare guide più complete di bash e di altri tipi di shell per GNU Linux. Tipicamente nelle architetture basate sul KernerLinux con la bash sono disponibili 8 “canali” detti anche tty (abbreviazione di TeleTYpewriter), nei sistemi basati su GNU Linux il primo canale è usato dal KernelLinux e in questo canale compaiono i messaggi del sistema mentre il server grafico tipicamente si trova nel settimo canale, dalla versione 10 di Debian il server grafico viene caricato sempre dal secondo canale mentre nel primo c'è una seconda versione del server grafico se si vuole utilizzare la funzionalità multiutente; è possibile passare da un canale ad un altro con la sequenza di tasti `ALT + CTRL + F1` dove l’F1 è il numero del canale (ovviamente per il settimo canale si può usare F7).
+Alcune delle configurazioni base devono essere eseguite da riga di comando che in informatica viene comunemente chiamata **shell** e, più in particolare, nei sistemi GNU Linux è disponibile il tipo chiamato **bash**, non bisogna fare confusione: con shell si intende una riga di comando *generica* mentre bash è l’interprete dei comandi, in questo manuale faremo sempre riferimento a bash e non verranno introdotte altre tipi di shell anche se in altri manuali potete trovare guide più complete di bash e di altri tipi di shell per GNU Linux. Tipicamente nelle architetture basate sul Kernel Linux con la bash sono disponibili 8 “canali” detti anche tty (abbreviazione di TeleTYpewriter), nei sistemi basati su GNU Linux il primo canale è usato dal Kernel Linux e in questo canale compaiono i messaggi del sistema mentre il server grafico tipicamente si trova nel settimo canale, dalla versione 10 di Debian il server grafico viene caricato sempre dal secondo canale mentre nel primo c'è una seconda versione del server grafico se si vuole utilizzare la funzionalità multiutente; è possibile passare da un canale ad un altro con la sequenza di tasti `ALT + CTRL + F1` dove l’F1 è il numero del canale (ovviamente per il settimo canale si può usare F7).
 
 ## Il mounting
 
-Una delle esigenze primarie di ogni utente è quello di poter accedere ai propri dati che sono salvati nei vari dischi, gli utenti di altri sistemi operativi sono abituati a identificare le memorie fisiche con delle lettere come C, D, E, ecc... mentre nei sistemi GNU Linux la gestione delle partizioni e delle periferiche di memoria è completamente diversa: la gestione viene chiamata *mounting* (in Italiano spesso viene tradotto con *montaggio*), nome che deriva dal comando **mount** che viene utilizzato per eseguire le configurazioni, infatti le memorie vengono viste dal Kernel Linux come un normale file dentro alla cartella /dev/ e, attraverso il comando mount, si possono collegare ad una cartella per permettere l’accesso al contenuto della memoria. I file che si trovano dentro alla cartella dev non rappresentano tutta la memoria fisica ma rappresentano una partizione: se in una memoria ci sono più partizioni significa che sono presenti più file che devono essere montati separatamente. Tipicamente questi file hanno il nome del tipo hda1, sda1, sda2, sdb1 dove la prima lettera del nome rappresenta il tipo (per esempio h=Eide, s=Sata), la seconda lettera è sempre d che significa DISK mentre la terza lettera è un incrementale se ci sono più dispositivi dello stesso tipo (se ci sono due HardDisk il primo sarà “a” mentre il secondo sarà “b”), il numero finale rappresenta il numero della partizione all'interno della stessa memoria fisica.
+Una delle esigenze primarie di ogni utente è quello di poter accedere ai propri dati che sono salvati nei vari dischi, gli utenti di altri sistemi operativi sono abituati a identificare le memorie fisiche con delle lettere come C, D, E, ecc... mentre nei sistemi GNU Linux la gestione delle partizioni e delle periferiche di memoria è completamente diversa: la gestione viene chiamata *mounting* (in Italiano spesso viene tradotto con *montaggio*), nome che deriva dal comando **mount** che viene utilizzato per eseguire le configurazioni, infatti le memorie vengono viste dal Kernel Linux come un normale file dentro alla cartella /dev/ e, attraverso il comando mount, si possono collegare ad una cartella per permettere l’accesso al contenuto della memoria. I file che si trovano dentro alla cartella dev non rappresentano tutta la memoria fisica ma rappresentano una partizione: se in una memoria ci sono più partizioni significa che sono presenti più file che devono essere montati separatamente. Tipicamente questi file hanno il nome del tipo hda1, sda1, sda2, sdb1 dove la prima lettera del nome rappresenta il tipo (per esempio h=Eide, s=Sata), la seconda lettera è sempre d che significa DISK mentre la terza lettera è un incrementale se ci sono più dispositivi dello stesso tipo (se ci sono due hard disk il primo sarà “a” mentre il secondo sarà “b”), il numero finale rappresenta il numero della partizione all'interno della stessa memoria fisica.
 
 
 Per poter recuperare l'elenco delle partizioni e la struttura delle memorie si può usare il programma gparted dal desktop da installare oppure con il comando
@@ -263,10 +263,10 @@ UUID=1234-5678 /mnt/Dati tipo parametri 0 0
 ```
 questo metodo è consigliato rispetto all'uso del DEV in quanto alcuni sistemi posso cambiare riferimenti alla risorse ogni riavvio del sistema. Nelle ultime versioni di Debian questa operazione viene eseguita durante la fase di installazione e, una volta terminata l'installazione del sistema base, è possibile vedere il file già ben configurato con tutti i parametri. Da notare che i lettori DVD/CD possono essere configurati nella cartella `media` per separare le memorie fisse da quelle rimovibili tuttavia questo non è uno standard ma solo un dettaglio presente in alcune vecchie versioni di Debian, *c'è ancora qualcuno che usa i lettori DVD?*.
 
-Modificare lo schema delle partizioni è una operazione complessa ad *alto* rischio di perdita di dati; la mia esperienza mi ha portato a non modificare mai le partizioni dei dischi se su questo è installato il sistema operativo o se ci sono dati importanti, quando si deve modificare una qualsiasi partizione contenente dati, conviene sempre eseguire una copia di backup di tutte le partizioni comprese quelle non modificate. Le cose si complicano ancora di più quando nello stesso disco ci sono più partizioni di tipo diverso come quelle di MsWindows (con filesystem di tipo NTFS o FAT32) e partizioni GNU Linux (con filesystem di tipo le Ext3 o Ext4), questo perché i programmi di partizionamento di un sistema operativo difficilmente trattano al meglio le partizioni degli altri sistemi con l'ovvio rischio di perdere partizioni che un programma non riconosce, per evitare questi contrasti fra sistemi operativi si possono usare programmi specializzati che cercano di gestire al meglio le partizioni di tutti i tipi, su Debian è disponibile il programma GParted per permette di gestire e modificare la struttura delle partizioni dei dischi.
+Modificare lo schema delle partizioni è una operazione complessa ad *alto* rischio di perdita di dati; la mia esperienza mi ha portato a non modificare mai le partizioni dei dischi se su questo è installato il sistema operativo o se ci sono dati importanti, quando si deve modificare una qualsiasi partizione contenente dati, conviene sempre eseguire una copia di backup di tutte le partizioni comprese quelle non modificate. Le cose si complicano ancora di più quando nello stesso disco ci sono più partizioni di tipo diverso come quelle di Windows (con filesystem di tipo NTFS o FAT32) e partizioni GNU Linux (con filesystem di tipo le Ext3 o Ext4), questo perché i programmi di partizionamento di un sistema operativo difficilmente trattano al meglio le partizioni degli altri sistemi con l'ovvio rischio di perdere partizioni che un programma non riconosce, per evitare questi contrasti fra sistemi operativi si possono usare programmi specializzati che cercano di gestire al meglio le partizioni di tutti i tipi, su Debian è disponibile il programma GParted per permette di gestire e modificare la struttura delle partizioni dei dischi.
 
 
-Per la gestione delle partizioni di tipo **swap**, è possibile confiurare le partizioni fisiche le file `fstab` come le normali partizioni, per esempio la riga:
+Per la gestione delle partizioni di tipo **swap**, è possibile configurare le partizioni fisiche le file `fstab` come le normali partizioni, per esempio la riga:
 ```
 /dev/sda2 none swap sw 0 0
 ```
@@ -311,7 +311,7 @@ La gestione dei pacchetti Debian nel sistema si basa sul componente **DPKG** abb
 - ```# apt-get upgrade``` aggiorna tutti i pacchetti se sono disponibili aggiornamenti e verifica tutte le dipendenze delle nuove versioni
 - ```# apt-get clean``` cancella tuti i file temporanei di apt-get cioè i file deb scaricati e già installati
 - ```# apt-get install -f``` verifica che tutti i pacchetti siano installati e configurati correttamente, in caso di errori sistema automaticamente le dipendenze
-- ```# dkpg --configure -a``` come il precedente ma funziona anche in casi estremi e risolve tutti i problemi di conflitto tra i pacchetti
+- ```# dpkg --configure -a``` come il precedente ma funziona anche in casi estremi e risolve tutti i problemi di conflitto tra i pacchetti
 - ```# dpkg-reconfigure pacchetto``` riconfigura un pacchetto già installato
 - ```# dpkg -i pacchetto.deb``` installa un pacchetto da un file deb
 - ```# dpkg -r pacchetto``` rimuove un pacchetto
@@ -342,7 +342,7 @@ I programmi di gestione APT & DPKG non sono stati studiati per essere interfacci
 
 ## Il pannello di controllo WebMin
 
-Nei sistemi Debian è possibile trovare diversi programmi che permettano la configurazione del sistema, nei vari menu dei desktop si possono trovare diverse voci all'interno della categoria Strumenti di sistema però per GNU Linux è stato sviluppato un potentissimo programma per il controllo generale: **WebMin** che prevedete moltissimi moduli al proprio interno e permette all'utente di amministrare tutti i componenti del sistema, uno dei grandi vantaggi di questo pacchetto è che si tratta di una applicazione web quindi viene usata tramite browser anche da remoto. Rispetto alle precedenti versioni, WebMin non è più all'interno dei mirror ufficiali di Debian e quindi bisogna configurare una sorgente esterna.
+Nei sistemi Debian è possibile trovare diversi programmi che permettano la configurazione del sistema, nei vari menu dei desktop si possono trovare diverse voci all'interno della categoria Strumenti di sistema però per GNU Linux è stato sviluppato un potentissimo programma per il controllo generale: **WebMin** che prevede moltissimi moduli al proprio interno e permette all'utente di amministrare tutti i componenti del sistema, uno dei grandi vantaggi di questo pacchetto è che si tratta di un'applicazione web quindi viene usata tramite browser anche da remoto. Rispetto alle precedenti versioni, WebMin non è più all'interno dei mirror ufficiali di Debian e quindi bisogna configurare una sorgente esterna.
 
 Come indicato nel [sito ufficiale webmin.com](https://webmin.com/download/) i comandi per l'installazione in Debian 13 sono:
 ```
@@ -365,17 +365,17 @@ Per poter accedere al pannello di controllo basta lanciare da un browser l'url:
 ```
 https://localhost:10000/
 ```
-All'interno delle ultime versioni di Webmin, c'è la possibilità di collegarsi alla console shell con l'icona >_ presente nel menù di sinistra al tab "dashbord" questo permette di usare il terminale da remoto anche se io lo ritengo molto scomodo.
+All'interno delle ultime versioni di Webmin, c'è la possibilità di collegarsi alla console shell con l'icona >_ presente nel menù di sinistra al tab "dashboard" questo permette di usare il terminale da remoto anche se io lo ritengo molto scomodo.
 
 ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: WebMin è uno strumento molto potente ma anche troppo! Bisogna sempre prestare attenzione alle configurazioni eseguite e controllare più volte le operazioni potenzialmente distruttive per il sistema 🔶⚠️
 
 # Come gestire i desktop e le applicazioni
 
-Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiamata **GDM** (abbreviazione di Gnome Desktop Manager) esistono anche altri gestori ma è sconsigliato l'utilizzo per utente non esperti. Per la creazione di altri utenti è possibile usare i vari programmi disponibili ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata ma questo tool è *sconsigliato* per alcuni temi specifici che si interfacciano con l'hardware, come la gestione delle partizioni perchè esistono tool specifici dedicati come **Gparted**.
+Il programma di installazione prevede la creazione di un primo utente che viene utilizzato al primo accesso, attraverso i vari tool di controllo disponibili è possibile creare e configurare altri utenti se necessario con la possibilità di raggrupparli e gestire l'accesso. Il gestore della login che compare all'avvio del sistema grafico si chiama **GDM** (abbreviazione di GNOME Display Manager), esistono anche altri gestori ma è sconsigliato l'utilizzo per utenti non esperti. Per la creazione di altri utenti è possibile usare i vari programmi disponibili ma è consigliato usare WebMin appena installato visto che ha una interfaccia molto semplice e intuitiva per la gestione degli utenti e dei gruppi. Il pannello di controllo WebMin è molto utile anche per la gestione di tutte le parti di un sistema: lo schedulatore di sistema CronTab, le configurazioni di rete, la gestione dei backup, il monitoraggio dei log e i demoni/server come sarà descritto in una sezione dedicata ma questo tool è *sconsigliato* per alcuni temi specifici che si interfacciano con l'hardware, come la gestione delle partizioni perché esistono tool specifici dedicati come **Gparted**.
 
-Nel mondo GNU Linux il principale server grafico è **X-WindowSystem** (spesso abbreviato con X), questo gestire l'interfaccia utente e bisogna ricordare che non esiste un unico desktop: esistono diversi desktop che possono essere installati ed usati parallelamente, infatti esiste la possibilità di passare da un desktop ad un altro selezionando il nome nella schermata di login all'avvio del sistema; tutte le applicazioni possono essere eseguite da qualsiasi tipo di desktop. I principali desktop per GNU Linux basati sul server grafico X sono: **GNOME**, **KDE** dettao che **Plasma** e **XFCE** mentre quelli leggeri e studiati per essere veloci sono **MATE** e **LXDE**, è consigliato la prova di tutti i cinque appena elencati in modo che un utente possa scegliere il più consono. 
+Nel mondo GNU Linux il principale server grafico è **X-WindowSystem** (spesso abbreviato con X), questo gestisce l'interfaccia utente e bisogna ricordare che non esiste un unico desktop: esistono diversi desktop che possono essere installati ed usati parallelamente, infatti esiste la possibilità di passare da un desktop ad un altro selezionando il nome nella schermata di login all'avvio del sistema; tutte le applicazioni possono essere eseguite da qualsiasi tipo di desktop. I principali desktop per GNU Linux basati sul server grafico X sono: **GNOME**, **KDE** detto **Plasma** e **XFCE** mentre quelli leggeri e studiati per essere veloci sono **MATE** e **LXDE**, è consigliata la prova di tutti i cinque appena elencati in modo che un utente possa scegliere il più consono. 
 
-Il più famoso desktop per il mondo GNU Linux è **GNOME** che di default viene attivato in fase di installazione di Debian, il gestore è ornami riconosciuto come il miglior gestore con un numero lunghissimo di applicazioni disponibili, le principali saranno elencate in questa sezione. Una delle proprietà di questo desktop è la possibilità di installare delle  estensioni molto comode e integrate nel sistema che possono essere facilmente attivate e disattivate da una applicazione specifica oppure andando sul sito
+Il più famoso desktop per il mondo GNU Linux è **GNOME** che di default viene attivato in fase di installazione di Debian, il gestore è ormai riconosciuto come il miglior gestore con un numero lunghissimo di applicazioni disponibili, le principali saranno elencate in questa sezione. Una delle proprietà di questo desktop è la possibilità di installare delle estensioni molto comode e integrate nel sistema che possono essere facilmente attivate e disattivate da una applicazione specifica oppure andando sul sito
 ```
 extensions.gnome.org
 ```
@@ -390,7 +390,7 @@ Le più famose e consigliate estensioni sono
 - User themes
 - Windows list
 
-Inoltre è disponibile anche una applicazione personalizzazioni studiata per permettere agli utenti di modificare l'aspetto grafico del desktop.
+Inoltre è disponibile anche un'applicazione di personalizzazione studiata per permettere agli utenti di modificare l'aspetto grafico del desktop.
 
 ## Gestione e installazione applicazioni
 
@@ -433,9 +433,9 @@ more /lib/systemd/system/apt-daily.timer
 
 ## Editor di testo
 
-Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs (troppo complicati per utenti poco esperti), i programmi più semplici da usare da riga di comando sono **pico** e **nano** che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è **kEdit** ma è possibile usare anche i programmi di GNOME come **gEdit** oppure **mousepad**. Tuttavia il programma più completo è **Kate** che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni *strane* e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o posso essere senza estensione come il file `fstab`. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare **jEdit**, questi due programmi sono i più famosi e potenti programmi per la modifica di file dei testo.
+Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs (troppo complicati per utenti poco esperti), i programmi più semplici da usare da riga di comando sono **pico** e **nano** che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è **kEdit** ma è possibile usare anche i programmi di GNOME come **gEdit** oppure **mousepad**. Tuttavia il programma più completo è **Kate** che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni *strane* e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o possono essere senza estensione come il file `fstab`. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare **jEdit**, questi due programmi sono i più famosi e potenti programmi per la modifica di file di testo.
 
-Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di commando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è lo *storico* **Konqueror** e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file exploper ed è stato migliorato molto tanto da diventare uno dei miglioro programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è **dolphin** che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure **Gnome Commander**.
+Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di comando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è lo *storico* **Konqueror** e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file explorer ed è stato migliorato molto tanto da diventare uno dei migliori programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è **Dolphin** che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure **GNOME Commander**.
 
 ## Compressione ZIP e simili
 
@@ -464,8 +464,8 @@ Nel mondo GNU Linux e Debian potete trovare moltissimi programmi per la navigazi
 
 Per installare il browser **Opera** è necessario aggiungere il repository proprietario e poi installare il pacchetto con i comandi:
 ```
-# wget -qO- https://deb.opera.com/archive.key | sudo apt-key add -
-# add-apt-repository "deb [arch=i386,amd64] https://deb.opera.com/opera-stable/ stable non-free"
+# wget -qO- https://deb.opera.com/archive.key | sudo gpg --dearmor -o /usr/share/keyrings/opera-archive-keyring.gpg
+# add-apt-repository "deb [arch=i386,amd64 signed-by=/usr/share/keyrings/opera-archive-keyring.gpg] https://deb.opera.com/opera-stable/ stable non-free"
 # apt install opera-stable
 ```
 Per installare il browser **Google Chrome** è consigliato scaricare e installare la versione dal repository proprietario di google:
@@ -475,14 +475,14 @@ Per installare il browser **Google Chrome** è consigliato scaricare e installar
 # sudo apt update
 # sudo apt install -y google-chrome-stable
 ```
-da notare che questa installazione va automaticamente ad aggiungere il repository per i successivi aggiornamenti. Nei repository ufficiali di Debian è disponibile anche **Chromium**: un web browser open source da cui deriva Google Chrome, inizialmente l'idea di Google era quella di mantenere un solo progetto ma alla fine si sono creati due progetti paralleli che hanno sviluppi simili ma non uguali tanto che i browser hanno comportamenti differenti a volte. Per quanto riguarda i programmi per gestire le mail potete usare il programma di Firefox che potete trovare con il nome di **Thunderbind Mail** oppure con il nome **IceDove**, però potete usare anche altri programmi nativi come Evolution, Balsa, Gnus e Pine. 
+da notare che questa installazione va automaticamente ad aggiungere il repository per i successivi aggiornamenti. Nei repository ufficiali di Debian è disponibile anche **Chromium**: un web browser open source da cui deriva Google Chrome, inizialmente l'idea di Google era quella di mantenere un solo progetto ma alla fine si sono creati due progetti paralleli che hanno sviluppi simili ma non uguali tanto che i browser hanno comportamenti differenti a volte. Per quanto riguarda i programmi per gestire le mail c'è molta scelta, il mio preferito è **Thunderbird Mail** (ex progetto **IceDove** derivante da *Firefox*), però potete usare anche altri programmi nativi come Evolution, Balsa, Gnus e Pine. 
 
 
 Per quanto riguarda il browser **Microsoft Edge** esiste, ad oggi, una versione di prova, definita *developer version*, scaricabile dal sito ufficiale di microsoft
 ```
 https://www.microsoft.com/en-us/edge/download/insider?cc=1&platform=linux&cs=3182488620
 ```
-oppure è possible procedere con l'installazione tramite il gestore dei pacchetti, configurando la sorgente corretta con i comandi:
+oppure è possibile procedere con l'installazione tramite il gestore dei pacchetti, configurando la sorgente corretta con i comandi:
 ```
 ## Setup
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -503,7 +503,7 @@ Per installare l'applicazione **Discord** basta scaricare il pacchetto dal sito 
 
 Nelle precedenti versioni di questo documento era presente una guida per installare **skype** ma purtroppo il servizio non è più disponibile quindi è il pacchetto è stato rimosso dai repository.
 
-## Appliazioni multimediali
+## Applicazioni multimediali
 
 Anche per quanto riguarda la multimedialità nei sistemi GNU Linux sono presenti moltissimi programmi, non solo per la visualizzazione dei video ma anche per l'editing video e sono disponibili plugin per tutti i formati; inoltre in tutte le distribuzioni sono presenti i programmi e i driver per vedere la TV con il computer, ovviamente questo è possibile se nel pc è presente un dispositivo di acquisizione TV come le chiavette USB. 
 Nelle precedenti versioni di Debian era necessario installare le librerie multimediali manualmente ma ora l'installazione è automatica, la lista dei pacchetti è libavcodec61, libavdevice61, libavformat61, libdvdnav4, libdvdread8t64,libxvidcore4.
@@ -539,9 +539,9 @@ Per i servizi **Dropbox** esiste il pacchetto dedicato ufficiale, purtroppo non 
 cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 ~/.dropbox-dist/dropboxd
 ```
-Da aggiungere due annotazioni: la prima è che l'icona del sistema compare nei desktop Gnome solo se è installata la estensione "Appindicator", la seconda è che l'icona non funziona molto bene, bisogna infatti bloccare il computer e poi ri-eseguire la login. Alla prima esecuzione il programma vi aprirà la schemata di autenticazione in un browser. 
+Da aggiungere due annotazioni: la prima è che l'icona del sistema compare nei desktop GNOME solo se è installata la estensione "Appindicator", la seconda è che l'icona non funziona molto bene, bisogna infatti bloccare il computer e poi ri-eseguire la login. Alla prima esecuzione il programma vi aprirà la schermata di autenticazione in un browser. 
 
-Per avviare il sisetma Dropbox all'avvio del sistema bisogna eseguire una configruazione manuale creando il file
+Per avviare il demone Dropbox all'avvio del sistema bisogna eseguire una configruazione manuale creando il file
 ```
 nano ~/.config/autostart/dropbox.desktop
 ```
@@ -559,16 +559,16 @@ Categories=Network;FileTransfer;
 StartupNotify=false
 ```
 
-Può succedere che dopo questa configurazione, all'avvio di un desktop il sistema chieda una login come utente root, questo problema si verifica perchè nella cartella locale di Sync sono presenti files non *assegnati* all'utente ma ad altri (come l'utente root). Per risovere questo problema bisogna eseguire un comando `chown` sui file incriminati, per trovarli si può eseguire il comando
+Può succedere che dopo questa configurazione, all'avvio di un desktop il sistema chieda una login come utente root, questo problema si verifica perché nella cartella locale di Sync sono presenti file non *assegnati* all'utente ma ad altri (come l'utente root). Per risolvere questo problema bisogna eseguire un comando `chown` sui file incriminati, per trovarli si può eseguire il comando
 ```
 # find /mnt/Dati/Dropbox/ ! -user alnao -exec chown alnao:alnao "{}" \;
 ```
 
 ## Giochi e Steam
 
-A differenza di quello che si pensa, GNU Linux ha una grandissima varietà di giochi ed è ormai superfluo dire che questi giochi possono funzionare indipendentemente dal desktop usato, questa lista comprende passatempi, come solitari e arcade, oppure giochi più complicati, come gare d'auto e sparatutto, non poteva mancare anche una versione di Mame, il famoso emulatore di ROM di giochi delle vecchie console, ricordando che è illegare giocare con ROM se non si possiede il gioco originale. Una lista completa di tutti i giochi disponibili è disponibile nel sito ufficiale.
+A differenza di quello che si pensa, GNU Linux ha una grandissima varietà di giochi ed è ormai superfluo dire che questi giochi possono funzionare indipendentemente dal desktop usato, questa lista comprende passatempi, come solitari e arcade, oppure giochi più complicati, come gare d'auto e sparatutto, non poteva mancare anche una versione di Mame, il famoso emulatore di ROM di giochi delle vecchie console, ricordando che è illegale giocare con ROM se non si possiede il gioco originale. Una lista completa di tutti i giochi disponibili è disponibile nel sito ufficiale.
 
-Il gioco **Minecraft** è disponibile per GNU LINUX: dal sito ufficiale è possibile scaricare che risulta molto veloce, una volta scaricata la versione basta lanciare il pacchtto-jar auto-installante per avere il gioco disponibile nel proprio sistema. Il pacchetto di Minecraft è disponibile per l'installazione anche da Snapd.
+Il gioco **Minecraft** è disponibile per GNU LINUX: dal sito ufficiale è possibile scaricare che risulta molto veloce, una volta scaricata la versione basta lanciare il pacchetto-jar auto-installante per avere il gioco disponibile nel proprio sistema. Il pacchetto di Minecraft è disponibile per l'installazione anche da Snapd.
 
 Cedega è stato un progetto per far funzionare giochi e programmi compilati per Microsoft Windows sui sistemi GNU Linux, il progetto era a pagamento acquistabile direttamente dal sito ufficiale, purtroppo da qualche anno il progetto è stato abbandonato e non è più consigliato usare tale programma.
 
@@ -576,7 +576,37 @@ Per i sistemi GNU Linux e Debian è disponibile l'installer del launcher **Steam
 ```bash
 $ snap install steam
 ```
-E' possibile installare anche il launcer di EpicGames, si rimanda al sito ufficiale in quanto è necessario scaricare e usare Wine come emulatore, tuttavia io sconsiglio l'uso di Wine se non strettamente necessario.
+È possibile installare anche il launcher di EpicGames, si rimanda al sito ufficiale in quanto è necessario scaricare e usare Wine come emulatore, tuttavia io sconsiglio l'uso di Wine se non strettamente necessario.
+
+
+Esistono altri di tipi di launcher e/o piattaforme di gaming, per esempio il recente gioco **hytale** è disponibile nella piattaforma **flatpak**, per procedere con i passi
+- per poter giocare è necessario aver acquistato il gioco tramite il sito ufficiale [hytale.com](https://www.hytale.com)
+- scaricare il file dal sito ufficiale [hytale.com/download](https://accounts.hytale.com/download) dopo aver verificato i requisiti minimi
+- installare il pacchetto flatpak
+  ```
+  # apt install flatpak
+  ```
+- avviare il download di flatpak con il comando
+  ```
+  # flatpak --user install ~/Downloads/hytale-launcher-latest.flatpak
+  ```
+  - nota: prestare attenzione perché questo comando scarica e installa diversi Gb di pacchetti
+- avviare il gioco con il comando
+  ```
+  flatpak run com.hypixel.HytaleLauncher
+  ```
+- eventualmente creare l'icona nel desktop GNOME creando il file `~/.local/share/applications/HytaleLauncher.desktop` con il contenuto
+  ```
+   [Desktop Entry]
+    Encoding=UTF-8
+    Name=Hytale
+    Exec=flatpak run com.hypixel.HytaleLauncher
+    Icon=/usr/share/icons/hicolor/scalable/apps/org.gnome.Settings-wellbeing-symbolic.svg
+    Terminal=false
+    Type=Application
+    Categories=Gaming;
+  ```
+
 
 
 # Come gestire i demoni di Debian
@@ -615,14 +645,14 @@ In GNU Linux la gestione dei servizi per stampare e la gestione delle stampanti 
 
 Una volta installati i pacchetti necessari il tutto, basta aprire un browser e andare all'indirizzo:
 ```
-http:\\localhost:631\
+http://localhost:631/
 ```
 per accedere al programma web di gestione del server di stampa. Da questa comoda interfaccia si possono gestire le stampanti (installarle, cancellarle, fermarle) e si possono anche gestire i processi di stampa. Oltre all'interfaccia web di CUPS, i vari Desktop manager mettono a disposizione vari programmi per la configurazione le stampanti oppure è possibile usare il pannello di controllo WebMin. Per condividere una stampante locale in una rete locale è necessario aver installato anche il demone SAMBA e dal condivisione potrà essere configurata direttamente dal pannello di amministrazione.
 
 
 ## Condivisioni di rete con Samba
 
-Se nella rete sono presenti nodi con altri sistemi operativi è possibile usare il servizio di rete **Samba** che permette di condividere file e stampanti tra i vari sistemi operativi, per attivarlo vi basta installare il pacchetto Samba: il demone della condivisione con il protocollo NetBios usato dal sistema operativo MsWindows e anche dai sistemi operativi di Apple. Nelle vecchie versioni di Debian era presente anche un software web per la configurazione di Samba ma `swat` è stato tolto dai repository quindi vi sconsiglio di installarlo perché non più aggiornato. La configurazione del demone può essere fatta in due modi:
+Se nella rete sono presenti nodi con altri sistemi operativi è possibile usare il servizio di rete **Samba** che permette di condividere file e stampanti tra i vari sistemi operativi, per attivarlo vi basta installare il pacchetto Samba: il demone della condivisione con il protocollo NetBios usato dal sistema operativo Windows e anche dai sistemi operativi di Apple. Nelle vecchie versioni di Debian era presente anche un software web per la configurazione di Samba ma `swat` è stato tolto dai repository quindi vi sconsiglio di installarlo perché non più aggiornato. La configurazione del demone può essere fatta in due modi:
 - modificando il file di configurazione 
   ```
   /etc/samba/smb.conf
@@ -658,7 +688,7 @@ Se nella rete sono presenti nodi con altri sistemi operativi è possibile usare 
   systemctl restart smbd
   ```
   - ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: questa configurazione è molto base e potrebbe non essere adatta ad una situazione di server reale o di rete aziendale, si rimanda alla documentazione per tutte le configurazioni
-- usare WebMin nella sezione "Samba Windows File Sharing" e aggiungendo le configurazioni di autentication e file-share options.
+- usare WebMin nella sezione "Samba Windows File Sharing" e aggiungendo le configurazioni di autenticazione e file-share options.
 
 Tipicamente il firewall di GNU Linux è configurato di default per bloccare tutte le connessioni "sconosciute", comprese le connessioni generate dalla rete nella LAN, quindi una volta configurate le condivisioni SAMBA è consigliato di controllare il firewall: per abilitare la rete basta verificare che i nodi della rete (gli indirizzi IP) non vengano bloccati, in tal caso dovete abilitare gli indirizzi IP ad accedere al vostro sistema, potete usare il programma e inserire l'IP del vostro sistema nella sezione Trust per abilitare le condivisioni. L'alternativa è permettere a tutti di accedere al servizio Samba, aprendo il firewall a tutte le connessioni con i comandi:
 ```
@@ -669,7 +699,7 @@ Da notare che l'accesso è limitato agli utenti del computer in cui è in esecuz
 ```
 # smbpasswd -a <nomeUtente>
 ```
-così sarà possibile accedere via Explorer inserendo nella barra degli indirizzi l'indirizzo IP preceduto da due parre oppure eseguendo il mount con il comando dalla console dei comandi di MsWindows:
+così sarà possibile accedere via Explorer inserendo nella barra degli indirizzi l'indirizzo IP preceduto da due barre oppure eseguendo il mount con il comando dalla console dei comandi di Windows:
 ```
 net use L: \\myserver\myshare /u:myuser mypassword
 ```
@@ -717,13 +747,13 @@ Il nuovo sistema di gestione introdotto con le ultime versioni si chiama **Syste
 - ```# systemctl stop``` apache2 ferma immediatamente un demone in esecuzione
 - ```# systemctl restart``` apache2 ferma e poi avvia un demone in esecuzione
 
-per maggiori informazioni sul questo sistema di gestione dei demoni è disponibile la pagina ufficiale.
+per maggiori informazioni su questo sistema di gestione dei demoni è disponibile la pagina ufficiale.
 
 In Debian 13 così come nelle versioni recenti precedenti, `/etc/rc.local` è deprecato perché il sistema di init predefinito è systemd, che gestisce l'avvio dei servizi in modo parallelo e basato su unità. Sebbene systemd offra una compatibilità limitata tramite systemd-rc-local-generator, la pratica raccomandata è creare un'apposita systemd service unit per eseguire script o comandi all'avvio, questo verrà mostrato in una sezione dedicata.
 
 ## Schedulazioni con Cron
 
-Un demone base di tutti i sistemi GNU Linux si chiama **cron** (e spesso chiamato **crontab**), questo permette la schedulazione e l'esecuzione di comando ad un orario e/o frequenze prefissati, tale demone viene lanciato in backgrouond all'avvio del sistema e si basa sul file di configurazione
+Un demone base di tutti i sistemi GNU Linux si chiama **cron** (e spesso chiamato **crontab**), questo permette la schedulazione e l'esecuzione di comando ad un orario e/o frequenze prefissati, tale demone viene lanciato in background all'avvio del sistema e si basa sul file di configurazione
 ```
 /etc/crontab
 ```
@@ -771,13 +801,13 @@ dove vengono indicati tutti i minuti da 6 a 12, ogni due ore, nei giorni 1,3,6,1
 ```
 */30 13,20 * 1-7,9-12 1-5 /comando/da/eseguire
 ```
-il comando verrà eseguito nei giorni feriali (da lunedì a venerdì) di tutti i mesi tranne agosto, alle 13,00 - 13,30 - 20,00 - 20,30. Quando si scrivono questi comandi bisogna ricordarsi di analizzare anche dove vengono eseguiti: di default vengono eseguiti in background e un utente eventualmente collegato al sistema non si accorge di nulla, per eseguire applicazioni nei desktop degli utenti bisogna seguire delle configurazioni ulteriori descritte in una sesione dedicata.
+il comando verrà eseguito nei giorni feriali (da lunedì a venerdì) di tutti i mesi tranne agosto, alle 13,00 - 13,30 - 20,00 - 20,30. Quando si scrivono questi comandi bisogna ricordarsi di analizzare anche dove vengono eseguiti: di default vengono eseguiti in background e un utente eventualmente collegato al sistema non si accorge di nulla, per eseguire applicazioni nei desktop degli utenti bisogna seguire delle configurazioni ulteriori descritte in una sezione dedicata.
 
-- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: spesso è complicato districarsi tra le varie schedulazioni configurate in un sistema, è consigliato l'uso di WebMin che permette di eseguire le configurazioni graficamente nella sesione "Scheduled Cron Jobs"  🔶⚠️
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: spesso è complicato districarsi tra le varie schedulazioni configurate in un sistema, è consigliato l'uso di WebMin che permette di eseguire le configurazioni graficamente nella sezione "Scheduled Cron Jobs"  🔶⚠️
 
 ## Accesso e controllo remoto
 
-Il servizio per la accesso remoto in una rete LAN è compreso nel KernelLinux e non deve essere installato nessun pacchetto supplementare: il protocollo **SSH** è disponibile grazie ai pacchetti ```openssh-server``` e ```openssh-client``. Per collegare due o più nodi con i sistemi GNU Linux basta collegarsi usando il protocollo ssh o sftp, standard ormai usato in tutti i sistemi. 
+Il servizio per l'accesso remoto in una rete LAN è compreso nel Kernel Linux e non deve essere installato nessun pacchetto supplementare: il protocollo **SSH** è disponibile grazie ai pacchetti ```openssh-server``` e ```openssh-client```. Per collegare due o più nodi con i sistemi GNU Linux basta collegarsi usando il protocollo ssh o sftp, standard ormai usato in tutti i sistemi. 
 Per attivare e controllare il demone di rete SSH 
 ```
 systemctl enable ssh
@@ -785,7 +815,7 @@ systemctl start ssh
 systemctl status ssh
 netstat -tunlp | grep ssh
 ```
-Per abilitare la connessione in ingresso si devono eseguire una serie di passatti:
+Per abilitare la connessione in ingresso si devono eseguire una serie di passaggi:
 - modificare il file 
   ```
   /etc/ssh/sshd_config
@@ -808,13 +838,13 @@ Per abilitare la connessione in ingresso si devono eseguire una serie di passatt
   ```
 - provare la connessione con il protocollo ssh
   ```
-  ssh autente@yourIP -p 7022
+  ssh utente@yourIP -p 7022
   ```
 - nota: in questo esempio è stata usata la porta 7022 per mostrare la configurazione specifica con una porta diversa dalla default.
 
-Per il controllo da remoto dei sistemi è possibile usare **rdesktop** compatibile il sistema di condivisione di MsWindows e potete provare il programma TeamViwever che permette di controllare da remoto in maniera indipendente. Il pacchetto **xrdp** è una implementazione per GNU Linux del protocollo RDP sviluppato da Microsoft, grazie a questo demone è possibile utilizzare un sistema GNU Linux come server RDP quindi una postazione di un sistema di desktop remoto, dando la possibilità ad un sistema Windows di collegarsi con il suo client di Remote-Desktop. Ovviamente per funzionare correttamente, il sistema xrdp necessita del server grafico X e di un desktop manager configurato. 
+Per il controllo da remoto dei sistemi è possibile usare **rdesktop** compatibile con il sistema di condivisione di Windows e potete provare il programma TeamViewer che permette di controllare da remoto in maniera indipendente. Il pacchetto **xrdp** è una implementazione per GNU Linux del protocollo RDP sviluppato da Microsoft, grazie a questo demone è possibile utilizzare un sistema GNU Linux come server RDP quindi una postazione di un sistema di desktop remoto, dando la possibilità ad un sistema Windows di collegarsi con il suo client di Remote-Desktop. Ovviamente per funzionare correttamente, il sistema xrdp necessita del server grafico X e di un desktop manager configurato. 
 
-Nelle impostazioni del sistema Gnome, nel programma **settings**, è possibile trovare la sezione "Remote desktop" (nel menù sistem), tramite questa semplice cofigurazione è possibile attivare e modificare il sistema che permette di collegarsi con anche la definiziona della password di collegamento. Il file di configurazione base è il `/etc/xrdp/xrdp.ini` ma è fortemente sconsigliato modificarlo se non strettamente necessario. 
+Nelle impostazioni del sistema GNOME, nel programma **settings**, è possibile trovare la sezione "Remote desktop" (nel menù sistema), tramite questa semplice configurazione è possibile attivare e modificare il sistema che permette di collegarsi con anche la definizione della password di collegamento. Il file di configurazione base è il `/etc/xrdp/xrdp.ini` ma è fortemente sconsigliato modificarlo se non strettamente necessario. 
 
 Tipicamente la porta usata dal server è la 3389, che nei sistemi GNU Linux potrebbe essere bloccata, per sbloccarla basta modificare la configurazione del firewall con il comando
 ```
@@ -890,9 +920,9 @@ Dopo le modifiche, riavviare il servizio:
 # systemctl restart systemd-journald
 ```
 
-- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: è possibile che journalctl occupo molto spazio nella cartella `/var/log`, è consigliato impostare un limite nel file di configurazione per evitare di salvare tanti log inuliti 🔶⚠️
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: è possibile che journalctl occupi molto spazio nella cartella `/var/log`, è consigliato impostare un limite nel file di configurazione per evitare di salvare tanti log inutili 🔶⚠️
 
-**Rsyslog** è il vecchio sistema di logging tradizionale di Debian che gestisce i file di log in log. Funzionava in parallelo con systemd-journald per fornire compatibilità con il sistema di log classico. A partire da Debian 12 (e proseguendo nella 13), rsyslog non è più installato di default nella maggior parte delle installazioni standard. Il sistema si affida nativamente a systemd-journald per la gestione dei log (che puoi consultare con il comando journalctl), è comunque possibile installarlo con il pachcetto `rsyslog` e abilitandolo con il comando:
+**Rsyslog** è il vecchio sistema di logging tradizionale di Debian che gestisce i file di log in log. Funzionava in parallelo con systemd-journald per fornire compatibilità con il sistema di log classico. A partire da Debian 12 (e proseguendo nella 13), rsyslog non è più installato di default nella maggior parte delle installazioni standard. Il sistema si affida nativamente a systemd-journald per la gestione dei log (che puoi consultare con il comando journalctl), è comunque possibile installarlo con il pacchetto `rsyslog` e abilitandolo con il comando:
 ```
 systemctl status rsyslog
 ```
@@ -914,7 +944,7 @@ Una volta installato, rsyslog funzionerà in parallelo a journald, scrivendo i l
 - `/var/log/iptables.log`: Log di iptables (se configurato)
 - `/var/log/cron.log`: Log del demone cron
 
-Nota: questi file potrebbero essere presenti nel sistema perchè dipende dai demoni effettivamente installati e attivi.
+Nota: questi file potrebbero essere presenti nel sistema perché dipende dai demoni effettivamente installati e attivi.
 
 # Programmazione in Debian
 
@@ -1001,7 +1031,7 @@ $ echo "print ( random.choice(['Sasso','Forbice','Carta']) )" >> a.py
 $ python3 -m venv venv
 $ python3 ciao.py
 ```
-Come ambiente di sviluppo IDE è possibile usare Eclipse, Code, PyCharm o tanti altri, lo storico programma atom è ormai considerato deprecato *perchè le cose belle prima o poi finiscono.
+Come ambiente di sviluppo IDE è possibile usare Eclipse, Code, PyCharm o tanti altri, lo storico programma atom è ormai considerato deprecato *perché le cose belle prima o poi finiscono.
 
 Inoltre è consigliato creare un alias py al comando python, infatti basta aggiungere sul file .bashrc un alias
 ```
@@ -1065,11 +1095,11 @@ La versione PDF di questo documento di precedenti versioni di Debian è stata sc
 
 ## LAMP 
 
-Quando si pensa ai sistemi GNU Linux si pensa anche al *matrimonio del secolo* chiamato **LAMP**: l'unione perfetta tra GNU Linux, **Apache**, **MySql** & **Php**. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo, probabilmente il più usato nella storia dell'informatica. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione in un unico comando (*non separare ciò che Dio ha unito*), i pacchetti da instlalare sono:
+Quando si pensa ai sistemi GNU Linux si pensa anche al *matrimonio del secolo* chiamato **LAMP**: l'unione perfetta tra GNU Linux, **Apache**, **MySQL** & **PHP**. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo, probabilmente il più usato nella storia dell'informatica. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione in un unico comando (*non separare ciò che Dio ha unito*), i pacchetti da installare sono:
 ```
 # apt-get install apache2 mariadb-client mariadb-server php8.4 php8.4-mysql libapache2-mod-php8.4
 ```
-oppure i pacchetti possono essere installati dai programmi di gestione dei pacchetti di Debian. In questo articolo viene usata la versione 8.4 di PHP ma si possono usare anche versioni precedenti o successive se presenti nel repository ufficiale, è sconsigliato usate versioni di pacchetti non ufficiali.
+oppure i pacchetti possono essere installati dai programmi di gestione dei pacchetti di Debian. In questo articolo viene usata la versione 8.4 di PHP ma si possono usare anche versioni precedenti o successive se presenti nel repository ufficiale, è sconsigliato usare versioni di pacchetti non ufficiali.
 
 Una volta installati i pacchetti questi vengono auto-configurati tanto che il server web viene attivato automaticamente e risulta disponibile all'indirizzo:
 ```
@@ -1104,7 +1134,7 @@ Dopo aver modificato il file di configurazione, per rendere effettive le modific
 ```
 # systemctl restart apache2
 ```
-La cartella web virtuale di default è la cartella `/var/www/`, questa è consigliata in fase di sviluppo ma è possibile configurare altre cartelle specifiche: per creare/aggiungere un path specifico esposto dal webserver, basta modificare il file di configurazione aggiungendo un blocco di codice specifoco indicando i path e il nome:
+La cartella web virtuale di default è la cartella `/var/www/`, questa è consigliata in fase di sviluppo ma è possibile configurare altre cartelle specifiche: per creare/aggiungere un path specifico esposto dal webserver, basta modificare il file di configurazione aggiungendo un blocco di codice specifico indicando i path e il nome:
 ```
 Alias "/Php/" "/mnt/Dati/Php/"
 <Directory "/mnt/Dati/Php/">
@@ -1115,12 +1145,12 @@ Alias "/Php/" "/mnt/Dati/Php/"
   Require all granted
 </Directory>
 ```
-*bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione, i browser non sono case-sentitive ma il webserver e i protocolli di rete lo sono!*.
+*bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione, i browser non sono case-sensitive ma il webserver e i protocolli di rete lo sono!*.
 
 
-### MySql
+### MySQL
 
-Il demone database **MySql** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione **mariadb** che è la versione *open-source* e sono previsti due pacchetti principali (`mariadb-client` e `mariadb-server~), alla fine della fase di installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
+Il demone database **MySQL** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione **MariaDB** che è la versione *open-source* e sono previsti due pacchetti principali (`mariadb-client` e `mariadb-server`), alla fine della fase di installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
 ```bash
 # mysql_secure_installation
 ```
@@ -1128,7 +1158,7 @@ Da notare che con il comando mysql è possibile accedere alla console del databa
 ```
 # systemctl restart mariadb
 ```
-per rendere effettive le modifiche alla password di root. Un semplice esempio di utilizzo della console del dabatase:
+per rendere effettive le modifiche alla password di root. Un semplice esempio di utilizzo della console del database:
 ```bash
 $ mysql
 > USE test;
@@ -1137,11 +1167,11 @@ $ mysql
 > INSERT INTO prova (Nome,Sito) VALUES ('Alberto Nao','www.alnao.it');
 > SELECT * FROM prova;
 ```
-Con questi comandi è stata creata una piccola tabella nel database test, inserita una riga sulla tabella e l'ultima query visualizza la riga appena inserita, in questo modo sono state eseguite tutte le istruzioni base del demone MySql. Per quanto riguarda l'applicazione-sito PhpMyAdmin, dalla versione 10 di Debian, non è più disponibile nei Repository ufficiali e deve essere scaricato manualmente dal sito ufficiale e posizionato in una cartella per poi lanciare i comandi di configurazione (per la configurazione dei permessi e del apache.conf). In alternativa all'ormai obsoleto PhpMyAdmin è consigliabile usare programmi più evoluti per la gestione del database come **MySql-Workbench**, per installarlo basta usare il repository snap e lanciare il comando:
+Con questi comandi è stata creata una piccola tabella nel database test, inserita una riga sulla tabella e l'ultima query visualizza la riga appena inserita, in questo modo sono state eseguite tutte le istruzioni base del demone MySQL. Per quanto riguarda l'applicazione-sito phpMyAdmin, dalla versione 10 di Debian, non è più disponibile nei repository ufficiali e deve essere scaricato manualmente dal sito ufficiale e posizionato in una cartella per poi lanciare i comandi di configurazione (per la configurazione dei permessi e del apache.conf). In alternativa all'ormai obsoleto phpMyAdmin è consigliabile usare programmi più evoluti per la gestione del database come **MySQL Workbench**, per installarlo basta usare il repository snap e lanciare il comando:
 ```bash
 $ snap install mysql-workbench-community
 ```
-Il demone Mysql pevede anche alcuni comandi speciali per la gestione da riga di comando del demone, per esempio per effettuare il backup di un database non può usare il comando:
+Il demone MySQL prevede anche alcuni comandi speciali per la gestione da riga di comando del demone, per esempio per effettuare il backup di un database non si può usare il comando:
 ```bash
 $ mysqldump -u user -p password nomeDatabaseSorgente > file.sql
 ```
@@ -1149,15 +1179,15 @@ il backup viene eseguito in un file con estensione sql, per eseguire il restore 
 ```bash
 $ mysql -u user -p password nomeDatabaseDestinazione < file.sql
 ```
-Da notare che il comando mysqldump permette di collegare due server MySql per trasferire dati tra i due server, per questo e tutti gli altri comandi si rimanda alla ufficiale MySql.
+Da notare che il comando mysqldump permette di collegare due server MySQL per trasferire dati tra i due server, per questo e tutti gli altri comandi si rimanda alla ufficiale MySQL.
 
-Per quanto riguarda la programmazione Web con i linguaggi di scripting Php o gli altri linguaggi, ci sono moltissimi programmi grafici che permettono lo sviluppo, alcuni esempi sono: screem, BlueFish, QuantaPlus anche se è consigliato l'utilizzo di Eclipse o Visual Studio Code.
+Per quanto riguarda la programmazione web con i linguaggi di scripting PHP o gli altri linguaggi, ci sono moltissimi programmi grafici che permettono lo sviluppo, alcuni esempi sono: screem, BlueFish, QuantaPlus anche se è consigliato l'utilizzo di Eclipse o Visual Studio Code.
 
-Il più semplice esempio di file php è il classico file con le informazioni base :
+Il più semplice esempio di file PHP è il classico file con le informazioni base:
 ```bash
 $ echo '<?php phpinfo(); ?> ' > /var/www/html/test.php
 ```
-che risulta disponibile nel server apache. I moduli php sono installabili dal gestiore dei pacchetti e l'elenco dei moduli installati sono consultabili nell'elenco dei pacchetti. Si rimanda alla documentazione ufficiale per maggior informazioni riguardo alla configurazione dell'interprete Php e della sua integrazione con il web-server apache!
+che risulta disponibile nel server Apache. I moduli PHP sono installabili dal gestore dei pacchetti e l'elenco dei moduli installati sono consultabili nell'elenco dei pacchetti. Si rimanda alla documentazione ufficiale per maggiori informazioni riguardo alla configurazione dell'interprete PHP e della sua integrazione con il web server Apache!
 
 ### Nginx
 **Nginx** (si legge “engine-x”) è un web server e reverse proxy molto leggero e performante, ampiamente usato sia per servire siti statici sia come “front-end” per applicazioni backend (Node.js, Python, Java, PHP-FPM). In Debian è una scelta eccellente perché è stabile, ben integrato con systemd e la struttura di configurazione è pulita e modulare. Spesso è usato come alternativa veloce e snella di Apache, ovviamente i due server possono essere attivi ma non configurati con la stessa porta di esposizione. Per l'installazione basta installare il pacchetto dedicato
@@ -1170,7 +1200,7 @@ Verifica rapida da locale: `$ curl -I http://localhost`
 I file di configurazione principali sono:
 - `/etc/nginx/nginx.conf`: config principale
 - `/etc/nginx/sites-available/`: elenco di tutti i virtual-host
-  - è possibile modificare il file `/etc/nginx/sites-available/default` per impostare una porta diversa dalla 80 (se si volesse) e si può modificare la catella radice predefinita del webserver
+  - è possibile modificare il file `/etc/nginx/sites-available/default` per impostare una porta diversa dalla 80 (se si volesse) e si può modificare la cartella radice predefinita del webserver
 - `/etc/nginx/sites-enabled/`: configurazione dei vhost attivi tramite symlink
 - `/var/www/html/`: cartella radice predefinita del sito “default” (attenzione che è la, stessa cartella usata da Apache!)
 - `/var/log/nginx/access.log` e `/var/log/nginx/error.log`: files di log
@@ -1243,14 +1273,14 @@ con i comandi di attivazione di questa configurazione:
 
 Per guardo riguarda la programmazione di applicazioni web **Node.js** e **NPM** hanno cambiato il mondo facilitando il lavoro degli sviluppatori: Node.js è lo strumento che consente agli sviluppatori di eseguire script al di fuori del browser web mentre NPM è il gestore di pacchetti per la gestione dei moduli Nodejs. L'installazione di questi due tool in una distribuzione Debian è facile e prevede l'installazione di due pacchetti
 ```
-# apt-get install nodejs npl curl -y
+# apt-get install nodejs curl -y
 ```
-Al termine dell'instazzione è sempre necessario impostare i permessi in modo che qualunque utente possa installare moduli con Npm, questi permessi possono essere assegnati con i comandi
+Al termine dell'installazione è sempre necessario impostare i permessi in modo che qualunque utente possa installare moduli con Npm, questi permessi possono essere assegnati con i comandi
 ```
 # mkdir /usr/local/lib/node_modules
 # chmod 777 /usr/local/lib/node_modules
 # chmod 777 /usr/local/bin/
-# node export NODE_OPTIONS=--openssl-legacy-provider
+# export NODE_OPTIONS=--openssl-legacy-provider
 ```
 In particolare questa ultima istruzione è da inserire nel file `.bashrc` presente nella home di ogni utente, si rimanda alla documentazione per maggiori dettagli. 
 Esistono molte guide che descrivono il processo di installazione di nuove versioni da repository esterni che spesso sono più aggiornate ma per un ambiente di sviluppo stabile è consigliato l'uso dei repository ufficiali. Per creare e provare una applicazione basata sulla libreria Angular basta lanciare i comandi:
@@ -1331,14 +1361,14 @@ Per Eclipse sono consigliati i seguenti plugin scaricabili dal marketplace uffic
 - Eclise JST server adapters
 - Eclipse Web developer tools 3.28
 - maven 1.2.0
-- PhP development tools 7.0 (se si usa il linguaggio Php)
+- PHP development tools 7.0 (se si usa il linguaggio PHP)
 - Spring tools 4 (oppure in alternativa la versione 3.9.13)
 
 Il tool **maven** e **glade** sono disponibili nel pacchetto ufficiale e possono essere facilmente scaricati dai repository di Debian tramite i programmi di gestione dei pacchetti.
 
 ## GIT
 
-Il tool **GIT** è il programma per il controllo delle versioni di software e distribuzione più usato al mondo, inizialmente proprio creato per la gestione degli sviluppi del KernelLinux, ad oggi è usato in tutto il mondo anche delle grandi aziende per i progetti di grandissimi progetti. Il sistema può essere installato con l'omonimo pacchetto e per la configurazione basta lanciare i comandi
+Il tool **GIT** è il programma per il controllo delle versioni di software e distribuzione più usato al mondo, inizialmente proprio creato per la gestione degli sviluppi del Kernel Linux, ad oggi è usato in tutto il mondo anche delle grandi aziende per i progetti di grandissimi progetti. Il sistema può essere installato con l'omonimo pacchetto e per la configurazione basta lanciare i comandi
 ```bash
 $ git config --global user.email "you@example.com"
 $ git config --global user.name "Your Name"
@@ -1357,13 +1387,13 @@ $ git push -u origin master
 ### Jenkins
 Jenkins è un server di automazione open source che consente l'integrazione continua (CI) e la distribuzione continua (CD) di software, facilitando la gestione e l'automazione dei processi di build, test e deploy.
 
-I passi per l'installazione di Jenkins in un sistema Debian 12 sono: 
+I passi per l'installazione di Jenkins in un sistema Debian sono: 
 - Aggiunta la chiave GPG di Jenkins e configurazione del repository
   ```
   # wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
   # echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
   ```
-- Aggiornamento e installaqzione Jenkins
+- Aggiornamento e installazione Jenkins
   ```
   # apt update
   # apt install jenkins -y
@@ -1445,12 +1475,12 @@ Come IDE per i sistemi GNU Linux è sempre disponibile VsCodium, ma è possibile
 Ad oggi esistono più modi di configurare il repository e installare il programma, per esempio:
 ```
 # apt-get install software-properties-common apt-transport-https curl
-# curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-# add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+# curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
+# add-apt-repository "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main"
 # apt-get update
 # apt-get install code
 ```
-Poi infatti basta lanciare il comando dall'icona che compare nel menù del desktop. Nel programma sono disponibili diversi plug-in per usare GIT ed è disponibile una console integrata per il lancio dei server NPM e NG per React e Angular. Come per gli altri sistemi operativo anche su GNU Linux è possibile scaricare i plug-in disponibili per tutti i linguaggi come Java o C. Un elenco incompleto dei plugin indispensabili:
+Poi infatti basta lanciare il comando dall'icona che compare nel menù del desktop. Nel programma sono disponibili diversi plug-in per usare GIT ed è disponibile una console integrata per il lancio dei server NPM e NG per React e Angular. Come per gli altri sistemi operativi anche su GNU Linux è possibile scaricare i plug-in disponibili per tutti i linguaggi come Java o C. Un elenco incompleto dei plugin indispensabili:
 
 - github copilot
 - git graph
@@ -1471,7 +1501,7 @@ Poi infatti basta lanciare il comando dall'icona che compare nel menù del deskt
 
 ## Postman
 
-Anche per **Postman** non esiste il pacchetto Debian ufficiale e per poterlo installare esistono due possiblità: scaricarlo dai server di snap con un semplice click oppure scaricare l'installer in formato tar.gz dal sito ufficiale e poi installare il programma con i comandi:
+Anche per **Postman** non esiste il pacchetto Debian ufficiale e per poterlo installare esistono due possibilità: scaricarlo dai server di snap con un semplice click oppure scaricare l'installer in formato tar.gz dal sito ufficiale e poi installare il programma con i comandi:
 ```
 # rm -rf /opt/Postman
 #	tar -C /tmp/ -xzf <(curl -L https://dl.pstmn.io/download/latest/linux64) && sudo mv /tmp/Postman /opt/
@@ -1490,7 +1520,7 @@ con l'ultimo comando si è creata la voce di menù da cui è possibile accedere 
 
 ## PostgreSQL
 
-Per gli ambienti GNU Linux sono disponibili molti diversi DBMS, il più usato ovviamente è MySql, già descritto nella sezione su LAMP, ma nel tempo sono stati sviluppati altri gestori di base dati più o meno open-source, uno dei più famoso e più usati è **PostgreSQL**, questo è disponibile nei repository ufficiali con dei pacchetti pronti per l'uso, basta installare i pacchetti base:
+Per gli ambienti GNU Linux sono disponibili molti diversi DBMS, il più usato ovviamente è MySQL, già descritto nella sezione su LAMP, ma nel tempo sono stati sviluppati altri gestori di base dati più o meno open-source, uno dei più famosi e più usati è **PostgreSQL**, questo è disponibile nei repository ufficiali con dei pacchetti pronti per l'uso, basta installare i pacchetti base:
 ```
 # apt-get install postgresql ufw
 ```
@@ -1524,7 +1554,7 @@ con questi semplici comandi si sono eseguite delle configurazioni base del serve
 
 ## MongoDB
 
-Per quanto riguarda il demone **MongoDB** si può installare utizzando il repository dedicato che necessita di una piccola configurazione come spiegato nel [sito ufficiale](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/):
+Per quanto riguarda il demone **MongoDB** si può installare utilizzando il repository dedicato che necessita di una piccola configurazione come spiegato nel [sito ufficiale](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/):
 ```
 # apt update && sudo apt install -y curl gnupg
 # curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
@@ -1602,7 +1632,7 @@ Per configurare correttamente l'accesso alla rete da dentro i container è possi
   ,"dns": ["8.8.8.8", "1.1.1.1"]
 }
 ```
-dopo la modifica del file di configurazione bisogna rivviare il demone-Docker con il comando
+dopo la modifica del file di configurazione bisogna riavviare il demone-Docker con il comando
 ```
 # service docker restart
 ```
@@ -1780,12 +1810,12 @@ docker-compose down
 
 
 ### Kubernetes
-Il famoso **Kubernetes** è una piattaforma open source per l’orchestrazione automatica di container, progettata per gestire, scalare e distribuire applicazioni in ambienti cloud e on-premise. `kubectl` è lo strumento da linea di comando che consente agli utenti di interagire con cluster Kubernetes per amministrare risorse e applicazioni. Questa mini-guida fa riferimento alla versione 1.32 presente nei repositoy ufficiali ma esiste anche la versione su snapd e altre versioni più recenti non pienamente compatibili con Debian.  
+Il famoso **Kubernetes** è una piattaforma open source per l’orchestrazione automatica di container, progettata per gestire, scalare e distribuire applicazioni in ambienti cloud e on-premise. `kubectl` è lo strumento da linea di comando che consente agli utenti di interagire con cluster Kubernetes per amministrare risorse e applicazioni. Questa mini-guida fa riferimento alla versione 1.32 presente nei repository ufficiali ma esiste anche la versione su snapd e altre versioni più recenti non pienamente compatibili con Debian.  
 ```
 # systemctl status docker
-# curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernets-apt-keyring-gpg
-# chmod 666 /etc/apt/keyrings/kubernets-apt-keyring-gpg 
-# echo 'deb [signed-by=/etc/apt/keyrings/kubernets-apt-keyring-gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list
+# curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+# echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list
 # cat /etc/apt/sources.list.d/kubernetes.list
 # chmod 644 /etc/apt/sources.list.d/kubernetes.list
 # apt-get update 
@@ -1799,7 +1829,7 @@ Bisogna ricordare che il demone kubectl può essere molto pesante e rallentare i
 # systemctl disable kubelet
 ```
 Prima di avviare kube per la prima volta bisogna eseguire questi passi:
-- Per il corretto funzionamento di Kubernets è **fondamentale** che sia disattivato il sistem di swap del sistema operativo, se attivo è possibile disattivare *temporaneamente* il sistem di gestione della memoria swap con i comandi:
+- Per il corretto funzionamento di Kubernetes è **fondamentale** che sia disattivato il sistema di swap del sistema operativo, se attivo è possibile disattivare *temporaneamente* il sistema di gestione della memoria swap con i comandi:
   ```
   # swapoff -a
   # sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
@@ -1921,7 +1951,7 @@ da notare che esistono diverse guide con diverse sorgenti, conviene sempre contr
 
 
 Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
-- Avvio di un server nging 
+- Avvio di un server nginx 
   ```bash
   $ minikube start --driver=docker --memory=2048 --cpus=2
   $ kubectl create deployment nginx --image=nginx
@@ -1933,7 +1963,7 @@ Per avviare un cluster esistono diversi modi, si riportano alcuni esempi:
   $ kubectl delete deployment nginx
   $ minikube stop
   ```
-- Avvio di un sever nging con file servide dedicato
+- Avvio di un server nginx con file service dedicato
   - File `nginx-service.yaml`
     ```
     apiVersion: v1
@@ -1973,7 +2003,7 @@ Da notare che assieme a minikube conviene usare anche **freelens**: un'estension
 ```bash
 $ snap install freelens --classic
 ```
-La configurazione è praticamente automatica per il server in locale, per server remoti la configurazione può essere complicata perchè regolata dal file
+La configurazione è praticamente automatica per il server in locale, per server remoti la configurazione può essere complicata perché regolata dal file
 ```
 ~/.kube/config
 ```
@@ -2006,7 +2036,7 @@ Per installare Portainer si può usare lo stesso docker, con i comandi:
 $ docker volume create portainer_data
 $ docker run -d -p 9001:9000 --name portainer -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
 ```
-Oppure basta aggiungere un `--restart=always` per averlo disponibile ad ogni avvio del sistema. Una volta installato l'interfaccia web è disponibile all'indirizzo `http://localhost:9001` (in questo esempio è stata scelta la porta 9001 perchè la 9000 potrebbe essere già occupata). Al primo avvio, verrà richiesto di configurare un utente amministratore e selezionare l’ambiente Docker da gestire.
+Oppure basta aggiungere un `--restart=always` per averlo disponibile ad ogni avvio del sistema. Una volta installata l'interfaccia web è disponibile all'indirizzo `http://localhost:9001` (in questo esempio è stata scelta la porta 9001 perché la 9000 potrebbe essere già occupata). Al primo avvio, verrà richiesto di configurare un utente amministratore e selezionare l’ambiente Docker da gestire.
 
 
 Portainer supporta **Kubernetes** a partire dalla versione 1.11 in poi ed è in grado di collegarsi a un cluster Kubernetes locale oppure a cluster remoti (su cloud o in infrastrutture on-premise) fornendo una dashboard semplificata per workload, namespace, pod, ingress, storage, ecc. È possibile installare Portainer direttamente nel cluster tramite Helm o manifest YAML:
@@ -2023,8 +2053,8 @@ Debian offre integrazione nativa con i principali provider cloud come AWS, Azure
 
 **Google Cloud SDK** mette a disposizione un repository ufficiale per l'installazione dei componenti:
 ```
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 sudo apt update && sudo apt install google-cloud-cli
 ```
 
@@ -2087,7 +2117,7 @@ $ serverless config credentials --provider aws --key <key> --secret <secret> --p
 ```
 Per verificare che sia tutto configurato correttamente basta lanciare il comando:
 ```bash
-$ servless
+$ serverless
 ```
 oppure:
 ```bash
@@ -2095,13 +2125,13 @@ $ sls
 ```
 
 
-#### Gestione EC2 con Debian 12
+#### Gestione EC2 con Debian
 
 Il cloud AWS mette a disposizione molte immagini **AMI** con il sistema operativo Debian12, la lista può essere recuperata in molti siti ufficiali oppure lanciando il comando AWS-CLI:
 ```bash
-$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
-$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
-$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-12*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*debian-13*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*lamp*debian-13*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
+$ aws ec2 describe-images --owners aws-marketplace --filters "Name=name,Values=*node*debian-13*" --query 'Images[*].[ImageId,Name,CreationDate]' --output table
 ```
 
 
@@ -2378,7 +2408,7 @@ per rinominare tutti i file da .ps a .eps, per maggiori informazioni e una guida
 
 ## Manipolazione video
 
-Per la manipolazione di file video si possono usare diversi comandi, il principale è **ffmeg** che permette di manipolare file video da riga di comando con una sintassi molto complessa, si rimanda al sito ufficiale per tutti i dettagli e l'elenco di tutte le funzionalità messe a disposizione da questo tool.
+Per la manipolazione di file video si possono usare diversi comandi, il principale è **ffmpeg** che permette di manipolare file video da riga di comando con una sintassi molto complessa, si rimanda al sito ufficiale per tutti i dettagli e l'elenco di tutte le funzionalità messe a disposizione da questo tool.
 Le principali operazioni disponibili sono:
 - Ruotare un video (per esempio se ripreso in verticale):
   ```bash		
@@ -2398,25 +2428,24 @@ Le principali operazioni disponibili sono:
   $ ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
   ```
 
-## Il bootloader Grub
+## Il bootloader GRUB
 
-Durante l'installazione al passo Copia del sistema base e impostazioni finali è stato installato nel proprio sistema il sistema **Grub**, questo è il componente della piattaforma GNU Linux che avvia il sistema operativo all'accensione del sistema: dopo l'accensione infatti compare con una schermata che permette di avviare il sistema GNU Linux in diverse modalità ed eventualmente sistemi operativi diversi se sono installate diverse versioni del KernelLinux o altri sistemi operativi, un utente non esperto deve evitare di eseguire modifiche lasciando i valori di default ma un utente più esperto potrà avviare il sistema ottimizzato a seconda delle proprie esigenze.
+Durante l'installazione al passo Copia del sistema base e impostazioni finali è stato installato nel proprio sistema il sistema **GRUB**, questo è il componente della piattaforma GNU Linux che avvia il sistema operativo all'accensione del sistema: dopo l'accensione infatti compare con una schermata che permette di avviare il sistema GNU Linux in diverse modalità ed eventualmente sistemi operativi diversi se sono installate diverse versioni del Kernel Linux o altri sistemi operativi, un utente non esperto deve evitare di eseguire modifiche lasciando i valori di default ma un utente più esperto potrà avviare il sistema ottimizzato a seconda delle proprie esigenze.
 
-New grub theme for debian 12! So hyped for debian 12 "bookworm"! : r/debian
-Questo pacchetto è importante perché permette di installare più sistemi operativi nello stesso sistema e poi scegliere quale avviare al momento dell'accensione (chiamata appunto boot del sistema oppure bootloader), in tutti gli altri sistemi operativi (come MS Windows e MacOX) questo componente non è presente per questo un utente non abituato a Grub non riesce a capirne l'utilità, è persino possibile installare più versioni di Debian o diverse distribuzioni nel sistema e poi gestirne l'avvio di sistemi operativi con Grub. Per gli utenti Debian di oggi, Grub viene installato durante la fase di installazione del sistema base e viene auto-configurato quindi l'utente non deve inserire nessuna configurazione: l'auto-configurazione rileva la presenza di altri sistemi operativi e li inserisce nell'elenco di quelli che Grub può avviare, ovviamente se il sistema operativo è stato installato dopo l'installazione di Grub bisogna rilanciarne la configurazione.
+Questo pacchetto è importante perché permette di installare più sistemi operativi nello stesso sistema e poi scegliere quale avviare al momento dell'accensione (chiamato appunto boot del sistema oppure bootloader), in tutti gli altri sistemi operativi (come MS Windows e macOS) questo componente non è presente per questo un utente non abituato a GRUB non riesce a capirne l'utilità, è persino possibile installare più versioni di Debian o diverse distribuzioni nel sistema e poi gestirne l'avvio di sistemi operativi con GRUB. Per gli utenti Debian di oggi, GRUB viene installato durante la fase di installazione del sistema base e viene auto-configurato quindi l'utente non deve inserire nessuna configurazione: l'auto-configurazione rileva la presenza di altri sistemi operativi e li inserisce nell'elenco di quelli che GRUB può avviare, ovviamente se il sistema operativo è stato installato dopo l'installazione di GRUB bisogna rilanciarne la configurazione.
 
 Il menù di avvio viene regolato dal file
 ```
 /boot/grub/grub.cfg
 ```
-ma non bisogna MAI modificarlo a mano visto che ci sono una serie di comandi che permettono di modificare le configurazioni, come per esempio lo sfondo e il carattere usato infatti di default viene usato uno sfondo semplice e un tema base. Per maggiori dettagli sulla configurazione del bootloader vi rimando al sito ufficiale oppure ad una guida italiana. Il problema principale di Grub è che, se si cambiano i componenti del sistema come gli HardDisk, può succedere che rimanga disallineato rispetto all'effettiva architettura del sistema, per ripristinare il bootloader bisogna seguire una guida molto chiara dove sono spiegati tutti i passi per il ripristino e la riattivazione, in particolare il comando
+ma non bisogna MAI modificarlo a mano visto che ci sono una serie di comandi che permettono di modificare le configurazioni, come per esempio lo sfondo e il carattere usato infatti di default viene usato uno sfondo semplice e un tema base. Per maggiori dettagli sulla configurazione del bootloader vi rimando al sito ufficiale oppure ad una guida italiana. Il problema principale di GRUB è che, se si cambiano i componenti del sistema come gli hard disk, può succedere che rimanga disallineato rispetto all'effettiva architettura del sistema, per ripristinare il bootloader bisogna seguire una guida molto chiara dove sono spiegati tutti i passi per il ripristino e la riattivazione, in particolare il comando
 ```
 # grub-install --root-directory=/mnt /dev/sdX
 ```
-ripristina la versione di Grub2 nel sistema, ovviamente i parametri mnt e sdX devono essere modificati con la configurazione del sistema.
+ripristina la versione di GRUB2 nel sistema, ovviamente i parametri mnt e sdX devono essere modificati con la configurazione del sistema.
 
 
-Se è necessario aggiungere un sistema operativo non presente su Grub è possibile lanciare il comando
+Se è necessario aggiungere un sistema operativo non presente su GRUB è possibile lanciare il comando
 ```
 # sudo update-grub
 ```
@@ -2431,7 +2460,7 @@ GRUB_DISABLE_OS_PROBER=false
 Se questa configurazione non è attiva (quindi impostata su "true" o assente), GRUB non rileverà automaticamente gli altri sistemi operativi installati sul computer.
 
 
-## Gestione del gestino
+## Gestione del cestino
 
 La gestione del **cestino** viene gestita dai vari Desktop (GNOME, KDE o XFCE), e come per altri sistemi, anche in Debian il cestino in realtà è una semplice cartella particolare dove vengono parcheggiati temporaneamente i file in attesa di una cancellazione definitiva, in realtà il Kernel di GNU Linux non gestisce nativamente il cestino, infatti se un utente usa i comandi:
 ```bash
@@ -2488,11 +2517,11 @@ questo perché in quasi tutte le live il comando sudo viene usato al posto dell'
 
 Esistono dei comandi specifici e dedicati al controllo di parti specifiche del sistema, questo articolo vuole essere un riassunto incompleto di questa categoria di comandi per Gnu Linux. Da ricordare che quasi tutte questi sistemi possono essere sostituiti da WebMin, pannello di controllo completo e facile da usare molto più semplice di tanti programmi divisi che possono risultare complessi da imparare ed usare.
 
-Esistono molti programmi per la gestione dell'intero sistema e che permettono di monitorare le risorse e lo stato del proprio sistema, soprattutto se state usando Debian come server: nella shell potete usare il programma top, utilissimo programma che permette di monitorare tutti processi attivi sul sistema, l'elenco delle funzionalità viene elencata semplicemente premendo il tasto "h". Se utilizzate un desktop, potete provare a configurare i vari widget di controllo sulla barra delle applicazioni e potete provare il programma Monitor di sistema che trovate sul menù Sistema, tramite questo programma potete monitorare memoria e processore, avete anche la possibilità di vedere ed eventualmente uccidere i vari processi e programmi in esecuzione nel vostro sistema. Un programma consigliato è **PhpSysInfo**, per funzionare necessita il demone web Apache e dopo aver installato l'omonimo pacchetto, basta accedere all'indirizzo:
+Esistono molti programmi per la gestione dell'intero sistema e che permettono di monitorare le risorse e lo stato del proprio sistema, soprattutto se state usando Debian come server: nella shell potete usare il programma top, utilissimo programma che permette di monitorare tutti processi attivi sul sistema, l'elenco delle funzionalità viene elencata semplicemente premendo il tasto "h". Se utilizzate un desktop, potete provare a configurare i vari widget di controllo sulla barra delle applicazioni e potete provare il programma Monitor di sistema che trovate sul menù Sistema, tramite questo programma potete monitorare memoria e processore, avete anche la possibilità di vedere ed eventualmente uccidere i vari processi e programmi in esecuzione nel vostro sistema. Un programma consigliato è **phpSysInfo**, per funzionare necessita il demone web Apache e dopo aver installato l'omonimo pacchetto, basta accedere all'indirizzo:
 ```
 http://localhost/phpsysinfo/
 ```
-tramite queste viste di tipo web, il programma permette di recuperare tutte le informazioni utili sul vostro sistema, dalle periferiche al processore, dalla ram agli harddisk e monitorare i livelli di utilizzo.
+tramite queste viste di tipo web, il programma permette di recuperare tutte le informazioni utili sul vostro sistema, dalle periferiche al processore, dalla ram agli hard disk e monitorare i livelli di utilizzo.
 
 Per la gestione e il monitoraggio dei processi in esecuzione su un sistema GNU Linux esiste una lunghissima lista di comandi, l'elenco di tutti i processi attivi ed in esecuzione è visualizzabile con il comando ps ma viene quasi sempre usato con il parametro aux che filtra tutti i processi attualmente attivi sul proprio sistema, quindi basta lanciare il comando
 ```
@@ -2511,7 +2540,7 @@ Per la gestione della memoria RAM, è possibile usare il comando **free** per av
 
 ## Configurazione di rete
 
-Esistono diversi tool per configurare del demone di rete: editare i singoli file di configurazione, usare comandi shell come **ifconfig**, usare gli strumenti con interfaccia grafica oppure l'uso di web webmin: GNU Linux e Debian mettono a disposizione moltissimi comandi per la gestione della rete, in particolare si può fare qualsiasi cosa anche senza ambiente grafico o Desktop, ovviamente bisogna ben sapere cosa fare e quindi conoscere tutte le teorie sulla rete, i protocolli (IP/TCP) e le impostazioni di sicurezza. In questo documento elenco solo alcuni comandi base che possono essere utili a tutti gli usi, i principali file di configurazione del demone di rete sono:
+Esistono diversi tool per configurare il demone di rete: editare i singoli file di configurazione, usare comandi shell come **ifconfig**, usare gli strumenti con interfaccia grafica oppure l'uso di WebMin: GNU Linux e Debian mettono a disposizione moltissimi comandi per la gestione della rete, in particolare si può fare qualsiasi cosa anche senza ambiente grafico o Desktop, ovviamente bisogna ben sapere cosa fare e quindi conoscere tutte le teorie sulla rete, i protocolli (IP/TCP) e le impostazioni di sicurezza. In questo documento elenco solo alcuni comandi base che possono essere utili a tutti gli usi, i principali file di configurazione del demone di rete sono:
  
 - ```/etc/hosts``` contiene il mapping fra indirizzi e hostname ed alias. Segue un esempio
 - ```/etc/services``` contiene il mapping tra i numeri di porta e i nomi dei servizi
@@ -2561,10 +2590,10 @@ Qualsiasi uso si faccia di un sistema informatico è sempre importante disporre 
 E' possibile anche costruire un mini script personalizzato, scritto in linguaggio sh, per la copia di backup dei file base, questo script più essere utile per salvare solamente le configurazioni e non tutto il sistema. Per prima cosa per un backup delle configurazione bisogna salvare i file di sistema che possono essere modificati come visto nei precedenti capitoli e poi si elencano alcune dei principali componenti che è possibile salvare in un backup:
 
 - La configurazione del browser Iceweasel se usato (come segnalibri, cronologia, password e cookies) nella cartella /home/nomeutente/.mozilla/firefox/
-- La posta di Icedove se usata: tutte le mail e tutte le impostazioni nella cartella /home/nomeutente/.mozilla-thunderbird/
+- La posta di Thunderbird (ex Icedove) se usata: tutte le mail e tutte le impostazioni nella cartella /home/nomeutente/.mozilla-thunderbird/
 - La cartella di Chrome se usato, se il sistema di sincronizzazione con google-drive è attivo questa cartella può non essere compresa in un eventuale backup, nella cartella /home/nomeutente/.config/google-chrome
 - Tutta la cartella home di ogni utente se ci sono dati interessanti
-- Se si usa il MySql/MariaDb come demone per lo sviluppo non bisogna dimenticarsi di comprendere nel
+- Se si usa il MySQL/MariaDB come demone per lo sviluppo non bisogna dimenticarsi di comprendere nel
 proprio backup anche i database usati, l'esportazione dei dati viene eseguita con il comando:
 ```
 $ mysqldump --database nomedatabase > nomefile.sql -u root -p password
@@ -2584,7 +2613,7 @@ $ dd if=/mnt/Virtuali/debian-live-12.10.0-amd64-gnome.iso of=/dev/sdc bs=4M stat
 
 
 ## Gestione delle macchine virtuali
-Per GNU Linux esistono diversi sistemi di virtualizzazione, lo storico sistema nativo è chiamato **Qemu** poi evoluto nel progetto **Kdm** la cui interfaccia utente è la **Virsh** ed esistono moltissime guide, si rimanda alla documentazione ufficiale per maggiori dettagli, link da inserire tuttavia la configurazione e creazione con Qemu è considerata obsoleta in quanto nelle ultime versioni di Debian non si usa praticamente mai questo tipo di configurazione.
+Per GNU Linux esistono diversi sistemi di virtualizzazione, lo storico sistema nativo è chiamato **Qemu** poi evoluto nel progetto **KVM** la cui interfaccia utente è la **Virsh** ed esistono moltissime guide, si rimanda alla documentazione ufficiale per maggiori dettagli, link da inserire tuttavia la configurazione e creazione con Qemu è considerata obsoleta in quanto nelle ultime versioni di Debian non si usa praticamente mai questo tipo di configurazione.
 
 Per quanto riguarda il programma **VMware** è possibile scaricarlo dal sito ufficiale, il file messo a disposizione è nel formato bundle, come già visto più volte l'estensione è solo una descrizione, infatti questo è uno script auto-installante, prima però di lanciare l'installazione bisogna verificare l'installazione di alcuni pacchetti:
 ```
@@ -2626,7 +2655,7 @@ $ xmessage -center "Messaggio da visualizzare"
 ```
 oppure è possibile usare il programma grafico evoluto zenity, permette di visualizzare finestre informative e anche domande, per esempio
 
-La sintassi dei comandi prevede anche la possiblità di personalizzare il messaggio visualizzato e il tipo di finestra:
+La sintassi dei comandi prevede anche la possibilità di personalizzare il messaggio visualizzato e il tipo di finestra:
 ```bash
 $ zenity --info --text="Messaggio da visualizzare" --title="Info" --width=600
 $ zenity --error --text="An error occurred!" --title="Warning"
