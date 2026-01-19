@@ -1331,13 +1331,9 @@ e provare ad accedere alla console all'indirizzo web
 ```
 http://localhost:8080/manager/html
 ```
-potete installare le vostre applicazioni web sotto forma di file WAR (Web Application aRrchives) oppure nel formato EAR (Enterprise ARchives) oppure all'indirizzo
-```
-http://localhost:8080/docs/manager-howto.html
-```
-è possibile trovare una piccola documentazione su Tomcat. 
+potete installare le vostre applicazioni web sotto forma di file WAR (Web Application aRrchives) oppure nel formato EAR (Enterprise ARchives) oppure all'indirizzo `http://localhost:8080/docs/manager-howto.html` è possibile trovare una piccola documentazione su Tomcat. 
 
-L'ambiente di sviluppo **Eclipse** è disponibile nei repository ufficiali anche se è consigliato l'installazione tramite snap visto che il pacchetto risulta più aggiornato. Grazie a Tomcat è potete collegare il vostro ambiente di sviluppo con il server web per gestire il demone direttamente dalla vista Server di Eclipse, bisogna infatti configurare il server nelle preferenze ma, per praticità e semplicità, è consigliato creare un duplicato del server installato: in questo modo ci saranno due demoni Tomcat attivi nel sistema (quello del sistema già auto-configurato automaticamente e quello gestito da Eclipse per lo sviluppo), per configurare questa logica basta creare una cartella di link virtuali da di comando:
+L'ambiente di sviluppo **Eclipse** è disponibile nei repository ufficiali e disponibile tramite snap ma io consiglio l'installazione tramite il pacchetto scaricato dal sito ufficiale [eclipse.org/downloads/](https://www.eclipse.org/downloads) visto che il pacchetto risulta più aggiornato. Grazie a Tomcat è potete collegare il vostro ambiente di sviluppo con il server web per gestire il demone direttamente dalla vista Server di Eclipse, bisogna infatti configurare il server nelle preferenze ma, per praticità e semplicità, è consigliato creare un duplicato del server installato: in questo modo ci saranno due demoni Tomcat attivi nel sistema (quello del sistema già auto-configurato automaticamente e quello gestito da Eclipse per lo sviluppo), per configurare questa logica basta creare una cartella di link virtuali da di comando:
 ```
 # mkdir /usr/share/tomcat11b
 # cd /usr/share/tomcat11b
@@ -1354,15 +1350,16 @@ e bisogna poi impostare nelle preferenze di Eclipse un server di tipo "Tomcat 11
 ```
 /usr/share/tomcat11b/
 ```
-così facendo nel workspace viene creato in automatico un progetto Servers con alcuni file di configurazione del demone, in questo progetto è presente un file ```server.xml``` dove è indispensabile impostare le porte HTTP diverse da quelle di default perché sono già occupate dal demone del sistema, per esempio basta cambiare 8080 in 8081 (per le applicazioni) e 8005 in 8082 (per la parte amministrativa del demone).
+così facendo nel workspace viene creato in automatico un progetto Servers con alcuni file di configurazione del demone, in questo progetto è presente un file ```server.xml``` dove è indispensabile impostare le porte HTTP diverse da quelle di default perché sono già occupate dal demone del sistema, per esempio basta cambiare 8080 in 8081 (per le porte dedicate alle applicazioni) e 8005 in 8082 (per la porte riservate alla sezione amministrativa del demone).
 
 Per Eclipse sono consigliati i seguenti plugin scaricabili dal marketplace ufficiale:
-- Eclipse enterprise java and web dev tools 3.28
+- Eclipse Web developer tools
+- Tomcat plugin
+- Eclipse enterprise java and web dev tools
 - Eclise JST server adapters
-- Eclipse Web developer tools 3.28
-- maven 1.2.0
-- PHP development tools 7.0 (se si usa il linguaggio PHP)
-- Spring tools 4 (oppure in alternativa la versione 3.9.13)
+- Spring tools
+- GitHub copilot
+- PHP development tools
 
 Il tool **maven** e **glade** sono disponibili nel pacchetto ufficiale e possono essere facilmente scaricati dai repository di Debian tramite i programmi di gestione dei pacchetti.
 
