@@ -43,6 +43,15 @@
   </tr>
   <tr>
     <td align="center">
+      <img src="https://img.shields.io/badge/GitHub%20Copilot-000000?style=for-the-badge&logo=githubcopilot&logoColor=white" />
+      <img src="https://img.shields.io/badge/Gaming-1B2838?style=for-the-badge&logo=steam&logoColor=white" />
+    </td>
+    <td>✨ Tentative game ✨
+      <a href="https://github.com/alnao/AlNaoTentativeGameBackend">Backend</a> &bull; 
+      <a href="https://github.com/alnao/AlNaoTentativeGameFrontend">Frontend</a> 
+  </tr>
+  <tr>
+    <td align="center">
       <img src="https://img.shields.io/badge/AWS-%23FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" />
       <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" />
     </td>
