@@ -44,11 +44,8 @@
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/GitHub%20Copilot-000000?style=for-the-badge&logo=githubcopilot&logoColor=white" />
-      <img src="https://img.shields.io/badge/Gaming-1B2838?style=for-the-badge&logo=steam&logoColor=white" />
     </td>
-    <td>✨ Tentative game ✨
-      <a href="https://github.com/alnao/AlNaoTentativeGameBackend">Backend</a> &bull; 
-      <a href="https://github.com/alnao/AlNaoTentativeGameFrontend">Frontend</a> 
+    <td>✨ <a href="https://github.com/alnao/AlNaoTentativeGame">AlNao Tentative game</a> ✨</td>
   </tr>
   <tr>
     <td align="center">
