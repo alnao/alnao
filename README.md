@@ -43,9 +43,10 @@
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/GitHub%20Copilot-000000?style=for-the-badge&logo=githubcopilot&logoColor=white" />
+      <img src="https://img.shields.io/badge/Dev project-darkgreen?style=for-the-badge&logo=devbox&logoColor=lightgreen" />
+      <img src="https://img.shields.io/badge/Gaming-gray?style=for-the-badge&logo=applearcade&logoColor=white" />
     </td>
-    <td>✨ <a href="https://github.com/alnao/AlNaoTentativeGame">AlNao Tentative game</a> ✨</td>
+    <td>✨🎮 <a href="https://github.com/alnao/AlNaoPathsGame">AlNao Paths Game</a> 🕹️✨</td>
   </tr>
   <tr>
     <td align="center">
@@ -90,14 +91,14 @@
       <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white" />
       <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap annotations</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap notes</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" />
       <img src="https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress annotations</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress notes</a></td>
   </tr>
   <tr>
     <td align="center">
@@ -112,6 +113,12 @@
   <img src="https://img.shields.io/badge/Ethereum-627EEA?style=for-the-badge&logo=ethereum&logoColor=white" />
    </td>
    <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain & Solidity examples</a></td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/GitHub%20Copilot-000000?style=for-the-badge&logo=githubcopilot&logoColor=white" />
+    </td>
+    <td><a href="https://github.com/alnao/AlNaoTentativeGame">GitHub copilot notes</a></td>
   </tr>
 </table>
 
