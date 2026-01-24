@@ -46,7 +46,7 @@
       <img src="https://img.shields.io/badge/Dev project-darkgreen?style=for-the-badge&logo=devbox&logoColor=lightgreen" />
       <img src="https://img.shields.io/badge/Gaming-gray?style=for-the-badge&logo=applearcade&logoColor=white" />
     </td>
-    <td>✨🎮 <a href="https://github.com/alnao/AlNaoPathsGame">AlNao Paths Game</a> 🕹️✨</td>
+    <td>🎮 <a href="https://github.com/alnao/AlNaoPathsGame">AlNao Paths Game</a> 🕹️</td>
   </tr>
   <tr>
     <td align="center">
@@ -116,9 +116,10 @@
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/GitHub%20Copilot-000000?style=for-the-badge&logo=githubcopilot&logoColor=white" />
+      <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white" />
+      <img src="https://img.shields.io/badge/GitHub%20Copilot-gray?style=for-the-badge&logo=githubcopilot&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/AlNaoTentativeGame">GitHub copilot notes</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/GitHubCopilot.md">GitHub copilot notes</a></td>
   </tr>
 </table>
 
