@@ -15,7 +15,7 @@ Imparare a usare la shell e conoscere la struttura delle directory principali (/
 - Strumenti utili: `vim`/`nano`, `curl`/`wget`, `ssh`, `rsync`, `tar`.
 
 ## Concetti base della shell
-- Prompt: la riga che vedi (es. `alnao@host:~$`). Qui scrivi i comandi.
+- Prompt: la riga che vedi (es. `utente@host:~$`). Qui scrivi i comandi.
 - Sintassi: `comando [opzioni] [argomenti]`
 - Percorsi:
   - Assoluti: iniziano con `/` (es. `/etc/hosts`)
@@ -28,7 +28,7 @@ Imparare a usare la shell e conoscere la struttura delle directory principali (/
 - `/` (root): radice del sistema; tutto parte da qui.
 - `/etc`: file di configurazione del sistema (es. `/etc/passwd`, `/etc/hosts`, `/etc/fstab`, `/etc/ssh/sshd_config`).
 - `/var`: dati variabili e log (es. `/var/log`, `/var/spool`, `/var/lib`, `/var/www`).
-- `/home`: directory home degli utenti (es. `/home/alnao`).
+- `/home`: directory home degli utenti (es. `/home/utente`).
 - Altre directory importanti (breve):
   - `/bin`, `/sbin`, `/usr`, `/boot`, `/tmp`, `/dev`, `/proc`.
 
@@ -43,7 +43,7 @@ Imparare a usare la shell e conoscere la struttura delle directory principali (/
   - `750` → owner rwx (7), group r-x (5), others none (0)
 - Comandi principali:
   - `chmod` per cambiare permessi (es. `chmod 644 file.txt` o `chmod u+x script.sh`)
-  - `chown` per cambiare proprietario (es. `sudo chown alnao:staff file.txt`)
+  - `chown` per cambiare proprietario (es. `sudo chown utente:staff file.txt`)
   - `getfacl` / `setfacl` per ACL avanzate (se supportate)
 - Nota: modificare file in `/etc` o `/root` richiede privilegi di root (`sudo`).
 

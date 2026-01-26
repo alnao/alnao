@@ -13,6 +13,13 @@ Necessario avere un profilo GitHub e un abbonamento al servizio [GitHub Copilot 
 
 ## Elenco esempi
 
+**GitHub Copilot Cli**
+- `copilot -h` per il dettaglio di tutti i parametri della cli di copilot!
+- Creazione di un semplice file
+  ```bash
+  copilot -i "genera un file prova.py con dentro un metodo python per generare un numero casuale da 1 a 100" --model gpt-5 --allow-all-tools --add-dir ~
+  ```
+
 **Python**
 - Esempio base di SDK *- coming soon*
 - Esembio di esecuzione in una immagine docker *- coming soon*
@@ -29,10 +36,14 @@ Necessario avere un profilo GitHub e un abbonamento al servizio [GitHub Copilot 
 
 
 ## Reference
+- GitHub Cli
+  - installabile su Debian 13 con il comando `apt install gh` e poi `gh auth status`
 - [GitHub Copilot Pro](https://github.com/copilot/), necessario per l'esecuzione di questi esempi!
 - [Copilot SDK - getting started](https://github.com/github/copilot-sdk/blob/main/docs/getting-started.md)
 - [Copilot CLI](https://github.com/features/copilot/cli)
-    - installabile su Debian 13 con il comando `apt install gh` e poi `gh auth status`
+  - installabile su Debian 13 con il comando `npm install -g @github/copilot`
+  - oppure `curl -fsSL https://gh.io/copilot-install | bash`
+
 
 
 # &lt; AlNao /&gt;
