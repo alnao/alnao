@@ -36,7 +36,7 @@ Necessario avere un profilo GitHub e un abbonamento al servizio [GitHub Copilot 
 
 
 ## Reference
-- GitHub Cli
+- [GitHub Cli](https://cli.github.com/manual/gh_codespace_code)
   - installabile su Debian 13 con il comando `apt install gh` e poi `gh auth status`
 - [GitHub Copilot Pro](https://github.com/copilot/), necessario per l'esecuzione di questi esempi!
 - [Copilot SDK - getting started](https://github.com/github/copilot-sdk/blob/main/docs/getting-started.md)

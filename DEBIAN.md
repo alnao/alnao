@@ -68,6 +68,9 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
       - [Terraform](#Terraform)
   - [Android](#Android)
   - [Blockchain](#Blockchain)
+  - [Intelligenza artificiale](#Intelligenza-artificiale)
+      - [Llama e Ollama](#Llama-e-Ollama)
+      - [GitHub copilot](#github-copilot)
 - [I comandi della shell](#I-comandi-della-shell)
   - [Configurazione del Path e alias](#Configurazione-del-Path-e-alias)
   - [Operazioni su files](#Operazioni-su-files)
@@ -2317,6 +2320,61 @@ console.log('Private key:', account.privateKey);
 console.log('Address:', account.address);
 // per lanciare questo script si esegue il comando: "node web3.js"
 ```
+
+
+## Intelligenza artificiale
+L'intelligenza artificiale è il tema più scottante e presente in questi anni, in Debian 13 sono molte le possibili integrazioni con strumenti di IA: la più semplice è usare librerie come PyTorch o TensorFlow e strumenti di inferenza leggeri (ONNX Runtime). Un'altra integrazione è quella di usare Docker con immagini specifiche, si trovano esempi pratici in questo repository nella sezione python.
+
+
+### Llama e Ollama
+
+Uno degli strimenti più usati al mondo è **llama**, si tratta di un gruppo di modelli di LLM scariabili e usabili , si maggiori informazioni si rimanda alla [documentazione ufficiale](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct). I vari modelli sono scaricabili in formato `gguf` dal sito e possono essere integrati con script python oppure eseguiti con un server installabile con i comandi
+```bash
+$ git clone https://github.com/ggerganov/llama.cpp.git
+$ cd llama.cpp
+$ mkdir build && cd build
+$ cmake ..
+$ cmake --build . --config Release
+$ ./bin/llama-server -m /mnt/path/codellama-7b-instruct.Q8_0.gguf --port 8090
+```
+da notare che bisogna precedentemente scaricare il pacchetto gguf del modello, in questo caso si usa il `codellama` pensato proprio per lo sviluppo di codice. Una volta eseguito il server, è possibile iterarici con un browser all'indirizzo `http://localhost:8090` oppure via API con il comando curl:
+```bash 
+$ curl -X POST http://127.0.0.1:8090/v1/completions -H "Content-Type: application/json" -d '{"model": "llama","prompt": "Write to me a aws lambda function to save a record into dynamo table" ,"max_tokens": 100  }'
+```
+Il sistema **ollama** è uno specifico server evoluto per llama facilmente installabile con il comando
+```bash
+$ curl -fsSL https://ollama.com/install.sh | sh
+```
+il vantaggio di usare ollama è che scarica in autonomia i pacchetti gguf (o altri formati), infatti basta lanciare i comandi
+```bash
+$ ollama pull llama3.3
+$ ollama list
+$ ollama rm llama3.3
+```
+per scaricare e gestire una immagine specifica, bisogna però prestare attenzione perchè questi modelli possono essere molto grandi e richiedere molte risorse (il modello llama 3.3 richiede 40Gb di spazio disponibile e più di 30Gb di memoria RAM libera). Per un uso domestico di laboratorio è consigliato l'uso di immagini piccole come codellama che richiede pochi GB di spazio e memoria. 
+
+⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: Prima di usare un modello, verificare sempre la modaliltà di utilizzo e la licenza perchè alcuni modelli hanno delle limitazioni 🔶⚠️
+
+
+### GitHub Copilot
+
+**GitHub Copilot** è un assistente di programmazione basato su intelligenza artificiale che suggerisce completamenti di codice, snippet e funzioni contestuali direttamente nell'editor. Integrato con IDE come Visual Studio Code, aiuta a velocizzare lo sviluppo riducendo il lavoro ripetitivo, pur richiedendo revisione umana per garantire correttezza, sicurezza e aderenza alle pratiche del progetto. E' disponibile anche la versione agente/CLI del motore per iteragire con la riga di comando o script automatizzati
+
+⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: Il comando copilot in modalità agente può accedere al sistema e leggere/manipolare files all'interno del sistema, prestare sempre attenzione a quello che si fa, consigliato non usare questo sistema se non strettamente necessario  🔶⚠️
+    
+Le CLI di GitHub e GitHub Copilot sono facilmente installabili con la sequenza di comandi:
+```
+# apt install gh
+$ gh --version
+$ gh auth status
+    You are not logged into any GitHub hosts. To log in, run: gh auth login
+$ gh auth login
+$ curl -fsSL https://gh.io/copilot-install | bash
+$ copilot -i "genera un file prova.py con dentro un metodo python per generare un numero casuale da 1 a 100"
+```
+Per tutti i dettagli e i possibili parametri della CLI, si rimanda alla [documentazione ufficiale](https://github.com/features/copilot/cli). 
+
+⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: GitHub Copilot è un servizio a pagamento, bisogna sempre prestare attenzione a quali modelli si usano per evitare costi indesiderati 🔶⚠️
 
 
 # I comandi della shell
