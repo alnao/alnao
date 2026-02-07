@@ -37,6 +37,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Accesso e controllo remoto](#Accesso-e-Controllo-remoto)
   - [Monitoraggio e Logging](#Monitoraggio-e-Logging)
 - [Programmazione in Debian](#Programmazione-in-Debian)
+  - [Ambienti di sviluppo](#Ambienti-di-sviluppo)
   - [Bash & scripting](#Bash-e-scripting)
   - [C & C++](#C)
   - [Python](#Python)
@@ -974,6 +975,59 @@ La documentazione per questi linguaggi è vastissima e facilmente reperibile onl
 
 Negli ultimi anni, linguaggi come **Java**, **Python**, **Perl**, **Ruby** e **Go** hanno guadagnato terreno anche nell'ambiente GNU Linux, offrendo la massima compatibilità con le API del sistema operativo e spesso prestazioni comparabili ai linguaggi nativi per molte tipologie di applicazioni. Debian include supporto nativo per tutti questi linguaggi, con compilatori, interpreti e librerie mantenuti e aggiornati costantemente.
 
+
+## Ambienti di sviluppo
+Debian 13 si presenta come una piattaforma eccezionale per gli sviluppatori, offrendo nei suoi repository ufficiali un'ampia gamma di editor di codice pronti all'uso per qualsiasi linguaggio. Spesso questi programmi sono detti **Ambienti di sviluppo integrati** abbreviato con la sigla **IDE**. 
+
+Per chi apprezza l'interfaccia e la potenza di Visual Studio Code ma preferisce una soluzione libera dalla telemetria e dal branding di Microsoft, **VSCodium** è la scelta ideale. È una build pulita del codice sorgente di VS Code, totalmente Open Source e compatibile con la maggior parte delle estensioni, perfetta per la filosofia Debian.
+
+Nei sistemi Debian è possibile usare anche il suo fork principale **Visual Studio Code** rilasciato da Microsoft gratuitamente sotto licenza libera-MIT: ad oggi è considerato il miglior programma per tanti linguaggi come Java, PHP, Javascript e Typescript. Può essere facilmente scaricato dal sito di microsoft, le istruzione per l'installazione variano spesso quindi bisogna sempre controllare alla [pagina ufficiale](https://code.visualstudio.com/docs/setup/linux) la sezione dedicata a Debian.
+
+Ad oggi esistono più modi di configurare il repository e installare il programma, per esempio:
+```
+# apt-get install software-properties-common apt-transport-https curl
+# curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
+# add-apt-repository "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main"
+# apt-get update
+# apt-get install code
+```
+Nel programma sono disponibili diversi plug-in per usare GIT ed è disponibile una console integrata per il lancio dei server NPM e NG per React e Angular. Come per gli altri sistemi operativi anche su GNU Linux è possibile scaricare i plug-in disponibili per tutti i linguaggi come Java o C. Un elenco incompleto dei plugin indispensabili:
+- github copilot (attenzione: l'uso di GitHub Copilot può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento)
+- git graph
+- git history
+- intellicode
+- extension pack for java
+- language support for java
+- maven for java
+- project manager for java
+- test runner for java
+- spring boot tools
+- pylance
+- python
+- docker
+- aws toolkit
+- sqLite viewer
+
+
+Esistono anche diverse alternative, per esempio Eclipse e IntelliJ per il linguaggio Java e altri ma possono risultare difficili da usare e piuttosto pensati durante l'uso. Alternative libere come Geany e Cursor sono molto più facili da usare e più facili da personalizzare. Si descrivono di seguito le alternative che ho provato:
+- **Lapce** si distingue per la sua incredibile velocità e per l'architettura nativa che punta sulle performance pure, integrando funzionalità moderne come il supporto LSP senza la pesantezza dei motori web-based, facilmente installabile con snap.
+- **Zed** è l'editor di nuova generazione creato dai fondatori di Atom, progettato per sfruttare l'accelerazione GPU e offrire un'esperienza di scrittura fluida combinata con potenti strumenti di collaborazione in tempo reale. Installabile con il semplice comando
+  - ```curl -fsSL https://zed.dev/install.sh | sh```
+- **Cursor** è un editor di nuova generazione che, partendo dalla solida base di VS Code, integra profondamente l'intelligenza artificiale nel workflow, permettendo di generare, correggere e rifattorizzare codice comprendendo l'intero contesto del progetto. Installabile con i semplici comandi
+  - `curl -L https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/2.4 -o cursor.deb`
+  - `dpkg -i ./cursor.deb`
+  - attenzione: l'uso di Cursor può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento
+- **Antigravity** è l'assistente AI agentico sviluppato da Google DeepMind, capace non solo di rispondere a domande ma di agire autonomamente sull'ambiente di lavoro per risolvere task complessi con uno specifico agente, gestire file e accelerare drasticamente il ciclo di sviluppo. Il (sito di riferimento)[https://antigravity.google/download/linux] indica i passi da eseguire per l'installazione
+  ```
+  # curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | gpg --dearmor --yes -o /etc/apt/keyrings/antigravity-repo-key.gpg
+  # echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | tee /etc/apt/sources.list.d/antigravity.list > /dev/null
+  # apt update
+  # apt install antigravity
+  ```
+  - attenzione: l'uso di Antigravity può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento
+
+
+
 ## Bash e scripting
 
 Oltre ai linguaggi di programmazione tradizionali, Debian offre potenti strumenti di scripting attraverso la shell, in particolare con **Bash** (Bourne Again Shell). Il linguaggio di scripting shell rappresenta un elemento unico e fondamentale nell'ecosistema GNU Linux, permettendo di automatizzare task complessi, creare tool personalizzati per l'amministrazione del sistema e sviluppare veri e propri programmi per la gestione e il monitoraggio.
@@ -1471,37 +1525,6 @@ I passi per l'installazione di Jenkins in un sistema Debian sono:
   journalctl -u jenkins.service -n 250 --no-pager
   journalctl -xeu jenkins.service
   ```
-
-## Visual Studio Code
-
-Come IDE per i sistemi GNU Linux è sempre disponibile VsCodium, ma è possibile usare anche il suo fork principale **Visual Studio Code** è un programma per lo sviluppo rilasciato da Microsoft gratuitamente sotto licenza MIT, disponibile anche per la piattaforma GNU Linux, può essere usato per quasi tutti i linguaggi: ad oggi è considerato il miglior programma per tanti linguaggi come PHP, Javascript e Typescript. Può essere facilmente scaricato dal sito di microsoft, le istruzione per l'installazione variano spesso quindi bisogna sempre controllare alla [pagina ufficiale](https://code.visualstudio.com/docs/setup/linux) la sezione dedicata a Debian.
-
-Ad oggi esistono più modi di configurare il repository e installare il programma, per esempio:
-```
-# apt-get install software-properties-common apt-transport-https curl
-# curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-archive-keyring.gpg
-# add-apt-repository "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main"
-# apt-get update
-# apt-get install code
-```
-Poi infatti basta lanciare il comando dall'icona che compare nel menù del desktop. Nel programma sono disponibili diversi plug-in per usare GIT ed è disponibile una console integrata per il lancio dei server NPM e NG per React e Angular. Come per gli altri sistemi operativi anche su GNU Linux è possibile scaricare i plug-in disponibili per tutti i linguaggi come Java o C. Un elenco incompleto dei plugin indispensabili:
-
-- github copilot
-- git graph
-- git history
-- intellicode
-- extension pack for java
-- language support for java
-- maven for java
-- project manager for java
-- test runner for java
-- spring boot tools
-- pylance
-- python
-- docker
-- aws toolkit
-- sqLite viewer
-
 
 ## Postman
 
