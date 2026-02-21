@@ -16,10 +16,11 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
 - [Introduzione](#Introduzione)
   - [Cosa, dove, come e perché](#Cosa-dove-come-e-perché)
 - [Come installare Debian](#Come-installare-Debian)
-- [Come gestire i file e le partizioni](#Come-gestire-i-file-e-le-partizioni)
-  - [Gestione dei permessi](#Gestione-dei-permessi)
-  - [Il mounting](#Il-mounting)
-- [Come gestire i pacchetti e il pannello di controllo](#Come-gestire-i-pacchetti-e-il-pannello-di-controllo)
+- [Come gestire il sistema](#Come-gestire-il-sistema)
+  - [Come gestire i file e le partizioni](#Come-gestire-i-file-e-le-partizioni)
+    - [Gestione dei permessi](#Gestione-dei-permessi)
+    - [Il mounting](#Il-mounting)
+  - [Come gestire i pacchetti](#Come-gestire-i-pacchetti)
   - [Il pannello di controllo WebMin](#Il-pannello-di-controllo-WebMin)
 - [Come gestire i desktop e le applicazioni](#Come-gestire-i-desktop-e-le-applicazioni)
   - [Gestione e installazione applicazioni](#Gestione-e-installazione-applicazioni)
@@ -49,7 +50,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Node e NPM](#Node-e-NPM)
   - [Java e Tomcat](#Java-e-Tomcat)
   - [GIT](#GIT)
-      - [Jenkins](#Jenkins)
+    - [Jenkins](#Jenkins)
   - [Visual Studio Code](#Visual-Studio-Code)
   - [Postman](#Postman)
   - [PostgreSQL](#PostgreSQL)
@@ -70,6 +71,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Android](#Android)
   - [Blockchain](#Blockchain)
   - [Intelligenza artificiale](#Intelligenza-artificiale)
+      - [LibreTranslate](#LibreTranslate)
       - [Llama e Ollama](#Llama-e-Ollama)
       - [GitHub copilot](#github-copilot)
 - [I comandi della shell](#I-comandi-della-shell)
@@ -170,7 +172,20 @@ Tutte le fasi e i dettagli del programma di installazione sono ben documentati n
 - Wiki Debian: [wiki.debian.org](https://wiki.debian.org/)
 
 
-# Come gestire i file e le partizioni
+
+# Come gestire il sistema
+
+La gestione di un sistema GNU Linux, in particolare di una distribuzione solida come Debian 13, richiede un equilibrio tra la manutenzione dei pacchetti e la comprensione dell'infrastruttura sottostante. Amministrare Debian significa padroneggiare strumenti come apt per gli aggiornamenti software, ma anche saper monitorare le risorse e configurare i servizi in modo che siano sicuri e performanti. In questa versione, Debian continua a privilegiare la stabilità, offrendo però un ambiente moderno che permette all'utente di avere il pieno controllo su ogni singolo file di configurazione, rendendo il sistema perfetto sia per l'uso desktop che per i server critici.
+
+Il **Kernel Linux** è il cuore pulsante di ogni sistema GNU Linux: non è un'applicazione, ma il software di base che funge da ponte tra l'hardware del computer e i programmi in esecuzione. Spesso viene paragonato ad un direttore d'orchestra che assegna il tempo della CPU ai processi, gestisce la memoria RAM per evitare conflitti e permette alle periferiche (mouse, dischi, schede video) di comunicare con il sistema operativo. Senza il kernel, il tuo software non avrebbe modo di *toccare* l'hardware; la sua efficienza determina direttamente la velocità e la stabilità dell'intera macchina.
+
+La versione 6.12 è stata una pietra miliare per il mondo GNU Linux, essendo stata classificata come versione **LTS (Long Term Support)**. È il kernel con cui Debian 13 ha iniziato il suo ciclo di vita, garantendo un supporto esteso per anni. Questa versione ha introdotto miglioramenti fondamentali nello scheduler dei processi e nel supporto per i file system moderni, offrendo un ambiente estremamente collaudato. Per molti utenti Debian, restare sulla versione 6.12 significa scegliere la massima affidabilità possibile, con la certezza che ogni bug critico verrà corretto senza stravolgere il comportamento del sistema.
+
+Tuttavia, aggiornare alla versione 6.18 (anch'essa una release stabile e moderna del 2025) è una scelta strategica per chi possiede hardware recente o cerca prestazioni pure. La nuova versione introduce ottimizzazioni significative nella gestione della rete e una nuova gestione della memoria chiamata "Sheaves", che riduce i colli di bottiglia sui processori con molti core. Se utilizzi CPU di ultima generazione (come Intel Lunar Lake o AMD Zen 5) o se hai bisogno di una gestione energetica più raffinata per i laptop, il passaggio alla 6.18 offre una marcia in più che la 6.12 non può garantire.
+
+Per aggiornare il kernel su Debian, puoi utilizzare i repository backports o installare manualmente il pacchetto aggiornato tramite il pacchetto speficico `linux-image-6.18.5+deb13-amd64`. La bellezza di Linux è che puoi mantenere entrambe le versioni installate contemporaneamente: al termine dell'installazione di una nuova versione del Kernel Linux, il sistema aggiornerà automaticamente il menu di GRUB (la schermata che appare all'accensione), permettendoti di scegliere quale versione avviare quando il sistema viene avviato entrando nella sezione "Advanced options for Debian" e scegliendo manualmente la versione del kernel desiderata; in caso di problemi con il nuovo kernel, questa procedura permette di tornare istantaneamente a un sistema precedentemente funzionante.
+
+## Come gestire i file e le partizioni
 
 Dopo aver completato tutti i passi del programma di installazione, il sistema è già quasi completo: di default nell'installazione base è compreso almeno un gestore di Desktop che comprende le parti dell’ambiente grafico e una serie di applicativi che possono essere trovati sul menù principale. Risulta impossibile usare GNU Linux senza avere qualche base sistemistica e un po’ di manualità su file e cartelle come la gestione i diritti di lettura e scrittura su file e cartelle. 
 
@@ -203,7 +218,7 @@ questa cartella è specifica per ciascun sistema e rappresenta l'intero sistema:
 - ```/usr``` Contiene le applicazioni (non di sistema) installate nel sistema
 - ```/var``` Contiene vari files di sistema come i log e le cartelle di posta e altri contenitori applicativi
 
-## Gestione dei permessi
+### Gestione dei permessi
 
 Nei sistemi Unix e GNU Linux esistono tre tipi di diritti su un file: scrittura, lettura ed esecuzione rispettivamente identificati con la lettera r, w e x. Ogni file, quindi ogni cosa nel sistema, appartiene all'utente che ha creato quel file che ha sempre i tutti i diritti su quel file. Per ottenere i diritti su un file basta eseguire il comando sulla shell:
 ```bash
@@ -224,7 +239,7 @@ Alcune delle configurazioni base devono essere eseguite da riga di comando che i
 ```
 questo comando infatti visualizza la lista degli utenti collegati e varie informazioni tra cui il canale tty utilizzato.
 
-## Il mounting
+### Il mounting
 
 Una delle esigenze primarie di ogni utente è quello di poter accedere ai propri dati che sono salvati nei vari dischi, gli utenti di altri sistemi operativi sono abituati a identificare le memorie fisiche con delle lettere come C, D, E, ecc... mentre nei sistemi GNU Linux la gestione delle partizioni e delle periferiche di memoria è completamente diversa: la gestione viene chiamata *mounting* (in Italiano spesso viene tradotto con *montaggio*), nome che deriva dal comando **mount** che viene utilizzato per eseguire le configurazioni, infatti le memorie vengono viste dal Kernel Linux come un normale file dentro alla cartella /dev/ e, attraverso il comando mount, si possono collegare ad una cartella per permettere l’accesso al contenuto della memoria. I file che si trovano dentro alla cartella dev non rappresentano tutta la memoria fisica ma rappresentano una partizione: se in una memoria ci sono più partizioni significa che sono presenti più file che devono essere montati separatamente. Tipicamente questi file hanno il nome del tipo hda1, sda1, sda2, sdb1 dove la prima lettera del nome rappresenta il tipo (per esempio h=Eide, s=Sata), la seconda lettera è sempre d che significa DISK mentre la terza lettera è un incrementale se ci sono più dispositivi dello stesso tipo (se ci sono due hard disk il primo sarà “a” mentre il secondo sarà “b”), il numero finale rappresenta il numero della partizione all'interno della stessa memoria fisica.
 
@@ -243,7 +258,7 @@ da notare il comando chmod assegna a tutti gli utenti la possibilità di acceder
 ```
 # mount -t auto /dev/sda2 /mnt/Dati
 ```
-con questa istruzione viene montata la partizione hda2 sulla cartella Dati, come parametro mount ha bisogno anche di sapere il tipo di Filesystem della partizione (Fat32, Ext3, NTFS, ecc..) ma esiste anche il parametro "auto" che ci semplifica la vita lasciando al sistema il compito di selezionare quello corretto. Il problema del comando mount è che, allo spegnimento o riavvio del sistema, il montaggio NON verrà rieseguito automaticamente, il kernel mette a disposizione un file di configurazione per rendere definitive le operazioni di mount che vengono eseguite al primo accesso:
+con questa istruzione viene montata la partizione hda2 sulla cartella Dati, come parametro mount ha bisogno anche di sapere il tipo di Filesystem della partizione (Fat32, Ext3, NTFS, ecc..) ma esiste anche il parametro "auto" che ci semplifica la vita lasciando al sistema il compito di selezionare quello corretto. Il problema del comando mount è che, allo spegnimento o riavvio del sistema, il montaggio NON verrà rieseguito automaticamente, il sistema mette a disposizione un file di configurazione per rendere definitive le operazioni di mount che vengono eseguite al primo accesso:
 ```
 /etc/fstab
 ```
@@ -304,49 +319,60 @@ $ cat /proc/sys/vm/swappiness
 # nano /etc/sysctl.conf
 ```
 
-# Come gestire i pacchetti e il pannello di controllo
 
-Per utilizzare al meglio i sistemi Debian è indispensabile conoscere la gestione dei pacchetti: i pacchetti sono un insieme di file organizzati e compressi in directory in modo che possano essere installati nel sistema velocemente e con ordine; esistono molti modi di compilare e preparare i pacchetti, Debian ha imposto da anni un suo standard che è facilmente riconoscibile per i file di **estensione deb** mentre altre distribuzioni possono avere altri formati come rpm o yum. Uno dei motivi per cui Debian è molto famosa è proprio per la gestione eccellente dei pacchetti perché, pur contando oltre 25.000 pacchetti nel repository ufficiale, esiste un sistema centrale che gestisce le dipendenze in modo semplice e ordinato cioè ogni pacchetto ha una versione e una lista di dipendenze: ogni pacchetto al suo interno ha l'informazione di quali pacchetti sono necessari e con i quali entra in conflitto. 
 
-Per esempio il pacchetto *a* dipende dal pacchetto *b* e entra in conflitto con il pacchetto *c*, tutto questo dipende anche delle versioni, cioè ogni pacchetto è segnato anche da una versione, per esempio nel mio sistema è installato il pacchetto *a* alla versione 2.2.8-3: questo vuol dire che il pacchetto è alla versione 2.2.8 ma è la terza compilazione del pacchetto. Per fortuna i programmi che andremo ad usare gestiscono automaticamente con ordine e precisione i pacchetti quindi l'utente non deve mai preoccuparsi di risolvere le dipendenze.
+## Come gestire i pacchetti
 
-La gestione dei pacchetti Debian nel sistema si basa sul componente **DPKG** abbreviazione di **Debian PacKaGe**: è usato per installare, disinstallare ed ottenere informazioni sul singolo pacchetto in formato standard `deb`. Questo è un tool di basso livello e viene sempre affiancato da **APT** che è l'abbreviazione di **Advanced Packaging Tool** che è il gestore standard di pacchetti software della distribuzione Debian. Con APT è possibile anche configurare diversi mirror-sorgenti di pacchetti (sorgenti remote in internet, cdrom, DVD). Tutti i comandi dei due programmi sono:
+Per utilizzare al meglio i sistemi Debian è indispensabile padroneggiare la gestione dei pacchetti. Questi sono insiemi di file organizzati e compressi in directory, progettati per essere installati nel sistema rapidamente e con un ordine rigoroso. Debian adotta uno standard specifico per la creazione e distribuzione del software, facilmente riconoscibile dall'estensione `.deb`, distinguendosi così da altre distribuzioni che utilizzano formati differenti come `rpm`. Uno dei motivi del successo di Debian è proprio l'eccellenza in questo campo: nonostante gli oltre 25.000 pacchetti nei repository ufficiali, il sistema gestisce le dipendenze in modo semplice e ordinato. Ogni pacchetto include metadati sulla propria versione e una lista di relazioni, specificando quali altri pacchetti siano necessari per il funzionamento o con quali entri in conflitto.
 
-- ```# apt-get update``` aggiorna la lista dei pacchetti dopo la configurazione di un nuovo mirror
-- ```# apt-get install nomepacchetto``` installa il pacchetto nel sistema, scegliendo l'ultima versione disponibile ed risolvendo le dipendenze in maniera automatica (installando i pacchetti necessari e evitando i pacchetti in conflitto)
-- ```# apt-get remove nomepacchetto``` rimuove il pacchetto e tutti i pacchetti che dipendono da esso
-- ```# apt-get --purge remove nomepacchetto``` rimuove il pacchetto e tutti i pacchetti che dipendono da esso compresi anche tutti i file di configurazione eventualmente presenti
-- ```# apt-get upgrade``` aggiorna tutti i pacchetti se sono disponibili aggiornamenti e verifica tutte le dipendenze delle nuove versioni
-- ```# apt-get clean``` cancella tuti i file temporanei di apt-get cioè i file deb scaricati e già installati
-- ```# apt-get install -f``` verifica che tutti i pacchetti siano installati e configurati correttamente, in caso di errori sistema automaticamente le dipendenze
+Per fare un esempio pratico: se un pacchetto a dipende dal pacchetto b ed entra in conflitto con il pacchetto c, il sistema ne terrà conto basandosi anche sulle versioni. Se nel sistema è installata la versione 2.2.8-3 del pacchetto a, ciò indica che il software è alla versione 2.2.8, ma si tratta della terza compilazione (revisione) specifica per Debian. Fortunatamente, gli strumenti di gestione automatizzano queste operazioni con estrema precisione, sollevando l'utente dall'onere di risolvere manualmente i conflitti tra i pacchetti.
+
+Il cuore della gestione dei pacchetti è **DPKG** (abbreviazione di **Debian PacKaGe**), un tool di basso livello utilizzato per installare, rimuovere e interrogare singoli file .deb. A questo si affianca **APT** (acronimo di **Advanced Packaging Tool**), il gestore standard di alto livello che permette di interagire con sorgenti remote come mirror su internet o i vecchi supporti fisici come CD-ROM/DVD. Di seguito i comandi principali:
+
+
+- ```# apt-get update``` aggiornare la lista dei pacchetti dopo la configurazione di un nuovo mirror
+- ```# apt-get install nomepacchetto``` installare il pacchetto nel sistema, scegliendo l'ultima versione disponibile ed risolvendo le dipendenze in maniera automatica (installando i pacchetti necessari e evitando i pacchetti in conflitto)
+- ```# apt-get remove nomepacchetto``` rimuovere il pacchetto e tutti i pacchetti che dipendono da esso
+- ```# apt-get --purge remove nomepacchetto``` rimuovere il pacchetto e tutti i pacchetti che dipendono da esso compresi anche tutti i file di configurazione eventualmente presenti
+- ```# apt-get upgrade``` aggiornare tutti i pacchetti se sono disponibili aggiornamenti e verifica tutte le dipendenze delle nuove versioni
+- ```# apt-get clean``` cancellare tuti i file temporanei di apt-get cioè i file deb scaricati e già installati
+- ```# apt-get install -f``` verificare che tutti i pacchetti siano installati e configurati correttamente, in caso di errori sistema automaticamente le dipendenze
 - ```# dpkg --configure -a``` come il precedente ma funziona anche in casi estremi e risolve tutti i problemi di conflitto tra i pacchetti
-- ```# dpkg-reconfigure pacchetto``` riconfigura un pacchetto già installato
-- ```# dpkg -i pacchetto.deb``` installa un pacchetto da un file deb
-- ```# dpkg -r pacchetto``` rimuove un pacchetto
-- ```# dpkg --get-selections > nomefile.txt``` salva su un file l'elenco dei pacchetti installati
-- ```# dpkg --set-selections < nomefile.txt``` imposta i pacchetti presenti sul file
-- ```# apt-get moo``` regala all'utente un simpatico messaggio
+- ```# dpkg-reconfigure pacchetto``` riconfigurare un pacchetto già installato
+- ```# dpkg -i pacchetto.deb``` installare un pacchetto da un file deb
+- ```# dpkg -r pacchetto``` rimuovere un pacchetto
+- ```# dpkg --get-selections > nomefile.txt``` salvare su un file l'elenco dei pacchetti installati
+- ```# dpkg --set-selections < nomefile.txt``` impostare i pacchetti presenti sul file
+- ```# apt-get moo``` un simpatico messaggio all'utente
 
-All'interno di un sistema, la lista dei mirror-sorgenti è elencata nel file
-```
-/etc/apt/sources.list
-```
-e da tutti i file contenuti nella sotto-cartella
-```
-/etc/apt/sources.list.d/
-```
-e si possono creare dei file con estensione list per aggiungere altri mirror specifici. In questi file list, ad ogni riga corrisponde una sorgente che può essere un DVD, un mirror in internet oppure una cartella del sistema locale. Ogni riga di questi file è del tipo:
+Le sorgenti del software sono elencate nel file principale 
+```/etc/apt/sources.list```
+e nei file con estensione `.list` contenuti nella cartella 
+```/etc/apt/sources.list.d/```
+
+Ogni riga rappresenta una sorgente e segue questa sintassi:
 ```
 deb http://host/debian distribuzione sezione1 sezione2 sezione3
-deb-src http://host/debian distribuzione sezione1 sezione2 sezione3
+deb-src http://host/debian distribuzione sezione1 sezione2 sezione3ù
 ```
-La prima parola di ogni riga (deb o deb-src) indica il tipo di archivio: se contiene pacchetti binari (deb) oppure indica se l'archivio contiene i pacchetti sorgente (deb-src), la seconda parte della riga indica l'indirizzo della sorgente. Nel terzo parametro si indica la distribuzione: di solito si tratta di uno dei tre rami di sviluppo: stable, testing o unstable, nelle righe di configurazione è possibile indicare esplicitamente il nome della versione come etch, sid o sarge). L'elenco delle sezioni indicano quali parti della distribuzione dovranno essere gestite, tipicamente si trova main (i pacchetti completamente liberi) oppure non-free (cioè i pacchetti rilasciati sotto una licenza non libera) oppure contrib (pacchetti liberi che però dipendono da altri non liberi). Al termine di ogni modifica di questi file di configurazione è necessario lanciare il comando per aggiornare il database di sistema:
+- `deb` oppure `deb-src`: indica se l'archivio contiene pacchetti binari o codici sorgente.
+- l'indirizzo: la posizione del mirror.
+- la distribuzione: indica il ramo di sviluppo (es. stable, testing, unstable) o il nome in codice della versione (es. etch, sid o *la mitica* sarge).
+- le sezioni: definiscono la natura del software:
+  - `main` contiene software libero
+  - `non-free` software con licenze restrittive
+  - `contrib` software libero che dipende da componenti non liberi
+
+Dopo ogni modifica a questi file, è fondamentale eseguire il comando di aggiornamento 
 ```
 # apt-get update
 ```
-In precedenti versioni di questo documento si indicava all'utente di modificare manualmente i file di list per inserire i mirror manualmente, questa operazione manuale è stata sostituita da operazioni più semplici che verranno introdotte man mano che sarà necessario installare pacchetti specifici non compresi nei mirror ufficiali di Debian che sono inseriti in automatico all'installazione del sistema base. 
+
+Mentre in passato era comune modificare questi file manualmente, oggi si preferiscono procedure più semplici che verranno introdotte all'occorrenza per installare pacchetti non presenti nei mirror ufficiali predefiniti.
+
 
 I programmi di gestione APT & DPKG non sono stati studiati per essere interfacciati graficamente, quindi sono stati sviluppati e sono presenti in Debian diversi strumenti grafici che permettono di gestire i pacchetti attraverso una interfaccia grafica che può risultare più intuitiva all'utente meno esperto: il più importante programma per desktop per la gestione dei pacchetti è **Synaptic** che spesso si può trovare nei menù anche con il nome in italiano di **Gestore pacchetti**, la potenza di questo programma è la semplicità d'uso rispetto ad altri programmi simili. Con Synaptic è possibile vedere la lista dei pacchetti divisi in sezione per argomento (sistema, grafici, editor,...), per stato (installati, aggiornabili, non installati, corrotti), per origine (DVD, debian.org, ecc...) e la possibilità di cercare i pacchetti con una semplice ricerca testuale sui nomi e sulle descrizioni dei pacchetti stessi. La comodità principale di questo programma è la possibilità di gestire gli aggiornamenti del sistema con un semplice click su pulsante.
+
 
 ## Il pannello di controllo WebMin
 
@@ -443,7 +469,8 @@ more /lib/systemd/system/apt-daily.timer
 
 Gli utenti di GNU Linux devono aver confidenza con i file di testo per modificare alcuni vari file di configurazione, anche se può sembrare antiquato agli utenti meno esperti, in realtà è molto più semplice e veloce di quanto possa sembrare. Sui sistemi basati su Debian è possibile trovare facilmente alcuni editor di testo più o meno complicati a seconda delle esigenze: per la shell da riga di comando esistono i famosi (e storici) programmi vim e emacs (troppo complicati per utenti poco esperti), i programmi più semplici da usare da riga di comando sono **pico** e **nano** che risulta molto semplice da usare visto che con la pressione del tasto CTRL è possibile cambiare dalla modalità editor a menù e viceversa. Negli ambienti grafici desktop sono disponibili molti programmi, tipicamente ogni desktop ha il proprio programma di default ma nessuno vieta di usare altri programmi anche di altri desktop, per esempio il programma di default di KDE è **kEdit** ma è possibile usare anche i programmi di GNOME come **gEdit** oppure **mousepad**. Tuttavia il programma più completo è **Kate** che, oltre ad essere un semplice editor di testo, può essere usato per programmare grazie al suo plugin di riconoscimento dei linguaggi di programmazione oppure può essere usato per la scrittura di documenti. Come già visto più volte, i file possono avere nomi ed estensioni *strane* e molti file di testo non hanno estensione il classico txt che di solito si trova su altri sistemi operativi, dobbiamo sempre tenere a mente che sui sistemi basati su GNU Linux le estensioni non hanno molto valore se non per pura naming-convention o estetica: molti file hanno estensione conf e tipicamente si trovano nella cartella /etc o una sottodirectory ma alcuni file hanno nomi non parlanti o possono essere senza estensione come il file `fstab`. Da snapd è possibile scaricare il famoso Notepad++ oppure nei repository ufficiali è possibile selezionare **jEdit**, questi due programmi sono i più famosi e potenti programmi per la modifica di file di testo.
 
-Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di comando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è lo *storico* **Konqueror** e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file explorer ed è stato migliorato molto tanto da diventare uno dei migliori programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è **Dolphin** che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure **GNOME Commander**.
+Per esplorare e navigare tra le varie cartelle del sistema, oltre che alla riga di comando, è possibile utilizzare i tanti programmi file manager, tipicamente ogni Desktop ha il proprio file manager di default e spesso in un desktop è possibile trovarne anche più di uno, il programma predefinito sul Desktop KDE è lo *storico* **Konqueror** e può essere usato anche in altri desktop, nonostante sia vecchio è ancora usatissimo come file explorer ed è stato migliorato molto tanto da diventare uno dei migliori programmi per muoversi tra le varie cartelle del sistema. La potenzialità maggiore è quella di poter visualizzare l’albero delle cartelle, inoltre nelle versioni più recenti sono stati integrati anche un visualizzatore di immagini, un piccolo editor di testo e il sistema veloce per gestire i file archivi (come zip e tar). Altra applicazione da provare è **Dolphin** che presenta una interfaccia molto semplice e veloce, pur non disponendo di plugin, rimane il più intuitivo programma per navigare tra le cartelle, anche in questo programma sono disponibili i plugin per visualizzare l'albero delle cartelle, ovviamente questo è compatibile con tutti i Desktop e permette anche di avere una shell in basso alla finestra che segue l'utente nella navigazione dell'utente nelle cartelle. Ovviamente un utente può benissimo usare un qualsiasi altro programma disponibile sui Desktop oppure basta aprire Synaptic per installarne decine, lo storico commander può essere trovato con il nome di Midnight Commander oppure **GNOME Commander**. Per le traduzioni di testi è possibile usare il semplicissimo ma utilizzomo programma **Dialect** che permette di eseguire tradurre testi e file di testo con pochi click usando i servizi remoti.
+
 
 ## Compressione ZIP e simili
 
@@ -937,7 +964,7 @@ systemctl status rsyslog
 Una volta installato, rsyslog funzionerà in parallelo a journald, scrivendo i log nei file tradizionali a cui sei abituato. I principali file di log gestiti da rsyslog:
 - `/var/log/syslog`: Log generale del sistema
 - `/var/log/auth.log`: Log di autenticazione
-- `/var/log/kern.log`: Log del kernel
+- `/var/log/kern.log`: Log del kernel Linux
 - `/var/log/daemon.log`: Log dei demoni
 - `/var/log/mail.log`: Log del sistema mail
 - `/var/log/messages`: Log di sistema generale (alternativo a syslog)
@@ -1236,11 +1263,11 @@ Il demone MySQL prevede anche alcuni comandi speciali per la gestione da riga di
 ```bash
 $ mysqldump -u user -p password nomeDatabaseSorgente > file.sql
 ```
-il backup viene eseguito in un file con estensione sql, per eseguire il restore (dallo stesso file sql) basta lanciare il comando
+il backup viene salvato in un file con estensione `.sql`, per eseguire il restore (dallo stesso file `.sql`) basta eseguire il comando mysql base:
 ```bash
 $ mysql -u user -p password nomeDatabaseDestinazione < file.sql
 ```
-Da notare che il comando mysqldump permette di collegare due server MySQL per trasferire dati tra i due server, per questo e tutti gli altri comandi si rimanda alla ufficiale MySQL.
+Da notare che il comando `mysqldump` permette di collegare due server MySQL per trasferire dati tra i due server, per questo e tutti gli altri comandi si rimanda alla documentazione ufficiale di MySQL.
 
 Per quanto riguarda la programmazione web con i linguaggi di scripting PHP o gli altri linguaggi, ci sono moltissimi programmi grafici che permettono lo sviluppo, alcuni esempi sono: screem, BlueFish, QuantaPlus anche se è consigliato l'utilizzo di Eclipse o Visual Studio Code.
 
@@ -1251,7 +1278,7 @@ $ echo '<?php phpinfo(); ?> ' > /var/www/html/test.php
 che risulta disponibile nel server Apache. I moduli PHP sono installabili dal gestore dei pacchetti e l'elenco dei moduli installati sono consultabili nell'elenco dei pacchetti. Si rimanda alla documentazione ufficiale per maggiori informazioni riguardo alla configurazione dell'interprete PHP e della sua integrazione con il web server Apache!
 
 ### Nginx
-**Nginx** (si legge “engine-x”) è un web server e reverse proxy molto leggero e performante, ampiamente usato sia per servire siti statici sia come “front-end” per applicazioni backend (Node.js, Python, Java, PHP-FPM). In Debian è una scelta eccellente perché è stabile, ben integrato con systemd e la struttura di configurazione è pulita e modulare. Spesso è usato come alternativa veloce e snella di Apache, ovviamente i due server possono essere attivi ma non configurati con la stessa porta di esposizione. Per l'installazione basta installare il pacchetto dedicato
+**Nginx** (si legge “engine-x”) è un web server e reverse proxy molto leggero e performante, ampiamente usato sia per servire siti statici sia come “front-end” per applicazioni backend (Node.js, Python, Java, PHP-FPM). In Debian è una scelta eccellente perché è stabile, ben integrato con systemd e la struttura di configurazione è pulita e modulare. Spesso è usato come alternativa veloce e snella di Apache, ovviamente i due server possono essere attivi nello stesso momento se **NON** configurati con la stessa porta di esposizione. Per l'installazione basta installare il pacchetto dedicato:
 ```
 # apt install nginx -y
 # systemctl enable --now nginx
@@ -2347,6 +2374,34 @@ console.log('Address:', account.address);
 
 ## Intelligenza artificiale
 L'intelligenza artificiale è il tema più scottante e presente in questi anni, in Debian 13 sono molte le possibili integrazioni con strumenti di IA: la più semplice è usare librerie come PyTorch o TensorFlow e strumenti di inferenza leggeri (ONNX Runtime). Un'altra integrazione è quella di usare Docker con immagini specifiche, si trovano esempi pratici in questo repository nella sezione python.
+
+
+### LibreTranslate
+**LibreTranslate** è un servizio di traduzione automatica open source e self-hosted che permette di effettuare traduzioni tra diverse lingue senza dipendere da API commerciali esterne. Il software si basa su modelli di traduzione neurale e può essere facilmente distribuito su Debian 13 tramite Docker o installazione diretta via pip, garantendo completa autonomia e privacy dei dati tradotti. La configurazione consente di limitare i modelli linguistici caricati alle sole lingue necessarie, ottimizzando così l'utilizzo delle risorse di sistema.
+- Opzione 1: Installa LibreTranslate direttamente con pip e poi eseguilo:
+  ```
+  $ pip install libretranslate
+  $ libretranslate --host 0.0.0.0 --port 5000
+  ```
+- Opzione 2: Usando Docker (consigliato)
+  ```bash
+  $ docker run -ti --rm -p 5000:5000 libretranslate/libretranslate
+  ```
+- Opzione 3: Installazione da sorgente GitHub per avere l'ultima versione:
+  ```bash
+  $ git clone https://github.com/LibreTranslate/LibreTranslate.git
+  $ cd LibreTranslate
+  $ pip install -r requirements.txt
+  $ python main.py --host 0.0.0.0 --port 5000
+  ```
+Note importanti: Al primo avvio, LibreTranslate scaricherà i modelli di traduzione necessari (può richiedere diversi GB e tempo) Se vuoi solo italiano-inglese, puoi specificare solo quelle lingue per risparmiare spazio: `--load-only en,it`, per esempio con il comando:
+```bash 
+$ docker run -ti --rm -p 5001:5000 libretranslate/libretranslate --load-only en,it
+```
+Il servizio sarà disponibile su http://localhost:5001 (dato che è mappato la porta 5001 sulla tua macchina alla porta 5000 del container). Per una installazione persistente con volume:
+```bash
+docker run -ti --rm -p 5001:5000 -v libretranslate-data:/home/libretranslate/.local libretranslate/libretranslate --load-only en,it
+```
 
 
 ### Llama e Ollama
