@@ -1,12 +1,8 @@
-# GitHub Copilot
+# GitHub Copilot annotations by AlNao
 
-In questo documento sono elencati e descritti esempi di utilizzo di GitHubCopilot
+**GitHub Copilot** è un assistente di programmazione basato su intelligenza artificiale che aiuta a scrivere codice e documentazione direttamente nell'editor. Analizza il contesto dei file aperti e propone suggerimenti completi o parziali, accelerando lo sviluppo e riducendo il lavoro ripetitivo.
 
-## Cos'è GitHub Copilot
-GitHub Copilot è un assistente di programmazione basato su intelligenza artificiale che aiuta a scrivere codice e documentazione direttamente nell'editor. Analizza il contesto dei file aperti e propone suggerimenti completi o parziali, accelerando lo sviluppo e riducendo il lavoro ripetitivo.
-
-
-Necessario avere un profilo GitHub e un abbonamento al servizio [GitHub Copilot Pro](https://github.com/copilot/).
+⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: Per usare il servizio al meglio è necessario avere un profilo GitHub e un abbonamento attivo al servizio [GitHub Copilot Pro](https://github.com/copilot/)  🔶⚠️
 
 
 
@@ -21,10 +17,13 @@ Necessario avere un profilo GitHub e un abbonamento al servizio [GitHub Copilot 
   ```
 
 **Python**
-- Esempio base di SDK *- coming soon*
+- Esempio di SDK con la libreria `litellm` 
+  - litellm base [`📁`](https://github.com/alnao/PythonExamples/tree/master/IA/litellm/litellm_base)
+  - litellm nano agent [`📁`](https://github.com/alnao/PythonExamples/tree/master/IA/litellm/litellm_nano_agent)
+- Esempio base di SDK con la libreria `copilot-sdk` *- coming soon* 
 - Esembio di esecuzione in una immagine docker *- coming soon*
 - Esempio di Ralph-AI system eseguito in una immagine per eseguire  *- coming soon*
-
+ 
 **Node.Js**
 - **☁️ GitHub Copilot SDK - esempio** [`📁`](./GitHubCopilotSDK_1Simple/) - esempio di utilizzo di GitHub Copilot SDK per la chiamata agli engine di Copilot
   - Tecnologie: Copilot SDK, Node.js - sviluppato a gennaio 2026

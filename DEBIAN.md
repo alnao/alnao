@@ -35,6 +35,10 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Condivisioni di rete con Samba](#Condivisioni-di-rete-con-Samba)
   - [I RunLevel](#I-RunLevel)
   - [Schedulazioni con Cron](#Schedulazioni-con-Cron)
+  - [LAMP](#LAMP)
+    - [Apache](#Apache)
+    - [MySQL](#MySQL)
+    - [Nginx](#Nginx)
   - [Accesso e controllo remoto](#Accesso-e-Controllo-remoto)
   - [Monitoraggio e Logging](#Monitoraggio-e-Logging)
 - [Programmazione in Debian](#Programmazione-in-Debian)
@@ -43,15 +47,10 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [C & C++](#C)
   - [Python](#Python)
   - [LaTeX](#LaTeX)
-  - [LAMP](#LAMP)
-    - [Apache](#Apache)
-    - [MySQL](#MySQL)
-    - [Nginx](#Nginx)
   - [Node e NPM](#Node-e-NPM)
   - [Java e Tomcat](#Java-e-Tomcat)
   - [GIT](#GIT)
     - [Jenkins](#Jenkins)
-  - [Visual Studio Code](#Visual-Studio-Code)
   - [Postman](#Postman)
   - [PostgreSQL](#PostgreSQL)
   - [MongoDB](#MongoDB)
@@ -840,6 +839,187 @@ il comando verrà eseguito nei giorni feriali (da lunedì a venerdì) di tutti i
 
 - ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: spesso è complicato districarsi tra le varie schedulazioni configurate in un sistema, è consigliato l'uso di WebMin che permette di eseguire le configurazioni graficamente nella sezione "Scheduled Cron Jobs"  🔶⚠️
 
+
+## LAMP 
+
+Quando si pensa ai sistemi GNU Linux si pensa anche al *matrimonio del secolo* chiamato **LAMP**: l'unione perfetta tra GNU Linux, **Apache**, **MySQL** & **PHP**. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo, uno dei più usati nella storia dell'informatica. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione in un unico comando *cioè non separare ciò che Dio ha unito*, i pacchetti da installare sono:
+```
+# apt-get install apache2 mariadb-client mariadb-server php8.4 php8.4-mysql libapache2-mod-php8.4
+```
+In questo articolo viene usata la versione 8.4 di PHP ma si possono usare anche versioni precedenti o successive se presenti nel repository ufficiale, è sconsigliato usare versioni di pacchetti non ufficiali.
+
+Una volta installati i pacchetti questi vengono auto-configurati tanto che il server web viene attivato automaticamente e risulta disponibile all'indirizzo:
+```
+http://localhost/
+```
+
+### Apache 
+
+La configurazione di **Apache** è possibile tramite i vari file di configurazione del server: per attivare una nuova applicazione web è necessario modificare il file di configurazione di Apache
+```
+/etc/apache2/apache2.conf
+```
+controllando che nel file siano presenti le seguenti righe:
+```
+ServerName localhost
+DirectoryIndex index.html index.cgi index.pl index.php index.xhtml
+AddType application/x-httpd-php .php
+AddType application/x-httpd-php-source .phps
+```
+e, se si vuole configurare la cartella home per ogni utente bisogna aggiungere una sezione
+```
+UserDir public_html
+<Directory /home/*/pubblic_html>
+  Options Indexes SymLinksIfOwnerMatch IncludesNoExec
+</Directory>
+```
+da notare che alcune righe potrebbero essere già presenti ma precedute dal simbolo # che è il simbolo per commentare una riga, in questo caso basta cancellare il carattere cancelletto. Con l'ultimo blocco è stato configurato una cartella web per ogni utente configurato nel sistema, cioè basterà andare sulla home di un utente, creare una cartella con il nome public_html e questo sarà accessibile dal web all'indirizzo:
+```
+http://localhost/~nomeutente/
+```
+Dopo aver modificato il file di configurazione, per rendere effettive le modifiche, è necessario riavviare il server con il comando:
+```
+# systemctl restart apache2
+```
+La cartella web virtuale di default è la cartella `/var/www/`, questa è consigliata in fase di sviluppo ma è possibile configurare altre cartelle specifiche: per creare/aggiungere un path specifico esposto dal webserver, basta modificare il file di configurazione aggiungendo un blocco di codice specifico indicando i path e il nome:
+```
+Alias "/Php/" "/mnt/Dati/Php/"
+<Directory "/mnt/Dati/Php/">
+  Options Indexes FollowSymLinks Includes
+  AllowOverride All
+  Order deny,allow
+  Allow from all
+  Require all granted
+</Directory>
+```
+*Bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione, i browser non sono case-sensitive ma il webserver e i protocolli di rete lo sono!*.
+
+⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: questa sezione è una introduzione alla configurazione base di Apache e non copre tutti gli aspetti del web server. Essendo Apache un server web aperto e accessibile dalla rete, la **configurazione della sicurezza** è un aspetto fondamentale che non deve essere trascurato: è indispensabile informarsi adeguatamente riguardo alla gestione dei permessi, alla configurazione HTTPS/SSL, alla protezione contro attacchi comuni e alle best practice di hardening del server. Si rimanda alla [documentazione ufficiale di Apache sulla sicurezza](https://httpd.apache.org/docs/current/misc/security_tips.html) per approfondire questo argomento critico 🔶⚠️
+
+
+### MySQL
+
+Il demone database **MySQL** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione **MariaDB** che è la versione *open-source* e sono previsti due pacchetti principali (`mariadb-client` e `mariadb-server`), alla fine della fase di installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
+```
+# mysql_secure_installation
+```
+Da notare che con il comando mysql è possibile accedere alla console del database con il quale è possibile lanciare comandi e query, in console viene usato il carattere ```>``` per indicare che ci si trova nella console del database e non in una shell bash di GNU Linux. Dopo aver configurato la password dell'amministratore bisogna riavviare il demone con il comando:
+```
+# systemctl restart mariadb
+```
+per rendere effettive le modifiche alla password di root. Un semplice esempio di utilizzo della console del database:
+```bash
+$ mysql
+> USE test;
+> SHOW TABLES;
+> CREATE TABLE prova (Nome char(120), Sito char(120));
+> INSERT INTO prova (Nome,Sito) VALUES ('Alberto Nao','www.alnao.it');
+> SELECT * FROM prova;
+```
+Con questi comandi è stata creata una piccola tabella nel database test, inserita una riga sulla tabella e l'ultima query visualizza la riga appena inserita, in questo modo sono state eseguite tutte le istruzioni base del demone MySQL. Per quanto riguarda l'applicazione-sito phpMyAdmin, dalla versione 10 di Debian, non è più disponibile nei repository ufficiali e deve essere scaricato manualmente dal sito ufficiale e posizionato in una cartella per poi lanciare i comandi di configurazione (per la configurazione dei permessi e del apache.conf). In alternativa all'ormai obsoleto phpMyAdmin è consigliabile usare programmi più evoluti per la gestione del database come **MySQL Workbench**, per installarlo basta usare il repository snap e lanciare il comando:
+```bash
+$ snap install mysql-workbench-community
+```
+Il demone MySQL prevede anche alcuni comandi speciali per la gestione da riga di comando del demone, per esempio per effettuare il backup di un database non si può usare il comando:
+```bash
+$ mysqldump -u user -p password nomeDatabaseSorgente > file.sql
+```
+il backup viene salvato in un file con estensione `.sql`, per eseguire il restore (dallo stesso file `.sql`) basta eseguire il comando mysql base:
+```bash
+$ mysql -u user -p password nomeDatabaseDestinazione < file.sql
+```
+Da notare che il comando `mysqldump` permette di collegare due server MySQL per trasferire dati tra i due server, per questo e tutti gli altri comandi si rimanda alla documentazione ufficiale di MySQL.
+
+Per quanto riguarda la programmazione web con i linguaggi di scripting PHP o gli altri linguaggi, ci sono moltissimi programmi grafici che permettono lo sviluppo, alcuni esempi sono: screem, BlueFish, QuantaPlus ma sono disponibili ambienti di sviluppo evoluti come **Ecl ipse** e **Visual Studio Code**.
+
+Il più semplice esempio di file PHP è il classico file con le informazioni base:
+```bash
+$ echo '<?php phpinfo(); ?> ' > /var/www/html/test.php
+```
+che risulta disponibile nel server Apache. I moduli PHP sono installabili dal gestore dei pacchetti e l'elenco dei moduli installati sono consultabili nell'elenco dei pacchetti. Si rimanda alla documentazione ufficiale per maggiori informazioni riguardo alla configurazione dell'interprete PHP e della sua integrazione con il web server Apache!
+
+### Nginx
+**Nginx** (si legge “engine-x”) è un web server e reverse proxy molto leggero e performante, ampiamente usato sia per servire siti statici sia come “front-end” per applicazioni backend (Node.js, Python, Java, PHP-FPM). In Debian è una scelta eccellente perché è stabile, ben integrato con systemd e la struttura di configurazione è pulita e modulare. Spesso è usato come alternativa veloce e snella di Apache, ovviamente i due server possono essere attivi nello stesso momento se **NON** configurati con la stessa porta di esposizione. Per l'installazione basta installare il pacchetto dedicato:
+```
+# apt install nginx -y
+# systemctl enable --now nginx
+# systemctl status nginx
+```
+Verifica rapida da locale: `$ curl -I http://localhost`
+I file di configurazione principali sono:
+- `/etc/nginx/nginx.conf`: config principale
+- `/etc/nginx/sites-available/`: elenco di tutti i virtual-host
+  - è possibile modificare il file `/etc/nginx/sites-available/default` per impostare una porta diversa dalla 80 (se si volesse) e si può modificare la cartella radice predefinita del webserver
+- `/etc/nginx/sites-enabled/`: configurazione dei vhost attivi tramite symlink
+- `/var/www/html/`: cartella radice predefinita del sito “default” (attenzione che è la, stessa cartella usata da Apache!)
+- `/var/log/nginx/access.log` e `/var/log/nginx/error.log`: files di log
+
+Si riporta qui un un file di configurazione di esempio di un sito:
+```
+# filepath: /etc/nginx/sites-available/miosito.conf
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name miosito.local;
+
+    root /var/www/miosito;
+    index index.html;
+
+    access_log /var/log/nginx/miosito.access.log;
+    error_log  /var/log/nginx/miosito.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+# /etc/hosts
+# echo "127.0.0.1 miosito.local" >> /etc/hosts
+# $ curl http://miosito.local
+```
+e i comandi di configurazione:
+```
+# ln -s /etc/nginx/sites-available/miosito.conf /etc/nginx/sites-enabled/miosito.conf
+# nginx -t
+# systemctl reload nginx
+```
+Oppure un file di configurazione del reverse proxy verso una app per un tipo server Node.js avviato su porta 3000 ma da esporre con Nginx su porta 80/443:
+```
+# filepath: /etc/nginx/sites-available/app-proxy.conf
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name app.local;
+
+    access_log /var/log/nginx/app.local.access.log;
+    error_log  /var/log/nginx/app.local.error.log;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+
+        # header fondamentali per mantenere info client
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # (opzionale) per websocket / upgrade
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+```
+con i comandi di attivazione di questa configurazione:
+```
+# ln -s /etc/nginx/sites-available/app-proxy.conf /etc/nginx/sites-enabled/app-proxy.conf
+# nginx -t
+# systemctl reload nginx
+```
+
+
+
 ## Accesso e controllo remoto
 
 Il servizio per l'accesso remoto in una rete LAN è compreso nel Kernel Linux e non deve essere installato nessun pacchetto supplementare: il protocollo **SSH** è disponibile grazie ai pacchetti ```openssh-server``` e ```openssh-client```. Per collegare due o più nodi con i sistemi GNU Linux basta collegarsi usando il protocollo ssh o sftp, standard ormai usato in tutti i sistemi. 
@@ -1044,7 +1224,7 @@ Esistono anche diverse alternative, per esempio Eclipse e IntelliJ per il lingua
   - `curl -L https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/2.4 -o cursor.deb`
   - `dpkg -i ./cursor.deb`
   - attenzione: l'uso di Cursor può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento
-- **Antigravity** è l'assistente AI agentico sviluppato da Google DeepMind, capace non solo di rispondere a domande ma di agire autonomamente sull'ambiente di lavoro per risolvere task complessi con uno specifico agente, gestire file e accelerare drasticamente il ciclo di sviluppo. Il (sito di riferimento)[https://antigravity.google/download/linux] indica i passi da eseguire per l'installazione
+- **Antigravity** è l'assistente AI agentico sviluppato da Google DeepMind, capace non solo di rispondere a domande ma di agire autonomamente sull'ambiente di lavoro per risolvere task complessi con uno specifico agente, gestire file e accelerare drasticamente il ciclo di sviluppo. Il [sito di riferimento](https://antigravity.google/download/linux) indica i passi da eseguire per l'installazione
   ```
   # curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | gpg --dearmor --yes -o /etc/apt/keyrings/antigravity-repo-key.gpg
   # echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | tee /etc/apt/sources.list.d/antigravity.list > /dev/null
@@ -1180,182 +1360,6 @@ Un'altra opzione è quella di usare l'utilissimo programma **Kile**: uno dei mig
 
 La versione PDF di questo documento di precedenti versioni di Debian è stata scritta in LaTeX utilizzando l'editor Kile. *Tanti ricordi*
 
-
-## LAMP 
-
-Quando si pensa ai sistemi GNU Linux si pensa anche al *matrimonio del secolo* chiamato **LAMP**: l'unione perfetta tra GNU Linux, **Apache**, **MySQL** & **PHP**. Questi quattro compongono uno stack tecnologico gratuito e open source utilizzabile per creare un server web completo, probabilmente il più usato nella storia dell'informatica. Possono essere installati separatamente selezionando i vari pacchetti ma è consigliato eseguire l'installazione in un unico comando (*non separare ciò che Dio ha unito*), i pacchetti da installare sono:
-```
-# apt-get install apache2 mariadb-client mariadb-server php8.4 php8.4-mysql libapache2-mod-php8.4
-```
-oppure i pacchetti possono essere installati dai programmi di gestione dei pacchetti di Debian. In questo articolo viene usata la versione 8.4 di PHP ma si possono usare anche versioni precedenti o successive se presenti nel repository ufficiale, è sconsigliato usare versioni di pacchetti non ufficiali.
-
-Una volta installati i pacchetti questi vengono auto-configurati tanto che il server web viene attivato automaticamente e risulta disponibile all'indirizzo:
-```
-http://localhost/
-```
-
-### Apache 
-
-Se un programmatore vuole configurare **Apache** deve andare a modificare i file di configurazione del server: per attivare una nuova applicazione web è necessario modificare il file di configurazione di Apache
-```
-/etc/apache2/apache2.conf
-```
-controllando che nel file siano presenti le seguenti righe:
-```
-ServerName localhost
-DirectoryIndex index.html index.cgi index.pl index.php index.xhtml
-AddType application/x-httpd-php .php
-AddType application/x-httpd-php-source .phps
-```
-e, se si vuole configurare la cartella home per ogni utente bisogna aggiungere una sezione
-```
-UserDir public_html
-<Directory /home/*/pubblic_html>
-  Options Indexes SymLinksIfOwnerMatch IncludesNoExec
-</Directory>
-```
-da notare che alcune righe potrebbero essere già presenti ma precedute dal simbolo # che è il simbolo per commentare una riga, in questo caso basta cancellare il carattere cancelletto. Con l'ultimo blocco è stato configurato una cartella web per ogni utente configurato nel sistema, cioè basterà andare sulla home di un utente, creare una cartella con il nome public_html e questo sarà accessibile dal web all'indirizzo:
-```
-http://localhost/~nomeutente/
-```
-Dopo aver modificato il file di configurazione, per rendere effettive le modifiche, è necessario riavviare il server con il comando:
-```
-# systemctl restart apache2
-```
-La cartella web virtuale di default è la cartella `/var/www/`, questa è consigliata in fase di sviluppo ma è possibile configurare altre cartelle specifiche: per creare/aggiungere un path specifico esposto dal webserver, basta modificare il file di configurazione aggiungendo un blocco di codice specifico indicando i path e il nome:
-```
-Alias "/Php/" "/mnt/Dati/Php/"
-<Directory "/mnt/Dati/Php/">
-  Options Indexes FollowSymLinks Includes
-  AllowOverride All
-  Order deny,allow
-  Allow from all
-  Require all granted
-</Directory>
-```
-*bisogna sempre ricordarsi di prestare la massima attenzione alla differenza maiuscole/minuscole sia per i nomi delle cartelle sia per i parametri di configurazione, i browser non sono case-sensitive ma il webserver e i protocolli di rete lo sono!*.
-
-
-### MySQL
-
-Il demone database **MySQL** è il più utilizzato al mondo per la creazione di applicazioni, per Debian i pacchetti sono disponibili nella versione **MariaDB** che è la versione *open-source* e sono previsti due pacchetti principali (`mariadb-client` e `mariadb-server`), alla fine della fase di installazione il demone è sprovvisto di password e bisogna sempre ricordarsi di eseguire la configurazione base con il comando:
-```bash
-# mysql_secure_installation
-```
-Da notare che con il comando mysql è possibile accedere alla console del database con il quale è possibile lanciare comandi e query, in console viene usato il carattere ```>``` per indicare che ci si trova nella console del database e non in una shell bash di GNU Linux. Dopo aver configurato la password dell'amministratore bisogna riavviare il demone con il comando:
-```
-# systemctl restart mariadb
-```
-per rendere effettive le modifiche alla password di root. Un semplice esempio di utilizzo della console del database:
-```bash
-$ mysql
-> USE test;
-> SHOW TABLES;
-> CREATE TABLE prova (Nome char(120), Sito char(120));
-> INSERT INTO prova (Nome,Sito) VALUES ('Alberto Nao','www.alnao.it');
-> SELECT * FROM prova;
-```
-Con questi comandi è stata creata una piccola tabella nel database test, inserita una riga sulla tabella e l'ultima query visualizza la riga appena inserita, in questo modo sono state eseguite tutte le istruzioni base del demone MySQL. Per quanto riguarda l'applicazione-sito phpMyAdmin, dalla versione 10 di Debian, non è più disponibile nei repository ufficiali e deve essere scaricato manualmente dal sito ufficiale e posizionato in una cartella per poi lanciare i comandi di configurazione (per la configurazione dei permessi e del apache.conf). In alternativa all'ormai obsoleto phpMyAdmin è consigliabile usare programmi più evoluti per la gestione del database come **MySQL Workbench**, per installarlo basta usare il repository snap e lanciare il comando:
-```bash
-$ snap install mysql-workbench-community
-```
-Il demone MySQL prevede anche alcuni comandi speciali per la gestione da riga di comando del demone, per esempio per effettuare il backup di un database non si può usare il comando:
-```bash
-$ mysqldump -u user -p password nomeDatabaseSorgente > file.sql
-```
-il backup viene salvato in un file con estensione `.sql`, per eseguire il restore (dallo stesso file `.sql`) basta eseguire il comando mysql base:
-```bash
-$ mysql -u user -p password nomeDatabaseDestinazione < file.sql
-```
-Da notare che il comando `mysqldump` permette di collegare due server MySQL per trasferire dati tra i due server, per questo e tutti gli altri comandi si rimanda alla documentazione ufficiale di MySQL.
-
-Per quanto riguarda la programmazione web con i linguaggi di scripting PHP o gli altri linguaggi, ci sono moltissimi programmi grafici che permettono lo sviluppo, alcuni esempi sono: screem, BlueFish, QuantaPlus anche se è consigliato l'utilizzo di Eclipse o Visual Studio Code.
-
-Il più semplice esempio di file PHP è il classico file con le informazioni base:
-```bash
-$ echo '<?php phpinfo(); ?> ' > /var/www/html/test.php
-```
-che risulta disponibile nel server Apache. I moduli PHP sono installabili dal gestore dei pacchetti e l'elenco dei moduli installati sono consultabili nell'elenco dei pacchetti. Si rimanda alla documentazione ufficiale per maggiori informazioni riguardo alla configurazione dell'interprete PHP e della sua integrazione con il web server Apache!
-
-### Nginx
-**Nginx** (si legge “engine-x”) è un web server e reverse proxy molto leggero e performante, ampiamente usato sia per servire siti statici sia come “front-end” per applicazioni backend (Node.js, Python, Java, PHP-FPM). In Debian è una scelta eccellente perché è stabile, ben integrato con systemd e la struttura di configurazione è pulita e modulare. Spesso è usato come alternativa veloce e snella di Apache, ovviamente i due server possono essere attivi nello stesso momento se **NON** configurati con la stessa porta di esposizione. Per l'installazione basta installare il pacchetto dedicato:
-```
-# apt install nginx -y
-# systemctl enable --now nginx
-# systemctl status nginx
-```
-Verifica rapida da locale: `$ curl -I http://localhost`
-I file di configurazione principali sono:
-- `/etc/nginx/nginx.conf`: config principale
-- `/etc/nginx/sites-available/`: elenco di tutti i virtual-host
-  - è possibile modificare il file `/etc/nginx/sites-available/default` per impostare una porta diversa dalla 80 (se si volesse) e si può modificare la cartella radice predefinita del webserver
-- `/etc/nginx/sites-enabled/`: configurazione dei vhost attivi tramite symlink
-- `/var/www/html/`: cartella radice predefinita del sito “default” (attenzione che è la, stessa cartella usata da Apache!)
-- `/var/log/nginx/access.log` e `/var/log/nginx/error.log`: files di log
-
-Si riporta qui un un file di configurazione di esempio di un sito:
-```
-# filepath: /etc/nginx/sites-available/miosito.conf
-server {
-    listen 80;
-    listen [::]:80;
-
-    server_name miosito.local;
-
-    root /var/www/miosito;
-    index index.html;
-
-    access_log /var/log/nginx/miosito.access.log;
-    error_log  /var/log/nginx/miosito.error.log;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}
-# /etc/hosts
-# echo "127.0.0.1 miosito.local" >> /etc/hosts
-# $ curl http://miosito.local
-```
-e i comandi di configurazione:
-```
-# ln -s /etc/nginx/sites-available/miosito.conf /etc/nginx/sites-enabled/miosito.conf
-# nginx -t
-# systemctl reload nginx
-```
-Oppure un file di configurazione del reverse proxy verso una app per un tipo server Node.js avviato su porta 3000 ma da esporre con Nginx su porta 80/443:
-```
-# filepath: /etc/nginx/sites-available/app-proxy.conf
-server {
-    listen 80;
-    listen [::]:80;
-
-    server_name app.local;
-
-    access_log /var/log/nginx/app.local.access.log;
-    error_log  /var/log/nginx/app.local.error.log;
-
-    location / {
-        proxy_pass http://127.0.0.1:3000;
-
-        # header fondamentali per mantenere info client
-        proxy_set_header Host              $host;
-        proxy_set_header X-Real-IP         $remote_addr;
-        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-
-        # (opzionale) per websocket / upgrade
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    }
-}
-```
-con i comandi di attivazione di questa configurazione:
-```
-# ln -s /etc/nginx/sites-available/app-proxy.conf /etc/nginx/sites-enabled/app-proxy.conf
-# nginx -t
-# systemctl reload nginx
-```
 
 ## Node e NPM
 

@@ -7,16 +7,17 @@
     &lt; AlNao /&gt;
   <!--<img src="https://user-images.githubusercontent.com/18350557/176309783-0785949b-9127-417c-8b55-ab5a4333674e.gif" width="30" alt="Ciao!" /> -->
 </h1>
+<!--
 <p align="center">
   <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank">
     <img src="https://img.shields.io/badge/Certified-AWS-%23FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" />
     <img src="https://img.shields.io/badge/Credly-005850?style=for-the-badge&logo=credly&logoColor=white" />
   </a>
-  <!--<a href="https://www.linkedin.com/in/alberto-nao-31818a83/" target="_blank">
+  <a href="https://www.linkedin.com/in/alberto-nao-31818a83/" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=Linkedin&logoColor=white" />
-  </a>-->
+  </a>
 </p>
-
+-->
 <!-- BADGES -->
 <p align="center">
   <a href="https://www.credly.com/users/alberto-nao/badges" target="_blank">
@@ -46,14 +47,18 @@
       <img src="https://img.shields.io/badge/Dev project-darkgreen?style=for-the-badge&logo=devbox&logoColor=lightgreen" />
       <img src="https://img.shields.io/badge/Gaming-gray?style=for-the-badge&logo=applearcade&logoColor=white" />
     </td>
-    <td>🎮 <a href="https://github.com/alnao/AlNaoPathsGame">AlNao Paths Game</a> 🕹️</td>
+    <td>🎲 <a href="https://github.com/gamespaths/pathsgames">Paths.Game</a> project 🕹️</td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/AWS-%23FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" />
-      <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" />
+      <img src="https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" />
+      <img src="https://img.shields.io/badge/CloudFormation-232F3E?style=for-the-badge&logo=yaml&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/AwsCloudFormationExamples">CloudFormation</a> &bull; <a href="https://github.com/alnao/PythonExamples/tree/master/AWS">Python SDK</a> &bull; <a href="https://github.com/alnao/JavaExamples/tree/master/AWS">Java SDK</a></td>
+    <td>
+      <a href="https://github.com/alnao/AwsCloudFormationExamples">CloudFormation</a> &bull; 
+      <a href="https://github.com/alnao/PythonExamples/tree/master/AWS">Python SDK</a> &bull; 
+      <a href="https://github.com/alnao/JavaExamples/tree/master/AWS">Java SDK</a>
+    </td>
   </tr>
     <tr>
       <td align="center">
@@ -64,19 +69,32 @@
     </tr>
   <tr>
     <td align="center">
+      <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" />
+      <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" />
+    </td>
+    <td>
+      <a href="https://github.com/alnao/alnao/blob/main/Docker.md">Docker annotations</a> &bull; 
+      <a href="https://github.com/alnao/PythonExamples/tree/master/Docker">Docker projects</a>
+    </td>      
+  </tr>
+  <tr>
+    <td align="center">
       <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=black" />
       <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/JavaExamples">Java Examples</a> &bull; <a href="https://github.com/alnao/JavaSpringBootExample">SpringBoot project</a></td>
+    <td>
+      <a href="https://github.com/alnao/JavaExamples">Java projects</a> &bull; 
+      <a href="https://github.com/alnao/JavaSpringBootExample">SpringBoot project</a>
+    </td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/Python-3766AB?style=for-the-badge&logo=Python&logoColor=white" />
-      <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" />
+      <img src="https://img.shields.io/badge/ollama-522CA5?style=for-the-badge&logo=ollama&logoColor=white" />
     </td>
     <td>
-      <a href="https://github.com/alnao/PythonExamples">Python Examples</a> &bull; 
-      <a href="https://github.com/alnao/PythonExamples/tree/master/Docker">Docker Examples</a>  
+      <a href="https://github.com/alnao/PythonExamples">Python projects</a> &bull; 
+      <a href="https://github.com/alnao/PythonExamples/tree/master/IA">IA projects</a>
     </td>
   </tr>
   <tr>
@@ -84,21 +102,21 @@
       <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" />
       <img src="https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/AngularReactNodeExamples">Angular & React examples</a></td>
+    <td><a href="https://github.com/alnao/AngularReactNodeExamples">Angular & React projects</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white" />
       <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap notes</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap annotations</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" />
       <img src="https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress notes</a></td>
+    <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress annotations</a></td>
   </tr>
   <tr>
     <td align="center">
@@ -112,14 +130,17 @@
   <img src="https://img.shields.io/badge/Solidity-4E5E94?style=for-the-badge&logo=solidity&logoColor=white" />
   <img src="https://img.shields.io/badge/Ethereum-627EEA?style=for-the-badge&logo=ethereum&logoColor=white" />
    </td>
-   <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain & Solidity examples</a></td>
+   <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain & Solidity projects</a></td>
   </tr>
   <tr>
     <td align="center">
       <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white" />
-      <img src="https://img.shields.io/badge/GitHub%20Copilot-gray?style=for-the-badge&logo=githubcopilot&logoColor=white" />
+      <img src="https://img.shields.io/badge/Copilot-gray?style=for-the-badge&logo=githubcopilot&logoColor=white" />
     </td>
-    <td><a href="https://github.com/alnao/alnao/blob/main/GitHubCopilot.md">GitHub copilot notes</a></td>
+    <td>
+      <a href="https://github.com/alnao/alnao/blob/main/GIT.md">Git annotations</a> &bull; 
+      <a href="https://github.com/alnao/alnao/blob/main/GitHubCopilot.md">GitHub copilot annotations</a>
+    </td>
   </tr>
 </table>
 

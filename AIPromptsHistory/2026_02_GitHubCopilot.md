@@ -1,6 +1,46 @@
 # GitHub Copilot Chat history - Feb 2026 
 **All AlNao chat history with IA**
 
+### 27/02/2026
+- Create the new Paths Games website
+    - i wanna create a website for my crowdfounding, i'm creating a multiplayer video game with game book mecanics, i wanna build the website with bootstrap5 and fontawesome5 and css3 on dedicated files with variables for all color and configurations, i wanna all elements in the web pages is "cards" like cards-game like "magic" and "pokemon card game". esist only two type of card : little and big, little is double of big, could be vertical or horizontal, every card on top has a title, an icon, an image and a description like magic cards, all cars must be overexposed with middle cars on top. In page on top-center an horizontal big-card in horizontal with title "paths games" and big-card in horizontal with "free to play" card, on left "crowdfounding coming soon" big-card in horizontal. On left a big big-vertical-card of location "castle" with two little vertical card on bottom with "enter into castle" and "go to mountains" side by side with little oblique. on center a big-vertical-card location "mountains" with two little-vertical-card "back to castle" and "enter the cave", on right a big-vertical-card location "dragon cave" with choose "talk with dragon" and "attack the dragon", i wanna a medieval style, with dark theme option, i wanna card "paths games" in gold style. add a footer with copyright, main and repository information. every card have a mediaval-brownish styles
+    - bigger title on desktop and centered for mobile, remove background images and create a card style like medieval-brownly style. change "The World of Aethermoor" with "choose your destiny" , on location cards remove background images, create border and style like medieval-brownly with title, image/emote, description. The chooser card must be above location card with slightly inclined. Create a section "Crowdfunding coming soon" with page where descript the Crowdfunding is coming soon with a new free to play game ispired to a classic game-books but with modern mecanics. will be free to play with new fantastic and modern stories! Change the footer to be little and with only logos without "back the quest"
+    - on navbar remove "world" and "aboud" section, leave only "Crowdfunding" section, show dark style button only in desktop , move Crowdfunding after world section and use more lightly text color. in world section move "card-choice" cards below the location card, bigger location card and choise card slightly inclined. on footer, icons and description on new line, add github icon and Roadmap and Crowdfunding and Devlog, for every icon add title, add a new line with "© 2025 Paths Games · All rights reserved · Crafted with  by the Paths Games Dev Team · Privacy Policy · Terms of Service - cookies policy"
+    - use "background.jpg" like background on dekstop, create mobile version using same background on vertical , remove "Toggle theme", 
+    - i wanna world-row and crowdfund-section bigger full page, increase all font size everywhere and linear-gradient on footer more hight rispect the footer contents
+    - on mobile repeat the background images, the locations and choise must be on javascript array and loaded, create a location-card and choise-card, every card must be golden-bronze simple-decorative border with plate for title, emote on top right, 2/3 body of image and 1/3 for shot description
+    - add icons with "code-fork", "code marge" and "code-pull" and other choise style icons in page
+    - edit card css: all cards type must be have same dimensions (locations and coises , location big, coises little), card-title-plate on right and remove card-emote-badge! in all cards font bigger.
+    - card-title-plate on top with horizontal text, for every card add a little footer with random code (like magic style)
+    - i wanna carosel on element "navbar-badges-to-rotate" i just added into navbar and change buttons styles, add crowdfuning element and "open source code" element
+    - crowdfund-badges bigger, double dimensions
+    - on "choice-card" and "location-card" on header put icon on right
+    - on "choice-card" and "location-card" use background2.png like background image on "card-body-left" and change text color in dark gold
+    - remove background2 image and use "background: linear-gradient(135deg, #1e0f04 0%, #5c3317 40%, #2e1508 100%);"
+    - i wanna make responsive page, on tablet show only 2 location, on mobile only montains, on top bar the nav-link should be centered on new line 
+    - i wanna rotate logo-dice like as it bounces on the floor
+- on my domain i've errors: 
+    ```
+    Loading the stylesheet 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' violates the following Content Security Policy directive: "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.Understand this error
+    (index):11 Loading the stylesheet 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css' violates the following Content Security Policy directive: "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.Understand this error
+    24Loading the font '<URL>' violates the following Content Security Policy directive: "font-src 'none'". The policy is report-only, so the violation has been logged but no further action has been taken.
+    (index):1 Loading the script 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js' violates the following Content Security Policy directive: "script-src-elem 'none'". The policy is report-only, so the violation has been logged but no further action has been taken.
+    (index):1 Loading the script 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js' violates the following Content Security Policy directive: "script-src 'self'". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback. The action has been blocked.Understand this error
+    (index):1 Loading the script 'https://pathsgames.com/main.js' violates the following Content Security Policy directive: "script-src-elem 'none'". The policy is report-only, so the violation has been logged but no further action has been taken.
+    ```
+    > change CloudFront `Policies > Response headers`
+    - from value
+        ```
+        default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'
+        ```
+    - to value
+        ```
+        default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self'
+        ```
+    - change terraform template too!
+
+
+
 ### 20/02/2026
 - Into AlNao Paths game project (see Step05_BackendStructure)
     - now read all documents in documentation_v1 and help me to complete the Step05 file  
