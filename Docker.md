@@ -58,6 +58,26 @@ Per la documentazione completa e approfondita si rimanda al [sito ufficiale di D
     docker system prune
     ```
 
+- **Postgresql**
+    ```bash
+    docker run --name postgres-local \
+    -e POSTGRES_DB=pathsgames \
+    -e POSTGRES_USER=dbuser \
+    -e POSTGRES_PASSWORD=dbpassword \
+    -p 5432:5432 \
+    -d postgres:latest
+    ```
+    Spiegazione parametri:
+    - `--name postgres-local`: nome del container
+    - `e POSTGRES_DB=pathsgames`: crea il database pathsgames
+    - `e POSTGRES_USER=dbuser`: utente personalizzato (default: postgres)
+    - `e POSTGRES_PASSWORD=dbpassword`: password dell'utente
+    - `p 5432:5432`: mappa la porta 5432 del container su localhost:5432
+    - `d`: esegue in background
+    - `postgres:latest`: immagine ufficiale PostgreSQL
+
+
+
 
 # &lt; AlNao /&gt;
 Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella massima misura possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 

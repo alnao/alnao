@@ -86,6 +86,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Gestione delle macchine virtuali](#Gestione-delle-macchine-virtuali)
   - [Notify e Zenity](#Notify-e-Zenity)
   - [Creazione di un demone](#Creazione-di-un-demone)
+  - [Come preparare una chiavetta USB avviabile su e con Debian](#Come-preparare-una-chiavetta-USB-avviabile-su-e-con-Debian)
 
 # Introduzione
 
@@ -2881,6 +2882,44 @@ I passi da eseguire sono:
 Da notare che questo servizio termina dopo aver eseguiro le istruzioni indicate e non rimane in ascolto di nulla
 
 Questo si deve intendere come esempio, *chiamarlo servizio/demone è forse un po' troppo*
+
+
+## Come preparare una chiavetta USB avviabile su e con Debian
+
+Su Debian esistono due strumenti principali per scrivere un'immagine ISO su chiavetta USB: il classico `dd`, integrato nel sistema, e **Ventoy**, che permette di gestire più ISO sulla stessa chiavetta senza riscriverla ogni volta. Prima di procedere con entrambi i metodi, è fondamentale identificare il dispositivo corretto con `lsblk` o `fdisk -l`, facendo attenzione a non confondere la chiavetta con il disco di sistema.
+
+Usare **dd** significa eseguire un singolo comando da terminale, senza installare nulla di aggiuntivo. Se la chiavetta è già montata, è necessario smontarla e poi eseguire il comando:
+
+```
+# dd if=/percorso/immagine.iso of=/dev/sdX bs=4M status=progress oflag=sync
+```
+Il parametro `bs=4M` velocizza la scrittura, mentre `oflag=sync` garantisce che tutti i dati vengano effettivamente salvati prima della chiusura. Attendere il completamento del comando senza interromperlo: `dd` non mostra un avanzamento visivo a meno di non includere `status=progress`. Per ogni nuova ISO sarà necessario riscrivere completamente la chiavetta da capo.
+
+
+Installare **Ventoy** significa preparare la chiavetta una volta sola: scaricare l'archivio dal sito ufficiale [ventoy.net](https://www.ventoy.net) oppure con il comando :
+```bash
+wget https://github.com/ventoy/Ventoy/releases/download/v1.0.99/ventoy-1.0.99-linux.tar.gz
+tar -xzf ventoy-1.0.99-linux.tar.gz
+cd ventoy-1.0.99
+```
+Per installare ventoy su una chiavetta USB eseguire il comando:
+```bash
+sudo ./Ventoy2Disk.sh -i /dev/sdX
+```
+dove X è il numero del dispositivo da utilizzare.
+
+Dopo l'installazione, Ventoy crea una partizione dati (exFAT) chiamata **Ventoy**. E' possibile aggiungere il parametro ` -r 28528 ` per indicare la dimensione in blocchi della partizione, lasciando il resto della memoria disponibile libera. Nella partizione è possibile copiare i file `.iso` come normali file:
+
+```bash
+cp ~/Scaricati/debian-12.9.0-amd64-netinst.iso /media/Ventoy/
+```
+All'avvio Ventoy mostra automaticamente un menu con tutte le ISO presenti, infatti questo sistema permette di avere più immagini nel dispositivo e sono supportati sutti i sistemi:sia BIOS legacy che UEFI. Per aggiungere o rimuovere immagini non è necessario riformattare: basta copiare o cancellare i file dalla partizione.
+
+
+Note importanti:
+- Per avviare una ISO live, accedere al menu di boot del BIOS/UEFI (solitamente premendo F12, F2 o ESC all'avvio) e selezionare la chiavetta USB come dispositivo di avvio.
+- ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: I comando `dd` e `Ventoy2Disk` cancellano tutto il contenuto di un dispositivo, prestare attenzione quando si lanciano questi comandi per evitare di cancellare dati 🔶⚠️
+
 
 
 # &lt; AlNao /&gt;
