@@ -39,6 +39,9 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
     - [Apache](#Apache)
     - [MySQL](#MySQL)
     - [Nginx](#Nginx)
+  - [Database](#Database)
+    - [PostgreSQL](#PostgreSQL)
+    - [MongoDB](#MongoDB)
   - [Accesso e controllo remoto](#Accesso-e-Controllo-remoto)
   - [Monitoraggio e Logging](#Monitoraggio-e-Logging)
 - [Programmazione in Debian](#Programmazione-in-Debian)
@@ -52,8 +55,6 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [GIT](#GIT)
     - [Jenkins](#Jenkins)
   - [Postman](#Postman)
-  - [PostgreSQL](#PostgreSQL)
-  - [MongoDB](#MongoDB)
   - [Docker](#Docker)
     - [Esempio con Pgadmin4](#Esempio-con-Pgadmin4)
     - [Configurazione di rete di Docker](#Configurazione-di-rete-di-Docker)
@@ -1019,6 +1020,97 @@ con i comandi di attivazione di questa configurazione:
 # systemctl reload nginx
 ```
 
+## Database
+Debian 13 consolida la sua reputazione di piattaforma server eccellente offrendo pacchetti aggiornati e stabili per MySQL 8, MariaDB 11, PostgreSQL 17 e Redis ottimizzati e pronti all'uso anche senza tante conoscenze tecniche. 
+
+**SQLite** offre una soluzione zero-config l'ideale per i database locali, memorizzando tutto in un singolo file compatto e portabile. Non richiede un processo server separato, garantendo un'integrazione immediata e una manutenzione minima per gestire salvataggi e impostazioni utente. Per usare la riga di comando si devono installare i due pacchetti `sqlite3` e `sqlite3-tools`. Poi sarà possibile creare un database con il comando:
+```bash
+$ sqlite3 /percorso/nomefile.db
+```
+E per eseguire uno script con la CLI:
+```bash
+$ sqlite3 /tmp/database.sqlite < script/init-database/init-sqlite.sql
+```
+
+
+### PostgreSQL
+Per quanto riguarda il demone **PostgreSQL**, è disponibile nei repository ufficiali con dei pacchetti pronti per l'uso, basta installare i pacchetti base:
+```
+# apt-get install postgresql ufw
+```
+e poi bisogna modificare il file di configurazione:
+```
+# pico /etc/postgresql/17/main/postgresql.conf
+```
+verificando che siano presenti le righe non commentate (senza il cancelletto iniziale)
+```
+listen_addresses='localhost'
+port = 5432
+```
+da notare che di default è permesso solo l'accesso da locale, è possibile modificare questa impostazione valorizzando con asterisco per l'apertura a tutta la rete internet. Successivamente bisogna aprire le porte di rete e configurare le utenze
+```
+# ss -tunelp | grep 5432
+# /sbin/ufw allow 5432/tcp
+# systemctl restart postgresql
+# su - postgres
+$$ psql -c "alter user postgres with password 'parolaSegreta'"
+$$ createuser prova
+$$ createdb testdb -O dbuser1
+$$ psql
+ =# \c prova
+ =# alter user dbuser1 with password 'DBPassword';
+ =# create table testtable ( id int,firstname text, lastname text );
+ =# insert into testtable (id,firstname,lastname) values (1,'Alberto','Nao');
+ =# select * from testtable;
+# systemctl restart postgresql
+```
+con questi semplici comandi si sono eseguite delle configurazioni base del server tra cui la creazione un utente nel sistema Debian, la creazione di un database e di una tabella, le query finali son un semplice esempio di verifica del corretto funzionamento del database. Per collegarsi al database PostgreSQL è possibile usare qualunque programma come DBeaver ma è consigliato installare **PgAdmin4**.
+
+
+### MongoDB
+
+Per quanto riguarda il demone **MongoDB** si può installare utilizzando il repository dedicato che necessita di una piccola configurazione come spiegato nel [sito ufficiale](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/):
+```
+# apt update && sudo apt install -y curl gnupg
+# curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
+# echo "deb [signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg] https://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+# apt update
+# apt install -y mongodb-org
+# systemctl enable mongod
+# systemctl start mongod
+# systemctl status mongod
+# mongosh --eval 'db.runCommand({ connectionStatus: 1 })'
+```
+se si vuole accedere al demone da altri nodi diversi dal nodo in esecuzione bisogna modificare il file di configurazione:
+```
+/etc/mongod.conf
+```
+nel quale bisogna verificare ed eventualmente modificare le configurazioni base di rete nei punti:
+```
+bindip = 127.0.0.1,indirizziIpCheUsanoMongo
+port = 27017
+#auth=true
+```
+se viene modificato il file di configurazione, bisogna ricordarsi di riavviare il server con il comando:
+```
+# systemctl restart mongod
+```
+Per l'accesso da riga di comandi è disponibile una console, un semplice esempio di utilizzo di questo comando:
+```bash
+$ mongosh 
+  > db.runCommand({ connectionStatus: 1 })
+  > use collectiondemo
+  > db.elenco.insertOne({nome:"Alberto"})
+  > db.elenco.find()}
+  > exit 
+```
+Un tool grafico per poter usare e gestire un database MongoDB è **Mongo-Compass**, disponibile come pacchetto nel [sito ufficiale](https://www.mongodb.com/docs/compass/install/) che può essere scaricato ed installato molto velocemente con pochi domandi:
+```
+# wget https://downloads.mongodb.com/compass/mongodb-compass_1.46.6_amd64.deb
+# sudo dpkg -i mongodb-compass_1.46.6_amd64.deb
+# sudo apt-get install -f
+$ mongodb-compass	
+```
 
 
 ## Accesso e controllo remoto
@@ -1577,84 +1669,6 @@ EOF
 ```
 con l'ultimo comando si è creata la voce di menù da cui è possibile accedere al programma velocemente, poi gli aggiornamenti vengono scaricati automaticamente dal programma stesso.
 
-## PostgreSQL
-
-Per gli ambienti GNU Linux sono disponibili molti diversi DBMS, il più usato ovviamente è MySQL, già descritto nella sezione su LAMP, ma nel tempo sono stati sviluppati altri gestori di base dati più o meno open-source, uno dei più famosi e più usati è **PostgreSQL**, questo è disponibile nei repository ufficiali con dei pacchetti pronti per l'uso, basta installare i pacchetti base:
-```
-# apt-get install postgresql ufw
-```
-e poi bisogna modificare il file di configurazione:
-```
-# pico /etc/postgresql/17/main/postgresql.conf
-```
-verificando che siano presenti le righe non commentate (senza il cancelletto iniziale)
-```
-listen_addresses='localhost'
-port = 5432
-```
-da notare che di default è permesso solo l'accesso da locale, è possibile modificare questa impostazione valorizzando con asterisco per l'apertura a tutta la rete internet. Successivamente bisogna aprire le porte di rete e configurare le utenze
-```
-# ss -tunelp | grep 5432
-# /sbin/ufw allow 5432/tcp
-# systemctl restart postgresql
-# su - postgres
-$$ psql -c "alter user postgres with password 'parolaSegreta'"
-$$ createuser prova
-$$ createdb testdb -O dbuser1
-$$ psql
- =# \c prova
- =# alter user dbuser1 with password 'DBPassword';
- =# create table testtable ( id int,firstname text, lastname text );
- =# insert into testtable (id,firstname,lastname) values (1,'Alberto','Nao');
- =# select * from testtable;
-# systemctl restart postgresql
-```
-con questi semplici comandi si sono eseguite delle configurazioni base del server tra cui la creazione un utente nel sistema Debian, la creazione di un database e di una tabella, le query finali son un semplice esempio di verifica del corretto funzionamento del database. Per collegarsi al database PostgreSQL è possibile usare qualunque programma come DBeaver ma è consigliato installare **PgAdmin4**.
-
-## MongoDB
-
-Per quanto riguarda il demone **MongoDB** si può installare utilizzando il repository dedicato che necessita di una piccola configurazione come spiegato nel [sito ufficiale](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/):
-```
-# apt update && sudo apt install -y curl gnupg
-# curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
-# echo "deb [signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg] https://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
-# apt update
-# apt install -y mongodb-org
-# systemctl enable mongod
-# systemctl start mongod
-# systemctl status mongod
-# mongosh --eval 'db.runCommand({ connectionStatus: 1 })'
-```
-se si vuole accedere al demone da altri nodi diversi dal nodo in esecuzione bisogna modificare il file di configurazione:
-```
-/etc/mongod.conf
-```
-nel quale bisogna verificare ed eventualmente modificare le configurazioni base di rete nei punti:
-```
-bindip = 127.0.0.1,indirizziIpCheUsanoMongo
-port = 27017
-#auth=true
-```
-se viene modificato il file di configurazione, bisogna ricordarsi di riavviare il server con il comando:
-```
-# systemctl restart mongod
-```
-Per l'accesso da riga di comandi è disponibile una console, un semplice esempio di utilizzo di questo comando:
-```bash
-$ mongosh 
-  > db.runCommand({ connectionStatus: 1 })
-  > use collectiondemo
-  > db.elenco.insertOne({nome:"Alberto"})
-  > db.elenco.find()}
-  > exit 
-```
-Un tool grafico per poter usare e gestire un database MongoDB è **Mongo-Compass**, disponibile come pacchetto nel [sito ufficiale](https://www.mongodb.com/docs/compass/install/) che può essere scaricato ed installato molto velocemente con pochi domandi:
-```
-# wget https://downloads.mongodb.com/compass/mongodb-compass_1.46.6_amd64.deb
-# sudo dpkg -i mongodb-compass_1.46.6_amd64.deb
-# sudo apt-get install -f
-$ mongodb-compass	
-```
 
 ## Docker
 

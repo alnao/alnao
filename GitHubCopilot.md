@@ -5,6 +5,13 @@
 ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: Per usare il servizio al meglio è necessario avere un profilo GitHub e un abbonamento attivo al servizio [GitHub Copilot Pro](https://github.com/copilot/)  🔶⚠️
 
 
+E' necessario avere installata la cli di GitHub Copilot per eseguire questi esempi!
+- Vedere la documentazione ufficiale [github/copilot-sdk](https://github.com/github/copilot-sdk)
+- Inoltre è necessario può essere usato il token di autenticazione per accedere al servizio!
+  - Vai su GitHub.com e clicca sulla tua foto profilo in alto a destra. Seleziona Settings (Impostazioni).
+  - Nel menu a sinistra, scorri fino in fondo e clicca su Developer settings.
+  - Clicca su Personal access tokens e poi seleziona Fine-grained tokens. Clicca sul pulsante Generate new token.
+  - Configurare la variabile `export COPILOT_GITHUB_TOKEN="il_tuo_fine_grained_token"`
 
 
 ## Elenco esempi
@@ -13,14 +20,16 @@
 - `copilot -h` per il dettaglio di tutti i parametri della cli di copilot!
 - Creazione di un semplice file
   ```bash
-  copilot -i "genera un file prova.py con dentro un metodo python per generare un numero casuale da 1 a 100" --model gpt-5 --allow-all-tools --add-dir ~
+  copilot -i "genera un file prova.py con dentro un metodo python per generare un numero casuale da 1 a 100" --model gpt-4.1 --allow-all-tools --add-dir ~
   ```
 
 **Python**
 - Esempio di SDK con la libreria `litellm` 
   - litellm base [`📁`](https://github.com/alnao/PythonExamples/tree/master/IA/litellm/litellm_base)
   - litellm nano agent [`📁`](https://github.com/alnao/PythonExamples/tree/master/IA/litellm/litellm_nano_agent)
-- Esempio base di SDK con la libreria `copilot-sdk` *- coming soon* 
+- Esempio base di SDK con la libreria `copilot-sdk` 
+  - 
+  - *coming soon* 
 - Esembio di esecuzione in una immagine docker *- coming soon*
 - Esempio di Ralph-AI system eseguito in una immagine per eseguire  *- coming soon*
  

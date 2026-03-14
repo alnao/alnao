@@ -37,22 +37,22 @@
 <table align="center">
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/Linux-BBCCEE?style=for-the-badge&logo=Linux&logoColor=black" height="32"/>
-      <img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=Debian&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/Linux-BBCCEE?style=for-the-badge&logo=Linux&logoColor=black" height=32/>
+      <img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=Debian&logoColor=white" height=32/>
     </td>
     <td>✨ <a href="https://github.com/alnao/alnao/blob/main/DEBIAN.md">AlNao Debian Handbook</a> ✨</td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/Dev project-darkgreen?style=for-the-badge&logo=devbox&logoColor=lightgreen" height="32"/>
-      <img src="https://img.shields.io/badge/Gaming-gray?style=for-the-badge&logo=applearcade&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/Dev project-darkgreen?style=for-the-badge&logo=devbox&logoColor=lightgreen" height=32/>
+      <img src="https://img.shields.io/badge/Gaming-gray?style=for-the-badge&logo=applearcade&logoColor=white" height=32/>
     </td>
     <td>🎲 <a href="https://github.com/gamespaths/pathsgames">Paths.Game project</a> 🕹️</td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/CloudFormation-232F3E?style=for-the-badge&logo=yaml&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=AmazonAWS&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/CloudFormation-232F3E?style=for-the-badge&logo=yaml&logoColor=white" height=32/>
     </td>
     <td>
       <a href="https://github.com/alnao/AwsCloudFormationExamples">CloudFormation</a> &bull; 
@@ -62,15 +62,15 @@
   </tr>
     <tr>
       <td align="center">
-        <img src="https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white" height="32"/>
-        <img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" height="32"/>        
+        <img src="https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white" height=32/>
+        <img src="https://img.shields.io/badge/Azure-0078D4?style=for-the-badge&logo=microsoftazure&logoColor=white" height=32/>        
       </td>
       <td><a href="https://github.com/alnao/TerraformExamples">Terraform on Cloud (AWS & Azure)</a>
     </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white" height=32/>
     </td>
     <td>
       <a href="https://github.com/alnao/alnao/blob/main/Docker.md">Docker annotations</a> &bull; 
@@ -79,8 +79,8 @@
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=black" height="32"/>
-      <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=black" height=32/>
+      <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white" height=32/>
     </td>
     <td>
       <a href="https://github.com/alnao/JavaExamples">Java projects</a> &bull; 
@@ -89,8 +89,8 @@
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/Python-3766AB?style=for-the-badge&logo=Python&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/ollama-522CA5?style=for-the-badge&logo=ollama&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/Python-3766AB?style=for-the-badge&logo=Python&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/ollama-522CA5?style=for-the-badge&logo=ollama&logoColor=white" height=32/>
     </td>
     <td>
       <a href="https://github.com/alnao/PythonExamples">Python projects</a> &bull; 
@@ -99,43 +99,43 @@
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/React-61DBFB?style=for-the-badge&logo=react&logoColor=white" height=32/>
     </td>
     <td><a href="https://github.com/alnao/AngularReactNodeExamples">Angular & React projects</a></td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" height=32/>
     </td>
     <td><a href="https://github.com/alnao/alnao/blob/main/CssBootstrap.md">CSS & Bootstrap annotations</a></td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/WordPress-21759B?style=for-the-badge&logo=wordpress&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/Php-777BB4?style=for-the-badge&logo=php&logoColor=white" height=32/>
     </td>
     <td><a href="https://github.com/alnao/alnao/blob/main/Wordpress.md">WordPress annotations</a></td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/Ionic-3880FF?style=for-the-badge&logo=ionic&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/Redux-764abc?style=for-the-badge&logo=redux&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/Ionic-3880FF?style=for-the-badge&logo=ionic&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/Redux-764abc?style=for-the-badge&logo=redux&logoColor=white" height=32/>
     </td>
     <td><a href="https://github.com/alnao/IonicReduxNxWorkspaceExample">Ionic & Redux workspace</a></td>
   </tr>
   <tr>
    <td align="center">
-  <img src="https://img.shields.io/badge/Solidity-4E5E94?style=for-the-badge&logo=solidity&logoColor=white" height="32"/>
-  <img src="https://img.shields.io/badge/Ethereum-627EEA?style=for-the-badge&logo=ethereum&logoColor=white" height="32"/>
+  <img src="https://img.shields.io/badge/Solidity-4E5E94?style=for-the-badge&logo=solidity&logoColor=white" height=32/>
+  <img src="https://img.shields.io/badge/Ethereum-627EEA?style=for-the-badge&logo=ethereum&logoColor=white" height=32/>
    </td>
    <td><a href="https://github.com/alnao/BlockChainExamples">Blockchain & Solidity projects</a></td>
   </tr>
   <tr>
     <td align="center">
-      <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white" height="32"/>
-      <img src="https://img.shields.io/badge/Copilot-gray?style=for-the-badge&logo=githubcopilot&logoColor=white" height="32"/>
+      <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white" height=32/>
+      <img src="https://img.shields.io/badge/Copilot-gray?style=for-the-badge&logo=githubcopilot&logoColor=white" height=32/>
     </td>
     <td>
       <a href="https://github.com/alnao/alnao/blob/main/GIT.md">Git annotations</a> &bull; 
