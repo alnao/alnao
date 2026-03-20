@@ -1023,6 +1023,15 @@ con i comandi di attivazione di questa configurazione:
 ## Database
 Debian 13 consolida la sua reputazione di piattaforma server eccellente offrendo pacchetti aggiornati e stabili per MySQL 8, MariaDB 11, PostgreSQL 17 e Redis ottimizzati e pronti all'uso anche senza tante conoscenze tecniche. 
 
+
+**DBeaver** è un potente strumento di gestione database universale, gratuito e open source, progettato per semplificare la vita a sviluppatori e analisti di dati. Grazie alla sua interfaccia grafica intuitiva, permette di esplorare, modificare e amministrare decine di sistemi diversi (come PostgreSQL, MySQL o SQLite) attraverso un'unica applicazione. È la soluzione ideale per chi cerca un ambiente di lavoro professionale, fluido e versatile, capace di sostituire i numerosi client specifici per ogni singolo database. L'installazione su Debian 13 prevede l'uso del repository snap oppure i repository dei pacchetti debian, i comandi per configurare il repository e l'installazione della *comunity edition* è:
+```
+# curl -fsSL https://dbeaver.io/keys/gpg.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/dbeaver.gpg
+# echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+# apt update && apt install dbeaver-ce
+```
+
+
 **SQLite** offre una soluzione zero-config l'ideale per i database locali, memorizzando tutto in un singolo file compatto e portabile. Non richiede un processo server separato, garantendo un'integrazione immediata e una manutenzione minima per gestire salvataggi e impostazioni utente. Per usare la riga di comando si devono installare i due pacchetti `sqlite3` e `sqlite3-tools`. Poi sarà possibile creare un database con il comando:
 ```bash
 $ sqlite3 /percorso/nomefile.db
@@ -1064,7 +1073,7 @@ $$ psql
  =# select * from testtable;
 # systemctl restart postgresql
 ```
-con questi semplici comandi si sono eseguite delle configurazioni base del server tra cui la creazione un utente nel sistema Debian, la creazione di un database e di una tabella, le query finali son un semplice esempio di verifica del corretto funzionamento del database. Per collegarsi al database PostgreSQL è possibile usare qualunque programma come DBeaver ma è consigliato installare **PgAdmin4**.
+con questi semplici comandi si sono eseguite delle configurazioni base del server tra cui la creazione un utente nel sistema Debian, la creazione di un database e di una tabella, le query finali son un semplice esempio di verifica del corretto funzionamento del database. Per collegarsi al database PostgreSQL è possibile usare qualunque programma come DBeaver oppure più specifici come **PgAdmin4**.
 
 
 ### MongoDB

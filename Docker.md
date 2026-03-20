@@ -62,21 +62,31 @@ Per la documentazione completa e approfondita si rimanda al [sito ufficiale di D
     ```bash
     docker run --name postgres-local \
     -e POSTGRES_DB=pathsgames \
-    -e POSTGRES_USER=dbuser \
-    -e POSTGRES_PASSWORD=dbpassword \
+    -e POSTGRES_USER=pathsgames \
+    -e POSTGRES_PASSWORD=pathsgames \
     -p 5432:5432 \
     -d postgres:latest
     ```
     Spiegazione parametri:
     - `--name postgres-local`: nome del container
     - `e POSTGRES_DB=pathsgames`: crea il database pathsgames
-    - `e POSTGRES_USER=dbuser`: utente personalizzato (default: postgres)
-    - `e POSTGRES_PASSWORD=dbpassword`: password dell'utente
+    - `e POSTGRES_USER=pathsgames`: utente personalizzato (default: postgres)
+    - `e POSTGRES_PASSWORD=pathsgames`: password dell'utente
     - `p 5432:5432`: mappa la porta 5432 del container su localhost:5432
     - `d`: esegue in background
     - `postgres:latest`: immagine ufficiale PostgreSQL
-
-
+    - comandi utili
+        ```bash
+        docker exec pathsgames-postgres psql -U pathsgames -d pathsgames -c "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public';" 2>&1
+        ```
+# Pgadmin4
+    ```bash
+    docker run --name pgadmin-container -p 8080:80 \
+    -e "PGADMIN_DEFAULT_EMAIL=user@domain.com" \
+    -e "PGADMIN_DEFAULT_PASSWORD=admin" \
+    -d dpage/pgadmin4
+    ```
+    - PgAdmin4 on `http://localhost:8044`, a me non funziona e preferisco DbEaver!
 
 
 # &lt; AlNao /&gt;
