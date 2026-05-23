@@ -111,3 +111,18 @@
     ```
     > This keeps your game lightweight without needing a full backend initially.
 
+
+# 23/03/2026
+- ciao, ho questo file che contiene caratteri non utf-8, mi di quali sono e quale comando debian 13 posso usare per rimuoverli/sistemarli?
+    ```bash
+    # Vedere il reale formato del file (o almeno cosa pensa il sistema operativo)
+    file -i sig.txt
+    # Trasfomrare dal formato ISo al UTF-8
+    iconv -f iso-8859-1 -t UTF-8 sig.txt -o sig_8.txt
+    # Mantiene solo caratteri stampabili e spazi bianchi standard (tab, newline)
+    tr -cd '\11\12\15\40-\176' < sig_8.txt > sig_pulito.txt
+    # Rimuove righe che iniziano con numeri seguiti da molti spazi (intestazioni piè di pagina)
+    sed -E '/^[0-9]+[[:space:]]{10,}/d' sig_pulito.txt > sig_finale.txt
+    ```
+
+

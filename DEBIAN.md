@@ -54,7 +54,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Java e Tomcat](#Java-e-Tomcat)
   - [GIT](#GIT)
     - [Jenkins](#Jenkins)
-  - [Postman](#Postman)
+  - [Postman e Bruno](#Postman-e-Bruno)
   - [Docker](#Docker)
     - [Esempio con Pgadmin4](#Esempio-con-Pgadmin4)
     - [Configurazione di rete di Docker](#Configurazione-di-rete-di-Docker)
@@ -1316,6 +1316,12 @@ Nel programma sono disponibili diversi plug-in per usare GIT ed è disponibile u
 - docker
 - aws toolkit
 - sqLite viewer
+- shell script command completion
+- github action
+- live server (per eseguire un server web locale su un progetto)
+- claude code (per chi ha abbonamento a Claude)
+- ACP client (per chi necessita di integrare ACP - Agentic Conversation Protocol)
+- Kiro (per chi ha abbonamento con AWS-Kiro)
 
 
 Esistono anche diverse alternative, per esempio Eclipse e IntelliJ per il linguaggio Java e altri ma possono risultare difficili da usare e piuttosto pensati durante l'uso. Alternative libere come Geany e Cursor sono molto più facili da usare e più facili da personalizzare. Si descrivono di seguito le alternative che ho provato:
@@ -1334,6 +1340,21 @@ Esistono anche diverse alternative, per esempio Eclipse e IntelliJ per il lingua
   # apt install antigravity
   ```
   - attenzione: l'uso di Antigravity può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento
+
+- **Kiro** è un IDE basato su VS Code arricchito da agenti AI autonomi, integrazione nativa con i servizi AWS e un approccio innovativo allo sviluppo guidato dalle specifiche. Sotto il cofano utilizza i modelli Claude di Anthropic, lo stesso motore che alimenta strumenti come Claude Code e GitHub Copilot Chat. Il [sito di riferimento](https://kiro.dev/downloads/) indica i passi da eseguire per l'installazione:
+  - bisogna installare la Kiro-cli (come indicato nella [guida ufficiale](https://kiro.dev/docs/cli/authentication/))
+    ```
+    $ curl -fsSL https://cli.kiro.dev/install | bash
+    $ kiro-cli login
+    $ kiro-cli whoami
+    $ kiro-cli settings chat.defaultModel claude-opus-4.7
+    ```
+  - dal sito bisogna scaricare il pacchetto deb e installarlo con il comando
+    ```
+    # dpkg -i ./kiro*.deb
+    ```  
+  - Essendo un prodotto in forte evoluzione, il processo di installazione potrebbe cambiare nel tempo, quindi è sempre consigliato consultare la pagina ufficiale per avere le informazioni più aggiornate, si rimanda sempre al [sito ufficiale](https://kiro.dev/docs/).
+  - Attenzione: l'uso di Kiro può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento su AWS come indicato nella [pagina dedicata](https://kiro.dev/pricing/).
 
 
 
@@ -1659,7 +1680,7 @@ I passi per l'installazione di Jenkins in un sistema Debian sono:
   journalctl -xeu jenkins.service
   ```
 
-## Postman
+## Postman e Bruno
 
 Anche per **Postman** non esiste il pacchetto Debian ufficiale e per poterlo installare esistono due possibilità: scaricarlo dai server di snap con un semplice click oppure scaricare l'installer in formato tar.gz dal sito ufficiale e poi installare il programma con i comandi:
 ```
@@ -1677,6 +1698,14 @@ Categories=Development;
 EOF
 ```
 con l'ultimo comando si è creata la voce di menù da cui è possibile accedere al programma velocemente, poi gli aggiornamenti vengono scaricati automaticamente dal programma stesso.
+
+
+Una alternativa a Postman è **Bruno**, un client API open source e gratuito, che può essere installato tramite snap con il comando:
+```
+# snap install bruno
+```
+oppure installabile tramite il pacchetto debian scaricabile dal [sito ufficiale](https://www.usebruno.com/downloads), pacchetto che purtroppo non si trova ancora nel repository ufficiale di Debian.
+
 
 
 ## Docker
@@ -2252,6 +2281,31 @@ $ aws ec2 authorize-security-group-ingress --group-id sg-XXXXXXXXXXXXXXXXX --pro
 ```
 
 
+
+
+#### Creazione di un proxy con Ec2
+Il protocollo SOCKS5 è un protocollo di rete che permette di instradare pacchetti di dati attraverso un server proxy, in questo modo è possibile mascherare il proprio indirizzo IP e la propria posizione geografica.
+
+
+Grazie ad AWS è possibile creare un piccolo *server*: i passi da eseguire sono
+- creare una piccola Ec2 di tipo `t2.micro` con configurata una chiave PEM per l'accesso e con public IP
+- configurare il security group per permettere il protocollo ssh dal IP del proprio pc
+- collegarsi alla Ec2 con il comando
+  ```bash
+	ssh -i $PEM_PATH -D 7070 -N -f ec2-user@$PUBLIC_IP
+  ```
+  - il parametro `-D 7070` apre una porta locale (la 7070) che funge da tunnel verso il server
+  - il parametro `-N` dice a SSH di non eseguire comandi remoti (serve solo per il tunnel)
+  - il parametro `-f` esegue il processo in background così da non bloccare la shell di esecuzione
+	
+Nei browser bisogna configurare il salto tramite la configurazione nelle `impostazioni di rete` impostando il proxy url `127.0.0.1` con la porta `8080` e il protocollo `SOCKS v5`. In alcuni browser è presente anche una opzione avanzata molto consigliata: "Inviare le query DNS tramite SOCKS v5", in questo modo anche le ricerche dei siti vengono eseguite tramite il proxy. Alcuni browser prevedono anche delle estensioni come "FoxyProxy Standard" per firefox.
+
+
+
+
+
+
+
 ### Azure
 **Azure** è la piattaforma cloud di Microsoft che offre servizi di computing, storage, networking e intelligenza artificiale, permettendo di distribuire e gestire applicazioni e infrastrutture su scala globale attraverso datacenter distribuiti worldwide.L'integrazione con Debian si realizza tramite Azure CLI (installabile via apt), Azure PowerShell e SDK specifici per vari linguaggi di programmazione.
 Per installare la Azure-CLI in Debina è disponibile uno script automatico messo a disposizione dalla [guida ufficiale](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest), tuttavia questo usa il comando `sudo`, se non disponibile è possibile procedere manualmente con tutti i passi per l'installazione configurando il repository specifico:
@@ -2592,6 +2646,18 @@ Le principali operazioni disponibili sono:
   $ cat fileIntermediate3.ts  fileIntermediate1.ts fileIntermediate2.ts > output.ts
   $ ffmpeg -i "concat:fileInt1.ts|fileInt2.ts|fileInt3.ts" -c copy -bsf:a aac_adtstoasc mergedVideo.mp4
   ```
+- Ridurre le dimensioni di video mp4 (per esempio registrati da cellulare), tutti i files di una cartella:
+  ```bash
+  $ mkdir compressi
+  $ for f in *.mp4; do ffmpeg -i "$f" -vcodec libx265 -crf 28 -acodec copy "compressi/${f%.mp4}_small.mp4"; done
+  ```
+	- aggiungere `preset faster`: Meno tempo per convertire, file leggermente più grande.
+	- aggiungere `preset slow`: Molto tempo per convertire, compressione massima (file più piccolo)
+- Convertire file `mkv` in formato `mp4` mantenendo la qualità originale:
+  ```bash
+  $ ffmpeg -i File.mkv -pix_fmt yuv420p File.mp4
+  ```
+
 
 ## Il bootloader GRUB
 
@@ -2942,6 +3008,7 @@ All'avvio Ventoy mostra automaticamente un menu con tutte le ISO presenti, infat
 Note importanti:
 - Per avviare una ISO live, accedere al menu di boot del BIOS/UEFI (solitamente premendo F12, F2 o ESC all'avvio) e selezionare la chiavetta USB come dispositivo di avvio.
 - ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: I comando `dd` e `Ventoy2Disk` cancellano tutto il contenuto di un dispositivo, prestare attenzione quando si lanciano questi comandi per evitare di cancellare dati 🔶⚠️
+
 
 
 

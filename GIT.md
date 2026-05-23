@@ -43,6 +43,13 @@ Per la documentazione completa e approfondita si rimanda al [sito ufficiale di G
             # Aggiungere tutti i file con una certa estensione
             $ git add *.py
         ```
+    - Commit post-datata
+        ```bash
+            # Eseguire un commit con una data passata
+            GIT_AUTHOR_DATE="2026-05-19 05:00:00" GIT_COMMITTER_DATE="2026-05-19 05:00:00" git commit -m "La tua descrizione della commit"
+
+            git commit --date="5 hours ago" -m "La tua descrizione della commit"
+        ```
     - Il commit è l'operazione fondamentale di Git: salva permanentemente nel repository lo stato corrente della staging area, creando un punto nella cronologia a cui è sempre possibile tornare. Ogni commit è identificato da un hash univoco (una stringa esadecimale di 40 caratteri) e contiene le informazioni sull'autore, la data e un messaggio descrittivo.
         ```bash
             # Commit con messaggio inline

@@ -89,6 +89,97 @@ Per la documentazione completa e approfondita si rimanda al [sito ufficiale di D
     - PgAdmin4 on `http://localhost:8044`, a me non funziona e preferisco DbEaver!
 
 
+# Kubernetes
+    - Esecuzione di un semplice webserver con una piccola pagina html:
+        - Creazione del file `index.html`:
+            ```html     
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Kubernetes Test</title>
+            </head>
+            <body>
+                <h1>Kubernetes Test</h1>
+                <p>Se vedi questa pagina, Kubernetes funziona!</p>
+            </body>
+            </html>
+            ```
+        - Creazione del file `deployment.yaml`:
+            ```yaml
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+                name: webserver-test
+            spec:
+                replicas: 3
+                selector:
+                    matchLabels:
+                        app: webserver-test
+                template:
+                    metadata:
+                        labels:
+                            app: webserver-test
+                    spec:
+                        containers:
+                            - name: webserver-test
+                                image: nginx:latest
+                                ports:
+                                    - containerPort: 80
+            ```
+        - Creazione del file `service.yaml`:
+            ```yaml
+            apiVersion: v1
+            kind: Service
+            metadata:
+                name: webserver-test
+            spec:
+                selector:
+                    app: webserver-test
+                ports:
+                    - protocol: TCP
+                        port: 80
+                        targetPort: 80
+            ```
+        - Creazione del file `ingress.yaml`:
+            ```yaml
+            apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            metadata:
+                name: webserver-test
+            spec:
+                rules:
+                    - host: webserver-test.local
+                        http:
+                            paths:
+                                - path: /
+                                    pathType: Prefix
+                                    backend:
+                                        service:
+                                            name: webserver-test
+                                            port:
+                                                number: 80
+            ```
+        - Esecuzione dei comandi:
+            ```bash
+            kubectl apply -f deployment.yaml
+            kubectl apply -f service.yaml
+            kubectl apply -f ingress.yaml
+            ``` 
+        - Test
+            ```bash
+            kubectl get pods
+            kubectl get services
+            kubectl get ingress
+            ```
+        - Rimozione totale
+            ```bash
+            kubectl delete -f ingress.yaml
+            kubectl delete -f service.yaml
+            kubectl delete -f deployment.yaml
+            ```
+
+
+
 # &lt; AlNao /&gt;
 Tutti i codici sorgente e le informazioni presenti in questo repository sono frutto di un attento e paziente lavoro di sviluppo da parte di AlNao, che si è impegnato a verificarne la correttezza nella massima misura possibile. Qualora parte del codice o dei contenuti sia stato tratto da fonti esterne, la relativa provenienza viene sempre citata, nel rispetto della trasparenza e della proprietà intellettuale. 
 
