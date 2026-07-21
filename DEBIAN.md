@@ -2301,8 +2301,7 @@ Grazie ad AWS è possibile creare un piccolo *server*: i passi da eseguire sono
 Nei browser bisogna configurare il salto tramite la configurazione nelle `impostazioni di rete` impostando il proxy url `127.0.0.1` con la porta `8080` e il protocollo `SOCKS v5`. In alcuni browser è presente anche una opzione avanzata molto consigliata: "Inviare le query DNS tramite SOCKS v5", in questo modo anche le ricerche dei siti vengono eseguite tramite il proxy. Alcuni browser prevedono anche delle estensioni come "FoxyProxy Standard" per firefox.
 
 
-
-
+Script per creazione e gestione di istanze AWS-EC2 utili a questo scopo sono disponibili nella cartella [scripts/aws_dev_server](./Scripts/aws_dev_server/).
 
 
 
