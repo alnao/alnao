@@ -1334,13 +1334,23 @@ Esistono anche diverse alternative, per esempio Eclipse e IntelliJ per il lingua
   - `curl -L https://api2.cursor.sh/updates/download/golden/linux-x64-deb/cursor/2.4 -o cursor.deb`
   - `dpkg -i ./cursor.deb`
   - attenzione: l'uso di Cursor può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento
-- **Antigravity** è l'assistente AI agentico sviluppato da Google DeepMind, capace non solo di rispondere a domande ma di agire autonomamente sull'ambiente di lavoro per risolvere task complessi con uno specifico agente, gestire file e accelerare drasticamente il ciclo di sviluppo. Il [sito di riferimento](https://antigravity.google/download/linux) indica i passi da eseguire per l'installazione
+- **Antigravity** è l'assistente AI agentico sviluppato da Google, capace non solo di rispondere a domande ma di agire autonomamente sull'ambiente di lavoro per risolvere task complessi con uno specifico agente, gestire file e accelerare drasticamente il ciclo di sviluppo. Il [sito di riferimento](https://antigravity.google/download) indica come scaricare il pacchetto di installazione della seconda versione chiamata `Antigravity-IDE` che comunque necessita di `Antigravity-CLI` per funzionare, il comando da eseguire per l'installazione della cli è indicato nella pagina ed è 
   ```
-  # curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | gpg --dearmor --yes -o /etc/apt/keyrings/antigravity-repo-key.gpg
-  # echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | tee /etc/apt/sources.list.d/antigravity.list > /dev/null
-  # apt update
-  # apt install antigravity
+  curl -fsSL https://antigravity.google/cli/install.sh | bash
   ```
+  Il pacchetto di installare della seconda versione NON è un pacchetto in formato standard `.deb` ma è un file compresso in formato `tar` che può essere scaricato con wget ed estratto in qualsiasi punto
+  - esistono delle guide e installer non ufficiali come nel repository 
+      ```
+      https://github.com/opensnap/antigravity/blob/main/install.sh
+      ```
+  - *speriamo facciano un pacchetto deb standard e ufficiale*
+  - attenzione: Nel sito ufficiale esiste ancora la [guida](https://antigravity.google/download/linux) che indica i passi da eseguire per l'installazione della prima versione ormai deprecata:
+    ```
+    # curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | gpg --dearmor --yes -o /etc/apt/keyrings/antigravity-repo-key.gpg
+    # echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | tee /etc/apt/sources.list.d/antigravity.list > /dev/null
+    # apt update
+    # apt install antigravity
+    ```
   - attenzione: l'uso di Antigravity può prevedere una registrazione obbligatoria e/o un abbonamento a pagamento
 
 - **Kiro** è un IDE basato su VS Code arricchito da agenti AI autonomi, integrazione nativa con i servizi AWS e un approccio innovativo allo sviluppo guidato dalle specifiche. Sotto il cofano utilizza i modelli Claude di Anthropic, lo stesso motore che alimenta strumenti come Claude Code e GitHub Copilot Chat. Il [sito di riferimento](https://kiro.dev/downloads/) indica i passi da eseguire per l'installazione:
