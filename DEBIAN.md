@@ -88,6 +88,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
   - [Notify e Zenity](#Notify-e-Zenity)
   - [Creazione di un demone](#Creazione-di-un-demone)
   - [Come preparare una chiavetta USB avviabile su e con Debian](#Come-preparare-una-chiavetta-USB-avviabile-su-e-con-Debian)
+  - [Come recuperare una chiavetta USB corrotta](#Come-recuperare-una-chiavetta-USB-corrotta)
 
 # Introduzione
 
@@ -3019,6 +3020,20 @@ All'avvio Ventoy mostra automaticamente un menu con tutte le ISO presenti, infat
 Note importanti:
 - Per avviare una ISO live, accedere al menu di boot del BIOS/UEFI (solitamente premendo F12, F2 o ESC all'avvio) e selezionare la chiavetta USB come dispositivo di avvio.
 - ⚠️🔶 $\textcolor{orange}{\textsf{Nota importante}}$: I comando `dd` e `Ventoy2Disk` cancellano tutto il contenuto di un dispositivo, prestare attenzione quando si lanciano questi comandi per evitare di cancellare dati 🔶⚠️
+
+
+## Come recuperare una chiavetta USB corrotta
+
+Tra i software open source più potenti per far fronte a perdita accidentale di dati o la corruzione della tabella delle partizioni di una chiavetta USB spicca **TestDisk**: uno strumento a riga di comando estremamente efficace. 
+
+Dopo aver installato e avviato il programma con i privilegi di amministrazione tramite il comando, occorre selezionare il supporto di memoria danneggiato dalla lista. Il software analizza la struttura del disco e identifica automaticamente la tipologia di partizione, permettendo di accedere al menu delle funzioni avanzate.
+
+Selezionando l'opzione `Advanced` e successivamente il comando `List`, TestDisk è in grado di mostrare l'elenco completo di file e cartelle ancora presenti sul supporto. 
+- Per salvare i propri dati non è necessario riparare la partizione guasta: la combinazione di tasti vincente risiede infatti nell'uso diretto di a e C. 
+- Premendo il tasto a (oppure spostandosi sui singoli file), si selezionano tutti gli elementi visualizzati nell'interfaccia. 
+- Subito dopo, la combinazione fondamentale Shift + c (ossia la lettera C maiuscola) attiva la modalità di copia verso una nuova destinazione.
+- A questo punto è sufficiente navigare nelle cartelle del proprio computer per scegliere dove posizionare i file salvati e premere nuovamente C per confermare.
+Con questa semplice procedura, TestDisk si conferma una risorsa indispensabile per mettere al sicuro i propri documenti anche dai dispositivi apparentemente illeggibili.
 
 
 
