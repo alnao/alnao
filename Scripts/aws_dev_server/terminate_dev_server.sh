@@ -9,8 +9,24 @@ log_msg() {
   echo "$(date +'%Y-%m-%d %H:%M:%S') $1" >> "${LOG_PATH}"
 }
 
+# Fallback: resolve the instance by Name tag when EC2_INSTANCE_ID is not set
+if [[ -z "${EC2_INSTANCE_ID:-}" && -n "${EC2_INSTANCE_NAME:-}" ]]; then
+  EC2_INSTANCE_ID=$(aws ec2 describe-instances \
+    --region "$AWS_REGION" \
+    --filters "Name=tag:Name,Values=$EC2_INSTANCE_NAME" "Name=instance-state-name,Values=pending,running,stopping,stopped" \
+    --query 'Reservations[].Instances[].InstanceId' \
+    --output text)
+  if [[ "$EC2_INSTANCE_ID" == "None" ]]; then
+    EC2_INSTANCE_ID=""
+  fi
+  if [[ "$EC2_INSTANCE_ID" =~ [[:space:]] ]]; then
+    echo "Error: multiple instances found with Name tag '$EC2_INSTANCE_NAME': $EC2_INSTANCE_ID" >&2
+    exit 1
+  fi
+fi
+
 if [[ -z "${EC2_INSTANCE_ID:-}" ]]; then
-  echo "Error: EC2_INSTANCE_ID is empty in $SCRIPT_DIR/.env" >&2
+  echo "Error: EC2_INSTANCE_ID is empty in $SCRIPT_DIR/.env and no instance found by EC2_INSTANCE_NAME" >&2
   exit 1
 fi
 

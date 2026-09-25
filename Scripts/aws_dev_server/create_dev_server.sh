@@ -51,12 +51,24 @@ if ! [[ "$EBS_VOLUME_SIZE_GB" =~ ^[0-9]+$ ]] || [[ "$EBS_VOLUME_SIZE_GB" -lt 1 ]
   exit 1
 fi
 
-EC2_NAME_TAG="${EC2_NAME_TAG:-alnao-dev-proxy-server}"
-if [[ -z "${EC2_NAME_TAG// }" ]]; then
-  log_msg "Invalid EC2_NAME_TAG: empty value"
-  echo "Error: EC2_NAME_TAG cannot be empty" >&2
-  exit 1
-fi
+EC2_INSTANCE_NAME="${EC2_INSTANCE_NAME:-alnao-dev-proxy-ec2}"
+EBS_VOLUME_NAME="${EBS_VOLUME_NAME:-alnao-dev-proxy-ebs}"
+ENI_NAME="${ENI_NAME:-alnao-dev-proxy-eni}"
+for name_var in EC2_INSTANCE_NAME EBS_VOLUME_NAME ENI_NAME; do
+  if [[ -z "${!name_var// }" ]]; then
+    log_msg "Invalid $name_var: empty value"
+    echo "Error: $name_var cannot be empty" >&2
+    exit 1
+  fi
+done
+
+# Tags applied to every created resource (instance, volume, network interface)
+TAG_ENVIRONMENT="${TAG_ENVIRONMENT:-dev}"
+TAG_PROJECT="${TAG_PROJECT:-Proxy}"
+TAG_OWNER="${TAG_OWNER:-AlNao}"
+TAG_COST_CENTER="${TAG_COST_CENTER:-dev}"
+TAG_MANAGED_BY="${TAG_MANAGED_BY:-Sh}"
+COMMON_TAGS="{Key=Environment,Value=$TAG_ENVIRONMENT},{Key=Project,Value=$TAG_PROJECT},{Key=Owner,Value=$TAG_OWNER},{Key=CostCenter,Value=$TAG_COST_CENTER},{Key=ManagedBy,Value=$TAG_MANAGED_BY}"
 
 KEY_NAME=$(resolve_key_name)
 if [[ -z "$KEY_NAME" ]]; then
@@ -81,13 +93,13 @@ fi
 
 EXISTING_TAG_INSTANCE_IDS=$(aws ec2 describe-instances \
   --region "$AWS_REGION" \
-  --filters "Name=tag:Name,Values=$EC2_NAME_TAG" "Name=instance-state-name,Values=pending,running,stopping,stopped,shutting-down" \
+  --filters "Name=tag:Name,Values=$EC2_INSTANCE_NAME" "Name=instance-state-name,Values=pending,running,stopping,stopped,shutting-down" \
   --query 'Reservations[].Instances[].InstanceId' \
   --output text)
 
 if [[ -n "$EXISTING_TAG_INSTANCE_IDS" && "$EXISTING_TAG_INSTANCE_IDS" != "None" ]]; then
-  log_msg "Creation blocked: instance(s) already exist with Name tag $EC2_NAME_TAG: $EXISTING_TAG_INSTANCE_IDS"
-  echo "Error: found existing instance(s) with Name tag '$EC2_NAME_TAG': $EXISTING_TAG_INSTANCE_IDS. Aborting create." >&2
+  log_msg "Creation blocked: instance(s) already exist with Name tag $EC2_INSTANCE_NAME: $EXISTING_TAG_INSTANCE_IDS"
+  echo "Error: found existing instance(s) with Name tag '$EC2_INSTANCE_NAME': $EXISTING_TAG_INSTANCE_IDS. Aborting create." >&2
   exit 1
 fi
 
@@ -135,7 +147,7 @@ cat > "$USER_DATA_FILE" <<'EOF'
 echo "$(date +'%Y-%m-%d %H:%M:%S') user_data bootstrap executed" >> /var/log/dev_server_user_data.log
 EOF
 
-log_msg "Creating EC2 with AMI $AMI_ID, key $KEY_NAME, security group $SECURITY_GROUP_ID, subnet $SUBNET_ID, name tag $EC2_NAME_TAG"
+log_msg "Creating EC2 with AMI $AMI_ID, key $KEY_NAME, security group $SECURITY_GROUP_ID, subnet $SUBNET_ID, name $EC2_INSTANCE_NAME"
 INSTANCE_ID=$(aws ec2 run-instances \
   --region "$AWS_REGION" \
   --image-id "$AMI_ID" \
@@ -145,7 +157,10 @@ INSTANCE_ID=$(aws ec2 run-instances \
   --subnet-id "$SUBNET_ID" \
   --block-device-mappings "[{\"DeviceName\":\"/dev/xvda\",\"Ebs\":{\"VolumeSize\":$EBS_VOLUME_SIZE_GB,\"VolumeType\":\"gp3\",\"DeleteOnTermination\":true}}]" \
   --user-data "file://$USER_DATA_FILE" \
-  --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$EC2_NAME_TAG}]" "ResourceType=volume,Tags=[{Key=Name,Value=$EC2_NAME_TAG}]" \
+  --tag-specifications \
+    "ResourceType=instance,Tags=[{Key=Name,Value=$EC2_INSTANCE_NAME},$COMMON_TAGS]" \
+    "ResourceType=volume,Tags=[{Key=Name,Value=$EBS_VOLUME_NAME},$COMMON_TAGS]" \
+    "ResourceType=network-interface,Tags=[{Key=Name,Value=$ENI_NAME},$COMMON_TAGS]" \
   --query 'Instances[0].InstanceId' \
   --output text)
 
