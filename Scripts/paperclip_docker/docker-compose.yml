@@ -1,0 +1,25 @@
+services:
+  paperclip:
+    image: ghcr.io/paperclipai/paperclip:latest
+    container_name: paperclip-ai
+    restart: unless-stopped
+    pids_limit: 2048
+    stop_grace_period: 90s
+    ports:
+      - "${PAPERCLIP_PORT:-3100}:3100"
+    environment:
+      HOST: "0.0.0.0"
+      PAPERCLIP_PORT: "3100"
+      PAPERCLIP_HOME: "/paperclip"
+      PAPERCLIP_DEPLOYMENT_MODE: "${PAPERCLIP_DEPLOYMENT_MODE:-authenticated}"
+      PAPERCLIP_PUBLIC_URL: "${PAPERCLIP_PUBLIC_URL:-http://localhost:3142}"
+      BETTER_AUTH_URL: "${PAPERCLIP_PUBLIC_URL:-http://localhost:3142}"
+      BETTER_AUTH_TRUSTED_ORIGINS: "${PAPERCLIP_PUBLIC_URL:-http://localhost:3142},http://localhost:${PAPERCLIP_PORT:-3142},http://127.0.0.1:${PAPERCLIP_PORT:-3142},http://localhost:3100,http://127.0.0.1:3100"
+      PAPERCLIP_ALLOWED_HOSTNAMES: "localhost,127.0.0.1"
+      BETTER_AUTH_SECRET: "${BETTER_AUTH_SECRET}"
+      PAPERCLIP_TOOL_ACTION_SIGNING_SECRET: "${PAPERCLIP_TOOL_ACTION_SIGNING_SECRET:-}"
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+    volumes:
+      # Monta la directory/disco esterno nel container per persistenza totale
+      - "${PAPERCLIP_DATA_DIR:-./data}:/paperclip"

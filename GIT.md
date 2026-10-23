@@ -201,6 +201,26 @@ Per la documentazione completa e approfondita si rimanda al [sito ufficiale di G
         ```bash
         git push --force-with-lease origin master
         ```
+- Cambiare autore commit passato
+    ```
+    # 0. Backup: un branch che punta allo stato attuale, per tornare indietro se serve
+    git branch backup/before-author-fix
+
+    # 1. Riscrivi l'autore solo del commit 82d4dd73 (rebase da suo padre).
+    #    Viene modificato solo il commit con autore xxx@yyy.com, gli altri vengono solo ricreati.
+    git rebase 82d4dd73^ --exec 'if [ "$(git log -1 --format=%ae)" = "xxx@yyy.com" ]; then git commit --amend --no-edit --author="Alberto Nao <alnao@alnao.it>"; fi'
+
+    # 2. Verifica: nessun autore XXX, e lo stesso contenuto di prima
+    git log --format='%h %an <%ae> | %s' -9
+    git diff backup/before-author-fix HEAD --stat      # deve essere VUOTO (stessi file)
+
+    # 3. Pubblica (forzato ma protetto: fallisce se qualcuno ha pushato nel frattempo)
+    git push --force-with-lease origin develop
+
+    # 4. Quando sei sicuro, elimina il backup
+    git branch -D backup/before-author-fix
+    ```
+    
 - Spostare commit da git sorgente ad uno destination, per spostare tutta la storia delle commit
     ```bash
 	git remote add destination git@github.com:nomedestination/destination.git

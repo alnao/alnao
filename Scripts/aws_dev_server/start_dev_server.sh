@@ -16,25 +16,25 @@ MY_IP=$(curl -s https://checkip.amazonaws.com)
 log_msg "Detected public IP: $MY_IP"
 
 # Ensure EC2 instance is running
-INSTANCE_STATE=$(aws ec2 describe-instances --instance-ids "$EC2_INSTANCE_ID" --query 'Reservations[].Instances[].State.Name' --output text)
+INSTANCE_STATE=$(aws ec2 describe-instances --region "$AWS_REGION" --instance-ids "$EC2_INSTANCE_ID" --query 'Reservations[].Instances[].State.Name' --output text)
 log_msg "Current instance state: $INSTANCE_STATE"
 if [[ "$INSTANCE_STATE" != "running" ]]; then
   log_msg "Starting EC2 instance $EC2_INSTANCE_ID"
-  aws ec2 start-instances --instance-ids "$EC2_INSTANCE_ID" > /dev/null
-  aws ec2 wait instance-running --instance-ids "$EC2_INSTANCE_ID"
+  aws ec2 start-instances --region "$AWS_REGION" --instance-ids "$EC2_INSTANCE_ID" > /dev/null
+  aws ec2 wait instance-running --region "$AWS_REGION" --instance-ids "$EC2_INSTANCE_ID"
   log_msg "EC2 instance started"
 fi
 
 # Get public IP of the instance
-PUBLIC_IP=$(aws ec2 describe-instances --instance-ids "$EC2_INSTANCE_ID" --query 'Reservations[].Instances[].PublicIpAddress' --output text)
+PUBLIC_IP=$(aws ec2 describe-instances --region "$AWS_REGION" --instance-ids "$EC2_INSTANCE_ID" --query 'Reservations[].Instances[].PublicIpAddress' --output text)
 log_msg "Instance public IP: $PUBLIC_IP"
 
 # Ensure security group allows current IP on all ports (TCP 0-65535)
 SG_QUERY="SecurityGroups[].IpPermissions[?FromPort==\`0\` && ToPort==\`65535\` && IpRanges[?CidrIp=='${MY_IP}/32']].IpRanges"
-RULE_EXISTS=$(aws ec2 describe-security-groups --group-ids "$SECURITY_GROUP_ID" --query "$SG_QUERY" --output text)
+RULE_EXISTS=$(aws ec2 describe-security-groups --region "$AWS_REGION" --group-ids "$SECURITY_GROUP_ID" --query "$SG_QUERY" --output text)
 if [[ -z "$RULE_EXISTS" ]]; then
   log_msg "Adding inbound rule for $MY_IP to security group $SECURITY_GROUP_ID"
-  aws ec2 authorize-security-group-ingress \
+  aws ec2 authorize-security-group-ingress --region "$AWS_REGION" \
     --group-id "$SECURITY_GROUP_ID" \
     --protocol tcp \
     --port 0-65535 \

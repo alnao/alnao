@@ -68,6 +68,7 @@ In questa pagina sono elencati tutti gli articoli riguardo a **GNU Linux Debian*
       - [AWS](#AWS)
       - [Azure](#Azure)
       - [Terraform](#Terraform)
+      - [Cloudflare WARP](#Cloudflare-WARP)
   - [Android](#Android)
   - [Blockchain](#Blockchain)
   - [Intelligenza artificiale](#Intelligenza-artificiale)
@@ -2375,6 +2376,34 @@ Terraform si integra perfettamente con AWS grazie al provider AWS ufficiale che 
 ```bash
 $ terraform apply
 ```
+
+
+### Cloudflare WARP
+Cloudflare WARP è un servizio gratuito che cifra tutto il traffico Internet del tuo dispositivo sfruttando la velocità del protocollo WireGuard. A differenza delle VPN tradizionali orientate all'anonimato e al geo-spoofing, WARP reindirizza i dati attraverso la rete globale di Cloudflare per ottimizzare la latenza e proteggere la navigazione sulle reti non sicure. È la soluzione ideale se cerchi privacy immediata e una connessione stabile senza sacrificare la velocità di banda.
+
+Per installare e configurare il client ufficiale Cloudflare WARP su Debian 13 (Trixie), esegui i seguenti passaggi da terminale:
+```bash
+# Installa le dipendenze necessarie
+# sudo apt update && sudo apt install -y curl gnupg lsb-release
+
+# Aggiungi la chiave GPG di Cloudflare
+# curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+# . /etc/os-release
+
+# Aggiungi il repository (utilizzando bookworm per massima compatibilità con i pacchetti Cloudflare)
+# echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $VERSION_CODENAME main" | tee /etc/apt/sources.list.d/cloudflare-client.list
+# apt update && apt install cloudflare-warp
+
+```
+Una volta completata l'installazione, registra il dispositivo e avvia la connessione:
+```bash
+# Registra il client (operazione da eseguire solo la prima volta)
+$ warp-cli registration new
+# Connetti il dispositivo alla rete WARP
+$ warp-cli connect
+$ warp-cli status
+```
+
 
 
 ## Android

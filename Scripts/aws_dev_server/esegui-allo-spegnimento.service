@@ -1,0 +1,18 @@
+[Unit]
+Description=Ferma il dev server AWS allo spegnimento/riavvio del sistema
+Wants=network-online.target
+# Allo spegnimento l'ordine è inverso: ExecStop gira prima che rete, DNS e WARP vengano fermati
+After=network-online.target NetworkManager.service systemd-resolved.service warp-svc.service
+RequiresMountsFor=/mnt/Dati4/Workspace/alnao/Scripts/aws_dev_server /home/alnao
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=alnao
+ExecStart=/bin/true
+ExecStop=/mnt/Dati4/Workspace/alnao/Scripts/aws_dev_server/stop_dev_server.sh
+# Tetto massimo: oltre questo systemd uccide lo script e prosegue lo spegnimento
+TimeoutStopSec=90
+
+[Install]
+WantedBy=multi-user.target
